@@ -7,3 +7,6 @@ https://www.pluralsight.com/guides/installing-elixir-erlang-with-asdf
 
 Current version of erlang is 26.1.2
 Current version of elixir is main
+
+NodeJs was installed for this Hardhat
+Current version of node 20.5.1
