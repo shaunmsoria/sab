@@ -84,8 +84,55 @@ contract SABV1 is IFlashLoanRecipient {
         tokenPath[0] = token0;
         tokenPath[1] = token1;
 
+        _executeSwap(routerPath, tokenPath, flashAmount);
 
+        IERC20(token0).transfer(address(vault), flashAmount);
 
+        IERC20(token0).transfer(owner, IERC20(token0).balanceOf(address(this)));
+
+    }
+
+    function _executeSwap(
+        IUniswapV2Router02[] memory _routerPath,
+        address[] memory _tokenPath,
+        uint256 _flashAmount
+    ) internal {
+        IUniswapV2Router02 _startRouter = _routerPath[0];
+        // uint256 _startAmountIn = IERC20(_tokenPath[0]).balanceOf(address(this));
+
+        require(
+            IERC20(_tokenPath[0]).approve(address(_startRouter), _flashAmount),
+            "start router  approval failed"
+        );
+
+        _startRouter.swapExactTokensForTokens(
+            _flashAmount,
+            0,
+            _tokenPath,
+            address(this),
+            (block.timestamp + 1200)
+        );
+
+        IUniswapV2Router02 _endRouter = _routerPath[1];
+        uint256 _endAmountIn = IERC20(_tokenPath[1]).balanceOf(address(this));
+
+        require(
+            IERC20(_tokenPath[1]).approve(address(_endRouter), _endAmountIn)
+        );
+
+        address token0 = _tokenPath[0];
+        address token1 = _tokenPath[1];
+
+        _tokenPath[0] = token1;
+        _tokenPath[1] = token0;
+
+        _endRouter.swapExactTokensForTokens(
+            _endAmountIn,
+            _flashAmount,
+            _tokenPath,
+            address(this),
+            (block.timestamp + 1200)
+        );
     }
 
 
