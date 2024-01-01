@@ -2,8 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Signer } from "ethers";
 import { SABV1 } from "../typechain-types/contracts/SABV1";
-// import { SABV1 } from "../typechain-types/factories/contracts/SABV1__factory";
-// import { config } from "../hardhat.config";
+import config from "../tsconfig.json";
 
 
 describe("SABV1", () => {
@@ -23,6 +22,7 @@ describe("SABV1", () => {
 
     describe("Deployment", function () {
        it("Sets the owner", async () => {
+        console.log("sx1 UNISWAP Factory_address", config.UNISWAP.FACTORY_ADDRESS);
         expect(await sabv1.owner()).to.equal(await owner.getAddress())
        }) 
     });
