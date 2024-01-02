@@ -3,12 +3,24 @@ import { ethers } from "hardhat";
 import { Signer } from "ethers";
 import { SABV1 } from "../typechain-types/contracts/SABV1";
 import config from "../tsconfig.json";
+// import { uniswap } from "../typechain-types";
 
 
 describe("SABV1", () => {
 
+    type ERC20Address = string;
+    type Factory_Router = {
+        V2_ROUTER_02_ADDRESS: ERC20Address,
+        FACTORY_ADDRESS: ERC20Address
+    }
+
     let owner: Signer;
     let sabv1: SABV1;
+    let uniswap: Factory_Router;
+    let sushiswap: Factory_Router;
+    let token0: ERC20Address;
+    let token1: ERC20Address;
+
     
     beforeEach(async () => {
         [owner] = await ethers.getSigners();
@@ -17,14 +29,37 @@ describe("SABV1", () => {
         .then((factory) => factory.deploy())
         .then((contract) => contract.waitForDeployment());
 
+        uniswap = config.UNISWAP;
+        sushiswap = config.SUSHISWAP;
+
+        token0 = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+        token1 = "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE";
+
     });
 
 
     describe("Deployment", function () {
        it("Sets the owner", async () => {
-        console.log("sx1 UNISWAP Factory_address", config.UNISWAP.FACTORY_ADDRESS);
+        console.log("sx1 UNISWAP Factory_address", uniswap);
+        // console.log("sx1 UNISWAP Factory_address", config.UNISWAP.FACTORY_ADDRESS);
         expect(await sabv1.owner()).to.equal(await owner.getAddress())
        }) 
     });
 
+    describe("executeTrade", function () {
+       it("Uniswap to Sushiswap", async () => {
+        console.log("sx1 UNISWAP ", uniswap);
+        console.log("sx1 SUSHISWAP ", sushiswap);
+        console.log("sx1 token1", token0);
+        console.log("sx1 token2", token1);
+
+        let result;
+        result = await sabv1.executeTrade(
+            token0, token1, uniswap.V2_ROUTER_02_ADDRESS, sushiswap.V2_ROUTER_02_ADDRESS, 1);
+
+        console.log("sx1 value of result", result);
+
+        expect(await sabv1.owner()).to.equal(await owner.getAddress())
+       }) 
+    });
 });
