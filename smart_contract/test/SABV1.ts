@@ -3,7 +3,9 @@ import { ethers } from "hardhat";
 import { Signer } from "ethers";
 import { SABV1 } from "../typechain-types/contracts/SABV1";
 import config from "../tsconfig.json";
-// import { uniswap } from "../typechain-types";
+import { 
+    // provider, 
+    uFactory, uRouter, sFactory, sRouter  } from "../helpers/initialisation"
 
 
 describe("SABV1", () => {
@@ -40,22 +42,31 @@ describe("SABV1", () => {
 
     describe("Deployment", function () {
        it("Sets the owner", async () => {
-        console.log("sx1 UNISWAP Factory_address", uniswap);
-        // console.log("sx1 UNISWAP Factory_address", config.UNISWAP.FACTORY_ADDRESS);
         expect(await sabv1.owner()).to.equal(await owner.getAddress())
        }) 
     });
 
     describe("executeTrade", function () {
        it("Uniswap to Sushiswap", async () => {
-        console.log("sx1 UNISWAP ", uniswap);
-        console.log("sx1 SUSHISWAP ", sushiswap);
+        // console.log("sx1 provider", provider);
+        console.log("sx1 uRouter", uRouter);
+        console.log("sx1 sRouter", sRouter);
         console.log("sx1 token1", token0);
         console.log("sx1 token2", token1);
 
+        // uFactory, uRouter, sFactory, sRouter
+
         let result;
         result = await sabv1.executeTrade(
-            token0, token1, uniswap.V2_ROUTER_02_ADDRESS, sushiswap.V2_ROUTER_02_ADDRESS, 1);
+            token0, token1, uRouter, sRouter, 1);
+
+        // let result;
+        // result = await sabv1.executeTrade(
+        //     token0, token1, uniswap.V2_ROUTER_02_ADDRESS, sushiswap.V2_ROUTER_02_ADDRESS, 1);
+
+            // let result;
+        // result = await sabv1.executeTrade(
+        //     token1, token0, sushiswap.V2_ROUTER_02_ADDRESS, uniswap.V2_ROUTER_02_ADDRESS, 1);
 
         console.log("sx1 value of result", result);
 

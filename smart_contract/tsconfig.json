@@ -9,7 +9,7 @@
     "resolveJsonModule": true
   },
   "PROJECT_SETTINGS": {
-      "isLocal": true,
+      "isLocal": false,
       "isDeployed": true,
       "ARBITRAGE_ADDRESS": "0xed12bE400A07910E4d4E743E4ceE26ab1FC9a961"
   },
