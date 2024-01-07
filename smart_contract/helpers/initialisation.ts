@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 let provider;
+const accountNumber = `${process.env.ACCOUNT_NUMBER}`;
 
 if (config.PROJECT_SETTINGS.isLocal) {
     provider = new ethers.WebSocketProvider(`ws://127.0.0.1:8545/`)
@@ -19,12 +20,15 @@ const uRouter = new ethers.Contract(config.UNISWAP.V2_ROUTER_02_ADDRESS, IUniswa
 const sFactory = new ethers.Contract(config.SUSHISWAP.FACTORY_ADDRESS, IUniswapV2Factory.abi, provider);
 const sRouter = new ethers.Contract(config.SUSHISWAP.V2_ROUTER_02_ADDRESS, IUniswapV2Router02.abi, provider);
 
+console.log("sx1 value accountNumber in initialisation", accountNumber);
+
 export {
-    // provider,
+    provider,
     uFactory,
     uRouter,
     sFactory,
-    sRouter
+    sRouter,
+    accountNumber
 }
 
 

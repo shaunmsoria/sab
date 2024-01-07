@@ -3,9 +3,7 @@ import { ethers } from "hardhat";
 import { Signer } from "ethers";
 import { SABV1 } from "../typechain-types/contracts/SABV1";
 import config from "../tsconfig.json";
-import { 
-    // provider, 
-    uFactory, uRouter, sFactory, sRouter  } from "../helpers/initialisation"
+import { provider, uFactory, uRouter, sFactory, sRouter, accountNumber  } from "../helpers/initialisation";
 
 
 describe("SABV1", () => {
@@ -22,6 +20,7 @@ describe("SABV1", () => {
     let sushiswap: Factory_Router;
     let token0: ERC20Address;
     let token1: ERC20Address;
+    let account: string;
 
     
     beforeEach(async () => {
@@ -36,6 +35,8 @@ describe("SABV1", () => {
 
         token0 = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
         token1 = "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE";
+
+        account = accountNumber;
 
     });
 
@@ -68,9 +69,12 @@ describe("SABV1", () => {
         // result = await sabv1.executeTrade(
         //     token1, token0, sushiswap.V2_ROUTER_02_ADDRESS, uniswap.V2_ROUTER_02_ADDRESS, 1);
 
+        console.log("sx1 value of accountNumber", accountNumber);
+
         console.log("sx1 value of result", result);
 
-        expect(await sabv1.owner()).to.equal(await owner.getAddress())
+        expect(result.from).to.equal(accountNumber);
+        // expect(await sabv1.owner()).to.equal(await owner.getAddress())
        }) 
     });
 });
