@@ -8,11 +8,12 @@ dotenv.config();
 
 let provider;
 const accountNumber = `${process.env.ACCOUNT_NUMBER}`;
+const alchemy = `${process.env.ALCHEMY_API_KEY}`
 
 if (config.PROJECT_SETTINGS.isLocal) {
     provider = new ethers.WebSocketProvider(`ws://127.0.0.1:8545/`)
 } else {
-    provider = new ethers.WebSocketProvider(`wss://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`)
+    provider = new ethers.WebSocketProvider(`wss://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`);
 }
 
 const uFactory = new ethers.Contract(config.UNISWAP.FACTORY_ADDRESS, IUniswapV2Factory.abi, provider);
@@ -28,8 +29,9 @@ export {
     uRouter,
     sFactory,
     sRouter,
-    accountNumber
-}
+    accountNumber,
+    alchemy
+};
 
 
 

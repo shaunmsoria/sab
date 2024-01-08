@@ -57,10 +57,11 @@ describe("SABV1", () => {
 
         // uFactory, uRouter, sFactory, sRouter
 
+        
         let result;
         result = await sabv1.executeTrade(
             token0, token1, uRouter, sRouter, 1);
-
+        
         // let result;
         // result = await sabv1.executeTrade(
         //     token0, token1, uniswap.V2_ROUTER_02_ADDRESS, sushiswap.V2_ROUTER_02_ADDRESS, 1);
@@ -69,12 +70,11 @@ describe("SABV1", () => {
         // result = await sabv1.executeTrade(
         //     token1, token0, sushiswap.V2_ROUTER_02_ADDRESS, uniswap.V2_ROUTER_02_ADDRESS, 1);
 
-        console.log("sx1 value of accountNumber", accountNumber);
+        console.log("sx1 value of accouny", account);
 
         console.log("sx1 value of result", result);
 
-        expect(result.from).to.equal(accountNumber);
-        // expect(await sabv1.owner()).to.equal(await owner.getAddress())
+        expect(result.from).to.equal(account);
        }) 
     });
 });
