@@ -17,12 +17,14 @@ describe("SABV1", () => {
         FACTORY_ADDRESS: ERC20Address
     }
 
+    type URL = string | undefined;
+
     let owner: Signer;
     let sabv1: SABV1;
     let token0: ERC20Address;
     let token1: ERC20Address;
     let account: string;
-    let url: string = config.networks.hardhat.forking.url;
+    let url: URL = config.networks?.hardhat?.forking?.url;
 
     
     beforeEach(async () => {
