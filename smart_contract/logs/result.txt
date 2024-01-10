@@ -1,0 +1,103 @@
+SABV1
+Deployment
+  ✔ Sets the owner
+executeTrade
+sx1 uRouter Contract {
+target: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+interface: Interface {
+fragments: [
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment]
+],
+deploy: ConstructorFragment {
+  type: 'constructor',
+  inputs: [],
+  payable: false,
+  gas: null
+},
+fallback: null,
+receive: false
+},
+runner: WebSocketProvider {},
+filters: {},
+fallback: null,
+[Symbol(_ethersInternal_contract)]: {}
+}
+sx1 sRouter Contract {
+target: '0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F',
+interface: Interface {
+fragments: [
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment],
+  [FunctionFragment], [FunctionFragment]
+],
+deploy: ConstructorFragment {
+  type: 'constructor',
+  inputs: [],
+  payable: false,
+  gas: null
+},
+fallback: null,
+receive: false
+},
+runner: WebSocketProvider {},
+filters: {},
+fallback: null,
+[Symbol(_ethersInternal_contract)]: {}
+}
+sx1 token1 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+sx1 token2 0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE
+sx1 value of result ContractTransactionResponse {
+provider: HardhatEthersProvider {
+_hardhatProvider: LazyInitializationProviderAdapter {
+  _providerFactory: [AsyncFunction (anonymous)],
+  _emitter: [EventEmitter],
+  _initializingPromise: [Promise],
+  provider: [BackwardsCompatibilityProviderAdapter]
+},
+_networkName: 'hardhat',
+_blockListeners: [],
+_transactionHashListeners: Map(0) {},
+_eventListeners: []
+},
+blockNumber: 18952975,
+blockHash: '0x9aee0863b1bce8da8fd8a45dd6474ea178853eeed0661affa9e38ca3640909a3',
+index: undefined,
+hash: '0x85399e21ab388b6647b63370b4c80c1a81d9204512a5b99f5bbd5b50ad628001',
+type: 2,
+to: '0xCdb63c58b907e76872474A0597C5252eDC97c883',
+from: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+nonce: 599,
+gasLimit: 30000000n,
+gasPrice: 27727834946n,
+maxPriorityFeePerGas: 1000000000n,
+maxFeePerGas: 54455669892n,
+data: '0xdded0692000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc200000000000000000000000095ad61b0a150d79219dcf64e1e6cc01f0b64c4ce0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d000000000000000000000000d9e1ce17f2641f24ae83637ab66a2cca9c378b9f0000000000000000000000000000000000000000000000000000000000000001',
+value: 0n,
+chainId: 31337n,
+signature: Signature { r: "0xc3b9f912c7ab91de1c9645dfd572d009b2746cb1483fee44d96525f80a43d7b7", s: "0x3e783b2043b5935cc71222eea84809f737e6580e0c26210eefa3fcb8e80b0647", yParity: 1, networkV: null },
+accessList: []
+}
+  ✔ Uniswap to Sushiswap (9326ms)
+
+
+2 passing (15s)
