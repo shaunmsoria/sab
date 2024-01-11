@@ -57,6 +57,8 @@ describe("SABV1", () => {
         let result;
         result = await sabv1.executeTrade(
             token0, token1, uRouter, sRouter, 1);
+        
+        console.log("sx1 response from Balancer", result);
 
         expect(result.from).to.equal(account);
        }) 
