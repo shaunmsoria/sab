@@ -16,6 +16,8 @@ defmodule BotSupervisor.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      {:ethers, "~> 0.2.2"}
+    ]
   end
 end
