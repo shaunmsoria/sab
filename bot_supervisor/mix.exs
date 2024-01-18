@@ -18,7 +18,15 @@ defmodule BotSupervisor.MixProject do
   defp deps do
     [
       {:ethers, "~> 0.2.2"},
+      {:ethereumex, "~> 0.10.6"},
       {:jason, "~> 1.2"}
     ]
   end
+
+  def application do
+    [
+      applications: [:ethereumex, :ethers]
+    ]
+  end
+
 end

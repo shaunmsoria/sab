@@ -1,6 +1,9 @@
 defmodule DexBot do
   # use Ethers.Contract,
+  # abi_file: System.get_env("ABI_UNISWAP"),
   # default_address: Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
+
+  alias Ethers.Contract
 
   @moduledoc """
   Documentation for `ArbitrageBotV1`.
@@ -26,6 +29,7 @@ defmodule DexBot do
 
     System.get_env("ABI_UNISWAP")
     |> IO.inspect(label: "sx1 ABI_UNISWAP")
+
 
     :world
   end

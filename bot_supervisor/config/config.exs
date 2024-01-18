@@ -26,4 +26,5 @@ config :ethers,
   default_signer_opts: [] # Defaults to: []
 
 # If using Ethereumex, you can specify a default JSON-RPC server url here for all requests.
+# config :ethereumex, url: "http://localhost:8545"
 config :ethereumex, url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
