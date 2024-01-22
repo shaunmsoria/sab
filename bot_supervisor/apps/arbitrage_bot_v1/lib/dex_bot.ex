@@ -1,9 +1,10 @@
 defmodule DexBot do
-  # use Ethers.Contract,
+  use Ethers.Contract,
+  abi_file: Jason.decode!(System.get_env("ABI_UNISWAP_JASON"), as: %{})
   # abi_file: System.get_env("ABI_UNISWAP"),
   # default_address: Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
 
-  alias Ethers.Contract
+  # alias Ethers.Contract
 
   @moduledoc """
   Documentation for `ArbitrageBotV1`.
@@ -19,13 +20,22 @@ defmodule DexBot do
 
   """
   def hello do
+
+    # abi_raw = {"status":"1","message":"OK-Missing/Invalid API Key, rate limit of 1/5sec applied","result":"[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeToSetter\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token0\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token1\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"PairCreated\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allPairs\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"allPairsLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"createPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeTo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeToSetter\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"getPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeTo\",\"type\":\"address\"}],\"name\":\"setFeeTo\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeToSetter\",\"type\":\"address\"}],\"name\":\"setFeeToSetter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"}
+
+
+    # abi_decoded = Jason.decode!(@abi_raw, as: %{})
+
     IO.puts("hello world DexBot")
+
+    # abi_decoded
+    # |> IO.inspect(label: "sx1 abi_decoded")
 
     System.get_env("ALCHEMY_API_KEY")
     |> IO.inspect(label: "sx1 ALCHEMY_API_KEY")
 
-    Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
-    |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
+    # Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
+    # |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
 
     System.get_env("ABI_UNISWAP")
     |> IO.inspect(label: "sx1 ABI_UNISWAP")

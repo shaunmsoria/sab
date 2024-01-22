@@ -17,15 +17,13 @@ defmodule BotSupervisor.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:ethers, "~> 0.2.2"},
-      {:ethereumex, "~> 0.10.6"},
-      {:jason, "~> 1.2"}
+      {:jason, "~> 1.2"},
+      {:ethers, "~> 0.2.2"}
     ]
   end
 
   def application do
     [
-      applications: [:ethereumex, :ethers]
     ]
   end
 
