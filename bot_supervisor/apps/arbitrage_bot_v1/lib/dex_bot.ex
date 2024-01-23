@@ -1,6 +1,7 @@
 defmodule DexBot do
   use Ethers.Contract,
-  abi_file: Jason.decode!(System.get_env("ABI_UNISWAP_JASON"), as: %{})
+  # abi: Jason.decode!(System.get_env("ABI_UNISWAP_JASON"), as: %{}) |> Map.get("result") |> Jason.decode!(as: [])
+  abi_file: "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/uniswap_abi.json"
   # abi_file: System.get_env("ABI_UNISWAP"),
   # default_address: Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
 
@@ -39,6 +40,11 @@ defmodule DexBot do
 
     System.get_env("ABI_UNISWAP")
     |> IO.inspect(label: "sx1 ABI_UNISWAP")
+
+    Jason.decode!(System.get_env("ABI_UNISWAP_JASON"), as: %{})
+    |> Map.get("result")
+    # |> Jason.decode!(as: [])
+    |> IO.inspect(label: "sx1 ABI_UNISWAP_JASON")
 
 
     :world
