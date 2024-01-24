@@ -1,9 +1,12 @@
 defmodule DexBot do
-  use Ethers.Contract,
-  # abi: Jason.decode!(System.get_env("ABI_UNISWAP_JASON"), as: %{}) |> Map.get("result") |> Jason.decode!(as: [])
-  abi_file: "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/uniswap_abi.json"
+  # use Ethers.Contract,
+  # abi_file: "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/uniswap_abi.json"
+
+
   # abi_file: System.get_env("ABI_UNISWAP"),
   # default_address: Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
+
+  import UniswapSmartContract
 
   # alias Ethers.Contract
 
@@ -22,30 +25,29 @@ defmodule DexBot do
   """
   def hello do
 
-    # abi_raw = {"status":"1","message":"OK-Missing/Invalid API Key, rate limit of 1/5sec applied","result":"[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeToSetter\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token0\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token1\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"PairCreated\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allPairs\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"allPairsLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"createPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeTo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeToSetter\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"getPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeTo\",\"type\":\"address\"}],\"name\":\"setFeeTo\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeToSetter\",\"type\":\"address\"}],\"name\":\"setFeeToSetter\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"}
-
-
-    # abi_decoded = Jason.decode!(@abi_raw, as: %{})
 
     IO.puts("hello world DexBot")
 
-    # abi_decoded
-    # |> IO.inspect(label: "sx1 abi_decoded")
 
     System.get_env("ALCHEMY_API_KEY")
     |> IO.inspect(label: "sx1 ALCHEMY_API_KEY")
 
-    # Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
-    # |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
+    uniswap_factory_address =
+    Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
+    |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
 
-    System.get_env("ABI_UNISWAP")
-    |> IO.inspect(label: "sx1 ABI_UNISWAP")
+    uniswap_router_address =
+    Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("V2_ROUTER_02_ADDRESS")
+    |> IO.inspect(label: "sx1 V2_ROUTER_02_ADDRESS")
 
-    Jason.decode!(System.get_env("ABI_UNISWAP_JASON"), as: %{})
-    |> Map.get("result")
-    # |> Jason.decode!(as: [])
-    |> IO.inspect(label: "sx1 ABI_UNISWAP_JASON")
 
+    # Ethers.Contract.ERC20.
+    data  =
+    UniswapSmartContract.get_pair("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE")
+    |> IO.inspect(label: "sx1 getPair")
+
+    # Ethers.call(data, to: uniswap_factory_address)
+    # |> IO.inspect(label: "sx1 call")
 
     :world
   end
