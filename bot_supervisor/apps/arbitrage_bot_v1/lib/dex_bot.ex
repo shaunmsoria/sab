@@ -1,15 +1,4 @@
 defmodule DexBot do
-  # use Ethers.Contract,
-  # abi_file: "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/uniswap_abi.json"
-
-
-  # abi_file: System.get_env("ABI_UNISWAP"),
-  # default_address: Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
-
-  import UniswapSmartContract
-
-  # alias Ethers.Contract
-
   @moduledoc """
   Documentation for `ArbitrageBotV1`.
   """
@@ -23,32 +12,47 @@ defmodule DexBot do
       :world
 
   """
-  def hello do
 
 
-    IO.puts("hello world DexBot")
+  # import UniswapSmartContract
+
+  @dexs Libraries.dexs
+  @tokens Libraries.tokens
+
+
+  def run do
 
 
     System.get_env("ALCHEMY_API_KEY")
     |> IO.inspect(label: "sx1 ALCHEMY_API_KEY")
 
-    uniswap_factory_address =
-    Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("FACTORY_ADDRESS")
+    @dexs.uniswap.factory_address
     |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
 
-    uniswap_router_address =
-    Jason.decode!(System.get_env("UNISWAP"), as: %{}) |> Map.get("V2_ROUTER_02_ADDRESS")
+    @dexs.uniswap.v2_router_02_address
     |> IO.inspect(label: "sx1 V2_ROUTER_02_ADDRESS")
 
+    {:ok, pair_address} = Compute.get_pair_address(
+      @dexs.uniswap.factory_address,
+      @tokens.weth.address,
+      @tokens.shib.address
+    )
 
-    # Ethers.Contract.ERC20.
-    data  =
-    UniswapSmartContract.get_pair("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE")
-    |> IO.inspect(label: "sx1 getPair")
+    pair_address
+    |> IO.inspect(label: "sx1 get_pair_address")
 
-    Ethers.call(data, to: uniswap_factory_address)
-    |> IO.inspect(label: "sx1 call")
+    # pair_address
+    # |> pair_contract()
+
+
+
+
 
     :world
   end
+
+  def pair_contract() do
+
+  end
+
 end
