@@ -46,8 +46,8 @@ defmodule DexBot do
     UniswapSmartContract.get_pair("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE")
     |> IO.inspect(label: "sx1 getPair")
 
-    # Ethers.call(data, to: uniswap_factory_address)
-    # |> IO.inspect(label: "sx1 call")
+    Ethers.call(data, to: uniswap_factory_address)
+    |> IO.inspect(label: "sx1 call")
 
     :world
   end

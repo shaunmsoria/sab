@@ -24,6 +24,7 @@ defmodule BotSupervisor.MixProject do
 
   def application do
     [
+      extra_applications: [:logger]
     ]
   end
 
