@@ -13,8 +13,9 @@ defmodule DexBot do
 
   """
 
+  import Compute
 
-  # import UniswapSmartContract
+  # use GenServer
 
   @dexs Libraries.dexs
   @tokens Libraries.tokens
@@ -32,18 +33,38 @@ defmodule DexBot do
     @dexs.uniswap.v2_router_02_address
     |> IO.inspect(label: "sx1 V2_ROUTER_02_ADDRESS")
 
-    {:ok, pair_address} = Compute.get_pair_address(
+    {:ok, pair_address_uni} = Compute.get_pair_address(
       @dexs.uniswap.factory_address,
       @tokens.weth.address,
       @tokens.shib.address
     )
 
-    pair_address
-    |> IO.inspect(label: "sx1 get_pair_address")
+    {:ok, pair_address_sushi} = Compute.get_pair_address(
+      @dexs.sushiswap.factory_address,
+      @tokens.weth.address,
+      @tokens.shib.address
+    )
 
-    # pair_address
-    # |> pair_contract()
 
+    pair_address_uni |> contract(:get_reserves)
+    |> IO.inspect(label: "sx1 pair_address_uni |> contract(:get_reserves)")
+
+    price_0 =
+    pair_address_uni
+    |> calculate_price()
+    |> IO.inspect(label: "sx1 price_0")
+
+
+    pair_address_sushi |> contract(:get_reserves)
+    |> IO.inspect(label: "sx1 pair_address_sushi |> contract(:get_reserves)")
+
+    price_1 =
+    pair_address_sushi
+    |> calculate_price()
+    |> IO.inspect(label: "sx1 price_1")
+
+    calculate_difference(price_0, price_1)
+    |> IO.inspect(label: "sx1 calculate_difference")
 
 
 
@@ -51,8 +72,5 @@ defmodule DexBot do
     :world
   end
 
-  def pair_contract() do
-
-  end
 
 end
