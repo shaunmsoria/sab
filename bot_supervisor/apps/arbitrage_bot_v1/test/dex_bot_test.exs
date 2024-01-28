@@ -3,6 +3,7 @@ defmodule DexBotTest do
   doctest DexBot
 
   test "greets the world" do
-    assert DexBot.run() == :world
+    assert DexBot.run() == {:ok, :done}
+    assert DexBot.start_link() == {:ok, :start_link}
   end
 end
