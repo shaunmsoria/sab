@@ -20,9 +20,8 @@ defmodule DexBot do
   @dexs Libraries.dexs
   @tokens Libraries.tokens
 
-  def start_link() do
-    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
-    {:ok, :start_link}
+  def start_link(params) do
+    GenServer.start_link(__MODULE__, params, name: __MODULE__)
   end
 
   def init(state) do
@@ -30,21 +29,34 @@ defmodule DexBot do
   end
 
 
-  def handle_call(:hello_world, _from, state) do
-    IO.puts("mx1 hello world")
-
-    state |> IO.inspect(label: "sx1 state")
-    {:reply, "Hello World", state}
+  def handle_call(:state, _from, state) do
+    {:reply, state, state}
   end
 
-  def handle_info({:add_value, %{} = value}, state) do
-
-    new_state =
-      Map.merger(state, value)
-
-    {:noreply, new_state}
+  def handle_cast({:add_pair, value} , state) when is_list(value) do
+    {:noreply, %{state | pairs: state.pairs ++ value}}
   end
 
+  def handle_info(:stop, state) do
+    raise "Stopped"
+
+    {:noreply, state}
+  end
+
+  def handle_info(:terminate, state) do
+      :persistent_term.put(
+        :dexbot_state,
+        state
+        )
+  end
+
+  def terminate(reason, state) do
+    reason
+    |> IO.inspect(label: "sx1 reason")
+
+    state
+    |> IO.inspect(label: "sx1 state")
+  end
 
 
   def run do
@@ -53,20 +65,22 @@ defmodule DexBot do
     System.get_env("ALCHEMY_API_KEY")
     |> IO.inspect(label: "sx1 ALCHEMY_API_KEY")
 
-    @dexs.uniswap.factory_address
+    @dexs.uniswap.factory
     |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
 
-    @dexs.uniswap.v2_router_02_address
+    @dexs.uniswap.router
     |> IO.inspect(label: "sx1 V2_ROUTER_02_ADDRESS")
 
     {:ok, pair_address_uni} = Compute.get_pair_address(
-      @dexs.uniswap.factory_address,
+      @dexs.uniswap.factory,
       @tokens.weth.address,
       @tokens.shib.address
     )
 
+    # token_pair0 =
+
     {:ok, pair_address_sushi} = Compute.get_pair_address(
-      @dexs.sushiswap.factory_address,
+      @dexs.sushiswap.factory,
       @tokens.weth.address,
       @tokens.shib.address
     )
@@ -91,9 +105,6 @@ defmodule DexBot do
 
     calculate_difference(price_0, price_1)
     |> IO.inspect(label: "sx1 calculate_difference")
-
-
-
 
     {:ok, :done}
   end

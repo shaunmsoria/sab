@@ -1,6 +1,7 @@
 defmodule ArbitrageBotV1.MixProject do
   use Mix.Project
 
+
   def project do
     [
       app: :arbitrage_bot_v1,
@@ -18,6 +19,14 @@ defmodule ArbitrageBotV1.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: {
+        ArbitrageBotV1.Application,
+        %{
+          dex0: :uniswap,
+          dex1: :sushiswap,
+          pairs: []
+        }
+        },
       extra_applications: [:logger]
     ]
   end

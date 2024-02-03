@@ -3,7 +3,13 @@ defmodule DexBotTest do
   doctest DexBot
 
   test "greets the world" do
+
     assert DexBot.run() == {:ok, :done}
-    assert DexBot.start_link() == {:ok, :start_link}
+
+    assert %DexPair{
+      dex0: :uniswap,
+      dex1: :sushiswap
+      } = GenServer.call(DexBot, :state_value)
+      # |> IO.inspect(label: "sx1 GenServer.call result")
   end
 end
