@@ -24,13 +24,39 @@ defmodule DexBot do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)
   end
 
-  def init(state) do
+  def init(state_init) do
+    state =
+      :persistent_term.get(
+        :dexbot_state,
+        state_init
+      )
+
+    # {:ok, pair_address_uni} = Compute.get_pair_address(
+    #   @dexs.uniswap.factory,
+    #   @tokens.weth.address,
+    #   @tokens.shib.address
+    # )
+
+    # pair_address_uni |> contract(:swap)
+    # |> IO.inspect(label: "sx1 pair_address_uni |> contract(:swap)")
+
     {:ok, state}
   end
 
 
   def handle_call(:state, _from, state) do
     {:reply, state, state}
+  end
+
+  def handle_call(:persistent, _from, state) do
+    result =
+    :persistent_term.get(
+      :dexbot_state,
+      state
+    )
+    |> IO.inspect(label: "sx1 persistent_term")
+
+    {:reply, result, state}
   end
 
   def handle_cast({:add_pair, value} , state) when is_list(value) do
@@ -43,19 +69,22 @@ defmodule DexBot do
     {:noreply, state}
   end
 
-  def handle_info(:terminate, state) do
-      :persistent_term.put(
+  # def handle_info(:terminate, state) do
+  #   IO.puts("sx1 handle_info triggered")
+
+  #     :persistent_term.put(
+  #       :dexbot_state,
+  #       state
+  #       )
+
+  #       {:noreply, state}
+  # end
+
+  def terminate(_reason, state) do
+    :persistent_term.put(
         :dexbot_state,
         state
-        )
-  end
-
-  def terminate(reason, state) do
-    reason
-    |> IO.inspect(label: "sx1 reason")
-
-    state
-    |> IO.inspect(label: "sx1 state")
+    )
   end
 
 
@@ -77,7 +106,6 @@ defmodule DexBot do
       @tokens.shib.address
     )
 
-    # token_pair0 =
 
     {:ok, pair_address_sushi} = Compute.get_pair_address(
       @dexs.sushiswap.factory,
