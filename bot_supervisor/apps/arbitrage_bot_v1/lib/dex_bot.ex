@@ -31,14 +31,20 @@ defmodule DexBot do
         state_init
       )
 
-    # {:ok, pair_address_uni} = Compute.get_pair_address(
-    #   @dexs.uniswap.factory,
-    #   @tokens.weth.address,
-    #   @tokens.shib.address
-    # )
+      {:ok, pair_address_uni} = Compute.get_pair_address(
+        @dexs.uniswap.factory,
+        @tokens.weth.address,
+        @tokens.shib.address
+      )
 
-    # pair_address_uni |> contract(:swap)
+    LiquidityPoolContract.EventFilters.swap(pair_address_uni, nil)
+    |> Ethers.get_logs()
+    |> IO.inspect(label: "sx1 EventFilters")
+
+    # pair_address_uni |> contract_logs(:swap)
     # |> IO.inspect(label: "sx1 pair_address_uni |> contract(:swap)")
+
+
 
     {:ok, state}
   end
@@ -86,7 +92,6 @@ defmodule DexBot do
         state
     )
   end
-
 
   def run do
 

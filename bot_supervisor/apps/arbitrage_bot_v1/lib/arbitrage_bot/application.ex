@@ -16,7 +16,8 @@ defmodule ArbitrageBotV1.Application do
             dex1: dex1,
             pairs: pairs
         }
-      }
+      },
+      {W3WS.ListenerManager, otp_app: :arbitrage_bot_v1}
     ]
 
     opts = [strategy: :one_for_one]

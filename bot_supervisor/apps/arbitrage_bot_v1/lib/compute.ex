@@ -18,6 +18,13 @@ defmodule Compute do
     end
   end
 
+  defmacro contract_logs(pair_address, function_contract) do
+    quote do
+      LiquidityPoolContract.unquote(function_contract)()
+      |> Ethers.get_logs(to: unquote(pair_address))
+    end
+  end
+
   def calculate_price(pair_address) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <- pair_address |> contract(:get_reserves) do
     amount_0 / amount_1
@@ -25,7 +32,6 @@ defmodule Compute do
   end
 
   def calculate_difference(price_0, price_1) do
-    # ((price_0 - price_1) / price_1) * 100
     Float.floor(((price_0 - price_1) / price_1) * 100, 2)
   end
 

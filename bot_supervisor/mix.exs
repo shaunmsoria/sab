@@ -20,7 +20,8 @@ defmodule BotSupervisor.MixProject do
   defp deps do
     [
       {:jason, "~> 1.2"},
-      {:ethers, "~> 0.2.2"}
+      {:ethers, "~> 0.2.2"},
+      {:w3ws, "~> 0.3.0"}
     ]
   end
 
