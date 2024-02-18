@@ -33,7 +33,8 @@ config :ethereumex, url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env(
 config :arbitrage_bot_v1, W3WS, listeners: [
   [
     # the uri of the ethereum jsonrpc websocket server
-    uri: "ws://localhost:8545",
+    uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+    # uri: "ws://192.168.1.1/:8545",
 
     # enable block ping every 10 seconds. this will cause the listener to
     # fetch and log the current block every 10 seconds. the last fetched block
@@ -58,7 +59,8 @@ config :arbitrage_bot_v1, W3WS, listeners: [
         # one of `abi` or `abi_files` is necessary to decode events.
         # neither are required if you jsut want to listen for encoded events.
         # abi: abi,                        # decoded json abi
-        abi_files: ["/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
+        abi_files: ["/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"], # list of paths to abi json files
+        # abi_files: ["/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
 
         # an optional `context` to provide in the `W3WS.Env` struct for any events
         # received from this subscription. Defaults to `%{}`.
