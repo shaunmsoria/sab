@@ -85,7 +85,7 @@ config :arbitrage_bot_v1, W3WS, listeners: [
         # you can always use hex topics (e.g.
         # `0x0148cba56e5d3a8d32fbcea206eae9e449ec0f0def4f642994b3edcd38561deb`).
         # topics: ["Sync"],
-        topics: ["Swap"],
+        # topics: ["Swap"],
         # topics: ["Transfer"],
 
         # address to limit the subscription to. this is optional. if not provided

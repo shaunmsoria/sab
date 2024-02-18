@@ -37,9 +37,9 @@ defmodule DexBot do
         @tokens.shib.address
       )
 
-    LiquidityPoolContract.EventFilters.swap(pair_address_uni, nil)
-    |> Ethers.get_logs()
-    |> IO.inspect(label: "sx1 EventFilters")
+    # LiquidityPoolContract.EventFilters.swap(pair_address_uni, nil)
+    # |> Ethers.get_logs()
+    # |> IO.inspect(label: "sx1 EventFilters")
 
     # pair_address_uni |> contract_logs(:swap)
     # |> IO.inspect(label: "sx1 pair_address_uni |> contract(:swap)")
@@ -67,6 +67,13 @@ defmodule DexBot do
 
   def handle_cast({:add_pair, value} , state) when is_list(value) do
     {:noreply, %{state | pairs: state.pairs ++ value}}
+  end
+
+  def handle_cast({:swap_detected, event} , state) do
+    event
+    |> IO.inspect(label: "sx1 event value")
+
+    {:noreply, state}
   end
 
   def handle_info(:stop, state) do
