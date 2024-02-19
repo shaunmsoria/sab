@@ -1,8 +1,6 @@
 defmodule BotSupervisor.MixProject do
   use Mix.Project
 
-
-
   def project do
     [
       apps_path: "apps",
@@ -30,5 +28,4 @@ defmodule BotSupervisor.MixProject do
       extra_applications: [:logger]
     ]
   end
-
 end

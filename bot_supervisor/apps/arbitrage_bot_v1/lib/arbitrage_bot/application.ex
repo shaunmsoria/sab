@@ -3,20 +3,17 @@ defmodule ArbitrageBotV1.Application do
   use Application
 
   def start(_type, %{
-    dex0: dex0,
-    dex1: dex1,
-    pairs: pairs
-  }) do
-
-
+        dex0: dex0,
+        dex1: dex1,
+        pairs: pairs
+      }) do
     children = [
       {DexBot,
-        %DexPair{
-            dex0: dex0,
-            dex1: dex1,
-            pairs: pairs
-        }
-      },
+       %DexPair{
+         dex0: dex0,
+         dex1: dex1,
+         pairs: pairs
+       }},
       {W3WS.ListenerManager, otp_app: :arbitrage_bot_v1}
     ]
 

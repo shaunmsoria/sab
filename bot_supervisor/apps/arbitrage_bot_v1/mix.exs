@@ -1,7 +1,6 @@
 defmodule ArbitrageBotV1.MixProject do
   use Mix.Project
 
-
   def project do
     [
       app: :arbitrage_bot_v1,
@@ -26,7 +25,7 @@ defmodule ArbitrageBotV1.MixProject do
           dex1: :sushiswap,
           pairs: []
         }
-        },
+      },
       extra_applications: [:logger]
     ]
   end

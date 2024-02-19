@@ -27,14 +27,11 @@ defmodule Compute do
 
   def calculate_price(pair_address) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <- pair_address |> contract(:get_reserves) do
-    amount_0 / amount_1
+      amount_0 / amount_1
     end
   end
 
   def calculate_difference(price_0, price_1) do
-    Float.floor(((price_0 - price_1) / price_1) * 100, 2)
+    Float.floor((price_0 - price_1) / price_1 * 100, 2)
   end
-
-
-
 end
