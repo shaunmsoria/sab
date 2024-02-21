@@ -61,9 +61,8 @@ defmodule DexBot do
 
   def handle_cast({:swap_detected, event}, state) do
     event
-    |> IO.inspect(label: "sx1 event value")
-
-    CheckProfit.run(event.address, event.data)
+    # |> IO.inspect(label: "sx1 event value")
+    |> CheckProfit.run()
 
     {:noreply, state}
   end

@@ -5,10 +5,14 @@ defmodule CheckProfit do
   @tokens Libraries.tokens()
 
 
-  def run(address, data) when is_binary(address) and is_map(data) do
-    address
+  def run(event_raw) when is_map(event_raw) do
+
+    event_raw.event.address
     |> calculate_price()
     |> IO.inspect(label: "sx1 price")
+
+    event_raw.event.address
+    |> IO.inspect(label: "sx1 address")
 
   end
 
