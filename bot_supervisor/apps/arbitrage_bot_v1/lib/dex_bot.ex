@@ -61,7 +61,6 @@ defmodule DexBot do
 
   def handle_cast({:swap_detected, event}, state) do
     event
-    # |> IO.inspect(label: "sx1 event value")
     |> CheckProfit.run()
 
     {:noreply, state}
@@ -135,6 +134,10 @@ defmodule DexBot do
 
     calculate_difference(price_0, price_1)
     |> IO.inspect(label: "sx1 calculate_difference")
+
+    {:ok, result} =
+      Compute.get_all_pairs(@dexs.uniswap.factory, 0)
+      |> IO.inspect(label: "sx Compute.get_all_pairs")
 
     {:ok, :done}
   end
