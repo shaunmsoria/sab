@@ -19,7 +19,8 @@ defmodule BotSupervisor.MixProject do
     [
       {:jason, "~> 1.2"},
       {:ethers, "~> 0.2.2"},
-      {:w3ws, "~> 0.3.0"}
+      {:w3ws, "~> 0.3.0"},
+      {:httpoison, "~> 2.2"}
     ]
   end
 

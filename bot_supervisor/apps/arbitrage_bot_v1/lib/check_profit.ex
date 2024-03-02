@@ -1,8 +1,8 @@
 defmodule CheckProfit do
   import Compute
 
-  @dexs Libraries.dexs()
-  @tokens Libraries.tokens()
+  # @dexs Libraries.dexs()
+  # @tokens Libraries.tokens()
 
 
   def run(event_raw) when is_map(event_raw) do

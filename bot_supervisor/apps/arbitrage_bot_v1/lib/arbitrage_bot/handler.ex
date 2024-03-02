@@ -3,11 +3,12 @@ defmodule DexBot.Handler do
   use GenServer
 
   @impl W3WS.Handler
+
+
   def handle_event(
         %Env{
           decoded?: true,
           event: %Event{name: "Swap", data: _data}
-          # event: %Event{name: "Swap", data: %{"from" => from}}
         } = event,
         _state
       ) do

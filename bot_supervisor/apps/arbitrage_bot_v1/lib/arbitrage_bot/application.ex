@@ -2,6 +2,8 @@ defmodule ArbitrageBotV1.Application do
   # @moduledoc false
   use Application
 
+
+
   def start(_type, %{
         dex0: dex0,
         dex1: dex1,

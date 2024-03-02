@@ -4,6 +4,11 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
+  def get_all_pairs_length(factory_address) do
+    DexContract.all_pairs_length()
+    |> Ethers.call(to: factory_address)
+  end
+
   def get_pair_address(factory_address, token0_address, token1_address) do
     DexContract.get_pair(token0_address, token1_address)
     |> Ethers.call(to: factory_address)
