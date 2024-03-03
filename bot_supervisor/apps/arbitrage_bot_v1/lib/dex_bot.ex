@@ -36,6 +36,7 @@ defmodule DexBot do
           state =
             %{state_init | pairs: InitialiseDexBot.run(state_init)}
           :persistent_term.put(:dexbot_state, state)
+
           {:ok, state}
     end
 

@@ -5,15 +5,33 @@ defmodule InitialiseDexBot do
   @tokens Libraries.tokens()
 
   def run(state) do
-    with  dex0 <- @dexs |> Map.get(state.dex0),
-          dex1 <- @dexs |> Map.get(state.dex1),
-          list_pair0 <- dex0 |> liquidity_pool_pair_data_extractor(),
-          list_pair1 <- dex1 |> liquidity_pool_pair_data_extractor() do
-
-      %ListPair{list_pair0: list_pair0, list_pair1: list_pair1}
-
-    end
+    extract_list_pairs()
   end
+
+  def extract_list_pairs() do
+    @dexs
+    |> Map.keys()
+    |> Enum.map(fn dex_key ->
+      %{
+        name: dex_key,
+        list: @dexs
+              |> Map.get(dex_key)
+              |> liquidity_pool_pair_data_extractor()
+      }
+
+    end)
+  end
+
+  # def run(state) do
+  #   with  dex0 <- @dexs |> Map.get(state.dex0),
+  #         dex1 <- @dexs |> Map.get(state.dex1),
+  #         list_pair0 <- dex0 |> liquidity_pool_pair_data_extractor(),
+  #         list_pair1 <- dex1 |> liquidity_pool_pair_data_extractor() do
+
+  #     %ListPair{list_pair0: list_pair0, list_pair1: list_pair1}
+
+  #   end
+  # end
 
 
   def liquidity_pool_pair_data_extractor(%Dex{} = dex) do
@@ -29,6 +47,7 @@ defmodule InitialiseDexBot do
   end
 
   def process_list_pair(%{"pairs" => pairs}) when is_list(pairs), do: pairs
+  def process_list_pair(%{"pools" => pools}) when is_list(pools), do: pools
   def process_list_pair(%{} = data), do: data
 
 
