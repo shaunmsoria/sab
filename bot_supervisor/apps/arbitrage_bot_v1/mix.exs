@@ -17,6 +17,7 @@ defmodule ArbitrageBotV1.MixProject do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
+    ##TODO restruct the state to remove dex0 dex1 and pairs to only have an empty map
     [
       mod: {
         ArbitrageBotV1.Application,

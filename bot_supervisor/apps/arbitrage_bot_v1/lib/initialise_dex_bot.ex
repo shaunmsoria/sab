@@ -22,17 +22,6 @@ defmodule InitialiseDexBot do
     end)
   end
 
-  # def run(state) do
-  #   with  dex0 <- @dexs |> Map.get(state.dex0),
-  #         dex1 <- @dexs |> Map.get(state.dex1),
-  #         list_pair0 <- dex0 |> liquidity_pool_pair_data_extractor(),
-  #         list_pair1 <- dex1 |> liquidity_pool_pair_data_extractor() do
-
-  #     %ListPair{list_pair0: list_pair0, list_pair1: list_pair1}
-
-  #   end
-  # end
-
 
   def liquidity_pool_pair_data_extractor(%Dex{} = dex) do
     with {:ok, %{"data" => data}} <- SubgraphApi.get_liquidity_pool_pairs(dex) do
@@ -100,6 +89,8 @@ defmodule InitialiseDexBot do
     {:ok, _result} =
       Compute.get_all_pairs(@dexs.uniswap.factory, 0)
       |> IO.inspect(label: "sx1 Compute.get_all_pairs")
+
+
 
     {:ok, :done}
   end
