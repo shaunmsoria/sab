@@ -1,3 +1,4 @@
 defmodule DexPair do
-  defstruct dex0: %Dex{}, dex1: %Dex{}, pairs: %ListDex{}
+  ##TODO is this necessary since we changed the State structure?
+  defstruct pairs: %ListDex{}
 end

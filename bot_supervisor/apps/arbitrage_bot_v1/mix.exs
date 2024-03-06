@@ -19,16 +19,20 @@ defmodule ArbitrageBotV1.MixProject do
   def application do
     ##TODO restruct the state to remove dex0 dex1 and pairs to only have an empty map
     [
-      mod: {
-        ArbitrageBotV1.Application,
-        %{
-          dex0: :uniswap,
-          dex1: :sushiswap,
-          pairs: %{}
-        }
-      },
+      mod: {ArbitrageBotV1.Application, []},
       extra_applications: [:logger]
     ]
+    # [
+    #   mod: {
+    #     ArbitrageBotV1.Application,
+    #     %{
+    #       dex0: :uniswap,
+    #       dex1: :sushiswap,
+    #       pairs: %{}
+    #     }
+    #   },
+    #   extra_applications: [:logger]
+    # ]
   end
 
   # Run "mix help deps" to learn about dependencies.

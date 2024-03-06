@@ -22,7 +22,7 @@ defmodule DexBot do
     state_init
     |> IO.inspect(label: "sx1 state_init")
 
-    with true <- state_init.pairs != %{} do
+    with true <- state_init != [] do
       IO.puts("init(state_init)")
       state =
         :persistent_term.get(
@@ -33,8 +33,7 @@ defmodule DexBot do
       {:ok, state}
       else
         _ ->
-          state =
-            %{state_init | pairs: InitialiseDexBot.run(state_init)}
+          state = state_init ++ InitialiseDexBot.run(state_init)
           :persistent_term.put(:dexbot_state, state)
 
           {:ok, state}
@@ -53,13 +52,14 @@ defmodule DexBot do
     {:reply, result, state}
   end
 
-  def handle_cast({:add_pair, value}, state) when is_list(value) do
-    {:noreply, %{state | pairs: state.pairs ++ value}}
+  ##TODO Not priority but need to ensure what is added is a Dex Struct type of data
+  def handle_cast({:add_dex, list_dex}, state) when is_list(list_dex) do
+    {:noreply, state ++ list_dex}
   end
 
   def handle_cast({:swap_detected, event}, state) do
-    event
-    |> CheckProfit.run()
+    state
+    |> CheckProfit.run(event)
 
     {:noreply, state}
   end

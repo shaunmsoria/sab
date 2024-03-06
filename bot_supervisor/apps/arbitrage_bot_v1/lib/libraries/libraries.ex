@@ -1,7 +1,4 @@
 defmodule Libraries do
-  # defmodule DexPair do
-  #   defstruct dex0: %{}, dex1: %{}, pairs: %{}
-  # end
 
   def dexs() do
     %{
