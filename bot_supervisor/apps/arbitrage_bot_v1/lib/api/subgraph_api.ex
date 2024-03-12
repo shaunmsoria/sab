@@ -2,7 +2,7 @@ defmodule SubgraphApi do
 
   use HTTPoison.Base
 
-  @base_url "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
+  # @base_url "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
 
 
   def process_url(url, _opts) do
@@ -31,7 +31,7 @@ defmodule SubgraphApi do
         {:ok,
         %{
           status_code: code,
-          body: body
+          body: _body
         }}  -> {:error, "status_code: #{code}"}
         _   -> {:error, "subgraph error"}
       end

@@ -6,6 +6,7 @@ defmodule DexBot.Handler do
 
   @event %W3WS.Env{
   event: %W3WS.Event{
+    # address: "0x2B08A6aAfB04447FFE19BE24d2015d42C00165Bc",
     # address: "0x4329412f58161141eb3d86c5c9a406d99020b518",
     address: "0x00001bea43608c5ee487f82b773af8bd7cb20a6f",
     # address: "0x1b882ce4976b23d8a393de71524f38912963ba05",
@@ -61,8 +62,12 @@ defmodule DexBot.Handler do
   subscription: "0x1a4dd7d0606fa307842bbaaa5ce1c95d"
 }
 
+  @impl true
+  def init(init_arg) do
+    {:ok, init_arg}
+  end
 
-
+  @impl true
   def handle_event(
         %Env{
           decoded?: true,

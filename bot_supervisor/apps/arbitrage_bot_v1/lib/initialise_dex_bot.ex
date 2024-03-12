@@ -4,7 +4,7 @@ defmodule InitialiseDexBot do
   @dexs Libraries.dexs()
   @tokens Libraries.tokens()
 
-  def run(state) do
+  def run(_state) do
     extract_list_pairs()
   end
 

@@ -6,12 +6,12 @@ defmodule DexBot do
   @doc """
   """
 
-  import Compute
+  # import Compute
 
   use GenServer
 
-  @dexs Libraries.dexs()
-  @tokens Libraries.tokens()
+  # @dexs Libraries.dexs()
+  # @tokens Libraries.tokens()
 
   def start_link(params) do
     IO.puts("start_link(params)")
@@ -60,6 +60,24 @@ defmodule DexBot do
   def handle_cast({:swap_detected, event}, state) do
     state
     |> CheckProfit.run(event)
+
+    state
+    |> ListDex.get_list_dex_from_name(:uniswap)
+    |> Map.get(:list)
+    |> Enum.reduce([], fn token_pair, acc ->
+      symbol0 =
+      token_pair
+      |> Map.get("token0")
+      |> Map.get("symbol")
+
+      symbol1 =
+      token_pair
+      |> Map.get("token1")
+      |> Map.get("symbol")
+
+      if (String.equivalent?(symbol0, "LKT") or String.equivalent?(symbol1, "LKT")), do: acc ++ [token_pair], else: acc
+    end)
+    |> IO.inspect(label: "sx1 get_list_dex_from_name", limit: :infinity)
 
     {:noreply, state}
   end
