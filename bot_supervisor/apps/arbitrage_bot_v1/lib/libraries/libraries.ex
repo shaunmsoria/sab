@@ -1,5 +1,4 @@
 defmodule Libraries do
-
   def dexs() do
     %{
       uniswap: %Dex{
@@ -19,7 +18,7 @@ defmodule Libraries do
         factory: "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
         subgraph_url: "https://gateway-arbitrum.network.thegraph.com/api",
         subgraph_api_key: "17c4cccfd28795b7a90b4a815fab12cc",
-        subgraph_id:  "9tHceukBZ5hFEcAH7zoV5zXxGDYQRezZr1ZMgwUcLK5w",
+        subgraph_id: "9tHceukBZ5hFEcAH7zoV5zXxGDYQRezZr1ZMgwUcLK5w",
         subgraph_query: "{pools {id token0 {id symbol} token1 {id symbol}}}"
       }
     }

@@ -24,6 +24,7 @@ defmodule DexBot do
 
     with true <- state_init != [] do
       IO.puts("init(state_init)")
+
       state =
         :persistent_term.get(
           :dexbot_state,
@@ -31,14 +32,13 @@ defmodule DexBot do
         )
 
       {:ok, state}
-      else
-        _ ->
-          state = state_init ++ InitialiseDexBot.run(state_init)
-          :persistent_term.put(:dexbot_state, state)
+    else
+      _ ->
+        state = state_init ++ InitialiseDexBot.run(state_init)
+        :persistent_term.put(:dexbot_state, state)
 
-          {:ok, state}
+        {:ok, state}
     end
-
   end
 
   def handle_call(:state, _from, state) do
@@ -52,7 +52,7 @@ defmodule DexBot do
     {:reply, result, state}
   end
 
-  ##TODO Not priority but need to ensure what is added is a Dex Struct type of data
+  ## TODO Not priority but need to ensure what is added is a Dex Struct type of data
   def handle_cast({:add_dex, list_dex}, state) when is_list(list_dex) do
     {:noreply, state ++ list_dex}
   end
@@ -61,23 +61,57 @@ defmodule DexBot do
     state
     |> CheckProfit.run(event)
 
-    state
-    |> ListDex.get_list_dex_from_name(:uniswap)
-    |> Map.get(:list)
-    |> Enum.reduce([], fn token_pair, acc ->
-      symbol0 =
-      token_pair
-      |> Map.get("token0")
-      |> Map.get("symbol")
+    # state
+    # |> ListDex.get_list_dex_from_name(:uniswap)
+    # |> Map.get(:list)
+    # |> Enum.reduce([], fn token_pair, acc ->
+    #   symbol0 =
+    #   token_pair
+    #   |> Map.get("token0")
+    #   |> Map.get("symbol")
 
-      symbol1 =
-      token_pair
-      |> Map.get("token1")
-      |> Map.get("symbol")
+    #   symbol1 =
+    #   token_pair
+    #   |> Map.get("token1")
+    #   |> Map.get("symbol")
 
-      if (String.equivalent?(symbol0, "LKT") or String.equivalent?(symbol1, "LKT")), do: acc ++ [token_pair], else: acc
-    end)
-    |> IO.inspect(label: "sx1 get_list_dex_from_name", limit: :infinity)
+    #   if (String.equivalent?(symbol0, "KABOSU2.0") or String.equivalent?(symbol1, "KABOSU2.0")), do: acc ++ [token_pair], else: acc
+    # end)
+    # |> IO.inspect(label: "sx1 get_list_dex_from_name", limit: :infinity)
+
+    # ListDex.common_token_pair_in_two_dexs(ListDex.get_list_dex_from_name(state, :uniswap), ListDex.get_list_dex_from_name(state, :sushiswap))
+    # |> IO.inspect(label: "sx1 common_token_pair_in_two_dexs")
+
+    # ListDex.get_list_dex_from_name(state, :uniswap) |> Map.get(:list) |> IO.inspect(label: "sx1 uniswap", limit: :infinity)
+    # ListDex.get_list_dex_from_name(state, :sushiswap) |> Map.get(:list) |> IO.inspect(label: "sx1 sushiswap", limit: :infinity)
+
+    # |> IO.inspect(label: "sx1 common_token_pair_in_two_dexs")
+
+    {:ok, file0} =
+      File.open(
+        "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/uniswap.ex",
+        [:write]
+      )
+
+    IO.binwrite(
+      file0,
+      ListDex.get_list_dex_from_name(state, :uniswap) |> inspect(limit: :infinity)
+    )
+
+    File.close(file0)
+
+    {:ok, file1} =
+      File.open(
+        "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/sushiswap.ex",
+        [:write]
+      )
+
+    IO.binwrite(
+      file1,
+      ListDex.get_list_dex_from_name(state, :sushiswap) |> inspect(limit: :infinity)
+    )
+
+    File.close(file1)
 
     {:noreply, state}
   end
@@ -91,6 +125,4 @@ defmodule DexBot do
   def terminate(_reason, state) do
     :persistent_term.put(:dexbot_state, state)
   end
-
-
 end

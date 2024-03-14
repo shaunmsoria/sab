@@ -14,32 +14,30 @@ defmodule InitialiseDexBot do
     |> Enum.map(fn dex_key ->
       %{
         name: dex_key,
-        list: @dexs
-              |> Map.get(dex_key)
-              |> liquidity_pool_pair_data_extractor()
+        list:
+          @dexs
+          |> Map.get(dex_key)
+          |> liquidity_pool_pair_data_extractor()
       }
-
     end)
   end
-
 
   def liquidity_pool_pair_data_extractor(%Dex{} = dex) do
     with {:ok, %{"data" => data}} <- SubgraphApi.get_liquidity_pool_pairs(dex) do
       data
       |> process_list_pair()
     else
-        error ->
-            error
-            |> IO.inspect(label: "error in liquidity_pool_pair_data_extractor is #{error}")
-            {:error, error}
+      error ->
+        error
+        |> IO.inspect(label: "error in liquidity_pool_pair_data_extractor is #{error}")
+
+        {:error, error}
     end
   end
 
   def process_list_pair(%{"pairs" => pairs}) when is_list(pairs), do: pairs
   def process_list_pair(%{"pools" => pools}) when is_list(pools), do: pools
   def process_list_pair(%{} = data), do: data
-
-
 
   def archive do
     System.get_env("ALCHEMY_API_KEY")
@@ -90,11 +88,8 @@ defmodule InitialiseDexBot do
       Compute.get_all_pairs(@dexs.uniswap.factory, 0)
       |> IO.inspect(label: "sx1 Compute.get_all_pairs")
 
-
-
     {:ok, :done}
   end
-
 end
 
 ## references:
@@ -105,9 +100,6 @@ end
 
 # pair_address_uni |> contract_logs(:swap)
 # |> IO.inspect(label: "sx1 pair_address_uni |> contract(:swap)")
-
-
-
 
 # {:ok, _pair_address_uni} =
 #   Compute.get_pair_address(
