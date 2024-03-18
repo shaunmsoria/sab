@@ -59,59 +59,34 @@ defmodule DexBot do
 
   def handle_cast({:swap_detected, event}, state) do
     state
+    |> IO.inspect(label: "sx1 state")
     |> CheckProfit.run(event)
 
-    # state
-    # |> ListDex.get_list_dex_from_name(:uniswap)
-    # |> Map.get(:list)
-    # |> Enum.reduce([], fn token_pair, acc ->
-    #   symbol0 =
-    #   token_pair
-    #   |> Map.get("token0")
-    #   |> Map.get("symbol")
+    # {:ok, file0} =
+    #   File.open(
+    #     "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/uniswap.ex",
+    #     [:write]
+    #   )
 
-    #   symbol1 =
-    #   token_pair
-    #   |> Map.get("token1")
-    #   |> Map.get("symbol")
+    # IO.binwrite(
+    #   file0,
+    #   ListDex.get_list_dex_from_name(state, :uniswap) |> inspect(limit: :infinity)
+    # )
 
-    #   if (String.equivalent?(symbol0, "KABOSU2.0") or String.equivalent?(symbol1, "KABOSU2.0")), do: acc ++ [token_pair], else: acc
-    # end)
-    # |> IO.inspect(label: "sx1 get_list_dex_from_name", limit: :infinity)
+    # File.close(file0)
 
-    # ListDex.common_token_pair_in_two_dexs(ListDex.get_list_dex_from_name(state, :uniswap), ListDex.get_list_dex_from_name(state, :sushiswap))
-    # |> IO.inspect(label: "sx1 common_token_pair_in_two_dexs")
+    # {:ok, file1} =
+    #   File.open(
+    #     "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/sushiswap.ex",
+    #     [:write]
+    #   )
 
-    # ListDex.get_list_dex_from_name(state, :uniswap) |> Map.get(:list) |> IO.inspect(label: "sx1 uniswap", limit: :infinity)
-    # ListDex.get_list_dex_from_name(state, :sushiswap) |> Map.get(:list) |> IO.inspect(label: "sx1 sushiswap", limit: :infinity)
+    # IO.binwrite(
+    #   file1,
+    #   ListDex.get_list_dex_from_name(state, :sushiswap) |> inspect(limit: :infinity)
+    # )
 
-    # |> IO.inspect(label: "sx1 common_token_pair_in_two_dexs")
-
-    {:ok, file0} =
-      File.open(
-        "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/uniswap.ex",
-        [:write]
-      )
-
-    IO.binwrite(
-      file0,
-      ListDex.get_list_dex_from_name(state, :uniswap) |> inspect(limit: :infinity)
-    )
-
-    File.close(file0)
-
-    {:ok, file1} =
-      File.open(
-        "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/sushiswap.ex",
-        [:write]
-      )
-
-    IO.binwrite(
-      file1,
-      ListDex.get_list_dex_from_name(state, :sushiswap) |> inspect(limit: :infinity)
-    )
-
-    File.close(file1)
+    # File.close(file1)
 
     {:noreply, state}
   end

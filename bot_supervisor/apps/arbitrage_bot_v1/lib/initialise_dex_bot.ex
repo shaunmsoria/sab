@@ -4,11 +4,11 @@ defmodule InitialiseDexBot do
   @dexs Libraries.dexs()
   @tokens Libraries.tokens()
 
-  def run(_state) do
-    extract_list_pairs()
+  def run(state) do
+    extract_list_pairs(state)
   end
 
-  def extract_list_pairs() do
+  def extract_list_pairs(state) do
     @dexs
     |> Map.keys()
     |> Enum.map(fn dex_key ->
@@ -17,27 +17,61 @@ defmodule InitialiseDexBot do
         list:
           @dexs
           |> Map.get(dex_key)
-          |> liquidity_pool_pair_data_extractor()
+          |> dex_token_pair_state_constructor(state)
       }
     end)
   end
 
-  def liquidity_pool_pair_data_extractor(%Dex{} = dex) do
-    with {:ok, %{"data" => data}} <- SubgraphApi.get_liquidity_pool_pairs(dex) do
-      data
-      |> process_list_pair()
-    else
-      error ->
-        error
-        |> IO.inspect(label: "error in liquidity_pool_pair_data_extractor is #{error}")
+  def dex_token_pair_state_constructor(%Dex{} = dex, [] = state) do
+    with name <- dex |> Map.get(:name) |> String.to_atom(),
+         factory_address <- @dexs |> Map.get(name) |> Map.get(:factory) do
+      list =
+        @tokens
+        |> Enum.reduce({[], 1}, fn token, acc ->
+          {token_pair_list, count} = acc
 
-        {:error, error}
+          {examined_tokens, reduced_tokens} =
+            @tokens
+            |> Enum.split(count)
+
+          additional_token_pair_list =
+            reduced_tokens
+            |> Enum.reduce([], fn token_checked, acc2 ->
+              acc2 ++ exist_token_pair(factory_address, token, token_checked)
+            end)
+
+          {token_pair_list ++ additional_token_pair_list, count + 1}
+        end)
+
+      %{
+        name: name,
+        list: list
+      }
     end
   end
 
-  def process_list_pair(%{"pairs" => pairs}) when is_list(pairs), do: pairs
-  def process_list_pair(%{"pools" => pools}) when is_list(pools), do: pools
-  def process_list_pair(%{} = data), do: data
+  def exist_token_pair(factory_address, token, []), do: []
+
+  def exist_token_pair(factory_address, token, token_checked) do
+    with {:ok, pair_address} <-
+           Compute.get_pair_address(
+             factory_address,
+             token |> Keyword.get_values() |> Map.get(:address), ##TODO fix access to this address
+             token_checked.address
+           ) do
+      if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
+        [
+          %TokenPair{
+            token0: token,
+            token1: token_checked,
+            address: pair_address
+          }
+        ]
+      else
+        []
+      end
+    end
+  end
 
   def archive do
     System.get_env("ALCHEMY_API_KEY")
