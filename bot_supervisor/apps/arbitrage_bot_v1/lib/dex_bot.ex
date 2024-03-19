@@ -59,7 +59,7 @@ defmodule DexBot do
 
   def handle_cast({:swap_detected, event}, state) do
     state
-    |> IO.inspect(label: "sx1 state")
+    # |> IO.inspect(label: "sx1 state")
     |> CheckProfit.run(event)
 
     # {:ok, file0} =

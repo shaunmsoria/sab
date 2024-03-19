@@ -23,9 +23,13 @@ defmodule InitialiseDexBot do
   end
 
   def dex_token_pair_state_constructor(%Dex{} = dex, [] = state) do
+    ##TODO write a file that contains the Dexs state
+    ##TODO when looking for a pair_address, first check the file,
+    ##TODO if pair_address not present then call get_pairs
+
     with name <- dex |> Map.get(:name) |> String.to_atom(),
          factory_address <- @dexs |> Map.get(name) |> Map.get(:factory) do
-      list =
+      {list, count} =
         @tokens
         |> Enum.reduce({[], 1}, fn token, acc ->
           {token_pair_list, count} = acc
@@ -43,27 +47,28 @@ defmodule InitialiseDexBot do
           {token_pair_list ++ additional_token_pair_list, count + 1}
         end)
 
-      %{
-        name: name,
-        list: list
-      }
+        list
+
     end
   end
 
   def exist_token_pair(factory_address, token, []), do: []
 
   def exist_token_pair(factory_address, token, token_checked) do
+    {name, token_value} = token
+    {name_checked, token_value_checked} = token_checked
+
     with {:ok, pair_address} <-
            Compute.get_pair_address(
              factory_address,
-             token |> Keyword.get_values() |> Map.get(:address), ##TODO fix access to this address
-             token_checked.address
+             token_value.address,
+             token_value_checked.address
            ) do
       if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
         [
           %TokenPair{
-            token0: token,
-            token1: token_checked,
+            token0: token_value,
+            token1: token_value_checked,
             address: pair_address
           }
         ]
