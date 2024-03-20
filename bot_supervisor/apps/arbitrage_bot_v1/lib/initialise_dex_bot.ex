@@ -4,29 +4,66 @@ defmodule InitialiseDexBot do
   @dexs Libraries.dexs()
   @tokens Libraries.tokens()
 
-  def run(state) do
-    extract_list_pairs(state)
+  def run(_state) do
+    extract_list_pairs()
   end
 
-  def extract_list_pairs(state) do
-    @dexs
-    |> Map.keys()
-    |> Enum.map(fn dex_key ->
-      %{
-        name: dex_key,
-        list:
-          @dexs
-          |> Map.get(dex_key)
-          |> dex_token_pair_state_constructor(state)
-      }
-    end)
+  def extract_list_pairs() do
+    with state <- state_file() do
+      new_state =
+        @dexs
+        |> Map.keys()
+        |> Enum.map(fn dex_key ->
+          %{
+            name: dex_key,
+            list:
+              @dexs
+              |> Map.get(dex_key)
+              |> dex_token_pair_state_constructor(state)
+          }
+        end)
+
+      {:ok, file} = write_state_file(new_state)
+      new_state
+    end
+  end
+
+  def write_state_file(state) do
+    state |> IO.inspect(label: "mx1 state")
+
+    with {:ok, file} <-
+           File.open(
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex",
+             [:write]
+           )
+           |> IO.inspect(label: "mx1 File.open"),
+         :ok <-
+           IO.binwrite(file, state |> inspect(limit: :infinity))
+           |> IO.inspect(label: "mx1 IO.binwrite"),
+         :ok <- File.close(file) |> IO.inspect(label: "mx1 IO.binwrite") do
+      {:ok, file}
+    end
+  end
+
+  def state_file() do
+    ##TODO data read is string, need to be converted back to list / map
+    with {:ok, body} <-
+           File.read(
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex"
+           ) do
+      body |> IO.inspect(label: "mx1 body")
+      []
+    else
+      {:error, :enoent} ->
+        []
+
+      {:error, error} ->
+        error |> IO.inspect(label: "state_file error: #{error}")
+        []
+    end
   end
 
   def dex_token_pair_state_constructor(%Dex{} = dex, [] = state) do
-    ##TODO write a file that contains the Dexs state
-    ##TODO when looking for a pair_address, first check the file,
-    ##TODO if pair_address not present then call get_pairs
-
     with name <- dex |> Map.get(:name) |> String.to_atom(),
          factory_address <- @dexs |> Map.get(name) |> Map.get(:factory) do
       {list, count} =
@@ -47,8 +84,7 @@ defmodule InitialiseDexBot do
           {token_pair_list ++ additional_token_pair_list, count + 1}
         end)
 
-        list
-
+      list
     end
   end
 
