@@ -31,14 +31,17 @@ defmodule InitialiseDexBot do
   def write_state_file(state) do
     state |> IO.inspect(label: "mx1 state")
 
+    state_jason =
+      state |> Jason.encode!()
+
     with {:ok, file} <-
            File.open(
              "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex",
              [:write]
            )
-           |> IO.inspect(label: "mx1 File.open"),
+           |> IO.inspect(label: "mx1 File.open", limit: :infinity),
          :ok <-
-           IO.binwrite(file, state |> inspect(limit: :infinity))
+           IO.binwrite(file, state_jason |> inspect(limit: :infinity, printable: :infinity))
            |> IO.inspect(label: "mx1 IO.binwrite"),
          :ok <- File.close(file) |> IO.inspect(label: "mx1 IO.binwrite") do
       {:ok, file}
@@ -46,12 +49,16 @@ defmodule InitialiseDexBot do
   end
 
   def state_file() do
-    ##TODO data read is string, need to be converted back to list / map
-    with {:ok, body} <-
-           File.read(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex"
-           ) do
-      body |> IO.inspect(label: "mx1 body")
+    ## TODO data read is string, need to be converted back to list / map || why the string is cut before the end
+    with {:ok, file} <-
+           File.open(
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex",
+             [:read]
+           ),
+         body <- IO.binread(file, :all),
+         :ok <- File.close(file),
+         true <- not String.equivalent?(body, "") do
+      body |> Jason.decode!() |> IO.inspect(label: "mx1 body")
       []
     else
       {:error, :enoent} ->
@@ -60,6 +67,9 @@ defmodule InitialiseDexBot do
       {:error, error} ->
         error |> IO.inspect(label: "state_file error: #{error}")
         []
+
+        false ->
+          []
     end
   end
 
