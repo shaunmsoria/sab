@@ -29,37 +29,32 @@ defmodule InitialiseDexBot do
   end
 
   def write_state_file(state) do
-    state |> IO.inspect(label: "mx1 state")
-
     state_jason =
       state |> Jason.encode!()
 
     with {:ok, file} <-
            File.open(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex",
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.json",
              [:write]
-           )
-           |> IO.inspect(label: "mx1 File.open", limit: :infinity),
+           ),
          :ok <-
-           IO.binwrite(file, state_jason |> inspect(limit: :infinity, printable: :infinity))
-           |> IO.inspect(label: "mx1 IO.binwrite"),
-         :ok <- File.close(file) |> IO.inspect(label: "mx1 IO.binwrite") do
+           IO.binwrite(file, state_jason),
+         :ok <- File.close(file) do
       {:ok, file}
     end
   end
 
   def state_file() do
-    ## TODO data read is string, need to be converted back to list / map || why the string is cut before the end
     with {:ok, file} <-
            File.open(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.ex",
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.json",
              [:read]
            ),
          body <- IO.binread(file, :all),
          :ok <- File.close(file),
          true <- not String.equivalent?(body, "") do
-      body |> Jason.decode!() |> IO.inspect(label: "mx1 body")
-      []
+      body |> Jason.decode!()
+      # []
     else
       {:error, :enoent} ->
         []
@@ -68,12 +63,12 @@ defmodule InitialiseDexBot do
         error |> IO.inspect(label: "state_file error: #{error}")
         []
 
-        false ->
-          []
+      false ->
+        []
     end
   end
 
-  def dex_token_pair_state_constructor(%Dex{} = dex, [] = state) do
+  def dex_token_pair_state_constructor(%Dex{} = dex, state) do
     with name <- dex |> Map.get(:name) |> String.to_atom(),
          factory_address <- @dexs |> Map.get(name) |> Map.get(:factory) do
       {list, count} =
@@ -88,7 +83,7 @@ defmodule InitialiseDexBot do
           additional_token_pair_list =
             reduced_tokens
             |> Enum.reduce([], fn token_checked, acc2 ->
-              acc2 ++ exist_token_pair(factory_address, token, token_checked)
+              acc2 ++ exist_token_pair(factory_address, state, token, token_checked)
             end)
 
           {token_pair_list ++ additional_token_pair_list, count + 1}
@@ -98,9 +93,13 @@ defmodule InitialiseDexBot do
     end
   end
 
-  def exist_token_pair(factory_address, token, []), do: []
+  ##TODO use ListDex.get_list_dex_from_name() to extract the state_dex from state
+  ##TODO check against state_dex if token_pair address already exist in state_dex
+  ##TODO if yes use state_dex token_pair address
+  ##TODO if no call Compute.get_pair_address()
+  def exist_token_pair(factory_address, state, token, []), do: []
 
-  def exist_token_pair(factory_address, token, token_checked) do
+  def exist_token_pair(factory_address, state, token, token_checked) do
     {name, token_value} = token
     {name_checked, token_value_checked} = token_checked
 
