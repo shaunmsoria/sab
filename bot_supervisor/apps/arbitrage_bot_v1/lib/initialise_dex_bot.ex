@@ -70,7 +70,9 @@ defmodule InitialiseDexBot do
 
   def dex_token_pair_state_constructor(%Dex{} = dex, state) do
     with name <- dex |> Map.get(:name) |> String.to_atom(),
-         factory_address <- @dexs |> Map.get(name) |> Map.get(:factory) do
+         factory_address <- @dexs |> Map.get(name) |> Map.get(:factory),
+         %{"list" => list_token_pair} <-
+           state |> ListDex.get_list_dex_from_name(name |> Atom.to_string()) do
       {list, count} =
         @tokens
         |> Enum.reduce({[], 1}, fn token, acc ->
@@ -83,7 +85,7 @@ defmodule InitialiseDexBot do
           additional_token_pair_list =
             reduced_tokens
             |> Enum.reduce([], fn token_checked, acc2 ->
-              acc2 ++ exist_token_pair(factory_address, state, token, token_checked)
+              acc2 ++ exist_token_pair(factory_address, list_token_pair, token, token_checked)
             end)
 
           {token_pair_list ++ additional_token_pair_list, count + 1}
@@ -93,15 +95,25 @@ defmodule InitialiseDexBot do
     end
   end
 
-  ##TODO use ListDex.get_list_dex_from_name() to extract the state_dex from state
-  ##TODO check against state_dex if token_pair address already exist in state_dex
-  ##TODO if yes use state_dex token_pair address
-  ##TODO if no call Compute.get_pair_address()
-  def exist_token_pair(factory_address, state, token, []), do: []
+  ## TODO use ListDex.get_list_dex_from_name() to extract the state_dex from state
+  ## TODO check against state_dex if token_pair address already exist in state_dex
+  ## TODO if yes use state_dex token_pair address
+  ## TODO if no call Compute.get_pair_address()
+  ## TODO Structs and State have different formats which is causing issues
+  ## TODO make the format uniform threw the application
 
-  def exist_token_pair(factory_address, state, token, token_checked) do
-    {name, token_value} = token
-    {name_checked, token_value_checked} = token_checked
+  def exist_token_pair(factory_address, list_token_pair, token, []), do: []
+
+  def exist_token_pair(factory_address, list_token_pair, token, token_checked) do
+    list_token_pair |> IO.inspect(label: "sx1 list_token_pair")
+    {name, token_value} = token |> IO.inspect(label: "sx1 token")
+    {name_checked, token_value_checked} = token_checked |> IO.inspect(label: "sx1 token_checked")
+
+    # ListDex.get_token_pair_from_token_ids(list_token_pair, %{
+    #   "token0" => token_value,
+    #   "token1" => token_value_checked
+    # })
+    # |> IO.inspect(label: "sx1 get_token_pair_from_token_ids")
 
     with {:ok, pair_address} <-
            Compute.get_pair_address(
@@ -111,10 +123,10 @@ defmodule InitialiseDexBot do
            ) do
       if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
         [
-          %TokenPair{
-            token0: token_value,
-            token1: token_value_checked,
-            address: pair_address
+          %{
+            "token0" => token_value,
+            "token1" => token_value_checked,
+            "address" => pair_address
           }
         ]
       else

@@ -1,11 +1,11 @@
 defmodule ListDex do
   defstruct name: "", list: []
 
-  def get_list_dex_from_name(list_dex, name) when is_list(list_dex) and is_atom(name) do
+  def get_list_dex_from_name(list_dex, name) when is_list(list_dex) do
     list_dex
     |> Enum.find(fn dex ->
       dex
-      |> Map.get(:name) == name
+      |> Map.get("name") == name
     end)
   end
 
@@ -20,28 +20,48 @@ defmodule ListDex do
     end)
   end
 
+  # def get_token_pair_from_token_ids(list_dex, %TokenPair{} = token_pair) when is_list(list_dex)do
+  #   with id0 <- token_pair |> Map.get(:token0) |> Map.get("id"),
+  #        id1 <- token_pair |> Map.get(:token1) |> Map.get("id") do
+  #     _list_token_pairs =
+  #       list_dex
+  #       |> Enum.reduce_while(%{}, fn token_pair_searched, acc ->
+
+  #         searched_id0 =
+  #           token_pair_searched |> Map.get(:token0) |> Map.get("id")
+
+
+  #         searched_id1 =
+  #           token_pair_searched |> Map.get(:token1) |> Map.get("id")
+
+
+  #         if (String.equivalent?(searched_id0, id0) and String.equivalent?(searched_id1, id1)) or
+  #              (String.equivalent?(searched_id1, id0) and String.equivalent?(searched_id0, id1)) do
+  #           {:halt, token_pair_searched}
+  #         else
+  #           {:cont, acc}
+  #         end
+  #       end)
+  #   end
+  # end
+
   def get_token_pair_from_token_ids(list_dex, token_pair) when is_list(list_dex) do
     with id0 <- token_pair |> Map.get("token0") |> Map.get("id"),
          id1 <- token_pair |> Map.get("token1") |> Map.get("id") do
       _list_token_pairs =
         list_dex
         |> Enum.reduce_while(%{}, fn token_pair_searched, acc ->
-          # id0 |> IO.inspect(label: "sx1 id0")
-          # id1 |> IO.inspect(label: "sx1 id1")
 
           searched_id0 =
             token_pair_searched |> Map.get("token0") |> Map.get("id")
 
-          # |> IO.inspect(label: "sx1 searched_id0")
 
           searched_id1 =
             token_pair_searched |> Map.get("token1") |> Map.get("id")
 
-          # |> IO.inspect(label: "sx1 searched_id1")
 
           if (String.equivalent?(searched_id0, id0) and String.equivalent?(searched_id1, id1)) or
                (String.equivalent?(searched_id1, id0) and String.equivalent?(searched_id0, id1)) do
-            # if (String.equivalent?(searched_id0, id0)) |> IO.inspect(label: "sx1 result") do
             {:halt, token_pair_searched}
           else
             {:cont, acc}
@@ -52,28 +72,26 @@ defmodule ListDex do
 
   # def get_token_pair_from_token_ids(list_dex, token_pair) when is_list(list_dex) do
   #   with id0 <- token_pair |> Map.get("token0") |> Map.get("id"),
-  #   id1 <- token_pair |> Map.get("token1") |> Map.get("id") do
+  #        id1 <- token_pair |> Map.get("token1") |> Map.get("id") do
   #     _list_token_pairs =
-  #         list_dex
-  #         |> Enum.reduce_while(%{}, fn token_pair_searched, acc ->
+  #       list_dex
+  #       |> Enum.reduce_while(%{}, fn token_pair_searched, acc ->
 
-  #           id0 |> IO.inspect(label: "sx1 id0")
-  #           id1 |> IO.inspect(label: "sx1 id1")
+  #         searched_id0 =
+  #           token_pair_searched |> Map.get("token0") |> Map.get("id")
 
-  #           searched_id0 =
-  #             token_pair_searched |> Map.get("token0") |> Map.get("id")
-  #             |> IO.inspect(label: "sx1 searched_id0")
 
-  #           searched_id1 =
-  #             token_pair_searched |> Map.get("token1") |> Map.get("id")
-  #             |> IO.inspect(label: "sx1 searched_id1")
+  #         searched_id1 =
+  #           token_pair_searched |> Map.get("token1") |> Map.get("id")
 
-  #           if (String.equivalent?(searched_id0, id0) and String.equivalent?(searched_id1, id1)) or (String.equivalent?(searched_id1, id0) and String.equivalent?(searched_id0, id1)) |> IO.inspect(label: "sx1 result") do
-  #             {:halt, token_pair_searched}
-  #             else
-  #               {:cont, acc}
-  #           end
-  #         end)
+
+  #         if (String.equivalent?(searched_id0, id0) and String.equivalent?(searched_id1, id1)) or
+  #              (String.equivalent?(searched_id1, id0) and String.equivalent?(searched_id0, id1)) do
+  #           {:halt, token_pair_searched}
+  #         else
+  #           {:cont, acc}
+  #         end
+  #       end)
   #   end
   # end
 
