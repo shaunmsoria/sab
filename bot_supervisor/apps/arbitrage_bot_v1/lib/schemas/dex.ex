@@ -1,4 +1,5 @@
 defmodule Dex do
+  ## TODO Deprecated
   defstruct name: "",
             version: "",
             router: "",

@@ -15,8 +15,8 @@ defmodule InitialiseDexBot do
         |> Map.keys()
         |> Enum.map(fn dex_key ->
           %{
-            name: dex_key,
-            list:
+            "name" => dex_key,
+            "list" =>
               @dexs
               |> Map.get(dex_key)
               |> dex_token_pair_state_constructor(state)
@@ -24,7 +24,9 @@ defmodule InitialiseDexBot do
         end)
 
       {:ok, file} = write_state_file(new_state)
+
       new_state
+      |> IO.inspect(label: "sx1 new_state")
     end
   end
 
@@ -68,11 +70,11 @@ defmodule InitialiseDexBot do
     end
   end
 
-  def dex_token_pair_state_constructor(%Dex{} = dex, state) do
-    with name <- dex |> Map.get(:name) |> String.to_atom(),
-         factory_address <- @dexs |> Map.get(name) |> Map.get(:factory),
+  def dex_token_pair_state_constructor(dex, state) do
+    with name <- dex |> Map.get("name"),
+         factory_address <- @dexs |> Map.get(name) |> Map.get("factory"),
          %{"list" => list_token_pair} <-
-           state |> ListDex.get_list_dex_from_name(name |> Atom.to_string()) do
+           state |> ListDex.get_list_dex_from_name(name) do
       {list, count} =
         @tokens
         |> Enum.reduce({[], 1}, fn token, acc ->
@@ -100,38 +102,43 @@ defmodule InitialiseDexBot do
   ## TODO if yes use state_dex token_pair address
   ## TODO if no call Compute.get_pair_address()
   ## TODO Structs and State have different formats which is causing issues
-  ## TODO make the format uniform threw the application
 
   def exist_token_pair(factory_address, list_token_pair, token, []), do: []
 
   def exist_token_pair(factory_address, list_token_pair, token, token_checked) do
-    list_token_pair |> IO.inspect(label: "sx1 list_token_pair")
-    {name, token_value} = token |> IO.inspect(label: "sx1 token")
-    {name_checked, token_value_checked} = token_checked |> IO.inspect(label: "sx1 token_checked")
+    # list_token_pair
+    # |> IO.inspect(label: "sx1 list_token_pair")
+    {name, token_value} = token
+    # |> IO.inspect(label: "sx1 token")
+    {name_checked, token_value_checked} = token_checked
+    # |> IO.inspect(label: "sx1 token_checked")
 
-    # ListDex.get_token_pair_from_token_ids(list_token_pair, %{
-    #   "token0" => token_value,
-    #   "token1" => token_value_checked
-    # })
-    # |> IO.inspect(label: "sx1 get_token_pair_from_token_ids")
-
-    with {:ok, pair_address} <-
-           Compute.get_pair_address(
-             factory_address,
-             token_value.address,
-             token_value_checked.address
-           ) do
-      if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
-        [
-          %{
-            "token0" => token_value,
-            "token1" => token_value_checked,
-            "address" => pair_address
-          }
-        ]
-      else
-        []
+    with %{} <-
+           ListDex.token_pair_from_list_dex(list_token_pair, %{
+             "token0" => token_value,
+             "token1" => token_value_checked
+           }) do
+      with {:ok, pair_address} <-
+             Compute.get_pair_address(
+               factory_address,
+               token_value["address"],
+               token_value_checked["address"]
+             ) do
+        if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
+          [
+            %{
+              "token0" => token_value,
+              "token1" => token_value_checked,
+              "address" => pair_address
+            }
+          ]
+        else
+          []
+        end
       end
+    else
+      token_pair ->
+        [token_pair]
     end
   end
 
