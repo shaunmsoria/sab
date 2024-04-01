@@ -8,6 +8,10 @@ defmodule InitialiseDexBot do
     extract_list_pairs()
   end
 
+##TODO how to store the token_pair price?
+##TODO how to update the token_pair price?
+##TODO how to calculate token_pair profit from one dex to another? (including gas fees and LP fee and flash loan fees)
+
   def extract_list_pairs() do
     with state <- state_file() do
       new_state =
@@ -97,21 +101,11 @@ defmodule InitialiseDexBot do
     end
   end
 
-  ## TODO use ListDex.get_list_dex_from_name() to extract the state_dex from state
-  ## TODO check against state_dex if token_pair address already exist in state_dex
-  ## TODO if yes use state_dex token_pair address
-  ## TODO if no call Compute.get_pair_address()
-  ## TODO Structs and State have different formats which is causing issues
-
   def exist_token_pair(factory_address, list_token_pair, token, []), do: []
 
   def exist_token_pair(factory_address, list_token_pair, token, token_checked) do
-    # list_token_pair
-    # |> IO.inspect(label: "sx1 list_token_pair")
     {name, token_value} = token
-    # |> IO.inspect(label: "sx1 token")
     {name_checked, token_value_checked} = token_checked
-    # |> IO.inspect(label: "sx1 token_checked")
 
     with %{} <-
            ListDex.token_pair_from_list_dex(list_token_pair, %{
@@ -130,7 +124,7 @@ defmodule InitialiseDexBot do
               "token0" => token_value,
               "token1" => token_value_checked,
               "address" => pair_address
-            }
+            } |> Map.merge(get_token_pair_price(pair_address))
           ]
         else
           []
@@ -138,8 +132,12 @@ defmodule InitialiseDexBot do
       end
     else
       token_pair ->
-        [token_pair]
+        [token_pair |> Map.merge(get_token_pair_price(token_pair["address"]))]
     end
+  end
+
+  def get_token_pair_price(token_pair) do
+    %{"price" => Compute.calculate_price(token_pair)}
   end
 
   def archive do
