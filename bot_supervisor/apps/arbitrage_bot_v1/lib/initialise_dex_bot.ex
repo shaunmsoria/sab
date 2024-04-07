@@ -8,7 +8,7 @@ defmodule InitialiseDexBot do
     extract_list_pairs()
   end
 
-##TODO how to store the token_pair price?
+##TODO how to store the token_pair price and access it?
 ##TODO how to update the token_pair price?
 ##TODO how to calculate token_pair profit from one dex to another? (including gas fees and LP fee and flash loan fees)
 
