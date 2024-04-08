@@ -8,7 +8,9 @@ defmodule InitialiseDexBot do
     extract_list_pairs()
   end
 
-##TODO how to store the token_pair price and access it?
+##TODO state.json not fully generated when wiped
+##DONE how to store the token_pair price?
+##TODO how to access it?
 ##TODO how to update the token_pair price?
 ##TODO how to calculate token_pair profit from one dex to another? (including gas fees and LP fee and flash loan fees)
 
@@ -23,6 +25,7 @@ defmodule InitialiseDexBot do
             "list" =>
               @dexs
               |> Map.get(dex_key)
+              |> IO.inspect(label: "sx1 dex_key")
               |> dex_token_pair_state_constructor(state)
           }
         end)
@@ -40,7 +43,7 @@ defmodule InitialiseDexBot do
 
     with {:ok, file} <-
            File.open(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.json",
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:write]
            ),
          :ok <-
@@ -53,7 +56,7 @@ defmodule InitialiseDexBot do
   def state_file() do
     with {:ok, file} <-
            File.open(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/state.json",
+             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:read]
            ),
          body <- IO.binread(file, :all),
@@ -77,8 +80,8 @@ defmodule InitialiseDexBot do
   def dex_token_pair_state_constructor(dex, state) do
     with name <- dex |> Map.get("name"),
          factory_address <- @dexs |> Map.get(name) |> Map.get("factory"),
-         %{"list" => list_token_pair} <-
-           state |> ListDex.get_list_dex_from_name(name) do
+         %{"list" => list_token_pair} <- state |> ListDex.get_list_dex_from_name(name) |> IO.inspect(label: "sx1 list") do
+
       {list, count} =
         @tokens
         |> Enum.reduce({[], 1}, fn token, acc ->
@@ -102,6 +105,32 @@ defmodule InitialiseDexBot do
   end
 
   def exist_token_pair(factory_address, list_token_pair, token, []), do: []
+
+
+  ##TODO finish the function below to generate token pair if not present in state
+  def exist_token_pair(factory_address, nil, token, token_checked) do
+    {name, token_value} = token
+    {name_checked, token_value_checked} = token_checked
+
+      with {:ok, pair_address} <-
+             Compute.get_pair_address(
+               factory_address,
+               token_value["address"],
+               token_value_checked["address"]
+             ) do
+        if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
+          [
+            %{
+              "token0" => token_value,
+              "token1" => token_value_checked,
+              "address" => pair_address
+            } |> Map.merge(get_token_pair_price(pair_address))
+          ]
+        else
+          []
+        end
+      end
+  end
 
   def exist_token_pair(factory_address, list_token_pair, token, token_checked) do
     {name, token_value} = token

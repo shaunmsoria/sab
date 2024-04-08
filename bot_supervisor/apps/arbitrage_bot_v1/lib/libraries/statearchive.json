@@ -59,7 +59,7 @@
       },
       {
         "address": "0xba13afecda9beb75de5c56bbaf696b880a5a50dd",
-        "price": 0.9765786245767567,
+        "price": 0.9665347447638294,
         "token0": {
           "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
           "name": "Maker",
@@ -101,7 +101,7 @@
       },
       {
         "address": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
-        "price": 3.6882572414008795e-9,
+        "price": 3.6890771810476913e-9,
         "token0": {
           "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "name": "usdc",
@@ -115,7 +115,7 @@
       },
       {
         "address": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
-        "price": 271013346.27087414,
+        "price": 271193744.13335645,
         "token0": {
           "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "name": "Tether USD",
@@ -134,7 +134,7 @@
     "list": [
       {
         "address": "0x517f9dd285e75b599234f7221227339478d0fcc8",
-        "price": 3768.206170272632,
+        "price": 3794.196181429751,
         "token0": {
           "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
           "name": "Dai Stablecoin",
@@ -190,7 +190,7 @@
       },
       {
         "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
-        "price": 3690.851937910755,
+        "price": 3691.517244122352,
         "token0": {
           "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
           "name": "Dai Stablecoin",
@@ -232,7 +232,7 @@
       },
       {
         "address": "0xc2adda861f89bbb333c90c492cb837741916a225",
-        "price": 0.9805059221578009,
+        "price": 0.9693398070420693,
         "token0": {
           "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
           "name": "Maker",
@@ -288,7 +288,7 @@
       },
       {
         "address": "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f",
-        "price": 474305967.89321095,
+        "price": 472991910.91321105,
         "token0": {
           "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
           "name": "Pepe",
@@ -330,7 +330,7 @@
       },
       {
         "address": "0x811beed0119b4afce20d2583eb608c6f7af1954f",
-        "price": 128686608.00447245,
+        "price": 128798957.55837741,
         "token0": {
           "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
           "name": "shib",
@@ -344,7 +344,7 @@
       },
       {
         "address": "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f",
-        "price": 0.9986911948789389,
+        "price": 0.9996176549012474,
         "token0": {
           "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "name": "usdc",
@@ -358,7 +358,7 @@
       },
       {
         "address": "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
-        "price": 3.6914293624292657e-9,
+        "price": 3.6901064846575457e-9,
         "token0": {
           "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "name": "usdc",
@@ -372,7 +372,7 @@
       },
       {
         "address": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
-        "price": 270947380.67041105,
+        "price": 271513551.43085986,
         "token0": {
           "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "name": "Tether USD",
