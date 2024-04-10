@@ -62,32 +62,6 @@ defmodule DexBot do
     # |> IO.inspect(label: "sx1 state")
     |> CheckProfit.run(event)
 
-    # {:ok, file0} =
-    #   File.open(
-    #     "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/uniswap.ex",
-    #     [:write]
-    #   )
-
-    # IO.binwrite(
-    #   file0,
-    #   ListDex.get_list_dex_from_name(state, :uniswap) |> inspect(limit: :infinity)
-    # )
-
-    # File.close(file0)
-
-    # {:ok, file1} =
-    #   File.open(
-    #     "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/examples/sushiswap.ex",
-    #     [:write]
-    #   )
-
-    # IO.binwrite(
-    #   file1,
-    #   ListDex.get_list_dex_from_name(state, :sushiswap) |> inspect(limit: :infinity)
-    # )
-
-    # File.close(file1)
-
     {:noreply, state}
   end
 

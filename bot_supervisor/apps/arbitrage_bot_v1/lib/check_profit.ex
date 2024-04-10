@@ -6,7 +6,7 @@ defmodule CheckProfit do
   # @tokens Libraries.tokens()
 
   def run(state, event_data) when is_map(event_data) do
-    _price =
+    price =
       event_data.event.address
       |> calculate_price()
       |> IO.inspect(label: "sx1 price")
@@ -21,12 +21,13 @@ defmodule CheckProfit do
       |> IO.inspect(label: "sx1 list_dex")
 
     with {:ok, token_pair} <- found_dex_token_pair?(state, address),
-         {:ok, list_of_profitable_trades} <- get_profitable_trades(state, token_pair) do
+          {:ok, token_pair_updated} <- update_token_pair_price(token_pair, price),
+         {:ok, list_of_profitable_trades} <- get_profitable_trades(state, token_pair_updated) do
       list_of_profitable_trades
       |> IO.inspect(label: "sx1 list_of_profitable_trades")
     else
       error ->
-        error |> IO.inspect(label: "sx1 found")
+        error |> IO.inspect(label: "sx1 error:")
     end
   end
 
@@ -54,6 +55,13 @@ defmodule CheckProfit do
     |> found_profitable_trades()
   end
 
+
+  ##TODO write the algorithm to update the token_pair price
+  def update_token_pair_price(token_pair, price) do
+  {:ok, token_pair}
+  end
+
+  ##TODO work on profitable trades
   def found_profitable_trades([]), do: {:error, "no profitable trades found"}
 
   def found_profitable_trades(list_of_trades) when is_list(list_of_trades),
