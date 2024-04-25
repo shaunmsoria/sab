@@ -81,6 +81,11 @@ defmodule InitialiseDexBot do
          factory_address <- @dexs |> Map.get(name) |> Map.get("factory"),
          %{"list" => list_token_pair} <- state |> ListDex.get_list_dex_from_name(name) do
 
+          ConCache.put(:dex, name, list_token_pair)
+
+          ConCache.get(:dex, name)
+          |> IO.inspect(label: "sx1 ConCache #{name}")
+
       {list, count} =
         @tokens
         |> Enum.reduce({[], 1}, fn token, acc ->
@@ -133,6 +138,8 @@ defmodule InitialiseDexBot do
   def exist_token_pair(factory_address, list_token_pair, token, token_checked) do
     {name, token_value} = token
     {name_checked, token_value_checked} = token_checked
+
+    list_token_pair |> IO.inspect(label: "sx1 list_token_pair")
 
     with %{} <-
            ListDex.token_pair_from_list_dex(list_token_pair, %{
