@@ -6,23 +6,12 @@ defmodule CheckProfit do
   # @tokens Libraries.tokens()
 
   def run(state, event_data) when is_map(event_data) do
-    price =
-      event_data.event.address
-      |> calculate_price()
-      |> IO.inspect(label: "sx1 price")
+    with  price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
+          address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
+          {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
+          {:ok, token_pair_price_udpated} <- update_token_pair_price(token_pair, dex_name, price),
+          {:ok, list_of_profitable_trades} <- get_profitable_trade(token_pair["address"], dex_name) do
 
-    address =
-      event_data.event.address
-      |> IO.inspect(label: "sx1 address")
-
-    _list_dex =
-      state
-      |> LD.get_dex_token_pair_from_address(address)
-      |> IO.inspect(label: "sx1 list_dex")
-
-    with {:ok, token_pair} <- found_dex_token_pair?(state, address),
-          {:ok, token_pair_updated} <- update_token_pair_price(token_pair, price),
-         {:ok, list_of_profitable_trades} <- get_profitable_trades(state, token_pair_updated) do
       list_of_profitable_trades
       |> IO.inspect(label: "sx1 list_of_profitable_trades")
     else
@@ -31,39 +20,29 @@ defmodule CheckProfit do
     end
   end
 
-  def found_dex_token_pair?(state, address) do
-    token_pair = LD.get_dex_token_pair_from_address(state, address)
-
-    if token_pair != %{}, do: {:ok, token_pair}, else: {:error, "no token_pair found"}
-  end
-
-  def get_profitable_trades(state, token_pair) do
-    state
-    |> Enum.reduce([], fn list_dex, acc ->
-      list_dex["name"]
-      |> IO.inspect(label: "sx1 list_dex.name")
-
-      token_pairs =
-        LD.get_token_pair_from_token_ids(list_dex["list"], token_pair)
-
-      IO.puts("sx1 after get_token_pair_from_token_ids")
-
-      if token_pairs == %{},
-        do: acc,
-        else: acc ++ [%{"dex" => list_dex["name"], "token_pair" => token_pair}]
-    end)
-    |> found_profitable_trades()
+  def found_dex_token_pair?(address) do
+    with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
+      {:ok, token_pair}
+    else
+      _ -> {:error, "no token_pair found"}
+    end
   end
 
 
-  ##TODO write the algorithm to update the token_pair price
-  def update_token_pair_price(token_pair, price) do
-  {:ok, token_pair}
+
+  def update_token_pair_price(token_pair, dex_name, price) do
+    with :ok <- ConCache.update(:dex, dex_name,
+    fn dex_content ->
+      {:ok, %{dex_content | token_pair["address"] => %{token_pair | "price" => price}}}
+    end) do
+
+    {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair["address"])}
+
+    end
   end
 
-  ##TODO work on profitable trades
-  def found_profitable_trades([]), do: {:error, "no profitable trades found"}
+  ## TODO
+  def get_profitable_trade(token_pair_address, dex_name),
+  do: {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair_address)}
 
-  def found_profitable_trades(list_of_trades) when is_list(list_of_trades),
-    do: {:ok, list_of_trades}
 end

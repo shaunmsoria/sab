@@ -15,22 +15,26 @@ defmodule InitialiseDexBot do
 ##TODO how to calculate token_pair profit from one dex to another? (including gas fees and LP fee and flash loan fees)
 
   def extract_list_pairs() do
-    with state <- state_file() do
+    with state <- state_file(),
+    :ok <- ConCache.put(:dex, "list_dex", @dexs |> Map.keys()) do
       new_state =
         @dexs
         |> Map.keys()
         |> Enum.map(fn dex_key ->
           %{
             "name" => dex_key,
-            "list" =>
+            "content" =>
               @dexs
               |> Map.get(dex_key)
-              |> IO.inspect(label: "sx1 dex_key")
+              # |> IO.inspect(label: "sx1 dex_key")
               |> dex_token_pair_state_constructor(state)
           }
         end)
 
       {:ok, file} = write_state_file(new_state)
+
+
+      ConCache.get(:dex, "list_dex") |> IO.inspect(label: "sx1 list_dex value")
 
       new_state
       |> IO.inspect(label: "sx1 new_state")
@@ -65,30 +69,32 @@ defmodule InitialiseDexBot do
       body |> Jason.decode!()
     else
       {:error, :enoent} ->
-        []
+        %{}
 
       {:error, error} ->
         error |> IO.inspect(label: "state_file error: #{error}")
-        []
+        %{}
 
       false ->
-        []
+        %{}
     end
   end
 
   def dex_token_pair_state_constructor(dex, state) do
     with name <- dex |> Map.get("name"),
-         factory_address <- @dexs |> Map.get(name) |> Map.get("factory"),
-         %{"list" => list_token_pair} <- state |> ListDex.get_list_dex_from_name(name) do
+         factory_address <-
+          @dexs
+          |> Map.get(name)
+          |> Map.get("factory"),
+         %{"content" => map_token_pair} <-
+          state
+          |> ListDex.get_list_dex_from_name(name),
+          :ok <- ConCache.put(:dex, name, map_token_pair) do
 
-          ConCache.put(:dex, name, list_token_pair)
 
-          ConCache.get(:dex, name)
-          |> IO.inspect(label: "sx1 ConCache #{name}")
-
-      {list, count} =
+      {processed_token_pair, count} =
         @tokens
-        |> Enum.reduce({[], 1}, fn token, acc ->
+        |> Enum.reduce({%{}, 1}, fn token, acc ->
           {token_pair_list, count} = acc
 
           {examined_tokens, reduced_tokens} =
@@ -97,19 +103,18 @@ defmodule InitialiseDexBot do
 
           additional_token_pair_list =
             reduced_tokens
-            |> Enum.reduce([], fn token_checked, acc2 ->
-              acc2 ++ exist_token_pair(factory_address, list_token_pair, token, token_checked)
+            |> Enum.reduce(%{}, fn token_checked, acc2 ->
+              Map.merge(acc2, exist_token_pair(factory_address, map_token_pair, token, token_checked))
             end)
 
-          {token_pair_list ++ additional_token_pair_list, count + 1}
+          {Map.merge(token_pair_list, additional_token_pair_list), count + 1}
         end)
 
-      list
+      processed_token_pair
     end
   end
 
-  def exist_token_pair(factory_address, list_token_pair, token, []), do: []
-
+  def exist_token_pair(factory_address, map_token_pair, token, %{}), do: %{}
 
   def exist_token_pair(factory_address, nil, token, token_checked) do
     {name, token_value} = token
@@ -122,27 +127,26 @@ defmodule InitialiseDexBot do
                token_value_checked["address"]
              ) do
         if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
-          [
+          %{pair_address =>
             %{
               "token0" => token_value,
               "token1" => token_value_checked,
               "address" => pair_address
             } |> Map.merge(get_token_pair_price(pair_address))
-          ]
+            }
         else
-          []
+          %{}
         end
       end
   end
 
-  def exist_token_pair(factory_address, list_token_pair, token, token_checked) do
+  def exist_token_pair(factory_address, map_token_pair, token, token_checked) do
     {name, token_value} = token
     {name_checked, token_value_checked} = token_checked
 
-    list_token_pair |> IO.inspect(label: "sx1 list_token_pair")
 
     with %{} <-
-           ListDex.token_pair_from_list_dex(list_token_pair, %{
+           ListDex.token_pair_from_list_dex(map_token_pair, %{
              "token0" => token_value,
              "token1" => token_value_checked
            }) do
@@ -153,20 +157,20 @@ defmodule InitialiseDexBot do
                token_value_checked["address"]
              ) do
         if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
-          [
+          %{pair_address =>
             %{
               "token0" => token_value,
               "token1" => token_value_checked,
               "address" => pair_address
             } |> Map.merge(get_token_pair_price(pair_address))
-          ]
+          }
         else
-          []
+          %{}
         end
       end
     else
-      token_pair ->
-        [token_pair |> Map.merge(get_token_pair_price(token_pair["address"]))]
+      {_address, token_pair} ->
+        %{token_pair["address"] => token_pair |> Map.merge(get_token_pair_price(token_pair["address"]))}
     end
   end
 
