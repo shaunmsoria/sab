@@ -2,9 +2,6 @@ defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
 
-  # @dexs Libraries.dexs()
-  # @tokens Libraries.tokens()
-
   def run(state, event_data) when is_map(event_data) do
     with  price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
           address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
@@ -27,8 +24,6 @@ defmodule CheckProfit do
       _ -> {:error, "no token_pair found"}
     end
   end
-
-
 
   def update_token_pair_price(token_pair, dex_name, price) do
     with :ok <- ConCache.update(:dex, dex_name,
