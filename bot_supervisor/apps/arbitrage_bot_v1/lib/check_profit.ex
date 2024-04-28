@@ -37,7 +37,15 @@ defmodule CheckProfit do
   end
 
   ## TODO
-  def get_profitable_trade(token_pair_address, dex_name),
-  do: {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair_address)}
+  def get_profitable_trade(token_pair_address, dex_name) do
+    with {_address, dex} <- ConCache.get(:dex, dex_name),
+          dex_price <- dex["price"] do
+            dex_price |> IO.inspect(label: "sx1 dex_price")
+
+    end
+
+
+    {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair_address)}
+  end
 
 end

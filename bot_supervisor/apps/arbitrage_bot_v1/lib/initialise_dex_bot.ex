@@ -37,7 +37,7 @@ defmodule InitialiseDexBot do
       ConCache.get(:dex, "list_dex") |> IO.inspect(label: "sx1 list_dex value")
 
       new_state
-      |> IO.inspect(label: "sx1 new_state")
+      # |> IO.inspect(label: "sx1 new_state")
     end
   end
 
