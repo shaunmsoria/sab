@@ -88,4 +88,17 @@ defmodule ListDex do
       if not is_nil(result), do: acc ++ [result], else: acc
     end)
   end
+
+  def update_token_pair_price(token_pair, dex_name, price) do
+    with :ok <- ConCache.update(:dex, dex_name,
+    fn dex_content ->
+      {:ok, %{dex_content | token_pair["address"] => %{token_pair | "price" => price}}}
+    end) do
+
+    {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair["address"])}
+
+    end
+  end
+
+
 end
