@@ -41,29 +41,33 @@ defmodule CheckProfit do
     token_pair_content |> IO.inspect(label: "sx1 token_pair_address")
     dex_name |> IO.inspect(label: "sx1 dex_name")
 
+    profitable_trades_result =
+    with list_dex <- ConCache.get(:dex, "list_dex") do
 
-    with {_address, dex} <- ConCache.get(:dex, dex_name),
-          dex_price <- dex["price"],
-          list_dex <- ConCache.get(:dex, "list_dex"),
-           do
+            # dex_price |> IO.inspect(label: "sx1 dex_price")
 
             list_dex
-            |> Enum.reduce([], fn dex_name, acc ->
-              if profitable_trade_from_dex(
-              LD.token_pair_from_list_dex(
-              ConCache.get(:dex, dex_name),
-                token_pair_content)) == {:true, token_pair_searched} do
-            {:ok, updated_token_pair_searched} = LD.update_token_pair_price(token_pair_searched, dex_name, Compute.calculate_price(token_pair_searched["address"]))
+            |> Enum.reduce([], fn dex_name_searched, acc ->
 
-                end
+              case profitable_trade_from_dex(LD.token_pair_from_list_dex(ConCache.get(:dex, dex_name_searched),token_pair_content)) |> IO.inspect(label: "sx1 profitable_trade_from_dex") do
+                {:true, token_pair_searched} ->
 
-              # {:ok, token_pair_price_udpated} = LD.update_token_pair_price(token_pair, dex_name, price)
+                  {:ok, updated_token_pair_searched} = LD.update_token_pair_price(token_pair_searched, dex_name_searched, Compute.calculate_price(token_pair_searched["address"]))
+
+                  price_difference = Compute.calculate_difference(token_pair_content["price"], updated_token_pair_searched["price"])
+                  |> IO.inspect(label: "sx1 price_difference")
+
+                  if price_difference != 0, do: acc ++ [{updated_token_pair_searched, price_difference}], else: acc
+
+
+                false -> acc
+              end
             end)
 
-            dex_price |> IO.inspect(label: "sx1 dex_price")
+
 
     end
-    {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair_address)}
+    {:ok, profitable_trades_result}
   end
 
   def profitable_trade_from_dex(%{}), do: false
