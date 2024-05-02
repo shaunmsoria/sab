@@ -38,6 +38,9 @@ defmodule CheckProfit do
 
   ## TODO
   def get_profitable_trade(token_pair_content, dex_name) do
+     gas_limit = System.get_env("GAS_LIMIT") |> IO.inspect(label: "mx1 gas_limit")
+     gas_price = System.get_env("GAS_PRICE") |> IO.inspect(label: "mx1 gas_price")
+     price_difference = System.get_env("PRICE_DIFFERENCE") |> IO.inspect(label: "mx1 price_difference")
 
     profitable_trades_result =
     with  list_dex <- ConCache.get(:dex, "list_dex") |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end) |> IO.inspect(label: "sx1 remove name") do
