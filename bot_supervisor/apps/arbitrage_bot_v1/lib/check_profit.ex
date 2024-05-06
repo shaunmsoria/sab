@@ -38,12 +38,12 @@ defmodule CheckProfit do
 
   ## TODO
   def get_profitable_trade(token_pair_content, dex_name) do
-     gas_limit = System.get_env("GAS_LIMIT") |> IO.inspect(label: "mx1 gas_limit")
-     gas_price = System.get_env("GAS_PRICE") |> IO.inspect(label: "mx1 gas_price")
-     price_difference = System.get_env("PRICE_DIFFERENCE") |> IO.inspect(label: "mx1 price_difference")
 
     profitable_trades_result =
-    with  list_dex <- ConCache.get(:dex, "list_dex") |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end) |> IO.inspect(label: "sx1 remove name") do
+    with  list_dex <-
+      ConCache.get(:dex, "list_dex")
+      |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end)
+      |> IO.inspect(label: "sx1 remove name") do
 
             list_dex
             |> Enum.reduce([], fn dex_name_searched, acc ->
@@ -55,7 +55,12 @@ defmodule CheckProfit do
 
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
-                  if price_difference != 0, do: acc ++ [{updated_token_pair_searched, price_difference, dex_name, dex_name_searched}], else: acc
+                  if is_trade_profitable?(price_difference, token_pair_content, updated_token_pair_searched) do
+                     acc ++ [{updated_token_pair_searched, price_difference, dex_name, dex_name_searched}]
+                  else
+                      acc
+                  end
+                  # if price_difference != 0, do: acc ++ [{updated_token_pair_searched, price_difference, dex_name, dex_name_searched}], else: acc
 
 
                 false -> acc
@@ -71,5 +76,23 @@ defmodule CheckProfit do
 
   def profitable_trade_from_dex(%{}), do: false
 
+  def is_trade_profitable?(
+    price_difference,
+    token_pair_content,
+    updated_token_pair_searched) do
+    gas_limit = System.get_env("GAS_LIMIT")
+    |> IO.inspect(label: "mx1 gas_limit")
+    gas_price = System.get_env("GAS_PRICE")
+    |> IO.inspect(label: "mx1 gas_price")
+    price_difference = System.get_env("PRICE_DIFFERENCE")
+    |> IO.inspect(label: "mx1 price_difference")
+
+    estimatedCost = gas_limit * gas_price
+
+
+
+
+    price_difference != 0
+  end
 
 end
