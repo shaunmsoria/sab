@@ -58,6 +58,9 @@ defmodule DexBot do
   end
 
   def handle_cast({:swap_detected, event}, state) do
+    EtherscanGasTrackerApi.get_gas_oracle()
+    |> IO.inspect(label: "sx1 result of etherscan api")
+
     state
     # |> IO.inspect(label: "sx1 state")
     |> CheckProfit.run(event)

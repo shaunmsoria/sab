@@ -1,43 +1,25 @@
 defmodule EtherscanGasTrackerApi do
   use HTTPoison.Base
 
-  # @base_url "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
+  @base_url "https://api.etherscan.io/api"
   @etherscan_api_key System.get_env("ETHERSCAN_API_KEY")
 
-  def process_url(url, _opts) do
-    url
-  end
 
-  def process_reponse_body(body, _opts) do
-    {:ok, Jason.decode(body)}
-  end
+ defp process_url(module, action), do: "#{@base_url}?module=#{module}&action=#{action}&apikey=#{@api_key}"
 
-  def get_liquidity_pool_pairs(%Dex{} = dex) do
+  def get_gas_oracle() do
     header = [{"Content-Type", "application/json"}]
-    body = Jason.encode!(%{"query" => dex.subgraph_query})
 
-    url = dex.subgraph_url <> "/" <> dex.subgraph_api_key <> "/subgraphs/id/" <> dex.subgraph_id
+    url = process_url("gastracker", "gasoracle")
 
-    response = post(url, body, header)
 
-    case response do
-      {:ok,
-       %{
-         status_code: 200,
-         body: body
-       }} ->
-        Jason.decode(body)
-
-      # |> IO.inspect(label: "sx1 Jason.decode(body) ")
-      {:ok,
-       %{
-         status_code: code,
-         body: _body
-       }} ->
-        {:error, "status_code: #{code}"}
-
-      _ ->
-        {:error, "subgraph error"}
+    case get(url) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        body
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        IO.puts("Error: #{reason}")
+        {:error, reason}
     end
   end
+
 end
