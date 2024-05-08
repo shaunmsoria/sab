@@ -15,7 +15,7 @@ defmodule EtherscanGasTrackerApi do
 
     case get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body
+        Jason.decode!(body)
       {:error, %HTTPoison.Error{reason: reason}} ->
         IO.puts("Error: #{reason}")
         {:error, reason}

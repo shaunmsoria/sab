@@ -22,6 +22,9 @@ defmodule DexBot do
     state_init
     |> IO.inspect(label: "sx1 state_init")
 
+
+
+
     with true <- state_init != [] do
       IO.puts("init(state_init)")
 
@@ -31,13 +34,17 @@ defmodule DexBot do
           state_init
         )
 
-      {:ok, state}
+        handle_cast(:gas_extractor, state)
+
+        {:ok, state}
     else
       _ ->
         state = state_init ++ InitialiseDexBot.run(state_init)
         :persistent_term.put(:dexbot_state, state)
 
-        {:ok, state}
+        handle_cast(:gas_extractor, state)
+
+      {:ok, state}
     end
   end
 
@@ -58,12 +65,22 @@ defmodule DexBot do
   end
 
   def handle_cast({:swap_detected, event}, state) do
-    EtherscanGasTrackerApi.get_gas_oracle()
-    |> IO.inspect(label: "sx1 result of etherscan api")
+    # EtherscanGasTrackerApi.get_gas_oracle()
+    # |> IO.inspect(label: "sx1 result of etherscan api")
 
     state
     # |> IO.inspect(label: "sx1 state")
     |> CheckProfit.run(event)
+
+    {:noreply, state}
+  end
+
+  def handle_cast(:gas_extractor, state) do
+    EtherscanGasTrackerApi.get_gas_oracle()
+    |> IO.inspect(label: "sx1 result of etherscan api")
+
+    :timer.sleep(5000)
+    handle_cast(:gas_extractor, state)
 
     {:noreply, state}
   end
