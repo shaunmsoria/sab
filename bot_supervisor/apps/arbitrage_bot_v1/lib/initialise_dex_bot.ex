@@ -31,7 +31,7 @@ defmodule InitialiseDexBot do
           }
         end)
 
-      {:ok, file} = write_state_file(new_state)
+      {:ok, _file} = write_state_file(new_state)
 
 
       ConCache.get(:dex, "list_dex") |> IO.inspect(label: "sx1 list_dex value")
@@ -47,7 +47,7 @@ defmodule InitialiseDexBot do
 
     with {:ok, file} <-
            File.open(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
+             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:write]
            ),
          :ok <-
@@ -60,10 +60,10 @@ defmodule InitialiseDexBot do
   def state_file() do
     with {:ok, file} <-
            File.open(
-             "/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
+             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:read]
            ),
-         body <- IO.binread(file, :all),
+         body <- IO.binread(file, :eof),
          :ok <- File.close(file),
          true <- not String.equivalent?(body, "") do
       body |> Jason.decode!()

@@ -4,7 +4,9 @@ defmodule ArbitrageBotV1.Application do
 
   def start(_type, []) do
     children = [
-      {ConCache, [name: :dex, ttl_check_interval: false]},
+      Supervisor.child_spec({ConCache, [name: :dex, ttl_check_interval: false]}, id: :con_cache_dex),
+      Supervisor.child_spec({ConCache, [name: :gas, ttl_check_interval: false]}, id: :con_cache_gas),
+      {GasExtractor, %{}},
       {DexBot, []},
       {W3WS.ListenerManager, otp_app: :arbitrage_bot_v1}
     ]

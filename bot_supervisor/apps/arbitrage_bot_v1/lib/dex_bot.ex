@@ -6,12 +6,7 @@ defmodule DexBot do
   @doc """
   """
 
-  # import Compute
-
   use GenServer
-
-  # @dexs Libraries.dexs()
-  # @tokens Libraries.tokens()
 
   def start_link(params) do
     IO.puts("start_link(params)")
@@ -34,15 +29,11 @@ defmodule DexBot do
           state_init
         )
 
-        handle_cast(:gas_extractor, state)
-
         {:ok, state}
     else
       _ ->
         state = state_init ++ InitialiseDexBot.run(state_init)
         :persistent_term.put(:dexbot_state, state)
-
-        handle_cast(:gas_extractor, state)
 
       {:ok, state}
     end
