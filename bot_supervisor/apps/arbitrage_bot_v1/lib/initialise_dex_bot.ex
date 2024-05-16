@@ -92,12 +92,12 @@ defmodule InitialiseDexBot do
           :ok <- ConCache.put(:dex, name, map_token_pair) do
 
 
-      {processed_token_pair, count} =
+      {processed_token_pair, _count} =
         @tokens
         |> Enum.reduce({%{}, 1}, fn token, acc ->
           {token_pair_list, count} = acc
 
-          {examined_tokens, reduced_tokens} =
+          {_examined_tokens, reduced_tokens} =
             @tokens
             |> Enum.split(count)
 
@@ -114,7 +114,7 @@ defmodule InitialiseDexBot do
     end
   end
 
-  def exist_token_pair(factory_address, map_token_pair, token, %{}), do: %{}
+  def exist_token_pair(_factory_address, _map_token_pair, _token, %{}), do: %{}
 
   def exist_token_pair(factory_address, nil, token, token_checked) do
     {name, token_value} = token

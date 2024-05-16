@@ -2,7 +2,9 @@ defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
 
-  def run(state, event_data) when is_map(event_data) do
+  @dexs Libraries.dexs()
+
+  def run(_state, event_data) when is_map(event_data) do
     with  price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
           address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
           {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
@@ -42,8 +44,7 @@ defmodule CheckProfit do
     profitable_trades_result =
     with  list_dex <-
       ConCache.get(:dex, "list_dex")
-      |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end)
-      |> IO.inspect(label: "sx1 remove name") do
+      |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end) do
 
             list_dex
             |> Enum.reduce([], fn dex_name_searched, acc ->
@@ -55,7 +56,7 @@ defmodule CheckProfit do
 
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
-                  if is_trade_profitable?(price_difference, token_pair_content, updated_token_pair_searched) do
+                  if is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
                      acc ++ [{updated_token_pair_searched, price_difference, dex_name, dex_name_searched}]
                   else
                       acc
@@ -76,23 +77,35 @@ defmodule CheckProfit do
 
   def profitable_trade_from_dex(%{}), do: false
 
+  def is_trade_profitable?(0, _dex_name, _is_trade_profitable, _dex_name_searched, _updated_token_pair_searched), do: false
+
   def is_trade_profitable?(
     price_difference,
-    token_pair_content,
+    dex_name,
+    token_pair_content, dex_name_searched,
     updated_token_pair_searched) do
-    gas_limit = System.get_env("GAS_LIMIT")
-    |> IO.inspect(label: "mx1 gas_limit")
-    gas_price = System.get_env("GAS_PRICE")
-    |> IO.inspect(label: "mx1 gas_price")
-    price_difference = System.get_env("PRICE_DIFFERENCE")
-    |> IO.inspect(label: "mx1 price_difference")
-
-    estimatedCost = gas_limit * gas_price
+      with  estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee"),
+      factory_address <- @dexs[dex_name]["factory"],
+       {:ok, pair_address_dex_name} <- Compute.get_pair_address(factory_address, token_pair_content.address, updated_token_pair_searched.address) do
+      #  {:ok, result} <- Compute.getAmountOut() do
 
 
 
+    # @dexs.uniswap.factory
+    # |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
 
-    price_difference != 0
+
+    # {:ok, pair_address_uni} =
+    #   Compute.get_pair_address(
+    #     @dexs.uniswap.factory,
+    #     @tokens.weth.address,
+    #     @tokens.shib.address
+    #   )
+
+
+      end
+    true
   end
+
 
 end
