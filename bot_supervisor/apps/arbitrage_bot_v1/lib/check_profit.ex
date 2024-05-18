@@ -56,12 +56,13 @@ defmodule CheckProfit do
 
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
-                  if is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
-                     acc ++ [{updated_token_pair_searched, price_difference, dex_name, dex_name_searched}]
-                  else
-                      acc
+                  case is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
+                    {false, _price_difference_result} -> acc
+
+                    {direction, true} -> acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, price_difference, direction}]
+
+                    {_direction, false} -> acc
                   end
-                  # if price_difference != 0, do: acc ++ [{updated_token_pair_searched, price_difference, dex_name, dex_name_searched}], else: acc
 
 
                 false -> acc
@@ -74,38 +75,37 @@ defmodule CheckProfit do
 
 
   def profitable_trade_from_dex(%{"address" => _address} = token_pair_searched), do: {:true, token_pair_searched}
-
   def profitable_trade_from_dex(%{}), do: false
 
   def is_trade_profitable?(0, _dex_name, _is_trade_profitable, _dex_name_searched, _updated_token_pair_searched), do: false
-
   def is_trade_profitable?(
-    price_difference,
+    _price_difference,
     dex_name,
-    token_pair_content, dex_name_searched,
-    updated_token_pair_searched) do
+    token_pair_content,
+    dex_name_searched,
+    token_pair_searched) do
       with  estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee"),
       factory_address <- @dexs[dex_name]["factory"],
-       {:ok, pair_address_dex_name} <- Compute.get_pair_address(factory_address, token_pair_content.address, updated_token_pair_searched.address) do
-      #  {:ok, result} <- Compute.getAmountOut() do
+      factory_address_searched <- @dexs[dex_name_searched]["factory"],
+        {:ok, pair_address_dex_name} <- Compute.get_pair_address(factory_address, token_pair_content.address, token_pair_searched.address),
+        {:ok, pair_address_dex_name_searched} <- Compute.get_pair_address(factory_address_searched, token_pair_content.address, token_pair_searched.address),
+        {:ok, [reserve0, reserve1, _block_timestamp_last]} <- pair_address_dex_name |> contract(:get_reserves),
+        {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- pair_address_dex_name_searched |> contract(:get_reserves),
+        {:ok, simulated_amount_out_reserve_1} <- factory_address |> simulate_amount_output(reserve0_searched, reserve0, reserve1),
+        {:ok, simulated_amount_out_reserve_0} <- factory_address_searched |> simulate_amount_output(simulated_amount_out_reserve_1, reserve0_searched, reserve1_searched),
+        pre_direction_gas_price_difference <- simulated_amount_out_reserve_0 - reserve0_searched,
+        {direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
+        simulated_price_difference <- pre_gas_difference - estimated_gas_fee do
 
 
-
-    # @dexs.uniswap.factory
-    # |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
-
-
-    # {:ok, pair_address_uni} =
-    #   Compute.get_pair_address(
-    #     @dexs.uniswap.factory,
-    #     @tokens.weth.address,
-    #     @tokens.shib.address
-    #   )
-
+          {direction, simulated_price_difference > 0}
 
       end
     true
   end
 
+  def transaction_direction(pre_direction_gas_price_difference) when pre_direction_gas_price_difference > 0, do: {:origin_to_search, pre_direction_gas_price_difference}
+  def transaction_direction(pre_gas_direction_price_difference) when pre_gas_direction_price_difference < 0, do: {:origin_to_search, pre_gas_direction_price_difference * -1}
+  def transaction_direction(0), do: {false, 0}
 
 end

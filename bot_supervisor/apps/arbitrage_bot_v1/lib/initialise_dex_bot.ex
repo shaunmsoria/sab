@@ -117,8 +117,8 @@ defmodule InitialiseDexBot do
   def exist_token_pair(_factory_address, _map_token_pair, _token, %{}), do: %{}
 
   def exist_token_pair(factory_address, nil, token, token_checked) do
-    {name, token_value} = token
-    {name_checked, token_value_checked} = token_checked
+    {_name, token_value} = token
+    {_name_checked, token_value_checked} = token_checked
 
       with {:ok, pair_address} <-
              Compute.get_pair_address(
