@@ -12,7 +12,9 @@ import Config
 # Sample configuration:
 #
 config :logger, :console,
-  level: :info,
+   level: :error,
+  # level: :debug,
+  # level: :info,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
   # metadata: [:user_id]

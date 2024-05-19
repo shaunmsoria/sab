@@ -47,12 +47,8 @@ defmodule GasExtractor do
           ConCache.put(:gas, :last_block, last_block)
           ConCache.put(:gas, :estimated_gas_fee, estimated_gas_fee)
 
-          ConCache.get(:gas, :fast_gas_price) |> IO.inspect(label: "sx1 fast_gas_price")
-          ConCache.get(:gas, :last_block) |> IO.inspect(label: "sx1 last_block")
-          ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx1 estimated_gas_fee")
 
-
-
+          {:error, reason} -> %{"error" => reason} |> IO.inspect(label: "sx1 gas_extract error result")
     end
 
     :timer.sleep(1000)
