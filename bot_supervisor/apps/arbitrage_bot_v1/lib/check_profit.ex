@@ -57,11 +57,11 @@ defmodule CheckProfit do
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
                   case is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
-                    {false, _price_difference_result} -> acc
+                    {:ok, false, _price_difference_result} -> acc
 
-                    {direction, true} -> acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, price_difference, direction}]
+                    {:ok, direction, true} -> acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, price_difference, direction}]
 
-                    {_direction, false} -> acc
+                    {:ok, _direction, false} -> acc
                   end
 
 
@@ -85,27 +85,30 @@ defmodule CheckProfit do
     token_pair_content,
     dex_name_searched,
     token_pair_searched) do
+      token_pair_content |> IO.inspect(label: "mx1 token_pair_content")
+      token_pair_searched |> IO.inspect(label: "mx1 token_pair_searched")
+
       with  estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee"),
-      factory_address <- @dexs[dex_name]["factory"],
-      factory_address_searched <- @dexs[dex_name_searched]["factory"],
-        {:ok, pair_address_dex_name} <- Compute.get_pair_address(factory_address, token_pair_content["address"], token_pair_searched["address"]) |> IO.inspect(label: "sx0 get_pair_address content"),
-        {:ok, pair_address_dex_name_searched} <- Compute.get_pair_address(factory_address_searched, token_pair_content["address"], token_pair_searched["address"]) |> IO.inspect(label: "sx0 get_pair_address searched"),
-        {:ok, [reserve0, reserve1, _block_timestamp_last]} <- pair_address_dex_name |> contract(:get_reserves) |> IO.inspect(label: "sx0 get_reserves pair_address_dex_name"),
-        {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- pair_address_dex_name_searched |> contract(:get_reserves) |> IO.inspect(label: "sxo get_reserves pair_address_dex_name_searched"),
-        {:ok, simulated_amount_out_reserve_1} <- factory_address |> simulate_amount_output(reserve0_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
-        {:ok, simulated_amount_out_reserve_0} <- factory_address_searched |> simulate_amount_output(simulated_amount_out_reserve_1, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
+      # factory_address <- @dexs[dex_name]["factory"] |> IO.inspect(label: "sx1 factory_address"),
+      router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
+      # factory_address_searched <- @dexs[dex_name_searched]["factory"] |> IO.inspect(label: "sx1 factory_address_searched"),
+      router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
+        {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx0 get_reserves pair_address_dex_name"),
+        {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sxo get_reserves pair_address_dex_name_searched"),
+        {:ok, simulated_amount_out_reserve_1} <- router_address |> simulate_amount_output(reserve0_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
+        {:ok, simulated_amount_out_reserve_0} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_1, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
         pre_direction_gas_price_difference <- simulated_amount_out_reserve_0 - reserve0_searched,
-        {direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
+        {:ok, direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
         simulated_price_difference <- pre_gas_difference - estimated_gas_fee do
 
 
-          {direction, simulated_price_difference > 0}
+          {:ok, direction, simulated_price_difference > 0}
 
       end
   end
 
-  def transaction_direction(pre_direction_gas_price_difference) when pre_direction_gas_price_difference > 0, do: {:origin_to_search, pre_direction_gas_price_difference}
-  def transaction_direction(pre_gas_direction_price_difference) when pre_gas_direction_price_difference < 0, do: {:origin_to_search, pre_gas_direction_price_difference * -1}
-  def transaction_direction(0), do: {false, 0}
+  def transaction_direction(pre_direction_gas_price_difference) when pre_direction_gas_price_difference > 0, do: {:ok, :origin_to_search, pre_direction_gas_price_difference}
+  def transaction_direction(pre_gas_direction_price_difference) when pre_gas_direction_price_difference < 0, do: {:ok, :search_to_origin, pre_gas_direction_price_difference * -1}
+  def transaction_direction(0), do: {:ok, false, 0}
 
 end
