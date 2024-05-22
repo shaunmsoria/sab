@@ -29,42 +29,50 @@ defmodule Libraries do
       "weth" => %{
         "name" => "weth",
         "symbol" => "WETH",
-        "address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "decimals" => 18
       },
       "shib" => %{
         "name" => "shib",
         "symbol" => "SHIB",
-        "address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
+        "address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "decimals" => 18
       },
       "usdc" => %{
         "name" => "usdc",
         "symbol" => "USDC",
-        "address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+        "address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "decimals" => 6
       },
       "dai" => %{
         "name" => "Dai Stablecoin",
         "symbol" => "DAI",
-        "address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+        "address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "decimals" => 18
       },
       "usdt" => %{
         "name" => "Tether USD",
         "symbol" => "USDT",
-        "address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+        "address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "decimals" => 6
       },
       "pepe" => %{
         "name" => "Pepe",
         "symbol" => "PEPE",
-        "address" => "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
+        "address" => "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "decimals" => 18
       },
       "mkr" => %{
         "name" => "Maker",
         "symbol" => "MKR",
-        "address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
+        "address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "decimals" => 18
       },
       "wise" => %{
         "name" => "Wise Token",
         "symbol" => "WISE",
-        "address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6"
+        "address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
+        "decimals" => 18
       }
     }
   end

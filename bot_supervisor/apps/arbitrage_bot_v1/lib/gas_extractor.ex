@@ -40,7 +40,7 @@ defmodule GasExtractor do
             fast_gas_price_raw
             |> String.to_integer()
 
-          estimated_gas_fee = fast_gas_price * max_gas_limit
+          estimated_gas_fee = fast_gas_price * max_gas_limit / 1000000000
 
 
           ConCache.put(:gas, :fast_gas_price, fast_gas_price)

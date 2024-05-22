@@ -141,8 +141,8 @@ defmodule InitialiseDexBot do
   end
 
   def exist_token_pair(factory_address, map_token_pair, token, token_checked) do
-    {name, token_value} = token
-    {name_checked, token_value_checked} = token_checked
+    {_name, token_value} = token
+    {_name_checked, token_value_checked} = token_checked
 
 
     with %{} <-

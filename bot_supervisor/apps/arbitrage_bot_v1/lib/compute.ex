@@ -42,8 +42,12 @@ defmodule Compute do
   end
 
   def calculate_difference(price_0, price_1) do
-    Float.floor((price_0 - price_1) / price_1 * 100, 2)
+    price_0 - price_1
   end
+
+  # def calculate_difference(price_0, price_1) do
+  #   Float.floor((price_0 - price_1) / price_1 * 100, 2)
+  # end
 
   def simulate_amount_output(factory_address, amount_in, reserve0, reserve1) do
     LiquidityPoolRouterContract.get_amount_out(amount_in, reserve0, reserve1)
