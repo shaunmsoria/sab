@@ -118,19 +118,22 @@ defmodule CheckProfit do
       end
   end
 
-  def calculate_gas_price_for_trade(%{"symbol" => "WETH"} = profit_token), do: estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee")
+  def calculate_gas_price_for_trade(%{"symbol" => "WETH"}), do: ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee")
   def calculate_gas_price_for_trade(profit_token) do
     with estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee"),
     {:ok, gas_token_pair} <- Compute.get_pair_address(
       "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       profit_token.address
-    ) do
+    ),
+    {:ok, weth_location} <- locate_weth_in_token_pair(gas_token_pair) do
 
     end
   end
 
-  def locate_weth_in_token_pair()
+  def locate_weth_in_token_pair(%{"token0" => %{"symbol" => "WETH"}}), do: {:ok, :token0_weth }
+  def locate_weth_in_token_pair(%{"token1" => %{"symbol" => "WETH"}}), do: {:ok, :token1_weth }
+  def locate_weth_in_token_pair(_), do: {:error, "WETH not find in token_pair"}
 
   def transaction_direction(pre_direction_gas_price_difference) when pre_direction_gas_price_difference > 0, do: {:ok, :origin_to_search, pre_direction_gas_price_difference}
   def transaction_direction(pre_gas_direction_price_difference) when pre_gas_direction_price_difference < 0, do: {:ok, :search_to_origin, pre_gas_direction_price_difference * -1}
