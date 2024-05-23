@@ -67,13 +67,19 @@ defmodule CheckProfit do
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
                   case is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
-                    {:ok, false, _price_difference_result, _estimated_profit} ->
+                    {:ok, false, _price_difference_result, _estimated_profit, _simulated_profit_token_symbol} ->
                       acc
 
-                    {:ok, direction, true, estimated_profit} ->
-                      acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, estimated_profit, direction}]
+                    {:ok, direction, true, estimated_profit, simulated_profit_token_symbol} ->
+                      acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, estimated_profit, simulated_profit_token_symbol, direction}]
 
-                    {:ok, _direction, false, _estimated_profit} ->
+                    {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol} ->
+                      acc
+
+                    _ ->
+                      %{token_content: token_pair_content, token_searched: updated_token_pair_searched}
+                      |> IO.inspect(label: "output: error in is_trade_profitable? for those tokens")
+
                       acc
                   end
 
@@ -101,27 +107,26 @@ defmodule CheckProfit do
       token_pair_content |> IO.inspect(label: "mx1 token_pair_content")
       token_pair_searched |> IO.inspect(label: "mx1 token_pair_searched")
 
-      with  estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee"),
-      router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
-      router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
+      with router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
+        router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
         {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx0 get_reserves pair_address_dex_name"),
         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sxo get_reserves pair_address_dex_name_searched"),
         {:ok, simulated_amount_out_reserve_0} <- router_address |> simulate_amount_output(reserve1_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
         {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
         pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - reserve1_searched,
         {:ok, direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
-        {:ok, gas_fee} <- calculate_gas_price_for_trade(),
-        simulated_profit <- pre_gas_difference - estimated_gas_fee do
+        {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
+        simulated_profit <- pre_gas_difference - gas_fee do
 
 
-          {:ok, direction, simulated_profit > 0, simulated_profit}
+          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol}
 
       end
   end
 
-  def calculate_gas_price_for_trade(%{"symbol" => "WETH"}), do: ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee")
+  def calculate_gas_price_for_trade(%{"symbol" => "WETH"}), do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
   def calculate_gas_price_for_trade(profit_token) do
-    with estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee) |> IO.inspect(label: "sx0 estimated_gas_fee"),
+    with estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee),
     {:ok, gas_token_pair} <- Compute.get_pair_address(
       "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -130,7 +135,7 @@ defmodule CheckProfit do
     {:ok, weth_location} <- locate_weth_in_token_pair(gas_token_pair),
     {:ok, [reserve0, reserve1, _block_timestamp]} <- gas_token_pair |> contract(:get_reserves),
     {:ok, unit_weth_token_profit_price} <- calculate_gas_price_weth_price(weth_location, reserve0, reserve1) do
-      {:ok, unit_weth_token_profit_price * estimated_gas_fee}
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee, profit_token["symbol"]}
     end
   end
 
