@@ -110,6 +110,7 @@ defmodule CheckProfit do
         {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
         pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - reserve1_searched,
         {:ok, direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
+        {:ok, gas_fee} <- calculate_gas_price_for_trade(),
         simulated_profit <- pre_gas_difference - estimated_gas_fee do
 
 
@@ -126,10 +127,17 @@ defmodule CheckProfit do
       "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       profit_token.address
     ),
-    {:ok, weth_location} <- locate_weth_in_token_pair(gas_token_pair) do
-
+    {:ok, weth_location} <- locate_weth_in_token_pair(gas_token_pair),
+    {:ok, [reserve0, reserve1, _block_timestamp]} <- gas_token_pair |> contract(:get_reserves),
+    {:ok, unit_weth_token_profit_price} <- calculate_gas_price_weth_price(weth_location, reserve0, reserve1) do
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee}
     end
   end
+
+  def calculate_gas_price_weth_price(:token0_weth, reserve0, reserve1), do: {:ok, reserve1 / (reserve0 * 1000000000)}
+  def calculate_gas_price_weth_price(:token1_weth, reserve0, reserve1), do: {:ok, reserve0 / (reserve1 * 1000000000)}
+
+
 
   def locate_weth_in_token_pair(%{"token0" => %{"symbol" => "WETH"}}), do: {:ok, :token0_weth }
   def locate_weth_in_token_pair(%{"token1" => %{"symbol" => "WETH"}}), do: {:ok, :token1_weth }
