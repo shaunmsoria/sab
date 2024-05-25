@@ -3,6 +3,7 @@ defmodule CheckProfit do
   alias ListDex, as: LD
 
   @dexs Libraries.dexs()
+  @balancer Libraries.balancer()
 
   def run(_state, event_data) when is_map(event_data) do
     with  price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
@@ -105,18 +106,29 @@ defmodule CheckProfit do
     dex_name_searched,
     token_pair_searched) do
       token_pair_content |> IO.inspect(label: "mx1 token_pair_content")
+      token_pair_content["address"] |> IO.inspect(label: "mx1 token_pair_content[address]")
+      token_pair_content["token1"] |> Map.get("address") |> IO.inspect(label: "mx1 token_pair_content[token] |> Map.get(address)")
+      token_pair_content["token1"]["address"] |> IO.inspect(label: "mx1 token_pair_content[token1][address]")
+      @balancer |> IO.inspect(label: "sx1 @balancer")
+      @balancer["pool_address"] |> IO.inspect(label: "sx1 @balancer[pool_address]")
       token_pair_searched |> IO.inspect(label: "mx1 token_pair_searched")
 
       with router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
         router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
-        {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx0 get_reserves pair_address_dex_name"),
-        {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sxo get_reserves pair_address_dex_name_searched"),
+        {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name"),
+        {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched"),
+        {:ok, [cash, managed, last_change_block, asset_manager]} <- @balancer["pool_address"] |> get_pool_token_info_balancer(token_pair_content["token1"]["address"]) |> IO.inspect(label: "sx1 get_pool_token_info result"),
         {:ok, simulated_amount_out_reserve_0} <- router_address |> simulate_amount_output(reserve1_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
         {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
         pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - reserve1_searched,
         {:ok, direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
         {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
         simulated_profit <- pre_gas_difference - gas_fee do
+
+          cash |> IO.inspect(label: "sx1 cash")
+          managed |> IO.inspect(label: "sx1 managed")
+          last_change_block |> IO.inspect(label: "sx1 last_change_block")
+          asset_manager |> IO.inspect(label: "sx1 asset_manager")
 
 
           {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol}

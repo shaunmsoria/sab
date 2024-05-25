@@ -76,4 +76,10 @@ defmodule Libraries do
       }
     }
   end
+
+  def balancer() do
+    %{
+      "pool_address" => "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9"
+    }
+  end
 end
