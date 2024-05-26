@@ -79,7 +79,9 @@ defmodule Libraries do
 
   def balancer() do
     %{
-      "pool_address" => "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9"
+      "pool_address" => "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9",
+      "base_url" => "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2/graphql?",
+      "subgraph_query" => "{query MyQuery {poolTokens {address token {address name symbol} id balance}}}"
     }
   end
 end

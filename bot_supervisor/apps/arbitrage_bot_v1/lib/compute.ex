@@ -52,10 +52,10 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
-  defmacro get_pool_token_info_balancer(balancer_pool_address, token_address) do
-      BalancerPoolContract.get_pool_token_info_balancer(token_address)
-      |> Ethers.call(to: balancer_pool_address)
-  end
+  # def get_pool_token_info_balancer(balancer_pool_address, token_address) do
+  #     BalancerPoolContract.get_pool_token_info_balancer(token_address)
+  #     |> Ethers.call(to: balancer_pool_address)
+  # end
 
   defmacro balancer_contract(pool_address, function_contract, params) do
     quote do

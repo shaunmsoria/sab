@@ -1,7 +1,7 @@
-defmodule SubgraphApi do
+defmodule SubgraphBalancerApi do
   use HTTPoison.Base
 
-  # @base_url "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
+  @balancer Libraries.balancer()
 
   def process_url(url, _opts) do
     url
@@ -11,11 +11,11 @@ defmodule SubgraphApi do
     {:ok, Jason.decode(body)}
   end
 
-  def get_liquidity_pool_pairs(%Dex{} = dex) do
+  def get_balancer_pool_ids() do
     header = [{"Content-Type", "application/json"}]
-    body = Jason.encode!(%{"query" => dex.subgraph_query})
+    body = Jason.encode!(%{"query" => @balancer["subgraph_query"]})
 
-    url = dex.subgraph_url <> "/" <> dex.subgraph_api_key <> "/subgraphs/id/" <> dex.subgraph_id
+    url = @balancer["base_url"] <>  body
 
     response = post(url, body, header)
 
