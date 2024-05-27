@@ -81,7 +81,8 @@ defmodule Libraries do
     %{
       "pool_address" => "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9",
       "base_url" => "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2/graphql?",
-      "subgraph_query" => "{query MyQuery {poolTokens {address token {address name symbol} id balance}}}"
+      "subgraph_query" => "{query MyQuery {poolTokens {address token {address name symbol} id balance}}}",
+      "url" => "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2/graphql?query=query+MyQuery+%7B%0A++poolTokens+%7B%0A++++address%0A++++token+%7B%0A++++++address%0A++++++name%0A++++++symbol%0A++++%7D%0A++++id%0A++++balance%0A++%7D%0A%7D#"
     }
   end
 end

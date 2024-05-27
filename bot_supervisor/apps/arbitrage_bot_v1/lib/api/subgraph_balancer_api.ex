@@ -11,13 +11,16 @@ defmodule SubgraphBalancerApi do
     {:ok, Jason.decode(body)}
   end
 
+
   def get_balancer_pool_ids() do
     header = [{"Content-Type", "application/json"}]
-    body = Jason.encode!(%{"query" => @balancer["subgraph_query"]})
+    body = Jason.encode!(%{})
+    |> IO.inspect(label: "sx1 body")
 
-    url = @balancer["base_url"] <>  body
+    url = @balancer["url"]
 
     response = post(url, body, header)
+    |> IO.inspect(label: "sx1 Jason.decode(body) ")
 
     case response do
       {:ok,
@@ -27,7 +30,6 @@ defmodule SubgraphBalancerApi do
        }} ->
         Jason.decode(body)
 
-      # |> IO.inspect(label: "sx1 Jason.decode(body) ")
       {:ok,
        %{
          status_code: code,
