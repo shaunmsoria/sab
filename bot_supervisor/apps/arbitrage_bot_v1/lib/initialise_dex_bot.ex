@@ -6,7 +6,6 @@ defmodule InitialiseDexBot do
   @balancer Libraries.balancer()
 
   def run(_state) do
-    extract_balancer_pool_ids()
     extract_list_pairs()
   end
 
@@ -178,17 +177,6 @@ defmodule InitialiseDexBot do
 
   def get_token_pair_price(token_pair) do
     %{"price" => Compute.calculate_price(token_pair)}
-  end
-
-  def extract_balancer_pool_ids() do
-    with {:ok, result} <- SubgraphBalancerApi.get_balancer_pool_ids() do
-
-      result
-
-    end
-
-   {:ok, @balancer["subgraph_query"]}
-   |> IO.inspect(label: "sx1 balancer subgraph query raw form")
   end
 
 

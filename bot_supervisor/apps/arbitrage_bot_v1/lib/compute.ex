@@ -57,13 +57,21 @@ defmodule Compute do
   #     |> Ethers.call(to: balancer_pool_address)
   # end
 
+
+  defmacro balancer_contract(pool_address, function_contract) do
+    quote do
+      BalancerPoolContract.unquote(function_contract)
+      |> Ethers.call(to: unquote(pool_address))
+    end
+  end
+
   defmacro balancer_contract(pool_address, function_contract, params) do
     quote do
       BalancerPoolContract.unquote(function_contract)(unquote(params))
       |> Ethers.call(to: unquote(pool_address))
     end
-  end
 
+  end
   defmacro balancer_contract(pool_address, function_contract, param1, param2) do
     quote do
       BalancerPoolContract.unquote(function_contract)(unquote(param1), unquote(param2))

@@ -117,8 +117,6 @@ defmodule CheckProfit do
         router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
         {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name"),
         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched"),
-        # {:ok, [cash, managed, last_change_block, asset_manager]} <- @balancer["pool_address"] |> get_pool_token_info_balancer(token_pair_content["address"], token_pair_content["token1"]["address"]) |> IO.inspect(label: "sx1 get_pool_token_info result"),
-        {:ok, result} <- get_balancer_token_amount(token_pair_content["token1"]),
         {:ok, simulated_amount_out_reserve_0} <- router_address |> simulate_amount_output(reserve1_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
         {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
         pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - reserve1_searched,
@@ -126,23 +124,15 @@ defmodule CheckProfit do
         {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
         simulated_profit <- pre_gas_difference - gas_fee do
 
-          # cash |> IO.inspect(label: "sx1 cash")
-          # managed |> IO.inspect(label: "sx1 managed")
-          # last_change_block |> IO.inspect(label: "sx1 last_change_block")
-          # asset_manager |> IO.inspect(label: "sx1 asset_manager")
-
-
           {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol}
 
       end
   end
 
-  def get_balancer_token_amount(_token) do
-   {:ok, @balancer["sybgraph_query"]}
-   |> IO.inspect(label: "sx1 balancer subgraph query raw form")
-
-
-  end
+  # def get_balancer_token_amount(_token) do
+  #  {:ok, @balancer["sybgraph_query"]}
+  #  |> IO.inspect(label: "sx1 balancer subgraph query raw form")
+  # end
 
 
   def calculate_gas_price_for_trade(%{"symbol" => "WETH"}), do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
