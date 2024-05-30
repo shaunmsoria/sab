@@ -37,9 +37,19 @@ defmodule Compute do
 
 
 
-  def calculate_price(pair_address) do
-    with {:ok, [amount_0, amount_1, _time_stamp]} <- pair_address |> contract(:get_reserves) do
+  def calculate_price(pair_address),
+    do: calculate_price(pair_address, :O_I)
+  def calculate_price(pair_address, :O_I) do
+    with {:ok, [amount_0, amount_1, _time_stamp]} <-
+      pair_address |> contract(:get_reserves) do
       amount_0 / amount_1
+    end
+  end
+
+  def calculate_price(pair_address, :I_O) do
+    with {:ok, [amount_0, amount_1, _time_stamp]} <-
+      pair_address |> contract(:get_reserves) do
+      amount_1 / amount_0
     end
   end
 
@@ -52,12 +62,6 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
-  # def get_pool_token_info_balancer(balancer_pool_address, token_address) do
-  #     BalancerPoolContract.get_pool_token_info_balancer(token_address)
-  #     |> Ethers.call(to: balancer_pool_address)
-  # end
-
-
   defmacro balancer_contract(pool_address, function_contract) do
     quote do
       BalancerPoolContract.unquote(function_contract)
@@ -68,13 +72,6 @@ defmodule Compute do
   defmacro balancer_contract(pool_address, function_contract, params) do
     quote do
       BalancerPoolContract.unquote(function_contract)(unquote(params))
-      |> Ethers.call(to: unquote(pool_address))
-    end
-
-  end
-  defmacro balancer_contract(pool_address, function_contract, param1, param2) do
-    quote do
-      BalancerPoolContract.unquote(function_contract)(unquote(param1), unquote(param2))
       |> Ethers.call(to: unquote(pool_address))
     end
   end
