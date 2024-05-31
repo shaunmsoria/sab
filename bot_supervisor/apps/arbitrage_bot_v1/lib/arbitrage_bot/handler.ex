@@ -78,6 +78,22 @@ defmodule DexBot.Handler do
     GenServer.cast(DexBot, {:swap_detected, event})
   end
 
+  def handle_event(
+        %Env{
+          decoded?: true,
+          event: event
+          },
+        _state
+      ) do
+   event.name |> IO.inspect(label: "sx1 event.name")
+  end
+
+  def handle_event(
+        _event,
+        _state
+      ) do
+  nil
+  end
   ## command to execute:
   ## DexBot.Handler.test()
   def test() do

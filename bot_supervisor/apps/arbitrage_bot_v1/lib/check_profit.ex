@@ -4,7 +4,7 @@ defmodule CheckProfit do
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
-  @trade_limit 1000000
+  @trade_limit 10000000
 
   def run(_state, event_data) when is_map(event_data) do
     with  price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
@@ -69,13 +69,13 @@ defmodule CheckProfit do
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
                   case is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
-                    {:ok, false, _price_difference_result, _estimated_profit, _simulated_profit_token_symbol} ->
+                    {:ok, false, _price_difference_result, _estimated_profit, _simulated_profit_token_symbol, _tradable_amount} ->
                       acc
 
-                    {:ok, direction, true, estimated_profit, simulated_profit_token_symbol} ->
-                      acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, estimated_profit, simulated_profit_token_symbol, direction}]
+                    {:ok, direction, true, estimated_profit, simulated_profit_token_symbol, tradable_amount} ->
+                      acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, estimated_profit, simulated_profit_token_symbol, direction, tradable_amount}]
 
-                    {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol} ->
+                    {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol, _tradable_amount} ->
                       acc
 
                     _ ->
@@ -121,27 +121,11 @@ defmodule CheckProfit do
         {:ok, direction, _difference_pair_price_O_I} <- transaction_direction(searched_pair_price_O_I - content_pair_price_O_I),
         {:ok, simulated_profit_pre_gas, tradable_amount} <- simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, direction),
         {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
-        simulated_profit <- pre_gas_difference - gas_fee do
+        simulated_profit <- simulated_profit_pre_gas - gas_fee do
 
-          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol}
+          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount}
 
       end
-
-
-      # with router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
-      #   router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
-      #   {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name"),
-      #   {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched"),
-      #   {:ok, simulated_amount_out_reserve_0} <- router_address |> simulate_amount_output(reserve1_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
-      #   {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
-      #   pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - reserve1_searched,
-      #   {:ok, direction, pre_gas_difference} <- transaction_direction(pre_direction_gas_price_difference),
-      #   {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
-      #   simulated_profit <- pre_gas_difference - gas_fee do
-
-      #     {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol}
-
-      # end
   end
 
   def calculate_gas_price_for_trade(%{"symbol" => "WETH"}), do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
@@ -171,20 +155,22 @@ defmodule CheckProfit do
   def transaction_direction(0), do: {:ok, false, 0}
 
   def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, :I_O) do
-      with  {:ok, tradable_amount} <- safety_tradable_amount(reserve1),
+      with  {:ok, tradable_amount} <- safety_tradable_amount(reserve1) |> IO.inspect(label: "sx1 tradable_amount"),
       {:ok, simulated_amount_out_reserve_0} <- router_address |> simulate_amount_output(tradable_amount, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
-            {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
-            pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - tradable_amount do
+            {:ok, simulated_amount_out_reserve_1_searched} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
+            pre_direction_gas_price_difference <- simulated_amount_out_reserve_1_searched - tradable_amount do
               {:ok, pre_direction_gas_price_difference, tradable_amount}
       end
   end
 
-  # def simulate_profit_pre_gas(reserve0, reserve1, reserve0_searched, reserve1_searched, :O_I) do
-
-  #       {:ok, simulated_amount_out_reserve_0} <- router_address |> simulate_amount_output(reserve1_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output content"),
-  #       {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
-  #       pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - reserve1_searched,
-  # end
+  def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, :O_I) do
+      with  {:ok, tradable_amount} <- safety_tradable_amount(reserve1_searched) |> IO.inspect(label: "sx1 tradable_amount"),
+      {:ok, simulated_amount_out_reserve_0_searched} <- router_address |> simulate_amount_output(tradable_amount, reserve0_searched, reserve1_searched) |> IO.inspect(label: "sx1 simulate_amount_output content"),
+            {:ok, simulated_amount_out_reserve_1} <- router_address_searched |> simulate_amount_output(simulated_amount_out_reserve_0_searched, reserve0, reserve1) |> IO.inspect(label: "sx1 simulate_amount_output searched"),
+            pre_direction_gas_price_difference <- simulated_amount_out_reserve_1 - tradable_amount do
+              {:ok, pre_direction_gas_price_difference, tradable_amount}
+      end
+  end
 
   def safety_tradable_amount(reserve), do: if @trade_limit > reserve, do: {:ok, reserve}, else: {:ok, @trade_limit}
 
