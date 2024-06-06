@@ -140,7 +140,7 @@ defmodule CheckProfit do
     {:ok, gas_token_pair} <- Compute.get_pair_address(
       "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      profit_token.address
+      profit_token["address"]
     ),
     {:ok, weth_location} <- locate_weth_in_token_pair(gas_token_pair),
     {:ok, [reserve0, reserve1, _block_timestamp]} <- gas_token_pair |> contract(:get_reserves),
