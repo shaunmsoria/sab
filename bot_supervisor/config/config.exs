@@ -39,7 +39,10 @@ config :ethers,
 config :ethereumex,
   url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
-# in your config.exs
+config :w3ws,
+  default_url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+
+  # in your config.exs
 config :arbitrage_bot_v1, W3WS,
   listeners: [
     [

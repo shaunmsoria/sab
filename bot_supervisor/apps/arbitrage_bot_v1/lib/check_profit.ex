@@ -112,6 +112,12 @@ defmodule CheckProfit do
       token_pair_content["token1"]["address"] |> IO.inspect(label: "mx1 token_pair_content[token1][address]")
       token_pair_searched |> IO.inspect(label: "mx1 token_pair_searched")
 
+      spawn(fn ->
+        # EthWallet.connect()
+        Compute.get_wallet_balance()
+        |> IO.inspect(label: "sx1 Compute.get_wallet_balance result")
+      end)
+
       with router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
         router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
         {:ok, [reserve0, reserve1, _block_timestamp_last]} <- token_pair_content["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name"),

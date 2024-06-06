@@ -62,17 +62,14 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
-  defmacro balancer_contract(pool_address, function_contract) do
-    quote do
-      BalancerPoolContract.unquote(function_contract)
-      |> Ethers.call(to: unquote(pool_address))
-    end
+  def get_wallet_balance() do
+    wallet_address = System.get_env("ACCOUNT_NUMBER")
+
+    Ethers.Contracts.ERC20.balance_of("0x2170Ed0880ac9A755fd29B2688956BD959F933F8")
+    |> Ethers.call(to: wallet_address)
+
+
   end
 
-  defmacro balancer_contract(pool_address, function_contract, params) do
-    quote do
-      BalancerPoolContract.unquote(function_contract)(unquote(params))
-      |> Ethers.call(to: unquote(pool_address))
-    end
-  end
+
 end
