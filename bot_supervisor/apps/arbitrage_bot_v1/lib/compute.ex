@@ -65,11 +65,7 @@ defmodule Compute do
   def get_wallet_balance() do
     wallet_address = System.get_env("ACCOUNT_NUMBER")
 
-    Ethers.Contracts.ERC20.balance_of(wallet_address)
-    |> Ethers.call(to: "0x0000000000000000000000000000000000000000")
-    # |> Ethers.call(to: wallet_address)
-
-
+    Ethers.get_balance(wallet_address)
   end
 
 

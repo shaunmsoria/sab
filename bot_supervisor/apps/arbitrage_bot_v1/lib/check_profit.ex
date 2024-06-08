@@ -13,8 +13,7 @@ defmodule CheckProfit do
           {:ok, token_pair_price_udpated} <- LD.update_token_pair_price(token_pair, dex_name, price),
           {:ok, list_of_profitable_trades} <- get_profitable_trade(token_pair_price_udpated, dex_name) do
 
-      list_of_profitable_trades
-      |> IO.inspect(label: "sx1 list_of_profitable_trades")
+      ExecuteTrade.maybe_execute_trade(list_of_profitable_trades)
     else
       error ->
         error |> IO.inspect(label: "sx1 error:")
@@ -69,13 +68,13 @@ defmodule CheckProfit do
                   price_difference = Compute.calculate_difference(updated_token_pair_searched["price"], token_pair_content["price"])
 
                   case is_trade_profitable?(price_difference, dex_name, token_pair_content, dex_name_searched, updated_token_pair_searched) do
-                    {:ok, false, _price_difference_result, _estimated_profit, _simulated_profit_token_symbol, _tradable_amount} ->
+                    {:ok, false, _price_difference_result, _estimated_profit, _simulated_profit_token_symbol, _tradable_amount, _gas_fee} ->
                       acc
 
-                    {:ok, direction, true, estimated_profit, simulated_profit_token_symbol, tradable_amount} ->
-                      acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, estimated_profit, simulated_profit_token_symbol, direction, tradable_amount}]
+                    {:ok, direction, true, estimated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee} ->
+                      acc ++ [{token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched, estimated_profit, simulated_profit_token_symbol, direction, tradable_amount, gas_fee}]
 
-                    {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol, _tradable_amount} ->
+                    {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol, _tradable_amount, _gas_fee} ->
                       acc
 
                     _ ->
@@ -112,11 +111,6 @@ defmodule CheckProfit do
       token_pair_content["token1"]["address"] |> IO.inspect(label: "mx1 token_pair_content[token1][address]")
       token_pair_searched |> IO.inspect(label: "mx1 token_pair_searched")
 
-      spawn(fn ->
-        # EthWallet.connect()
-        Compute.get_wallet_balance()
-        |> IO.inspect(label: "sx1 Compute.get_wallet_balance result")
-      end)
 
       with router_address <- @dexs[dex_name]["router"] |> IO.inspect(label: "sx1 router_address"),
         router_address_searched <- @dexs[dex_name_searched]["router"] |> IO.inspect(label: "sx1 router_address_searched"),
@@ -129,7 +123,7 @@ defmodule CheckProfit do
         {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
         simulated_profit <- simulated_profit_pre_gas - gas_fee do
 
-          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount}
+          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee}
 
       end
   end
