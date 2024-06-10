@@ -13,7 +13,7 @@ defmodule CheckProfit do
           {:ok, token_pair_price_udpated} <- LD.update_token_pair_price(token_pair, dex_name, price),
           {:ok, list_of_profitable_trades} <- get_profitable_trade(token_pair_price_udpated, dex_name) do
 
-      ExecuteTrade.maybe_execute_trade(list_of_profitable_trades)
+      ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
         error |> IO.inspect(label: "sx1 error:")
@@ -39,7 +39,6 @@ defmodule CheckProfit do
     end
   end
 
-  ## TODO
   def get_profitable_trade(token_pair_content, dex_name) do
 
     profitable_trades_result =

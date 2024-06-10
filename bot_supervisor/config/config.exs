@@ -39,8 +39,6 @@ config :ethers,
 config :ethereumex,
   url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
-config :w3ws,
-  default_url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
   # in your config.exs
 config :arbitrage_bot_v1, W3WS,
@@ -48,6 +46,8 @@ config :arbitrage_bot_v1, W3WS,
     [
       # the uri of the ethereum jsonrpc websocket server
       uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+
+
       # uri: "ws://192.168.1.1/:8545",
 
       # enable block ping every 10 seconds. this will cause the listener to
