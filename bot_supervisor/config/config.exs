@@ -30,7 +30,7 @@ config :ethers,
   # Defaults to: ExSecp256k1
   secp256k1_module: ExSecp256k1,
   # Defaults to: nil, see Ethers.Signer for more info
-  default_signer: nil,
+  default_signer: Ethers.Signer.JsonRPC,
   # Defaults to: []
   default_signer_opts: []
 

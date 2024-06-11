@@ -46,15 +46,16 @@ defmodule Compute do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
       pair_address |> contract(:get_reserves) do
       amount_0 / amount_1
+      else _ -> {:error, "no price found for the pair #{pair_address}"}
     end
   end
 
   def calculate_price(pair_address, :I_O) do
-    pair_address |> IO.inspect(label: "sx1 pair_address value")
 
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
       pair_address |> contract(:get_reserves) do
       amount_1 / amount_0
+      else _ -> {:error, "no price found for the pair #{pair_address}"}
     end
   end
 

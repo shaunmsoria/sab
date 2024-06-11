@@ -41,7 +41,6 @@ defmodule ExecuteTrade do
     gas_fee
     },
     eth_wallet_amount) do
-      @dexs |> IO.inspect(label: "sx1 dex[dex_name]")
 
       with  {:ok, true} <- enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount),
             dex_content_address <- @dexs |> Map.get(dex_name) |> Map.get("router"),
