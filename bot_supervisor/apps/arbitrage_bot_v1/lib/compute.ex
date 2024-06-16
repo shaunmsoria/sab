@@ -76,7 +76,9 @@ defmodule Compute do
     {:ok, Ethers.Utils.from_wei(eth_wallet_amount_wei)}
   end
 
-  def execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount) do
+  def execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount, env \\ "dev")
+
+  def execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount, "prod") do
     smart_contract_address = System.get_env("CONTRACT_ADDRESS")
     owner_wallet_address = System.get_env("ACCOUNT_NUMBER")
 
@@ -86,4 +88,13 @@ defmodule Compute do
   end
 
 
+  def execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount, "dev") do
+    smart_contract_address = System.get_env("SEPOLIA_CONTRACT_ADDRESS")
+    owner_wallet_address = System.get_env("SEPOLIA_ACCOUNT_NUMBER")
+
+    Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
+    |> Ethers.call(to: smart_contract_address)
+    |> IO.inspect(label: "mx1 execute_trade result")
+    # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
+  end
 end
