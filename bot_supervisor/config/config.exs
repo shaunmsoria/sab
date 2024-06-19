@@ -37,7 +37,9 @@ config :ethers,
 # # If using Ethereumex, you can specify a default JSON-RPC server url here for all requests.
 # # config :ethereumex, url: "http://localhost:8545"
 config :ethereumex,
-  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+  # url:  "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw"
+  url: "http://localhost:8545"
+  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
 
   # in your config.exs
@@ -45,6 +47,7 @@ config :arbitrage_bot_v1, W3WS,
   listeners: [
     [
       # the uri of the ethereum jsonrpc websocket server
+      # uri: "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw",
       uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
 
 

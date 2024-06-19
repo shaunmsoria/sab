@@ -26,6 +26,10 @@ contract SABV1 is IFlashLoanRecipient {
         _;
     }
 
+    function getString() public pure returns (string memory) {
+        return "Hello World";
+    }
+
     function executeTrade(
         address _token0,
         address _token1,
