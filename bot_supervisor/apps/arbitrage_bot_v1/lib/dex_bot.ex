@@ -56,11 +56,6 @@ defmodule DexBot do
   end
 
   def handle_cast({:swap_detected, event}, state) do
-    spawn(fn ->
-        # EthWallet.connect()
-        Compute.get_wallet_balance()
-        |> IO.inspect(label: "sx1 Compute.get_wallet_balance result")
-      end)
 
     state
     |> CheckProfit.run(event)
@@ -71,6 +66,7 @@ defmodule DexBot do
   def handle_cast(:gas_extractor, state) do
     EtherscanGasTrackerApi.get_gas_oracle()
     |> IO.inspect(label: "sx1 result of etherscan api")
+
 
     :timer.sleep(5000)
     handle_cast(:gas_extractor, state)

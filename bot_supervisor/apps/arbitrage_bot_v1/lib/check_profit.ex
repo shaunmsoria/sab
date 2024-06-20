@@ -7,6 +7,10 @@ defmodule CheckProfit do
   @trade_limit 10000000
 
   def run(_state, event_data) when is_map(event_data) do
+
+    Compute.test_smart_contract()
+    |> IO.inspect(label: "sx1 test_smart_contrat")
+
     with  price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
           address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
           {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),

@@ -110,5 +110,12 @@ defmodule Compute do
     # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
   end
 
+  def test_smart_contract() do
+    smart_contract_address = System.get_env("CONTRACT_ADDRESS")
+
+    Sabv1Contract.get_string()
+    |> Ethers.call(to: smart_contract_address)
+  end
+
 
 end

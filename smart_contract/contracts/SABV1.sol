@@ -36,7 +36,8 @@ contract SABV1 is IFlashLoanRecipient {
         IUniswapV2Router02 _router0,
         IUniswapV2Router02 _router1,
         uint256 _flashAmount
-    ) external onlyOwner {
+    ) external {
+    // ) external onlyOwner {
         // encode data about the transaction including tokens, and routers to be used in the receivedFlashLoan
         bytes memory data = abi.encode(owner, _token0, _token1, _router0, _router1);
 
