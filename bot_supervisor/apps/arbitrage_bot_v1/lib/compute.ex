@@ -61,7 +61,14 @@ defmodule Compute do
 
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
       pair_address |> contract(:get_reserves) do
-      amount_1 / amount_0
+        case {is_integer(amount_0), is_integer(amount_1)} do
+          {true, true} -> amount_1 / amount_0
+          {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
+        end
+
+      # amount_1 / amount_0
+
+
       else _ -> {:error, "no price found for the pair #{pair_address}"}
     end
   end
@@ -86,11 +93,12 @@ defmodule Compute do
   def execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount, env \\ System.get_env("ENV"))
 
   def execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount, "prod") do
-    IO.puts("sx1 in execute_trade dev")
+    IO.puts("sx1 in execute_trade prod")
 
     smart_contract_address = System.get_env("CONTRACT_ADDRESS")
     owner_wallet_address = System.get_env("ACCOUNT_NUMBER")
 
+    # Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, 10000000000000)
     Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
     |> Ethers.call(to: smart_contract_address)
     # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
@@ -104,6 +112,7 @@ defmodule Compute do
     owner_wallet_address = System.get_env("SEPOLIA_ACCOUNT_NUMBER")
 
     Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
+    # Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
     |> IO.inspect(label: "mx1 execute_trade pre Ethers.call result")
     |> Ethers.call(to: smart_contract_address)
     |> IO.inspect(label: "mx1 execute_trade result")

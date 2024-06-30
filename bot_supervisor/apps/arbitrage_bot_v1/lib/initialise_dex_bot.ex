@@ -9,12 +9,6 @@ defmodule InitialiseDexBot do
     extract_list_pairs()
   end
 
-##DONE state.json not fully generated when wiped
-##DONE how to store the token_pair price?
-##DONE how to access it?
-##DONE how to update the token_pair price?
-##TODO how to calculate token_pair profit from one dex to another? (including gas fees and LP fee and flash loan fees)
-
   def extract_list_pairs() do
     with state <- state_file(),
     :ok <- ConCache.put(:dex, "list_dex", @dexs |> Map.keys()) do

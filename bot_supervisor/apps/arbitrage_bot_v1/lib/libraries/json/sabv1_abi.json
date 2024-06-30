@@ -1,28 +1,94 @@
 [
-  {
-    "constant": false,
-    "inputs" : [],
-    "name": "getString",
-    "outputs": [
-      { "internalType": "string", "name": "", "type": "string"}
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      { "internalType": "address", "name": "token0", "type": "address" },
-      { "internalType": "address", "name": "token1", "type": "address" },
-      { "internalType": "IUniswapV2Router02", "name": "router0", "type": "address" },
-      { "internalType": "IUniswapV2Router02", "name": "router1", "type": "address" },
-      { "internalType": "uint256", "name": "flashAmount", "type": "uint256" }
-    ],
-    "name": "executeTrade",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_token0",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_token1",
+				"type": "address"
+			},
+			{
+				"internalType": "contract IUniswapV2Router02",
+				"name": "_router0",
+				"type": "address"
+			},
+			{
+				"internalType": "contract IUniswapV2Router02",
+				"name": "_router1",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_flashAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "executeTrade",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getString",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20[]",
+				"name": "tokens",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "amounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "feeAmounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bytes",
+				"name": "userData",
+				"type": "bytes"
+			}
+		],
+		"name": "receiveFlashLoan",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
 ]

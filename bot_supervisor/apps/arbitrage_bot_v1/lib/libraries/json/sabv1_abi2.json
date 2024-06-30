@@ -1,0 +1,28 @@
+[
+  {
+    "constant": false,
+    "inputs" : [],
+    "name": "getString",
+    "outputs": [
+      { "internalType": "string", "name": "", "type": "string"}
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "address", "name": "token0", "type": "address" },
+      { "internalType": "address", "name": "token1", "type": "address" },
+      { "internalType": "IUniswapV2Router02", "name": "router0", "type": "address" },
+      { "internalType": "IUniswapV2Router02", "name": "router1", "type": "address" },
+      { "internalType": "uint256", "name": "flashAmount", "type": "uint256" }
+    ],
+    "name": "executeTrade",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

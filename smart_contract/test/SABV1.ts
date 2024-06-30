@@ -38,8 +38,10 @@ describe("SABV1", () => {
         .then((contract) => contract.waitForDeployment());
 
 
+        token1 = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
         token0 = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
-        token1 = "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE";
+        // token0 = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+        // token1 = "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE";
 
         account = accountNumber;
 
@@ -57,6 +59,8 @@ describe("SABV1", () => {
         let result;
         result = await sabv1.executeTrade(
             token0, token1, uRouter, sRouter, 1);
+            // token0, token1, sRouter, uRouter, ethers.parseUnits('1', 'ether'));
+            // token0, token1, uRouter, sRouter, ethers.parseUnits('1', 'ether'));
         
         console.log("sx1 response from Balancer", result);
 

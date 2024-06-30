@@ -22,11 +22,11 @@ defmodule ExecuteTrade do
 
 
   def execute_trade(token0, token1, dex_content_address, dex_searched_address, tradable_amount, :O_I) do
-    Compute.execute_trade(token0, token1, dex_content_address, dex_searched_address, tradable_amount)
+    Compute.execute_trade(token1, token0, dex_content_address, dex_searched_address, tradable_amount)
   end
 
   def execute_trade(token0, token1, dex_content_address, dex_searched_address, tradable_amount, :I_O) do
-    Compute.execute_trade(token0, token1, dex_searched_address, dex_content_address, tradable_amount)
+    Compute.execute_trade(token1, token0, dex_searched_address, dex_content_address, tradable_amount)
   end
 
   def maybe_execute_trade({
@@ -42,17 +42,21 @@ defmodule ExecuteTrade do
     },
     eth_wallet_amount) do
 
+
+
+
       with  {:ok, true} <- enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount),
             dex_content_address <- @dexs |> Map.get(dex_name) |> Map.get("router"),
             dex_searched_address <- @dexs |> Map.get(dex_name_searched) |> Map.get("router") do
-        {
-          execute_trade(
-          token_pair_content["address"],
-          updated_token_pair_searched["address"],
-          dex_content_address,
-          dex_searched_address,
-          tradable_amount,
-          direction
+
+      {
+        execute_trade(
+          token_pair_content["token0"]["address"] |> IO.inspect(label: "sx1 token_pair_content[token0][address]"),
+          token_pair_content["token1"]["address"] |> IO.inspect(label: "sx1 token_pair_content[token1][address]"),
+          dex_content_address  |> IO.inspect(label: "sx1 dex_content_address"),
+          dex_searched_address |> IO.inspect(label: "sx1 dex_searched_address"),
+          tradable_amount |> IO.inspect(label: "sx1 tradable_amount"),
+          direction |> IO.inspect(label: "sx1 direction")
         ),
         token_pair_content,
         updated_token_pair_searched,
@@ -64,7 +68,28 @@ defmodule ExecuteTrade do
         tradable_amount,
         gas_fee,
         eth_wallet_amount
-       }
+      }
+
+      # {
+      #   execute_trade(
+      #   token_pair_content["address"] |> IO.inspect(label: "sx1 token_pair_content[address]"),
+      #   updated_token_pair_searched["address"] |> IO.inspect(label: "sx1 updated_token_pair_searched[address]"),
+      #   dex_content_address  |> IO.inspect(label: "sx1 dex_content_address"),
+      #   dex_searched_address |> IO.inspect(label: "sx1 dex_searched_address"),
+      #   tradable_amount |> IO.inspect(label: "sx1 tradable_amount"),
+      #   direction |> IO.inspect(label: "sx1 direction")
+      # ),
+      # token_pair_content,
+      # updated_token_pair_searched,
+      # dex_name,
+      # dex_name_searched,
+      # estimated_profit,
+      # simulated_profit_token_symbol,
+      # direction,
+      # tradable_amount,
+      # gas_fee,
+      # eth_wallet_amount
+      # }
 
       else
         _ ->

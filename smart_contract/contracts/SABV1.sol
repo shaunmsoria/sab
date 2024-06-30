@@ -122,7 +122,8 @@ contract SABV1 is IFlashLoanRecipient {
         uint256 _endAmountIn = IERC20(_tokenPath[1]).balanceOf(address(this));
 
         require(
-            IERC20(_tokenPath[1]).approve(address(_endRouter), _endAmountIn)
+            IERC20(_tokenPath[1]).approve(address(_endRouter), _endAmountIn),
+            "end router  approval failed"
         );
 
         address token0 = _tokenPath[0];
