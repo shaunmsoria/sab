@@ -125,7 +125,7 @@ defmodule CheckProfit do
         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <- token_pair_searched["address"] |> contract(:get_reserves) |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched"),
         content_pair_price_O_I <- reserve0 / reserve1 |> IO.inspect(label: "sx1 content_pair_price_I_O"),
         searched_pair_price_O_I <- reserve0_searched / reserve1_searched |> IO.inspect(label: "sx1 searched_pair_price_I_O"),
-        {:ok, direction, _difference_pair_price_O_I} <- transaction_direction(searched_pair_price_O_I - content_pair_price_O_I),
+        {:ok, direction, _difference_pair_price_O_I} <- transaction_direction(searched_pair_price_O_I - content_pair_price_O_I) |> IO.inspect(label: "sx1 transaction_direction"),
         {:ok, simulated_profit_pre_gas, tradable_amount} <- simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, direction),
         {:ok, gas_fee, simulated_profit_token_symbol} <- calculate_gas_price_for_trade(token_pair_content["token1"]) |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
         simulated_profit <- simulated_profit_pre_gas - gas_fee do
