@@ -98,7 +98,6 @@ defmodule Compute do
     smart_contract_address = System.get_env("CONTRACT_ADDRESS")
     owner_wallet_address = System.get_env("ACCOUNT_NUMBER")
 
-    # Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, 10000000000000)
     Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
     |> Ethers.call(to: smart_contract_address)
     # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
@@ -112,10 +111,7 @@ defmodule Compute do
     owner_wallet_address = System.get_env("SEPOLIA_ACCOUNT_NUMBER")
 
     Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
-    # Sabv1Contract.execute_trade(token0_address, token1_address, router_address, router_address_searched, tradable_amount)
-    |> IO.inspect(label: "mx1 execute_trade pre Ethers.call result")
     |> Ethers.call(to: smart_contract_address)
-    |> IO.inspect(label: "mx1 execute_trade result")
     # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
   end
 

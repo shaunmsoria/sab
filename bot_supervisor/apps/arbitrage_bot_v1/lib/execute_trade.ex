@@ -49,63 +49,46 @@ defmodule ExecuteTrade do
             dex_content_address <- @dexs |> Map.get(dex_name) |> Map.get("router"),
             dex_searched_address <- @dexs |> Map.get(dex_name_searched) |> Map.get("router") do
 
-      {
-        execute_trade(
-          token_pair_content["token0"]["address"] |> IO.inspect(label: "sx1 token_pair_content[token0][address]"),
-          token_pair_content["token1"]["address"] |> IO.inspect(label: "sx1 token_pair_content[token1][address]"),
-          dex_content_address  |> IO.inspect(label: "sx1 dex_content_address"),
-          dex_searched_address |> IO.inspect(label: "sx1 dex_searched_address"),
-          tradable_amount |> IO.inspect(label: "sx1 tradable_amount"),
-          direction |> IO.inspect(label: "sx1 direction")
-        ),
-        token_pair_content,
-        updated_token_pair_searched,
-        dex_name,
-        dex_name_searched,
-        estimated_profit,
-        simulated_profit_token_symbol,
-        direction,
-        tradable_amount,
-        gas_fee,
-        eth_wallet_amount
-      }
 
-      # {
-      #   execute_trade(
-      #   token_pair_content["address"] |> IO.inspect(label: "sx1 token_pair_content[address]"),
-      #   updated_token_pair_searched["address"] |> IO.inspect(label: "sx1 updated_token_pair_searched[address]"),
-      #   dex_content_address  |> IO.inspect(label: "sx1 dex_content_address"),
-      #   dex_searched_address |> IO.inspect(label: "sx1 dex_searched_address"),
-      #   tradable_amount |> IO.inspect(label: "sx1 tradable_amount"),
-      #   direction |> IO.inspect(label: "sx1 direction")
-      # ),
-      # token_pair_content,
-      # updated_token_pair_searched,
-      # dex_name,
-      # dex_name_searched,
-      # estimated_profit,
-      # simulated_profit_token_symbol,
-      # direction,
-      # tradable_amount,
-      # gas_fee,
-      # eth_wallet_amount
-      # }
+            Compute.get_wallet_balance()
+            |> IO.inspect(label: "sx1 wallet balance")
+
+            {
+              execute_trade(
+                token_pair_content["token0"]["address"] |> IO.inspect(label: "sx1 token_pair_content[token0][address]"),
+                token_pair_content["token1"]["address"] |> IO.inspect(label: "sx1 token_pair_content[token1][address]"),
+                dex_content_address  |> IO.inspect(label: "sx1 dex_content_address"),
+                dex_searched_address |> IO.inspect(label: "sx1 dex_searched_address"),
+                tradable_amount |> IO.inspect(label: "sx1 tradable_amount"),
+                direction |> IO.inspect(label: "sx1 direction")
+              ),
+              token_pair_content,
+              updated_token_pair_searched,
+              dex_name,
+              dex_name_searched,
+              estimated_profit,
+              simulated_profit_token_symbol,
+              direction,
+              tradable_amount,
+              gas_fee,
+              eth_wallet_amount
+            }
 
       else
         _ ->
-          {
-            "not_enough_eth_to_pay_for_gas_fees",
-            token_pair_content,
-            updated_token_pair_searched,
-            dex_name,
-            dex_name_searched,
-            estimated_profit,
-            simulated_profit_token_symbol,
-            direction,
-            tradable_amount,
-            gas_fee,
-            eth_wallet_amount
-            }
+            {
+              "not_enough_eth_to_pay_for_gas_fees",
+              token_pair_content,
+              updated_token_pair_searched,
+              dex_name,
+              dex_name_searched,
+              estimated_profit,
+              simulated_profit_token_symbol,
+              direction,
+              tradable_amount,
+              gas_fee,
+              eth_wallet_amount
+              }
       end
 
     end
