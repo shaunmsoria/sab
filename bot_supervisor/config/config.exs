@@ -48,7 +48,9 @@ config :arbitrage_bot_v1, W3WS,
     [
       # the uri of the ethereum jsonrpc websocket server
       # uri: "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw",
-      uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+      # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+      # uri: "http://localhost:8545",
+      uri: "ws://localhost:8545",
 
 
       # uri: "ws://192.168.1.1/:8545",
