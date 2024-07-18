@@ -75,6 +75,9 @@ defmodule DexBot.Handler do
         } = event,
         _state
       ) do
+        event |> IO.inspect(label: "sx1 event filtered")
+
+
     GenServer.cast(DexBot, {:swap_detected, event})
   end
 
@@ -89,10 +92,10 @@ defmodule DexBot.Handler do
   # end
 
   def handle_event(
-        _event,
+        event,
         _state
       ) do
-  nil
+  event |> IO.inspect(label: "sx1 any event")
   end
   ## command to execute:
   ## DexBot.Handler.test()
