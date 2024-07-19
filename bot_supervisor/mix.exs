@@ -21,14 +21,16 @@ defmodule BotSupervisor.MixProject do
       {:ethers, "~> 0.2.2"},
       {:w3ws, "~> 0.3.0"},
       {:httpoison, "~> 2.2"},
-      {:con_cache, "~> 1.0"}
+      {:con_cache, "~> 1.0"},
+      {:plug, "~> 1.11"},
+      {:plug_cowboy, "~> 2.5"}
     ]
   end
 
   def application do
     [
-      extra_applications: [:logger]
-      # extra_applications: [:logger, :con_cache]
+      extra_applications: [:logger, :plug_cowboy],
+      mod: {Server, []}
     ]
   end
 end
