@@ -11,8 +11,16 @@ defmodule ListDex do
   end
 
   def get_dex_token_pair_from_address(address) when is_binary(address) do
+    address
+    |> IO.inspect(label: "sx1 address in get_dex_token_pair_from_address")
+
     ConCache.get(:dex, "list_dex")
     |> Enum.reduce_while({}, fn dex_name, acc ->
+      ConCache.get(:dex, dex_name)
+      |> Enum.map(fn token_pair_raw ->
+        token_pair_raw |> IO.inspect(label: "sx1 token_pair_raw")
+      end)
+
       if is_nil(token_pair = ConCache.get(:dex, dex_name) |> Map.get(address)) do
         {:cont, acc}
       else
@@ -20,6 +28,9 @@ defmodule ListDex do
       end
     end)
   end
+
+  def get_dex_token_pair_from_address(address),
+    do: address |> IO.inspect(label: "sx1 in def get_dex_token_pair_from_address(address)")
 
 
   def token_pair_from_list_dex(list_dex, token_pair) do

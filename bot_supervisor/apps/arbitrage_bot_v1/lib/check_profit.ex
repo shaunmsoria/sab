@@ -26,6 +26,7 @@ defmodule CheckProfit do
   end
 
   def found_dex_token_pair?(address) do
+    address |> IO.inspect(label: "sx1 in found_dex_token_pair? address result")
     with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
       {:ok, token_pair}
     else

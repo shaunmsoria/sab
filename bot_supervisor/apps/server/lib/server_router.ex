@@ -21,15 +21,6 @@ defmodule Server.Router do
 
     event_raw = Jason.decode!(body)
 
-    # event =
-    #   %{"event" =>
-    #     %{
-    #       "from" => from,
-    #       "to" => to
-    #     }
-    #   } = Jason.decode!(body)
-    #   |> IO.inspect(label: "sx1 event")
-
       event = %{event: %{address: event_raw["address"]}}
       |> IO.inspect(label: "sx1 event")
 
