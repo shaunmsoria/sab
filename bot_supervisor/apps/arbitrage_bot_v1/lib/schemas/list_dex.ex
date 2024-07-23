@@ -11,27 +11,44 @@ defmodule ListDex do
   end
 
   def get_dex_token_pair_from_address(address) when is_binary(address) do
-    address
-    |> IO.inspect(label: "sx1 address in get_dex_token_pair_from_address")
+    with upcase_address <- String.upcase(address) do
+      ConCache.get(:dex, "list_dex")
+      |> Enum.reduce_while({}, fn dex_name, acc ->
+        # ConCache.get(:dex, dex_name)
+        # |> Map.get("0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f")
+        # |> Map.get("0x811beed0119b4afce20d2583eb608c6f7af1954f")
+        # |> IO.inspect(label: "sx1 ConCache.get(:dex, dex_name)")
 
-    ConCache.get(:dex, "list_dex")
-    |> Enum.reduce_while({}, fn dex_name, acc ->
-      ConCache.get(:dex, dex_name)
-      |> Enum.map(fn token_pair_raw ->
-        token_pair_raw |> IO.inspect(label: "sx1 token_pair_raw")
+        # ConCache.get(:dex, dex_name)
+        # |> Enum.map(fn token_pair_raw ->
+        #   token_pair_raw |> IO.inspect(label: "sx1 token_pair_raw")
+        # end)
+
+        found_token_pair_from_address =
+          ConCache.get(:dex, dex_name)
+          |> Enum.find(fn token_pair ->
+            {token_pair_address, token_pair_conten} = token_pair
+
+            String.equivalent?(upcase_address, token_pair_address |> String.upcase())
+          end)
+
+        if is_nil(found_token_pair_from_address) do
+          {:cont, acc}
+        else
+          {token_address, token_content} = found_token_pair_from_address
+          {:halt, {:ok, {token_content, dex_name}}}
+        end
+        # if is_nil(token_pair = ConCache.get(:dex, dex_name) |> Map.get(address)) do
+        #   {:cont, acc}
+        # else
+        #   {:halt, {:ok, {token_pair, dex_name}}}
+        # end
       end)
+    end
 
-      if is_nil(token_pair = ConCache.get(:dex, dex_name) |> Map.get(address)) do
-        {:cont, acc}
-      else
-        {:halt, {:ok, {token_pair, dex_name}}}
-      end
-    end)
+
+
   end
-
-  def get_dex_token_pair_from_address(address),
-    do: address |> IO.inspect(label: "sx1 in def get_dex_token_pair_from_address(address)")
-
 
   def token_pair_from_list_dex(list_dex, token_pair) do
 
