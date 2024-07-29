@@ -12,12 +12,13 @@ import Config
 # Sample configuration:
 #
 config :logger, :console,
-  #  level: :error,
-  # level: :debug,
-  level: :info,
+  # level: :error,
+  level: :debug,
+  # level: :info,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
-  # metadata: [:user_id]
+
+# metadata: [:user_id]
 #
 
 config :ethers,
@@ -47,10 +48,10 @@ config :ethereumex,
   # url:  "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw"
   # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
   # url: "http://127.0.0.1:8545/"
-  url: "http://127.0.0.1:8545"
+  # url: "http://127.0.0.1:8545"
+  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
-
-  # in your config.exs
+# in your config.exs
 config :arbitrage_bot_v1, W3WS,
   listeners: [
     [
@@ -75,7 +76,8 @@ config :arbitrage_bot_v1, W3WS,
       # uri: "wss://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw",
       # uri: "ws://127.0.0.1:8545/",
       # uri: "ws://localhost:8545",
-      uri: "ws://127.0.0.1:8545",
+      # uri: "ws://127.0.0.1:8545",
+      uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
 
       # enable block ping every 10 seconds. this will cause the listener to
       # fetch and log the current block every 10 seconds. the last fetched block
@@ -127,7 +129,7 @@ config :arbitrage_bot_v1, W3WS,
           # you can always use hex topics (e.g.
           # `0x0148cba56e5d3a8d32fbcea206eae9e449ec0f0def4f642994b3edcd38561deb`).
           # topics: ["Sync"],
-          topics: ["Swap"],
+          topics: ["Swap"]
           # topics: ["Transfer"],
 
           # address to limit the subscription to. this is optional. if not provided
