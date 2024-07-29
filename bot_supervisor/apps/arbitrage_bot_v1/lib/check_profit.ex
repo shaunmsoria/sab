@@ -209,11 +209,11 @@ defmodule CheckProfit do
   def locate_weth_in_token_pair(_), do: {:error, "WETH not find in token_pair"}
 
   def transaction_direction(pre_direction_gas_price_difference)
-      when pre_direction_gas_price_difference > 0,
+      when pre_direction_gas_price_difference < 0,
       do: {:ok, :O_I, pre_direction_gas_price_difference}
 
   def transaction_direction(pre_gas_direction_price_difference)
-      when pre_gas_direction_price_difference < 0,
+      when pre_gas_direction_price_difference > 0,
       do: {:ok, :I_O, pre_gas_direction_price_difference * -1}
 
   def transaction_direction(0), do: {:ok, false, 0}
@@ -230,16 +230,16 @@ defmodule CheckProfit do
     with tradable_amount <-
            reserve1_searched
            |> IO.inspect(label: "sx1 tradable_amount"),
-         {:ok, simulated_amount_out_reserve_0} <-
+         {:ok, simulated_amount_out_reserve_0_searched} <-
            router_address_searched
            |> simulate_amount_output(tradable_amount, reserve1_searched, reserve0_searched)
-           |> IO.inspect(label: "sx1 simulate_amount_output content"),
-         {:ok, simulated_amount_out_reserve_1_searched} <-
+           |> IO.inspect(label: "sx1 simulate_amount_output simulated_amount_out_reserve_0"),
+         {:ok, simulated_amount_out_reserve_1} <-
            router_address
-           |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0, reserve1)
-           |> IO.inspect(label: "sx1 simulate_amount_output searched"),
+           |> simulate_amount_output(simulated_amount_out_reserve_0_searched, reserve0, reserve1)
+           |> IO.inspect(label: "sx1 simulate_amount_output simulated_amount_out_reserve_1"),
          pre_direction_gas_price_difference <-
-           (simulated_amount_out_reserve_1_searched - tradable_amount)
+           (simulated_amount_out_reserve_1 - tradable_amount)
            |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :I_O") do
       {:ok, pre_direction_gas_price_difference, tradable_amount}
     end
