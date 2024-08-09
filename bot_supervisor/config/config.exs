@@ -12,8 +12,8 @@ import Config
 # Sample configuration:
 #
 config :logger, :console,
-  # level: :error,
-  level: :debug,
+  level: :error,
+  # level: :debug,
   # level: :info,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
@@ -49,7 +49,8 @@ config :ethereumex,
   # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
   # url: "http://127.0.0.1:8545/"
   # url: "http://127.0.0.1:8545"
-  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+  url: "http://127.0.0.1:8545"
 
 # in your config.exs
 config :arbitrage_bot_v1, W3WS,
@@ -65,6 +66,7 @@ config :arbitrage_bot_v1, W3WS,
       # uri: "wss://127.0.0.1:8545/",
       # uri: "wss://localhost:8545/",
       # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+      # uri: "wss://localhost:8545/",
 
       # uri: "ws://192.168.1.1/:8545",
       # uri: "ws://192.168.1.1/:8545/",
@@ -77,7 +79,8 @@ config :arbitrage_bot_v1, W3WS,
       # uri: "ws://127.0.0.1:8545/",
       # uri: "ws://localhost:8545",
       # uri: "ws://127.0.0.1:8545",
-      uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+      # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+      uri: "ws://127.0.0.1:8545",
 
       # enable block ping every 10 seconds. this will cause the listener to
       # fetch and log the current block every 10 seconds. the last fetched block
@@ -118,7 +121,7 @@ config :arbitrage_bot_v1, W3WS,
           # In the MFA tuple case  the arguments will be a `%W3WS.Env{}` struct followed
           # by any arguments provided.
           # defaults to `W3WS.Handler.DefaultHandler` which logs received events.
-          handler: {W3WS.Handler.BlockRemovalHandler, blocks: 12, handler: DexBot.Handler},
+          handler: {W3WS.Handler.BlockRemovalHandler, blocks: 12, handler: DexBot.Handler}
 
           # a list of log event topics to subscribe to for the given subscription. this is
           # optional. not passing `:topics` will subscribe to all log events. See
@@ -129,7 +132,7 @@ config :arbitrage_bot_v1, W3WS,
           # you can always use hex topics (e.g.
           # `0x0148cba56e5d3a8d32fbcea206eae9e449ec0f0def4f642994b3edcd38561deb`).
           # topics: ["Sync"],
-          topics: ["Swap"]
+          # topics: ["Swap"]
           # topics: ["Transfer"],
 
           # address to limit the subscription to. this is optional. if not provided

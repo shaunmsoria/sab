@@ -3,24 +3,24 @@ pragma solidity 0.8.19;
 
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 import "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol";
-import '@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol';
-
+import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
 contract SABV1 is IFlashLoanRecipient {
-    IVault private constant vault = IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
+    IVault private constant vault =
+        IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;
 
-    constructor(){
+    constructor() {
         owner = msg.sender;
     }
 
-    modifier onlyOwner(){
+    modifier onlyOwner() {
         // ensure it's the owner of the smart contract who can call it
         require(msg.sender == owner, "your are not the owner");
         _;
     }
 
-    modifier onlyVault(){
+    modifier onlyVault() {
         // ensure it's only the vault that can call this function
         require(msg.sender == address(vault), "your are not the vault");
         _;
@@ -37,9 +37,15 @@ contract SABV1 is IFlashLoanRecipient {
         IUniswapV2Router02 _router1,
         uint256 _flashAmount
     ) external {
-    // ) external onlyOwner {
+        // ) external onlyOwner {
         // encode data about the transaction including tokens, and routers to be used in the receivedFlashLoan
-        bytes memory data = abi.encode(owner, _token0, _token1, _router0, _router1);
+        bytes memory data = abi.encode(
+            owner,
+            _token0,
+            _token1,
+            _router0,
+            _router1
+        );
 
         // token to be flash loaned, only one for now
         IERC20[] memory tokens = new IERC20[](1);
@@ -53,7 +59,6 @@ contract SABV1 is IFlashLoanRecipient {
         vault.flashLoan(this, tokens, amounts, data);
     }
 
-
     function receiveFlashLoan(
         IERC20[] memory tokens,
         uint256[] memory amounts,
@@ -61,15 +66,21 @@ contract SABV1 is IFlashLoanRecipient {
         bytes memory userData
     ) external override onlyVault {
         (
-            address _ownerData, 
-            address token0, 
-            address token1, 
-            IUniswapV2Router02 router0, 
+            address _ownerData,
+            address token0,
+            address token1,
+            IUniswapV2Router02 router0,
             IUniswapV2Router02 router1
         ) = abi.decode(
-            userData,
-            (address, address, address, IUniswapV2Router02, IUniswapV2Router02)
-        );
+                userData,
+                (
+                    address,
+                    address,
+                    address,
+                    IUniswapV2Router02,
+                    IUniswapV2Router02
+                )
+            );
 
         // ensure data from balancer is for this contract
         require(_ownerData == owner, "this data isn't from the owner");
@@ -94,7 +105,6 @@ contract SABV1 is IFlashLoanRecipient {
         IERC20(token0).transfer(address(vault), flashAmount);
 
         IERC20(token0).transfer(owner, IERC20(token0).balanceOf(address(this)));
-
     }
 
     function _executeSwap(
@@ -110,7 +120,7 @@ contract SABV1 is IFlashLoanRecipient {
             "start router  approval failed"
         );
 
-        _startRouter.swapExactTokensForTokens(
+        _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
             _flashAmount,
             0,
             _tokenPath,
@@ -132,7 +142,7 @@ contract SABV1 is IFlashLoanRecipient {
         _tokenPath[0] = token1;
         _tokenPath[1] = token0;
 
-        _endRouter.swapExactTokensForTokens(
+        _endRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
             _endAmountIn,
             _flashAmount,
             _tokenPath,
@@ -140,6 +150,4 @@ contract SABV1 is IFlashLoanRecipient {
             (block.timestamp + 1200)
         );
     }
-
-
 }

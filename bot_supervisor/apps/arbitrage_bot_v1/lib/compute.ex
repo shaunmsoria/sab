@@ -1,4 +1,9 @@
 defmodule Compute do
+  def get_weth_balance(wallet_address) do
+    WethContract.get_balance(wallet_address)
+    |> Ethers.call(to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
+  end
+
   def get_all_pairs(factory_address, n_pair) do
     DexContract.all_pairs(n_pair)
     |> Ethers.call(to: factory_address)
@@ -84,6 +89,12 @@ defmodule Compute do
     {:ok, Ethers.Utils.from_wei(eth_wallet_amount_wei)}
   end
 
+  def get_wallet_balance(address) do
+    {:ok, token_amount_wei} = Ethers.get_balance(address)
+
+    {:ok, Ethers.Utils.from_wei(token_amount_wei)}
+  end
+
   def execute_trade(
         token0_address,
         token1_address,
@@ -103,8 +114,28 @@ defmodule Compute do
       ) do
     IO.puts("sx1 in execute_trade prod")
 
-    smart_contract_address = System.get_env("CONTRACT_ADDRESS")
-    owner_wallet_address = System.get_env("ACCOUNT_NUMBER")
+    smart_contract_address =
+      System.get_env("CONTRACT_ADDRESS")
+      |> IO.inspect(label: "sx1 smart_contract_address")
+
+    owner_wallet_address =
+      System.get_env("ACCOUNT_NUMBER")
+      |> IO.inspect(label: "sx1 owner_wallet_address")
+
+    token0_address |> IO.inspect(label: "sx1 token0_address")
+    token1_address |> IO.inspect(label: "sx1 token1_address")
+    router_address |> IO.inspect(label: "sx1 router_address")
+    router_address_searched |> IO.inspect(label: "sx1 router_address_searched")
+    tradable_amount |> IO.inspect(label: "sx1 tradable_amount")
+
+    # Sabv1Contract.execute_trade(
+    #   token0_address,
+    #   token1_address,
+    #   router_address,
+    #   router_address_searched,
+    #   1
+    # )
+    # |> Ethers.call(to: smart_contract_address)
 
     Sabv1Contract.execute_trade(
       token0_address,
