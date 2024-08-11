@@ -86,9 +86,20 @@ defmodule ExecuteTrade do
       (eth_wallet_amount_after - eth_wallet_amount)
       |> IO.inspect(label: "sx1 Gain / Lost")
 
+      System.get_env("ACCOUNT_NUMBER")
+      |> IO.inspect(label: "sx1 ACCOUNT_NUMBER")
+
       {:ok, weth_amount} =
         Compute.get_weth_balance(System.get_env("ACCOUNT_NUMBER"))
         |> IO.inspect(label: "sx1 weth_amount?")
+
+      {:ok, weth_total_supply} =
+        Compute.weth_total_supply()
+        |> IO.inspect(label: "sx1 weth_total_supplymount?")
+
+      {:ok, shib_amount} =
+        Compute.get_shib_balance(System.get_env("ACCOUNT_NUMBER"))
+        |> IO.inspect(label: "sx1 shib_amount?")
 
       {
         trade_result,

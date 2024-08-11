@@ -1,6 +1,16 @@
 defmodule Compute do
   def get_weth_balance(wallet_address) do
-    WethContract.get_balance(wallet_address)
+    WethContract.balance_of(wallet_address)
+    |> Ethers.call(to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
+  end
+
+  def get_shib_balance(wallet_address) do
+    WethContract.balance_of(wallet_address)
+    |> Ethers.call(to: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE")
+  end
+
+  def weth_total_supply() do
+    WethContract.total_supply()
     |> Ethers.call(to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
   end
 
