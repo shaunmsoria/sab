@@ -154,9 +154,9 @@ defmodule Compute do
       router_address_searched,
       tradable_amount
     )
-    |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
+    # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
 
-    # |> Ethers.call(to: smart_contract_address)
+    |> Ethers.call(to: smart_contract_address)
   end
 
   def execute_trade(
