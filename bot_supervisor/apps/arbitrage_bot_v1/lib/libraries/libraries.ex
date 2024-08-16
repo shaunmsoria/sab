@@ -15,6 +15,7 @@ defmodule Libraries do
         "name" => "sushiswap",
         "version" => "2",
         "router" => "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
+        # "router" => "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
         "factory" => "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
         "subgraph_url" => "https://gateway-arbitrum.network.thegraph.com/api",
         "subgraph_api_key" => "17c4cccfd28795b7a90b4a815fab12cc",
@@ -81,8 +82,10 @@ defmodule Libraries do
     %{
       "pool_address" => "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9",
       "base_url" => "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2/graphql?",
-      "subgraph_query" => "{query MyQuery {poolTokens {address token {address name symbol} id balance}}}",
-      "url" => "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2/graphql?query=query+MyQuery+%7B%0A++poolTokens+%7B%0A++++address%0A++++token+%7B%0A++++++address%0A++++++name%0A++++++symbol%0A++++%7D%0A++++id%0A++++balance%0A++%7D%0A%7D#"
+      "subgraph_query" =>
+        "{query MyQuery {poolTokens {address token {address name symbol} id balance}}}",
+      "url" =>
+        "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2/graphql?query=query+MyQuery+%7B%0A++poolTokens+%7B%0A++++address%0A++++token+%7B%0A++++++address%0A++++++name%0A++++++symbol%0A++++%7D%0A++++id%0A++++balance%0A++%7D%0A%7D#"
     }
   end
 end

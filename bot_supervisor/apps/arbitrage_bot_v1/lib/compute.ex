@@ -154,9 +154,13 @@ defmodule Compute do
       router_address_searched,
       tradable_amount
     )
-    # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
+    |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
 
+    # |> Ethers.call()
     |> Ethers.call(to: smart_contract_address)
+    |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
+
+    # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
   end
 
   def execute_trade(

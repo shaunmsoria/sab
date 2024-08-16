@@ -82,8 +82,8 @@ contract SABV1 is IFlashLoanRecipient {
                 )
             );
 
-        // ensure data from balancer is for this contract
-        require(_ownerData == owner, "this data isn't from the owner");
+        // // ensure data from balancer is for this contract
+        // require(_ownerData == owner, "this data isn't from the owner");
 
         // store flosh loan amount
         uint256 flashAmount = amounts[0];
