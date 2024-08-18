@@ -5,7 +5,7 @@ import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 import "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
-contract SABV1 is IFlashLoanRecipient {
+contract SABV1_Archive1 is IFlashLoanRecipient {
     IVault private constant vault =
         IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;

@@ -86,6 +86,11 @@ defmodule Compute do
     price_0 - price_1
   end
 
+  def simulate_amount_input(router_address, amount_in, reserve0, reserve1) do
+    LiquidityPoolRouterContract.get_amount_in(amount_in, reserve0, reserve1)
+    |> Ethers.call(to: router_address)
+  end
+
   def simulate_amount_output(router_address, amount_in, reserve0, reserve1) do
     LiquidityPoolRouterContract.get_amount_out(amount_in, reserve0, reserve1)
     |> Ethers.call(to: router_address)

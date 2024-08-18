@@ -29,6 +29,13 @@ defmodule ExecuteTrade do
       dex_searched_address,
       tradable_amount
     )
+    # Compute.execute_trade(
+    #   token1,
+    #   token0,
+    #   dex_content_address,
+    #   dex_searched_address,
+    #   tradable_amount
+    # )
   end
 
   def execute_trade(
@@ -115,9 +122,9 @@ defmodule ExecuteTrade do
         eth_wallet_amount
       }
     else
-      _ ->
+      msg ->
         {
-          "not_enough_eth_to_pay_for_gas_fees",
+          msg,
           token_pair_content,
           updated_token_pair_searched,
           dex_name,

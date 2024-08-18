@@ -5,7 +5,7 @@ import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 import "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
-contract SABV1 is IFlashLoanRecipient {
+contract SABV1_archive is IFlashLoanRecipient {
     IVault private constant vault =
         IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;
@@ -82,8 +82,8 @@ contract SABV1 is IFlashLoanRecipient {
                 )
             );
 
-        // // ensure data from balancer is for this contract
-        // require(_ownerData == owner, "this data isn't from the owner");
+        // ensure data from balancer is for this contract
+        require(_ownerData == owner, "this data isn't from the owner");
 
         // store flosh loan amount
         uint256 flashAmount = amounts[0];
@@ -113,50 +113,20 @@ contract SABV1 is IFlashLoanRecipient {
         uint256 _flashAmount
     ) internal {
         IUniswapV2Router02 _startRouter = _routerPath[0];
-        uint256 _startAmountIn = IERC20(_tokenPath[0]).balanceOf(address(this));
+        // uint256 _startAmountIn = IERC20(_tokenPath[0]).balanceOf(address(this));
 
         require(
-            IERC20(_tokenPath[0]).approve(address(_startRouter), _startAmountIn),
+            IERC20(_tokenPath[0]).approve(address(_startRouter), _flashAmount),
             "start router  approval failed"
         );
 
-        // require(
-        //     IERC20(_tokenPath[0]).approve(address(_startRouter), _flashAmount),
-        //     "start router  approval failed"
-        // );
-
-        // _startRouter.swapExactTokensForTokens(
-        //     _flashAmount,
-        //     0,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
-
-        // _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
-        //     _flashAmount,
-        //     0,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
-
-
-        _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
-            _startAmountIn,
+        _startRouter.swapExactTokensForTokens(
+            _flashAmount,
             0,
             _tokenPath,
             address(this),
             (block.timestamp + 1200)
         );
-
-        // _startRouter.swapExactTokensForTokens(
-        //     _startAmountIn,
-        //     0,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
 
         IUniswapV2Router02 _endRouter = _routerPath[1];
         uint256 _endAmountIn = IERC20(_tokenPath[1]).balanceOf(address(this));
@@ -172,29 +142,12 @@ contract SABV1 is IFlashLoanRecipient {
         _tokenPath[0] = token1;
         _tokenPath[1] = token0;
 
-        // _endRouter.swapExactTokensForTokens(
-        //     _endAmountIn,
-        //     _flashAmount,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
-
-        _endRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
+        _endRouter.swapExactTokensForTokens(
             _endAmountIn,
             _flashAmount,
             _tokenPath,
             address(this),
             (block.timestamp + 1200)
         );
-
-
-        // _endRouter.swapExactTokensForTokens(
-        //     _endAmountIn,
-        //     _flashAmount,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
     }
 }
