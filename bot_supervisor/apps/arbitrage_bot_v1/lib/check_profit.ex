@@ -170,31 +170,33 @@ defmodule CheckProfit do
   #     end
   # end
 
-  def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, token_pair, :I_0) do
-      with  min_amount <- reserve0_searched / 2
-              |> IO.inspect(label: "sx1 min_amount"),
+  def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, token_pair, :I_O) do
+    IO.puts("sx1 in simulate_profit_pre_gas :I_0")
+    with  min_amount <- (reserve0_searched / 2)
+                                |> IO.inspect(label: "sx1 min_amount"),
             {:ok, estimate} <- router_address_searched |> simulate_amounts_input(min_amount, reserve0_searched, reserve1_searched)
-              |> IO.inspect(label: "sx1 estimate"),
+                                |> IO.inspect(label: "sx1 estimate"),
             {:ok, result} <- router_address |> simulate_amount_output(estimate[1], reserve0, reserve1)
-              |> IO.inspect(label: "sx1 result"),
-            {:ok, amount_in, amount_out} <- simulate(estimate[0], router_address_searched, router_address, token_pair)
-            pre_direction_gas_price_difference <- amount_out - amount_in
-              |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :O_I") do
-              {:ok, pre_direction_gas_price_difference, estimate[0]}
+                                |> IO.inspect(label: "sx1 result"),
+            {:ok, amount_in, amount_out} <- simulate(estimate[0], router_address_searched, router_address, token_pair),
+            pre_direction_gas_price_difference <- (amount_out - amount_in)
+                                |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :I_O") do
+              {:ok, pre_direction_gas_price_difference, amount_in}
       end
   end
 
   def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, token_pair, :O_I) do
-      with  min_amount <- reserve0 / 2
-              |> IO.inspect(label: "sx1 min_amount"),
+    IO.puts("sx1 in simulate_profit_pre_gas :0_I")
+      with  min_amount <- (reserve0 / 2)
+                                |> IO.inspect(label: "sx1 min_amount"),
             {:ok, estimate} <- router_address |> simulate_amounts_input(min_amount, reserve0, reserve1)
-              |> IO.inspect(label: "sx1 estimate"),
+                                |> IO.inspect(label: "sx1 estimate"),
             {:ok, result} <- router_address_searched |> simulate_amount_output(estimate[1], reserve0_searched, reserve1_searched)
-              |> IO.inspect(label: "sx1 result"),
-            {:ok, amount_in, amount_out} <- simulate(estimate[0], router_address, router_address_searched, token_pair)
-            pre_direction_gas_price_difference <- amount_out - amount_in
-              |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :O_I") do
-              {:ok, pre_direction_gas_price_difference, estimate[0]}
+                                |> IO.inspect(label: "sx1 result"),
+            {:ok, amount_in, amount_out} <- simulate(estimate[0], router_address, router_address_searched, token_pair),
+            pre_direction_gas_price_difference <- (amount_out - amount_in)
+                                |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :O_I") do
+              {:ok, pre_direction_gas_price_difference, amount_in}
       end
   end
 

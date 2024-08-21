@@ -107,9 +107,26 @@ defmodule Compute do
 
   ##TODO finish this function based on the the get_amounts_out from weth to shib
   def simulate(amount, router_from, router_to, token_pair) do
-    with do
+    with {:ok, trade1} <-
+      router_from
+      |> simulate_amounts_output(
+        amount,
+        [token_pair["token0"]["address"]],
+        [token_pair["token1"]["address"]]
+        ),
+      {:ok, trade2} <-
+        router_from
+        |> simulate_amounts_output(
+          trade1[1],
+          [token_pair["token1"]["address"]],
+          [token_pair["token0"]["address"]]
+          ),
+          amount_in <- trade2[0],
+          amount_out <- trade2[1] do
+            {:ok, amount_in, amount_out}
 
     end
+
   end
 
 
