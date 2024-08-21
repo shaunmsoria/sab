@@ -27,7 +27,6 @@ defmodule Compute do
   def get_pair_address(factory_address, token0_address, token1_address) do
     DexContract.get_pair(token0_address, token1_address)
     |> Ethers.call(to: factory_address)
-    |> IO.inspect(label: "sx1 get_pair_address result")
   end
 
   defmacro contract(pair_address, function_contract) do
@@ -96,6 +95,25 @@ defmodule Compute do
     |> Ethers.call(to: router_address)
   end
 
+  def simulate_amounts_input(router_address, amount_in, reserve0, reserve1) do
+    LiquidityPoolRouterContract.get_amounts_ins(amount_in, reserve0, reserve1)
+    |> Ethers.call(to: router_address)
+  end
+
+  def simulate_amounts_output(router_address, amount_in, reserve0, reserve1) do
+    LiquidityPoolRouterContract.get_amounts_out(amount_in, reserve0, reserve1)
+    |> Ethers.call(to: router_address)
+  end
+
+  ##TODO finish this function based on the the get_amounts_out from weth to shib
+  def simulate(amount, router_from, router_to, token_pair) do
+    with do
+
+    end
+  end
+
+
+
   def get_wallet_balance() do
     wallet_address = System.get_env("ACCOUNT_NUMBER")
 
@@ -143,14 +161,6 @@ defmodule Compute do
     router_address_searched |> IO.inspect(label: "sx1 router_address_searched")
     tradable_amount |> IO.inspect(label: "sx1 tradable_amount")
 
-    # Sabv1Contract.execute_trade(
-    #   token0_address,
-    #   token1_address,
-    #   router_address,
-    #   router_address_searched,
-    #   1
-    # )
-    # |> Ethers.call(to: smart_contract_address)
 
     Sabv1Contract.execute_trade(
       token0_address,
