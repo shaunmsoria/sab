@@ -95,13 +95,16 @@ defmodule Compute do
     |> Ethers.call(to: router_address)
   end
 
-  def simulate_amounts_input(router_address, amount_in, reserve0, reserve1) do
-    LiquidityPoolRouterContract.get_amounts_ins(amount_in, reserve0, reserve1)
+
+  # This returns the amount of WETH needed to swap for X amount of SHIB
+  def simulate_amounts_input(router_address, amount_in, token0_address, token1_address) do
+    LiquidityPoolRouterContract.get_amounts_in(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
-  def simulate_amounts_output(router_address, amount_in, reserve0, reserve1) do
-    LiquidityPoolRouterContract.get_amounts_out(amount_in, reserve0, reserve1)
+  #  This returns the amount of WETH for swapping X amount of SHIB
+  def simulate_amounts_output(router_address, amount_in, token0_address, token1_address) do
+    LiquidityPoolRouterContract.get_amounts_out(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
@@ -111,18 +114,18 @@ defmodule Compute do
       router_from
       |> simulate_amounts_output(
         amount,
-        [token_pair["token0"]["address"]],
-        [token_pair["token1"]["address"]]
+        token_pair["token1"]["address"],
+        token_pair["token0"]["address"]
         ),
       {:ok, trade2} <-
         router_from
         |> simulate_amounts_output(
-          trade1[1],
-          [token_pair["token1"]["address"]],
-          [token_pair["token0"]["address"]]
+          trade1 |> Enum.at(1),
+          token_pair["token0"]["address"],
+          token_pair["token1"]["address"]
           ),
-          amount_in <- trade2[0],
-          amount_out <- trade2[1] do
+          amount_in <- trade2 |> Enum.at(0),
+          amount_out <- trade2 |> Enum.at(1) do
             {:ok, amount_in, amount_out}
 
     end

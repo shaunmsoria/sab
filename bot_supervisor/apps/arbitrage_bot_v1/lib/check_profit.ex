@@ -126,7 +126,8 @@ defmodule CheckProfit do
             simulated_profit <- simulated_profit_pre_gas - gas_fee
               |> IO.inspect(label: "sx1 simulated_profit") do
 
-          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee}
+          # {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee}
+          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount |> Ethers.Utils.to_wei(), gas_fee}
 
       end
   end
@@ -153,8 +154,8 @@ defmodule CheckProfit do
   def locate_weth_in_token_pair(%{"token1" => %{"symbol" => "WETH"}}), do: {:ok, :token1_weth }
   def locate_weth_in_token_pair(_), do: {:error, "WETH not find in token_pair"}
 
-  def transaction_direction(pre_direction_gas_price_difference) when pre_direction_gas_price_difference > 0, do: {:ok, :O_I, pre_direction_gas_price_difference}
-  def transaction_direction(pre_gas_direction_price_difference) when pre_gas_direction_price_difference < 0, do: {:ok, :I_O, pre_gas_direction_price_difference * -1}
+  def transaction_direction(pre_direction_gas_price_difference) when pre_direction_gas_price_difference < 0, do: {:ok, :O_I, pre_direction_gas_price_difference * -1}
+  def transaction_direction(pre_gas_direction_price_difference) when pre_gas_direction_price_difference > 0, do: {:ok, :I_O, pre_gas_direction_price_difference}
   def transaction_direction(0), do: {:ok, false, 0}
 
   # def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, _token_pair_content, :I_O) do
@@ -172,13 +173,17 @@ defmodule CheckProfit do
 
   def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, token_pair, :I_O) do
     IO.puts("sx1 in simulate_profit_pre_gas :I_0")
-    with  min_amount <- (reserve0_searched / 2)
+    reserve0_searched |> IO.inspect(label: "sx1 reserve0_searched value")
+    reserve0_searched / 2 |> trunc() |> IO.inspect(label: "sx1 reserve0_searched / 2 value")
+
+    # with  min_amount <- (reserve0_searched / 2) |> trunc() |> Ethers.Utils.from_wei() |> trunc()
+    with  min_amount <- (reserve0_searched / 2) |> trunc()
                                 |> IO.inspect(label: "sx1 min_amount"),
-            {:ok, estimate} <- router_address_searched |> simulate_amounts_input(min_amount, reserve0_searched, reserve1_searched)
+            {:ok, estimate} <- router_address_searched |> simulate_amounts_input(min_amount, token_pair["token1"]["address"], token_pair["token0"]["address"])
                                 |> IO.inspect(label: "sx1 estimate"),
-            {:ok, result} <- router_address |> simulate_amount_output(estimate[1], reserve0, reserve1)
+            {:ok, result} <- router_address |> simulate_amounts_output(estimate |> Enum.at(1), token_pair["token0"]["address"], token_pair["token1"]["address"])
                                 |> IO.inspect(label: "sx1 result"),
-            {:ok, amount_in, amount_out} <- simulate(estimate[0], router_address_searched, router_address, token_pair),
+            {:ok, amount_in, amount_out} <- simulate(estimate |> Enum.at(0), router_address_searched, router_address, token_pair),
             pre_direction_gas_price_difference <- (amount_out - amount_in)
                                 |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :I_O") do
               {:ok, pre_direction_gas_price_difference, amount_in}
@@ -187,17 +192,18 @@ defmodule CheckProfit do
 
   def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, token_pair, :O_I) do
     IO.puts("sx1 in simulate_profit_pre_gas :0_I")
-      with  min_amount <- (reserve0 / 2)
+    # with  min_amount <- (reserve0 / 2) |> trunc() |> Ethers.Utils.from_wei() |> trunc()
+    with  min_amount <- (reserve0 / 2) |> trunc()
                                 |> IO.inspect(label: "sx1 min_amount"),
-            {:ok, estimate} <- router_address |> simulate_amounts_input(min_amount, reserve0, reserve1)
+            {:ok, estimate} <- router_address |> simulate_amounts_input(min_amount, token_pair["token1"]["address"], token_pair["token0"]["address"])
                                 |> IO.inspect(label: "sx1 estimate"),
-            {:ok, result} <- router_address_searched |> simulate_amount_output(estimate[1], reserve0_searched, reserve1_searched)
+            {:ok, result} <- router_address_searched |> simulate_amounts_output(estimate |> Enum.at(1), token_pair["token0"]["address"], token_pair["token1"]["address"])
                                 |> IO.inspect(label: "sx1 result"),
-            {:ok, amount_in, amount_out} <- simulate(estimate[0], router_address, router_address_searched, token_pair),
+            {:ok, amount_in, amount_out} <- simulate(estimate |> Enum.at(0), router_address, router_address_searched, token_pair),
             pre_direction_gas_price_difference <- (amount_out - amount_in)
                                 |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :O_I") do
               {:ok, pre_direction_gas_price_difference, amount_in}
-      end
+    end
   end
 
   def safety_tradable_amount(reserve0, reserve1), do: if reserve0 > reserve1, do: {:ok, reserve1}, else: {:ok, reserve0}

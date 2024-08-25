@@ -7,11 +7,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "_startOnUniswap",
-				"type": "bool"
-			},
-			{
 				"internalType": "address",
 				"name": "_token0",
 				"type": "address"
@@ -19,6 +14,16 @@
 			{
 				"internalType": "address",
 				"name": "_token1",
+				"type": "address"
+			},
+			{
+				"internalType": "contract IUniswapV2Router02",
+				"name": "_router0",
+				"type": "address"
+			},
+			{
+				"internalType": "contract IUniswapV2Router02",
+				"name": "_router1",
 				"type": "address"
 			},
 			{
