@@ -127,7 +127,7 @@ defmodule CheckProfit do
               |> IO.inspect(label: "sx1 simulated_profit") do
 
           # {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee}
-          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount |> Ethers.Utils.to_wei(), gas_fee}
+          {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee}
 
       end
   end
@@ -177,7 +177,7 @@ defmodule CheckProfit do
     reserve0_searched / 2 |> trunc() |> IO.inspect(label: "sx1 reserve0_searched / 2 value")
 
     # with  min_amount <- (reserve0_searched / 2) |> trunc() |> Ethers.Utils.from_wei() |> trunc()
-    with  min_amount <- (reserve0_searched / 2) |> trunc()
+    with  min_amount <- (reserve0 / 2) |> trunc()
                                 |> IO.inspect(label: "sx1 min_amount"),
             {:ok, estimate} <- router_address_searched |> simulate_amounts_input(min_amount, token_pair["token1"]["address"], token_pair["token0"]["address"])
                                 |> IO.inspect(label: "sx1 estimate"),
@@ -193,7 +193,7 @@ defmodule CheckProfit do
   def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, token_pair, :O_I) do
     IO.puts("sx1 in simulate_profit_pre_gas :0_I")
     # with  min_amount <- (reserve0 / 2) |> trunc() |> Ethers.Utils.from_wei() |> trunc()
-    with  min_amount <- (reserve0 / 2) |> trunc()
+    with  min_amount <- (reserve0_searched / 2) |> trunc()
                                 |> IO.inspect(label: "sx1 min_amount"),
             {:ok, estimate} <- router_address |> simulate_amounts_input(min_amount, token_pair["token1"]["address"], token_pair["token0"]["address"])
                                 |> IO.inspect(label: "sx1 estimate"),

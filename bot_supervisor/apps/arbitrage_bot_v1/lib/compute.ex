@@ -96,7 +96,7 @@ defmodule Compute do
   end
 
 
-  # This returns the amount of WETH needed to swap for X amount of SHIB
+  # This returns the amo121160853036425522unt of WETH needed to swap for X amount of SHIB
   def simulate_amounts_input(router_address, amount_in, token0_address, token1_address) do
     LiquidityPoolRouterContract.get_amounts_in(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
@@ -116,15 +116,15 @@ defmodule Compute do
         amount,
         token_pair["token1"]["address"],
         token_pair["token0"]["address"]
-        ),
+        ) |> IO.inspect(label: "sx1 simulate_amounts_output trade1"),
       {:ok, trade2} <-
-        router_from
+        router_to
         |> simulate_amounts_output(
           trade1 |> Enum.at(1),
           token_pair["token0"]["address"],
           token_pair["token1"]["address"]
-          ),
-          amount_in <- trade2 |> Enum.at(0),
+          ) |> IO.inspect(label: "sx1 simulate_amounts_output trade2"),
+          amount_in <- trade1 |> Enum.at(0),
           amount_out <- trade2 |> Enum.at(1) do
             {:ok, amount_in, amount_out}
 

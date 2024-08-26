@@ -55,6 +55,8 @@ defmodule ExecuteTrade do
     )
   end
 
+
+  ##TODO try to execute with the other smart contract and ours to see if it execute and understand the difference
   def maybe_execute_trade(
         {
           token_pair_content,
