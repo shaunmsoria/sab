@@ -108,7 +108,6 @@ defmodule Compute do
     |> Ethers.call(to: router_address)
   end
 
-  ##TODO finish this function based on the the get_amounts_out from weth to shib
   def simulate(amount, router_from, router_to, token_pair) do
     with {:ok, trade1} <-
       router_from
@@ -182,16 +181,22 @@ defmodule Compute do
     tradable_amount |> IO.inspect(label: "sx1 tradable_amount")
 
 
+    # Sabv1Contract.execute_trade(
+    #   token0_address,
+    #   token1_address,
+    #   router_address,
+    #   router_address_searched,
+    #   tradable_amount
+    # )
+    # |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
+
     Sabv1Contract.execute_trade(
+      true,
       token0_address,
       token1_address,
-      router_address,
-      router_address_searched,
       tradable_amount
     )
     |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
-
-    # |> Ethers.call()
     |> Ethers.call(to: smart_contract_address)
     |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
 

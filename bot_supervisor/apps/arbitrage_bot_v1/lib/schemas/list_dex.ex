@@ -1,5 +1,5 @@
 defmodule ListDex do
-  ##TODO defstruct deprecated
+  ##INFO defstruct deprecated
   defstruct name: "", list: []
 
   def get_list_dex_from_name(list_dex, name) do

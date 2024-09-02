@@ -9,7 +9,7 @@ import Big from "big.js";
 import axios from 'axios';
 
 const UNLOCKED_ACCOUNT = '0xdEAD000000000000000042069420694206942069'; // SHIB account to impersonate
-const AMOUNT = '80500000000000'; // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
+const AMOUNT = '40500000000000'; // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
 const deadline = Math.floor(Date.now() / 1000) + 60 * 20 // 20 minutes
 const shibAddress = '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE';
 const wethAddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
