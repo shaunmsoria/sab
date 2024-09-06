@@ -25,6 +25,7 @@ defmodule InitialiseDexBot do
               |> dex_token_pair_state_constructor(state)
           }
         end)
+        |> IO.inspect(label: "mx1 new_state")
 
       {:ok, _file} = write_state_file(new_state)
 
