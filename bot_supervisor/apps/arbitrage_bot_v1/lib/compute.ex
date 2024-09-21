@@ -50,8 +50,11 @@ defmodule Compute do
     end
   end
 
+
   def calculate_price(pair_address),
     do: calculate_price(pair_address, :O_I)
+
+  def calulcate_price("", _), do: {:error, "no pair address extracted from event"}
 
   def calculate_price(pair_address, :O_I) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
@@ -96,14 +99,25 @@ defmodule Compute do
   end
 
 
-  # This returns the amo121160853036425522unt of WETH needed to swap for X amount of SHIB
-  def simulate_amounts_input(router_address, amount_in, token0_address, token1_address) do
-    LiquidityPoolRouterContract.get_amounts_in(amount_in, [token0_address, token1_address])
+  # This returns the amount of WETH needed to swap for X amount of SHIB
+  def simulate_amounts_input(router_address, amount_out, token0_address, token1_address) do
+    IO.puts("mx1 simulate_amounts_input")
+    amount_out |> IO.inspect(label: "mx1 amount_out")
+    token0_address |> IO.inspect(label: "mx1 token0_address")
+    token1_address |> IO.inspect(label: "mx1 token1_address")
+
+
+    LiquidityPoolRouterContract.get_amounts_in(amount_out, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
   #  This returns the amount of WETH for swapping X amount of SHIB
   def simulate_amounts_output(router_address, amount_in, token0_address, token1_address) do
+    IO.puts("mx1 simulate_amounts_output")
+    amount_in |> IO.inspect(label: "mx1 amount_in")
+    token0_address |> IO.inspect(label: "mx1 token0_address")
+    token1_address |> IO.inspect(label: "mx1 token1_address")
+
     LiquidityPoolRouterContract.get_amounts_out(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end

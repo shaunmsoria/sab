@@ -26,7 +26,7 @@ const uRouter = new hre.ethers.Contract(config.UNISWAP.V2_ROUTER_02_ADDRESS, IUn
 const sFactory = new hre.ethers.Contract(config.SUSHISWAP.FACTORY_ADDRESS, IUniswapV2Factory.abi, provider)
 const sRouter = new hre.ethers.Contract(config.SUSHISWAP.V2_ROUTER_02_ADDRESS, IUniswapV2Router02.abi, provider)
 
-const IArbitrage = require('../artifacts/contracts/Arbitrage.sol/Arbitrage.json')
+const IArbitrage = require('../artifacts/contracts/SABV1.sol/SABV1.json')
 const arbitrage = new hre.ethers.Contract(config.PROJECT_SETTINGS.ARBITRAGE_ADDRESS, IArbitrage.abi, provider)
 
 module.exports = {

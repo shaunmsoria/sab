@@ -11,6 +11,16 @@ import Config
 
 # Sample configuration:
 #
+
+config :logger,
+  backends: [{LoggerFileBackend, :error_log}]
+
+config :logger, :error_log,
+  path: "log/error.log",
+  level: :error,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
+
 config :logger, :console,
   level: :error,
   # level: :debug,
@@ -18,8 +28,6 @@ config :logger, :console,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
 
-# metadata: [:user_id]
-#
 
 config :ethers,
   # Defaults to: Ethereumex.HttpClient
@@ -50,7 +58,8 @@ config :ethereumex,
   # url: "http://127.0.0.1:8545/"
   # url: "http://127.0.0.1:8545"
   # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  url: "http://127.0.0.1:8545"
+  # url: "http://127.0.0.1:8545"
+  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
 # in your config.exs
 config :arbitrage_bot_v1, W3WS,
@@ -80,7 +89,8 @@ config :arbitrage_bot_v1, W3WS,
       # uri: "ws://localhost:8545",
       # uri: "ws://127.0.0.1:8545",
       # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
-      uri: "ws://127.0.0.1:8545",
+      # uri: "ws://127.0.0.1:8545",
+      uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
 
       # enable block ping every 10 seconds. this will cause the listener to
       # fetch and log the current block every 10 seconds. the last fetched block

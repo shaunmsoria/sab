@@ -23,6 +23,7 @@ defmodule BotSupervisor.MixProject do
       {:httpoison, "~> 2.2"},
       {:con_cache, "~> 1.0"},
       {:plug, "~> 1.11"},
+      {:logger_file_backend, "~> 0.0.14"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end

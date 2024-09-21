@@ -14,15 +14,6 @@ defmodule ListDex do
     with upcase_address <- String.upcase(address) do
       ConCache.get(:dex, "list_dex")
       |> Enum.reduce_while({}, fn dex_name, acc ->
-        # ConCache.get(:dex, dex_name)
-        # |> Map.get("0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f")
-        # |> Map.get("0x811beed0119b4afce20d2583eb608c6f7af1954f")
-        # |> IO.inspect(label: "sx1 ConCache.get(:dex, dex_name)")
-
-        # ConCache.get(:dex, dex_name)
-        # |> Enum.map(fn token_pair_raw ->
-        #   token_pair_raw |> IO.inspect(label: "sx1 token_pair_raw")
-        # end)
 
         found_token_pair_from_address =
           ConCache.get(:dex, dex_name)
@@ -38,11 +29,6 @@ defmodule ListDex do
           {token_address, token_content} = found_token_pair_from_address
           {:halt, {:ok, {token_content, dex_name}}}
         end
-        # if is_nil(token_pair = ConCache.get(:dex, dex_name) |> Map.get(address)) do
-        #   {:cont, acc}
-        # else
-        #   {:halt, {:ok, {token_pair, dex_name}}}
-        # end
       end)
     end
 

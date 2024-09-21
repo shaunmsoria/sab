@@ -1,26 +1,115 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-const hre = require("hardhat")
+require("dotenv").config()
 
-const config = require("../config.json")
+const hre = require("hardhat")
+const axios = require("axios")
+
+// -- IMPORT HELPER FUNCTIONS & CONFIG -- //
+const { getTokenAndContract, getPairContract, calculatePrice } = require('../helpers/helpers.js')
+const { provider, uFactory, uRouter, sFactory, sRouter } = require('../helpers/initialization.js')
+
+// -- CONFIGURE VALUES HERE -- //
+const V2_FACTORY_TO_USE = uFactory
+const V2_ROUTER_TO_USE = uRouter
+
+const UNLOCKED_ACCOUNT = '0xdEAD000000000000000042069420694206942069' // SHIB account to impersonate 
+const AMOUNT = '40500000000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
+
+
+async function sendPostEvent(event) {
+  const url = `http://localhost:4000/event`;
+
+  console.log("sx1 event pre post request", event);
+
+  try {
+    const response = await axios.post(url, event, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('Sucess:', response.data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.message);
+    } else {
+      console.error('Unexpected error:', error)
+    }
+
+  }
+
+
+};
 
 async function main() {
-  const SABV1 = await hre.ethers.deployContract(
-    "SABV1",
-    []
-  )
+  // Fetch contracts
+  const {
+    token0Contract,
+    token1Contract,
+    token0: ARB_AGAINST,
+    token1: ARB_FOR
+  } = await getTokenAndContract(process.env.ARB_AGAINST, process.env.ARB_FOR, provider)
 
-  await SABV1.waitForDeployment()
+  const pair = await getPairContract(V2_FACTORY_TO_USE, ARB_AGAINST.address, ARB_FOR.address, provider)
 
-  console.log(`SABV1 contract deployed to ${await SABV1.getAddress()}`)
+  // Fetch price of SHIB/WETH before we execute the swap
+  const priceBefore = await calculatePrice(pair)
+
+  pair.on("Swap", async (...params) => {
+    console.log("sx1 swap event");
+    console.log(params);
+
+    const event = JSON.stringify({ address: params[6].emitter.target });
+    console.log("sx1 JSON.stringify(event)", event);
+
+
+    sendPostEvent(event);
+
+  });
+
+
+  await manipulatePrice([ARB_AGAINST, ARB_FOR], token0Contract)
+
+  // Fetch price of SHIB/WETH after the swap
+  const priceAfter = await calculatePrice(pair)
+
+  const data = {
+    'Price Before': `1 WETH = ${Number(priceBefore).toFixed(0)} SHIB`,
+    'Price After': `1 WETH = ${Number(priceAfter).toFixed(0)} SHIB`,
+  }
+
+
+
+  console.table(data)
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+async function manipulatePrice(_path, _token0Contract) {
+  console.log(`\nBeginning Swap...\n`)
+
+  console.log(`Input Token: ${_path[0].symbol}`)
+  console.log(`Output Token: ${_path[1].symbol}\n`)
+
+  const amount = hre.ethers.parseUnits(AMOUNT, 'ether')
+  const path = [_path[0].address, _path[1].address]
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 20 // 20 minutes
+
+  await hre.network.provider.request({
+    method: "hardhat_impersonateAccount",
+    params: [UNLOCKED_ACCOUNT],
+  })
+
+  const signer = await hre.ethers.getSigner(UNLOCKED_ACCOUNT)
+
+  const approval = await _token0Contract.connect(signer).approve(await V2_ROUTER_TO_USE.getAddress(), amount, { gasLimit: 50000 })
+  await approval.wait()
+
+  const swap = await V2_ROUTER_TO_USE.connect(signer).swapExactTokensForTokens(amount, 0, path, signer.address, deadline, { gasLimit: 125000 })
+  await swap.wait()
+
+
+
+  console.log(`Swap Complete!\n`)
+}
+
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

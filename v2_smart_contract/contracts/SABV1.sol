@@ -116,31 +116,12 @@ contract SABV1 is IFlashLoanRecipient {
         uint256 _startAmountIn = IERC20(_tokenPath[0]).balanceOf(address(this));
 
         require(
-            IERC20(_tokenPath[0]).approve(address(_startRouter), _startAmountIn),
+            IERC20(_tokenPath[0]).approve(
+                address(_startRouter),
+                _startAmountIn
+            ),
             "start router  approval failed"
         );
-
-        // require(
-        //     IERC20(_tokenPath[0]).approve(address(_startRouter), _flashAmount),
-        //     "start router  approval failed"
-        // );
-
-        // _startRouter.swapExactTokensForTokens(
-        //     _flashAmount,
-        //     0,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
-
-        // _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
-        //     _flashAmount,
-        //     0,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
-
 
         _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
             _startAmountIn,
@@ -149,14 +130,6 @@ contract SABV1 is IFlashLoanRecipient {
             address(this),
             (block.timestamp + 1200)
         );
-
-        // _startRouter.swapExactTokensForTokens(
-        //     _startAmountIn,
-        //     0,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
 
         IUniswapV2Router02 _endRouter = _routerPath[1];
         uint256 _endAmountIn = IERC20(_tokenPath[1]).balanceOf(address(this));
@@ -172,14 +145,6 @@ contract SABV1 is IFlashLoanRecipient {
         _tokenPath[0] = token1;
         _tokenPath[1] = token0;
 
-        // _endRouter.swapExactTokensForTokens(
-        //     _endAmountIn,
-        //     _flashAmount,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
-
         _endRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
             _endAmountIn,
             _flashAmount,
@@ -187,14 +152,5 @@ contract SABV1 is IFlashLoanRecipient {
             address(this),
             (block.timestamp + 1200)
         );
-
-
-        // _endRouter.swapExactTokensForTokens(
-        //     _endAmountIn,
-        //     _flashAmount,
-        //     _tokenPath,
-        //     address(this),
-        //     (block.timestamp + 1200)
-        // );
     }
 }

@@ -1,4 +1,6 @@
 defmodule Libraries do
+
+  #TODO find the balancer router address
   def dexs() do
     %{
       "uniswap" => %{
@@ -15,12 +17,21 @@ defmodule Libraries do
         "name" => "sushiswap",
         "version" => "2",
         "router" => "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
-        # "router" => "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
         "factory" => "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
         "subgraph_url" => "https://gateway-arbitrum.network.thegraph.com/api",
         "subgraph_api_key" => "17c4cccfd28795b7a90b4a815fab12cc",
         "subgraph_id" => "9tHceukBZ5hFEcAH7zoV5zXxGDYQRezZr1ZMgwUcLK5w",
         "subgraph_query" => "{pools {id token0 {id symbol} token1 {id symbol}}}"
+      },
+      "pancakeswap" => %{
+        "name" => "pancakeswap",
+        "version" => "2",
+        "router" => "0xEfF92A263d31888d860bD50809A8D171709b7b1c",
+        "factory" => "0x1097053Fd2ea711dad45caCcc45EfF7548fCB362",
+        "subgraph_url" => "",
+        "subgraph_api_key" => "",
+        "subgraph_id" => "",
+        "subgraph_query" => ""
       }
     }
   end

@@ -20,24 +20,9 @@ const config: HardhatUserConfig = {
       },
       mining: {
         auto: true,
-        // Produce new block every 3 minutes to resolve next issues
-        // https://github.com/NomicFoundation/hardhat/issues/2053
-        // https://github.com/ethers-io/ethers.js/issues/2338
-        // https://github.com/ethers-io/ethers.js/discussions/4116
         interval: 3 * 60 * 1000, // should be less then 5 minutes to make event subscription work
     }
     },
-    // local : {
-    //   url: 'http://127.0.0.1:8545',
-    //   mining: {
-    //     auto: true,
-    //     // Produce new block every 3 minutes to resolve next issues
-    //     // https://github.com/NomicFoundation/hardhat/issues/2053
-    //     // https://github.com/ethers-io/ethers.js/issues/2338
-    //     // https://github.com/ethers-io/ethers.js/discussions/4116
-    //     interval: 3 * 60 * 1000, // should be less then 5 minutes to make event subscription work
-    // }
-    // }
   }
 };
 
