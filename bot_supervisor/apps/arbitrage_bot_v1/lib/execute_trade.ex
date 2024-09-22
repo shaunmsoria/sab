@@ -7,10 +7,24 @@ defmodule ExecuteTrade do
   def run(list_profitable_trades) when is_list(list_profitable_trades) do
     with {:ok, eth_wallet_amount} <- Compute.get_wallet_balance() do
       list_profitable_trades
-      |> Enum.map(fn trade ->
-        maybe_execute_trade(trade, eth_wallet_amount)
+      |> Enum.sort_by(
+        fn {token_pair_content, updated_token_pair_searched, dex_name, dex_name_searched,
+            estimated_profit, simulated_profit_token_symbol, direction, tradable_amount,
+            gas_fee} ->
+          estimated_profit
+        end,
+        :desc
+      )
+      |> Enum.reduce_while([], fn trade, acc ->
+        IO.puts("sx1 inside reduce_while")
+        case maybe_execute_trade(trade, eth_wallet_amount) do
+          {:error, trade} ->
+            trade |> IO.inspect(label: "sx1 trade failed to execute, continuing to next trade...")
+            {:cont, acc}
+          {:ok, trade} -> {:halt, trade}
+        end
       end)
-      |> IO.inspect(label: "sx1 list_profitable_trades")
+      |> IO.inspect(label: "sx1 execute trade result")
     end
   end
 
@@ -29,6 +43,7 @@ defmodule ExecuteTrade do
       dex_searched_address,
       tradable_amount
     )
+
     # Compute.execute_trade(
     #   token1,
     #   token0,
@@ -55,8 +70,6 @@ defmodule ExecuteTrade do
     )
   end
 
-
-  ##TODO try to execute with the other smart contract and ours to see if it execute and understand the difference
   def maybe_execute_trade(
         {
           token_pair_content,
@@ -71,7 +84,7 @@ defmodule ExecuteTrade do
         },
         eth_wallet_amount
       ) do
-    with {:ok, true} <- enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount),
+    with {:ok, true} <- enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount) |> IO.inspect(label: "sx1 enough_eth_to_pay_gas_fee?"),
          dex_content_address <- @dexs |> Map.get(dex_name) |> Map.get("router"),
          dex_searched_address <- @dexs |> Map.get(dex_name_searched) |> Map.get("router"),
          {:ok, trade_result} <-
@@ -110,37 +123,43 @@ defmodule ExecuteTrade do
         Compute.get_shib_balance(System.get_env("ACCOUNT_NUMBER"))
         |> IO.inspect(label: "sx1 shib_amount?")
 
-      {
-        trade_result,
-        token_pair_content,
-        updated_token_pair_searched,
-        dex_name,
-        dex_name_searched,
-        estimated_profit,
-        simulated_profit_token_symbol,
-        direction,
-        tradable_amount,
-        gas_fee,
-        eth_wallet_amount
-      }
+      {:ok,
+       {
+         trade_result,
+         token_pair_content,
+         updated_token_pair_searched,
+         dex_name,
+         dex_name_searched,
+         estimated_profit,
+         simulated_profit_token_symbol,
+         direction,
+         tradable_amount,
+         gas_fee,
+         eth_wallet_amount
+       }}
     else
       msg ->
-        {
-          msg,
-          token_pair_content,
-          updated_token_pair_searched,
-          dex_name,
-          dex_name_searched,
-          estimated_profit,
-          simulated_profit_token_symbol,
-          direction,
-          tradable_amount,
-          gas_fee,
-          eth_wallet_amount
-        }
+        {:error,
+         {
+           msg,
+           token_pair_content,
+           updated_token_pair_searched,
+           dex_name,
+           dex_name_searched,
+           estimated_profit,
+           simulated_profit_token_symbol,
+           direction,
+           tradable_amount,
+           gas_fee,
+           eth_wallet_amount
+         }}
     end
   end
 
-  def enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount),
-    do: {:ok, eth_wallet_amount > gas_fee}
+  def enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount) do
+    eth_wallet_amount |> IO.inspect(label: "sx1 eth_wallet_amount")
+    gas_fee |> IO.inspect(label: "sx1 gas_fee")
+
+    {:ok, eth_wallet_amount > gas_fee}
+  end
 end

@@ -4,12 +4,8 @@ defmodule CheckProfit do
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
-  # @trade_limit 10000000
 
   def run(_state, event_data) when is_map(event_data) do
-    event_data.event.address
-    |> IO.inspect(label: "sx1 event_data.event.address")
-
     with true <-
            not String.equivalent?(event_data.event.address, ""),
          price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
@@ -22,13 +18,11 @@ defmodule CheckProfit do
       ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
-        error |> IO.inspect(label: "sx1 error: no event address")
+        {:error, error} |> IO.inspect(label: "sx1 error: no event address")
     end
   end
 
   def found_dex_token_pair?(address) do
-    address |> IO.inspect(label: "sx1 in found_dex_token_pair? address result")
-
     with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
       {:ok, token_pair}
     else
@@ -178,7 +172,6 @@ defmodule CheckProfit do
          simulated_profit <-
            (simulated_profit_pre_gas - gas_fee)
            |> IO.inspect(label: "sx1 simulated_profit") do
-      # {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol, tradable_amount, gas_fee}
       {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol,
        tradable_amount, gas_fee}
     end
@@ -224,19 +217,6 @@ defmodule CheckProfit do
 
   def transaction_direction(0), do: {:ok, false, 0}
 
-  # def simulate_profit_pre_gas(router_address, reserve0, reserve1, router_address_searched, reserve0_searched, reserve1_searched, _token_pair_content, :I_O) do
-  #     with  tradable_amount <- reserve1_searched / 2
-  #             |> IO.inspect(label: "sx1 tradable_amount"),
-  #           {:ok, simulated_amount_out_reserve_0} <- router_address_searched |> simulate_amount_input(tradable_amount, reserve1_searched, reserve0_searched)
-  #             |> IO.inspect(label: "sx1 simulate_amount_output content"),
-  #           {:ok, simulated_amount_out_reserve_1_searched} <- router_address |> simulate_amount_output(simulated_amount_out_reserve_0, reserve0, reserve1)
-  #             |> IO.inspect(label: "sx1 simulate_amount_output searched"),
-  #           pre_direction_gas_price_difference <- simulated_amount_out_reserve_1_searched - tradable_amount
-  #             |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :I_O") do
-  #             {:ok, pre_direction_gas_price_difference, tradable_amount}
-  #     end
-  # end
-
   def simulate_profit_pre_gas(
         router_address,
         reserve0,
@@ -250,15 +230,6 @@ defmodule CheckProfit do
     IO.puts("sx1 in simulate_profit_pre_gas :I_0")
     reserve0 |> IO.inspect(label: "sx1 reserve0 value")
 
-    # (reserve0 / 1_000_000_000_000)
-    # |> trunc()
-    # |> IO.inspect(label: "sx1 reserve0 / 1000000000000 value")
-
-    # with  min_amount <- (reserve0_searched / 2) |> trunc() |> Ethers.Utils.from_wei() |> trunc()
-    # with min_amount <-
-    #        (reserve0 / 1_000_000_000_000)
-    #        |> trunc()
-    #        |> IO.inspect(label: "sx1 min_amount"),
     with {:ok, estimate} <-
            router_address_searched
            |> estimate_extractor(
@@ -268,14 +239,6 @@ defmodule CheckProfit do
              18
            )
            |> IO.inspect(label: "sx1 estimate :I_0"),
-         #  {:ok, estimate} <-
-         #    router_address_searched
-         #    |> simulate_amounts_input(
-         #      min_amount,
-         #      token_pair["token1"]["address"],
-         #      token_pair["token0"]["address"]
-         #    )
-         #    |> IO.inspect(label: "sx1 estimate"),
          {:ok, result} <-
            router_address
            |> simulate_amounts_output(
@@ -306,15 +269,6 @@ defmodule CheckProfit do
     IO.puts("sx1 in simulate_profit_pre_gas :0_I")
     reserve0_searched |> IO.inspect(label: "sx1 reserve0_searched value")
 
-    # (reserve0_searched / 1_000_000_000_000)
-    # |> trunc()
-    # |> IO.inspect(label: "sx1 reserve0_searched / 1000000000000 value")
-
-    # with  min_amount <- (reserve0 / 2) |> trunc() |> Ethers.Utils.from_wei() |> trunc()
-    # with min_amount <-
-    #        (reserve0_searched / 1_000_000_000_000)
-    #        |> trunc()
-    #        |> IO.inspect(label: "sx1 min_amount"),
     with {:ok, estimate} <-
            router_address
            |> estimate_extractor(
@@ -324,14 +278,6 @@ defmodule CheckProfit do
              18
            )
            |> IO.inspect(label: "sx1 estimate :0_I"),
-         #  {:ok, estimate} <-
-         #    router_address
-         #    |> simulate_amounts_input(
-         #      min_amount,
-         #      token_pair["token1"]["address"],
-         #      token_pair["token0"]["address"]
-         #    )
-         #    |> IO.inspect(label: "sx1 estimate"),
          {:ok, result} <-
            router_address_searched
            |> simulate_amounts_output(
@@ -352,29 +298,6 @@ defmodule CheckProfit do
   def safety_tradable_amount(reserve0, reserve1),
     do: if(reserve0 > reserve1, do: {:ok, reserve1}, else: {:ok, reserve0})
 
-  # @divider [
-  #   1_000_000_000_000,
-  #   500_000_000_000,
-  #   1_000_000_000,
-  #   500_000_000,
-  #   1_000_000,
-  #   500_000,
-  #   1000,
-  #   500,
-  #   100,
-  #   50,
-  #   10,
-  #   9,
-  #   8,
-  #   7,
-  #   6,
-  #   5,
-  #   4,
-  #   3,
-  #   2
-  # ]
-  # @divider [1000000000000, 1000000000, 1000000, 1000, 100, 10, 8, 6, 4, 2]
-  # @divider_up [500000000000, 500000000, 500000, 500, 50, 9, 7, 5, 3, 2]
   def estimate_extractor(router, amount, token0, token1, counter) when counter <= 0,
     do: {:error, "event not tradable"}
 
