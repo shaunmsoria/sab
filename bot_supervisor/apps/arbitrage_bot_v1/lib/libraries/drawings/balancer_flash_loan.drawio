@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="GS-LAj8GKtuHsBEUhd14" name="Balancer FL Flow">
-        <mxGraphModel dx="2011" dy="869" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1618" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -253,7 +253,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="hZPSvRqQnpIW0ilMayFJ" name="Implementation Flow">
-        <mxGraphModel dx="772" dy="869" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="791" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -290,13 +290,13 @@
                         <mxPoint x="96.5" y="480" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-11" value="Choose&lt;br&gt;Extra Dex" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e3c800;strokeColor=#B09500;fontColor=#000000;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-11" value="Choose&lt;br&gt;Extra Dex" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="240" y="115" width="120" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-12" value="Gather&lt;br&gt;Dex Details" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-12" value="Gather&lt;br&gt;Dex Details" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
                     <mxGeometry x="441" y="115" width="120" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-13" value="Include new Dex&lt;br&gt;in Check Profit&lt;br&gt;Process" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-13" value="Include new Dex&lt;br&gt;in Check Profit&lt;br&gt;Process" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
                     <mxGeometry x="640" y="115" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="UhlgqV1v0M_lInKnJqnQ-14" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="UhlgqV1v0M_lInKnJqnQ-4" edge="1">
@@ -305,7 +305,7 @@
                         <mxPoint x="230" y="150" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-15" value="Breakdown&lt;br&gt;Different Logs&lt;br&gt;Categories" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-15" value="Breakdown&lt;br&gt;Different Logs&lt;br&gt;Categories" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" parent="1" vertex="1">
                     <mxGeometry x="241" y="225" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="UhlgqV1v0M_lInKnJqnQ-16" value="Configure&lt;br&gt;config.ex to write&lt;br&gt;the logs" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -344,7 +344,7 @@
                         <mxPoint x="230" y="509.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="3JztZfSmWXZ1rNvbyD9X-1" value="Clean Up&lt;br&gt;unnecessary logs" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="3JztZfSmWXZ1rNvbyD9X-1" value="Clean Up&lt;br&gt;unnecessary logs" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="640" y="225" width="120" height="70" as="geometry"/>
                 </mxCell>
             </root>

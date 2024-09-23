@@ -32,16 +32,9 @@ defmodule GasExtractor do
         max_gas_limit =
           convert_string_to_value(System.get_env("GAS_LIMIT"))
 
-        # max_gas_limit =
-        #   System.get_env("GAS_LIMIT")
-        #   |> String.to_float()
-
         fast_gas_price =
           convert_string_to_value(fast_gas_price_raw)
 
-        # fast_gas_price =
-        #   fast_gas_price_raw
-        #   |> String.to_float()
 
         estimated_gas_fee = fast_gas_price * max_gas_limit / 1_000_000_000
 

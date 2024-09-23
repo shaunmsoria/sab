@@ -1,0 +1,12 @@
+08:05:57.510 [info] tracking subscription 0x1 for #PID<0.528.0>
+08:05:57.529 [info] tracking subscription 0x2 for #PID<0.526.0>
+08:06:07.533 [info] [BlockPing] current block: 20808949 (0x13d84f5)
+08:10:57.534 [info] tracking subscription 0x3 for #PID<0.526.0>
+07:20:59.658 [info] tracking subscription 0x1 for #PID<0.528.0>
+07:20:59.666 [info] tracking subscription 0x2 for #PID<0.526.0>
+07:21:09.669 [info] [BlockPing] current block: 20815746 (0x13d9f82)
+07:25:59.669 [info] tracking subscription 0x3 for #PID<0.526.0>
+07:30:59.671 [info] tracking subscription 0x4 for #PID<0.526.0>
+07:35:59.672 [info] tracking subscription 0x5 for #PID<0.526.0>
+07:37:35.929 [info] tracking subscription 0x6 for #PID<0.501.0>
+07:37:35.939 [info] tracking subscription 0x7 for #PID<0.495.0>

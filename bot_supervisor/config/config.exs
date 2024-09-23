@@ -21,6 +21,16 @@ config :logger, :error_log,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :logger,
+  backends: [{LoggerFileBackend, :info_log}]
+
+config :logger, :info_log,
+  path: "log/info.log",
+  level: :info,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
+
+
 config :logger, :console,
   level: :error,
   # level: :debug,
