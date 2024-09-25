@@ -10,3 +10,528 @@
 07:35:59.672 [info] tracking subscription 0x5 for #PID<0.526.0>
 07:37:35.929 [info] tracking subscription 0x6 for #PID<0.501.0>
 07:37:35.939 [info] tracking subscription 0x7 for #PID<0.495.0>
+07:50:27.168 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.502.0>, nil)
+    lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:52:04.191 [info] tracking subscription 0x1 for #PID<0.518.0>
+07:52:04.199 [info] tracking subscription 0x2 for #PID<0.516.0>
+07:52:04.199 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.520.0>, nil)
+    lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:52:04.201 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.522.0>, nil)
+    lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:52:04.202 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.524.0>, nil)
+    lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:52:04.203 [info] Application arbitrage_bot_v1 exited: shutdown
+07:53:56.909 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.490.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:53:57.365 [info] tracking subscription 0x3 for #PID<0.506.0>
+07:53:57.370 [info] tracking subscription 0x4 for #PID<0.504.0>
+07:53:57.371 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.508.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:53:57.372 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.510.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:53:57.372 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.513.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:53:57.376 [info] Application arbitrage_bot_v1 exited: shutdown
+07:57:44.388 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.490.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:57:44.885 [info] tracking subscription 0x5 for #PID<0.506.0>
+07:57:44.892 [info] tracking subscription 0x6 for #PID<0.503.0>
+07:57:44.895 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.508.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:57:44.897 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.511.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:57:44.898 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.513.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:57:44.904 [info] Application arbitrage_bot_v1 exited: shutdown
+07:59:17.858 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.490.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:59:18.300 [info] tracking subscription 0x7 for #PID<0.501.0>
+07:59:18.309 [info] tracking subscription 0x8 for #PID<0.499.0>
+07:59:18.311 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.504.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:59:18.313 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.507.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:59:18.315 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.510.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:59:18.319 [info] Application arbitrage_bot_v1 exited: shutdown
+08:01:44.013 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: LogsWritter
+    ** (EXIT) an exception was raised:
+        ** (FunctionClauseError) no function clause matching in LogsWritter.start_link/1
+            (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:6: LogsWritter.start_link([])
+            (stdlib 5.1.1) supervisor.erl:420: :supervisor.do_start_child_i/3
+            (stdlib 5.1.1) supervisor.erl:406: :supervisor.do_start_child/2
+            (stdlib 5.1.1) supervisor.erl:390: anonymous fn/3 in :supervisor.start_children/2
+            (stdlib 5.1.1) supervisor.erl:1258: :supervisor.children_map/4
+            (stdlib 5.1.1) supervisor.erl:350: :supervisor.init_children/2
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+08:01:44.021 [info] Application con_cache exited: :stopped
+08:01:44.021 [info] Application httpoison exited: :stopped
+08:01:44.022 [info] Application hackney exited: :stopped
+08:01:44.022 [info] Application metrics exited: :stopped
+08:01:44.022 [info] Application ssl_verify_fun exited: :stopped
+08:01:44.022 [info] Application parse_trans exited: :stopped
+08:01:44.022 [info] Application syntax_tools exited: :stopped
+08:01:44.022 [info] Application certifi exited: :stopped
+08:01:44.022 [info] Application mimerl exited: :stopped
+08:01:44.022 [info] Application w3ws exited: :stopped
+08:01:44.022 [info] Application wind exited: :stopped
+08:01:44.022 [info] Application mint_web_socket exited: :stopped
+08:01:44.022 [info] Application ethers exited: :stopped
+08:01:44.022 [info] Application idna exited: :stopped
+08:01:44.022 [info] Application unicode_util_compat exited: :stopped
+08:01:44.022 [info] Application ex_rlp exited: :stopped
+08:01:44.022 [info] Application ex_abi exited: :stopped
+08:01:44.022 [info] Application ex_keccak exited: :stopped
+08:01:44.022 [info] Application rustler_precompiled exited: :stopped
+08:01:44.022 [info] Application ethereumex exited: :stopped
+08:01:44.022 [info] Application poolboy exited: :stopped
+08:01:44.022 [info] Application finch exited: :stopped
+08:01:44.022 [info] Application nimble_options exited: :stopped
+08:01:44.023 [info] Application nimble_pool exited: :stopped
+08:01:44.023 [info] Application mint exited: :stopped
+08:01:44.023 [info] Application hpax exited: :stopped
+08:01:44.023 [info] Application castore exited: :stopped
+08:01:44.023 [info] Application jason exited: :stopped
+08:01:44.023 [info] Application decimal exited: :stopped
+08:01:44.024 [info] Application server exited: :stopped
+08:01:44.024 [info] Application plug_cowboy exited: :stopped
+08:01:44.025 [info] Application cowboy_telemetry exited: :stopped
+08:01:44.025 [info] Application cowboy exited: :stopped
+08:01:44.025 [info] Application ranch exited: :stopped
+08:01:44.025 [info] Application cowlib exited: :stopped
+08:01:44.026 [info] Application plug exited: :stopped
+08:01:44.026 [info] Application telemetry exited: :stopped
+08:01:44.026 [info] Application plug_crypto exited: :stopped
+08:01:44.026 [info] Application mime exited: :stopped
+08:01:44.026 [info] Application eex exited: :stopped
+08:02:16.184 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.489.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:02:16.547 [info] tracking subscription 0x9 for #PID<0.500.0>
+08:02:16.551 [info] tracking subscription 0xa for #PID<0.498.0>
+08:02:16.552 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.502.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:02:16.554 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.505.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:02:16.554 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.507.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:33: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:02:16.556 [info] Application arbitrage_bot_v1 exited: shutdown
+08:09:26.592 [info] tracking subscription 0xb for #PID<0.499.0>
+08:09:26.597 [info] tracking subscription 0xc for #PID<0.497.0>
+08:10:46.943 [info] tracking subscription 0xd for #PID<0.504.0>
+08:10:46.949 [info] tracking subscription 0xe for #PID<0.502.0>
+08:10:56.951 [info] [BlockPing] current block: 20823098 (0x13dbc3a)
+08:12:50.291 [info] tracking subscription 0xf for #PID<0.503.0>
+08:12:50.299 [info] tracking subscription 0x10 for #PID<0.497.0>
+08:12:50.395 [error] GenServer LogsWritter terminating
+** (ArgumentError) construction of binary failed: segment 1 of type 'binary': expected a binary but got: nil
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:46: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:12:50.931 [error] GenServer LogsWritter terminating
+** (ArgumentError) construction of binary failed: segment 1 of type 'binary': expected a binary but got: nil
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:46: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:12:51.434 [error] GenServer LogsWritter terminating
+** (ArgumentError) construction of binary failed: segment 1 of type 'binary': expected a binary but got: nil
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:46: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:12:51.936 [error] GenServer LogsWritter terminating
+** (ArgumentError) construction of binary failed: segment 1 of type 'binary': expected a binary but got: nil
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:46: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+08:12:51.942 [info] Application arbitrage_bot_v1 exited: shutdown
+08:13:31.528 [info] tracking subscription 0x11 for #PID<0.500.0>
+08:13:31.532 [info] tracking subscription 0x12 for #PID<0.498.0>
+08:13:41.537 [info] [BlockPing] current block: 20823098 (0x13dbc3a)
+18:51:21.713 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (BadMapError) expected a map, got: {:error, %Mint.TransportError{reason: :econnrefused}}
+            (stdlib 5.1.1) :maps.merge(%{}, {:error, %Mint.TransportError{reason: :econnrefused}})
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:103: anonymous fn/5 in InitialiseDexBot.dex_token_pair_state_constructor/2
+            (elixir 1.17.0-dev) lib/enum.ex:2531: Enum."-reduce/3-lists^foldl/2-0-"/3
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:102: anonymous fn/4 in InitialiseDexBot.dex_token_pair_state_constructor/2
+            (stdlib 5.1.1) maps.erl:416: :maps.fold_1/4
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:93: InitialiseDexBot.dex_token_pair_state_constructor/2
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:25: anonymous fn/2 in InitialiseDexBot.extract_list_pairs/0
+            (elixir 1.17.0-dev) lib/enum.ex:1703: Enum."-map/2-lists^map/1-1-"/2
+18:51:21.755 [info] Application con_cache exited: :stopped
+18:51:21.755 [info] Application httpoison exited: :stopped
+18:51:21.756 [info] Application hackney exited: :stopped
+18:51:21.756 [info] Application metrics exited: :stopped
+18:51:21.756 [info] Application ssl_verify_fun exited: :stopped
+18:51:21.756 [info] Application parse_trans exited: :stopped
+18:51:21.756 [info] Application syntax_tools exited: :stopped
+18:51:21.756 [info] Application certifi exited: :stopped
+18:51:21.756 [info] Application mimerl exited: :stopped
+18:51:21.756 [info] Application w3ws exited: :stopped
+18:51:21.756 [info] Application wind exited: :stopped
+18:51:21.756 [info] Application mint_web_socket exited: :stopped
+18:51:21.756 [info] Application ethers exited: :stopped
+18:51:21.756 [info] Application idna exited: :stopped
+18:51:21.756 [info] Application unicode_util_compat exited: :stopped
+18:51:21.756 [info] Application ex_rlp exited: :stopped
+18:51:21.756 [info] Application ex_abi exited: :stopped
+18:51:21.756 [info] Application ex_keccak exited: :stopped
+18:51:21.756 [info] Application rustler_precompiled exited: :stopped
+18:51:21.757 [info] Application ethereumex exited: :stopped
+18:51:21.757 [info] Application poolboy exited: :stopped
+18:51:21.757 [info] Application finch exited: :stopped
+18:51:21.757 [info] Application nimble_options exited: :stopped
+18:51:21.759 [info] Application nimble_pool exited: :stopped
+18:51:21.759 [info] Application mint exited: :stopped
+18:51:21.759 [info] Application hpax exited: :stopped
+18:51:21.759 [info] Application castore exited: :stopped
+18:51:21.759 [info] Application jason exited: :stopped
+18:51:21.759 [info] Application decimal exited: :stopped
+18:51:21.761 [info] Application server exited: :stopped
+18:51:21.761 [info] Application plug_cowboy exited: :stopped
+18:51:21.761 [info] Application cowboy_telemetry exited: :stopped
+18:51:21.762 [info] Application cowboy exited: :stopped
+18:51:21.763 [info] Application ranch exited: :stopped
+18:51:21.763 [info] Application cowlib exited: :stopped
+18:51:21.764 [info] Application plug exited: :stopped
+18:51:21.765 [info] Application telemetry exited: :stopped
+18:51:21.765 [info] Application plug_crypto exited: :stopped
+18:51:21.765 [info] Application mime exited: :stopped
+18:51:21.765 [info] Application eex exited: :stopped
+18:53:59.704 [info] tracking subscription 0x1 for #PID<0.492.0>
+18:53:59.709 [info] tracking subscription 0x2 for #PID<0.490.0>
+18:54:09.714 [info] [BlockPing] current block: 20826514 (0x13dc992)
+18:58:59.715 [info] tracking subscription 0x3 for #PID<0.490.0>
+18:59:13.042 [info] tracking subscription 0x4 for #PID<0.492.0>
+18:59:13.047 [info] tracking subscription 0x5 for #PID<0.490.0>
+18:59:23.051 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:04:13.051 [info] tracking subscription 0x6 for #PID<0.490.0>
+19:04:49.936 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.491.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:04:50.330 [info] tracking subscription 0x7 for #PID<0.502.0>
+19:04:50.336 [info] tracking subscription 0x8 for #PID<0.500.0>
+19:04:50.340 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.504.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:04:50.341 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.506.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:04:50.343 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.509.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:04:50.345 [info] Application arbitrage_bot_v1 exited: shutdown
+19:05:43.401 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.478.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:05:43.831 [info] tracking subscription 0x9 for #PID<0.494.0>
+19:05:43.836 [info] tracking subscription 0xa for #PID<0.492.0>
+19:05:43.837 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.496.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:05:43.838 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.498.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:05:43.838 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.500.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:05:43.843 [info] Application arbitrage_bot_v1 exited: shutdown
+19:07:03.037 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.491.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:07:03.366 [info] tracking subscription 0xb for #PID<0.501.0>
+19:07:03.369 [info] tracking subscription 0xc for #PID<0.499.0>
+19:07:03.371 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.503.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:07:03.373 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.506.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:07:03.375 [error] GenServer LogsWritter terminating
+** (FunctionClauseError) no function clause matching in IO.binwrite/2
+    (elixir 1.17.0-dev) lib/io.ex:280: IO.binwrite(#PID<0.508.0>, nil)
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:35: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:07:03.376 [info] Application arbitrage_bot_v1 exited: shutdown
+19:09:48.681 [info] tracking subscription 0xd for #PID<0.500.0>
+19:09:48.690 [info] tracking subscription 0xe for #PID<0.498.0>
+19:09:58.694 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:10:51.919 [info] tracking subscription 0xf for #PID<0.500.0>
+19:10:51.923 [info] tracking subscription 0x10 for #PID<0.498.0>
+19:11:01.926 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:14:24.527 [info] tracking subscription 0x11 for #PID<0.505.0>
+19:14:24.532 [info] tracking subscription 0x12 for #PID<0.503.0>
+19:14:34.534 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:21:05.270 [info] tracking subscription 0x13 for #PID<0.500.0>
+19:21:05.281 [info] tracking subscription 0x14 for #PID<0.498.0>
+19:21:15.285 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:25:14.138 [info] tracking subscription 0x15 for #PID<0.506.0>
+19:25:14.143 [info] tracking subscription 0x16 for #PID<0.504.0>
+19:25:24.145 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:26:11.459 [error] GenServer LogsWritter terminating
+** (ArgumentError) argument error
+    (stdlib 5.1.1) io.erl:103: :io.put_chars(:standard_io, [[label: "sx1 in with"], 10])
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:54: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:26:11.901 [info] tracking subscription 0x17 for #PID<0.507.0>
+19:26:11.911 [info] tracking subscription 0x18 for #PID<0.504.0>
+19:26:11.916 [error] GenServer LogsWritter terminating
+** (ArgumentError) argument error
+    (stdlib 5.1.1) io.erl:103: :io.put_chars(:standard_io, [[label: "sx1 in with"], 10])
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:54: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:26:11.917 [error] GenServer LogsWritter terminating
+** (ArgumentError) argument error
+    (stdlib 5.1.1) io.erl:103: :io.put_chars(:standard_io, [[label: "sx1 in with"], 10])
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:54: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:26:11.921 [error] GenServer LogsWritter terminating
+** (ArgumentError) argument error
+    (stdlib 5.1.1) io.erl:103: :io.put_chars(:standard_io, [[label: "sx1 in with"], 10])
+    (arbitrage_bot_v1 0.1.0) lib/logs_writter.ex:54: LogsWritter.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: %{}
+19:26:11.924 [info] Application arbitrage_bot_v1 exited: shutdown
+19:30:30.940 [info] tracking subscription 0x19 for #PID<0.500.0>
+19:30:30.947 [info] tracking subscription 0x1a for #PID<0.498.0>
+19:30:40.951 [info] [BlockPing] current block: 20826514 (0x13dc992)
+19:33:05.771 [info] tracking subscription 0x1b for #PID<0.500.0>
+19:33:05.775 [info] tracking subscription 0x1c for #PID<0.498.0>
+19:33:15.779 [info] [BlockPing] current block: 20826514 (0x13dc992)
