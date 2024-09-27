@@ -13,7 +13,7 @@ defmodule ArbitrageBotV1.Application do
       Supervisor.child_spec({ConCache, [name: :gas, ttl_check_interval: false]},
         id: :con_cache_gas
       ),
-      {LogsWritter, %{}},
+      {LogSaver, []},
       {GasExtractor, %{}},
       {DexBot, []},
       {W3WS.ListenerManager, otp_app: :arbitrage_bot_v1}

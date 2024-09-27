@@ -1,5 +1,6 @@
 defmodule InitialiseDexBot do
   import Compute
+  alias LogWritter, as: LW
 
   @dexs Libraries.dexs()
   @tokens Libraries.tokens()
@@ -11,7 +12,7 @@ defmodule InitialiseDexBot do
 
   def extract_list_pairs() do
     with state <- state_file(),
-    :ok <- ConCache.put(:dex, "list_dex", @dexs |> Map.keys()) do
+         :ok <- ConCache.put(:dex, "list_dex", @dexs |> Map.keys()) do
       new_state =
         @dexs
         |> Map.keys()
@@ -25,12 +26,19 @@ defmodule InitialiseDexBot do
               |> dex_token_pair_state_constructor(state)
           }
         end)
-        |> IO.inspect(label: "mx1 new_state")
+
+      # |> IO.inspect(label: "mx1 new_state")
 
       {:ok, _file} = write_state_file(new_state)
 
+      ConCache.get(:dex, "list_dex")
+      |> LW.ipt("sx1 list_dex with LW.ipt")
+      # |> IO.inspect(label: "sx1 list_dex value")
 
-      ConCache.get(:dex, "list_dex") |> IO.inspect(label: "sx1 list_dex value")
+      # ConCache.get(:dex, "list_dex")
+      # |> Logger.info()
+
+
 
       new_state
       # |> IO.inspect(label: "sx1 new_state")
@@ -79,15 +87,13 @@ defmodule InitialiseDexBot do
   def dex_token_pair_state_constructor(dex, state) do
     with name <- dex |> Map.get("name"),
          factory_address <-
-          @dexs
-          |> Map.get(name)
-          |> Map.get("factory"),
+           @dexs
+           |> Map.get(name)
+           |> Map.get("factory"),
          %{"content" => map_token_pair} <-
-          state
-          |> ListDex.get_list_dex_from_name(name),
-          :ok <- ConCache.put(:dex, name, map_token_pair) do
-
-
+           state
+           |> ListDex.get_list_dex_from_name(name),
+         :ok <- ConCache.put(:dex, name, map_token_pair) do
       {processed_token_pair, _count} =
         @tokens
         |> Enum.reduce({%{}, 1}, fn token, acc ->
@@ -100,7 +106,10 @@ defmodule InitialiseDexBot do
           additional_token_pair_list =
             reduced_tokens
             |> Enum.reduce(%{}, fn token_checked, acc2 ->
-              Map.merge(acc2, exist_token_pair(factory_address, map_token_pair, token, token_checked))
+              Map.merge(
+                acc2,
+                exist_token_pair(factory_address, map_token_pair, token, token_checked)
+              )
             end)
 
           {Map.merge(token_pair_list, additional_token_pair_list), count + 1}
@@ -116,30 +125,31 @@ defmodule InitialiseDexBot do
     {_name, token_value} = token
     {_name_checked, token_value_checked} = token_checked
 
-      with {:ok, pair_address} <-
-             Compute.get_pair_address(
-               factory_address,
-               token_value["address"],
-               token_value_checked["address"]
-             ) do
-        if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
-          %{pair_address =>
+    with {:ok, pair_address} <-
+           Compute.get_pair_address(
+             factory_address,
+             token_value["address"],
+             token_value_checked["address"]
+           ) do
+      if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
+        %{
+          pair_address =>
             %{
               "token0" => token_value,
               "token1" => token_value_checked,
               "address" => pair_address
-            } |> Map.merge(get_token_pair_price(pair_address))
             }
-        else
-          %{}
-        end
+            |> Map.merge(get_token_pair_price(pair_address))
+        }
+      else
+        %{}
       end
+    end
   end
 
   def exist_token_pair(factory_address, map_token_pair, token, token_checked) do
     {_name, token_value} = token
     {_name_checked, token_value_checked} = token_checked
-
 
     with %{} <-
            ListDex.token_pair_from_list_dex(map_token_pair, %{
@@ -153,12 +163,14 @@ defmodule InitialiseDexBot do
                token_value_checked["address"]
              ) do
         if not String.equivalent?(pair_address, "0x0000000000000000000000000000000000000000") do
-          %{pair_address =>
-            %{
-              "token0" => token_value,
-              "token1" => token_value_checked,
-              "address" => pair_address
-            } |> Map.merge(get_token_pair_price(pair_address))
+          %{
+            pair_address =>
+              %{
+                "token0" => token_value,
+                "token1" => token_value_checked,
+                "address" => pair_address
+              }
+              |> Map.merge(get_token_pair_price(pair_address))
           }
         else
           %{}
@@ -166,15 +178,16 @@ defmodule InitialiseDexBot do
       end
     else
       {_address, token_pair} ->
-        %{token_pair["address"] => token_pair |> Map.merge(get_token_pair_price(token_pair["address"]))}
+        %{
+          token_pair["address"] =>
+            token_pair |> Map.merge(get_token_pair_price(token_pair["address"]))
+        }
     end
   end
 
   def get_token_pair_price(token_pair) do
     %{"price" => Compute.calculate_price(token_pair)}
   end
-
-
 
   def archive do
     System.get_env("ALCHEMY_API_KEY")

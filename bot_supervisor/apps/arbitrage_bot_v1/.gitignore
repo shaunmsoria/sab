@@ -24,3 +24,6 @@ arbitrage_bot_v1-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Logs
+/apps/arbitrage_bot_v1/lib/log/
