@@ -37,3 +37,4 @@ bot_supervisor/tmp/
 
 # Remove logs from github
 bot_supervisor/log/
+bot_supervisor/apps/arbitrage_bot_v1/lib/log/
