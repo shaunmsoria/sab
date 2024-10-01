@@ -19,12 +19,12 @@ defmodule ExecuteTrade do
         IO.puts("sx1 inside reduce_while")
         case maybe_execute_trade(trade, eth_wallet_amount) do
           {:error, trade} ->
-            trade |> IO.inspect(label: "sx1 trade failed to execute, continuing to next trade...")
+            trade |> LogWritter.ipt("sx1 trade failed to execute, continuing to next trade...")
             {:cont, acc}
           {:ok, trade} -> {:halt, trade}
         end
       end)
-      |> IO.inspect(label: "sx1 execute trade result")
+      |> LogWritter.ipt("sx1 execute trade result")
     end
   end
 
@@ -84,44 +84,44 @@ defmodule ExecuteTrade do
         },
         eth_wallet_amount
       ) do
-    with {:ok, true} <- enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount) |> IO.inspect(label: "sx1 enough_eth_to_pay_gas_fee?"),
+    with {:ok, true} <- enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount) |> LogWritter.ipt("sx1 enough_eth_to_pay_gas_fee?"),
          dex_content_address <- @dexs |> Map.get(dex_name) |> Map.get("router"),
          dex_searched_address <- @dexs |> Map.get(dex_name_searched) |> Map.get("router"),
          {:ok, trade_result} <-
            execute_trade(
              token_pair_content["token0"]["address"]
-             |> IO.inspect(label: "sx1 token_pair_content[token0][address]"),
+             |> LogWritter.ipt("sx1 token_pair_content[token0][address]"),
              token_pair_content["token1"]["address"]
-             |> IO.inspect(label: "sx1 token_pair_content[token1][address]"),
-             dex_content_address |> IO.inspect(label: "sx1 dex_content_address"),
-             dex_searched_address |> IO.inspect(label: "sx1 dex_searched_address"),
-             tradable_amount |> IO.inspect(label: "sx1 tradable_amount"),
-             direction |> IO.inspect(label: "sx1 direction")
+             |> LogWritter.ipt("sx1 token_pair_content[token1][address]"),
+             dex_content_address |> LogWritter.ipt("sx1 dex_content_address"),
+             dex_searched_address |> LogWritter.ipt("sx1 dex_searched_address"),
+             tradable_amount |> LogWritter.ipt("sx1 tradable_amount"),
+             direction |> LogWritter.ipt("sx1 direction")
            ) do
       eth_wallet_amount
-      |> IO.inspect(label: "sx1 eth_wallet_amount before")
+      |> LogWritter.ipt("sx1 eth_wallet_amount before")
 
       {:ok, eth_wallet_amount_after} =
         Compute.get_wallet_balance()
-        |> IO.inspect(label: "sx1 eth_wallet_amount after")
+        |> LogWritter.ipt("sx1 eth_wallet_amount after")
 
       (eth_wallet_amount_after - eth_wallet_amount)
-      |> IO.inspect(label: "sx1 Gain / Lost")
+      |> LogWritter.ipt("sx1 Gain / Lost")
 
       System.get_env("ACCOUNT_NUMBER")
-      |> IO.inspect(label: "sx1 ACCOUNT_NUMBER")
+      |> LogWritter.ipt("sx1 ACCOUNT_NUMBER")
 
       {:ok, weth_amount} =
         Compute.get_weth_balance(System.get_env("ACCOUNT_NUMBER"))
-        |> IO.inspect(label: "sx1 weth_amount?")
+        |> LogWritter.ipt("sx1 weth_amount?")
 
       {:ok, weth_total_supply} =
         Compute.weth_total_supply()
-        |> IO.inspect(label: "sx1 weth_total_supplymount?")
+        |> LogWritter.ipt("sx1 weth_total_supplymount?")
 
       {:ok, shib_amount} =
         Compute.get_shib_balance(System.get_env("ACCOUNT_NUMBER"))
-        |> IO.inspect(label: "sx1 shib_amount?")
+        |> LogWritter.ipt("sx1 shib_amount?")
 
       {:ok,
        {
@@ -157,8 +157,8 @@ defmodule ExecuteTrade do
   end
 
   def enough_eth_to_pay_gas_fee?(gas_fee, eth_wallet_amount) do
-    eth_wallet_amount |> IO.inspect(label: "sx1 eth_wallet_amount")
-    gas_fee |> IO.inspect(label: "sx1 gas_fee")
+    eth_wallet_amount |> LogWritter.ipt("sx1 eth_wallet_amount")
+    gas_fee |> LogWritter.ipt("sx1 gas_fee")
 
     {:ok, eth_wallet_amount > gas_fee}
   end

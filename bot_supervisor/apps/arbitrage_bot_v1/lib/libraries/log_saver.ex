@@ -20,13 +20,13 @@ defmodule LogSaver do
   end
 
   def handle_cast(:save_logs, state) do
-#? can change the DateTime.now!("Etc/UTC") to Melbourne time
+    # ? can change the DateTime.now!("Etc/UTC") to Melbourne time
 
-    IO.puts("sx1 in save_logs")
+    # IO.puts("sx1 in save_logs")
 
     write_log()
 
-    :timer.sleep(60000)
+    :timer.sleep(1000)
 
     GenServer.cast(__MODULE__, :save_logs)
 
@@ -66,7 +66,7 @@ defmodule LogSaver do
          file_name <- "console_#{date.day}_#{date.month}_#{date.year}.log",
          message <-
            "Time: #{date.hour}:#{date.minute}:#{date.second}  " <>
-             message_raw <> "\n" do
+             message_raw <> "\n\n" do
       {file_name, message}
     end
   end

@@ -1,6 +1,7 @@
 defmodule InitialiseDexBot do
   import Compute
   alias LogWritter, as: LW
+  # import LogWritter
 
   @dexs Libraries.dexs()
   @tokens Libraries.tokens()
@@ -22,26 +23,16 @@ defmodule InitialiseDexBot do
             "content" =>
               @dexs
               |> Map.get(dex_key)
-              # |> IO.inspect(label: "sx1 dex_key")
               |> dex_token_pair_state_constructor(state)
           }
         end)
 
-      # |> IO.inspect(label: "mx1 new_state")
-
       {:ok, _file} = write_state_file(new_state)
 
       ConCache.get(:dex, "list_dex")
-      |> LW.ipt("sx1 list_dex with LW.ipt")
-      # |> IO.inspect(label: "sx1 list_dex value")
-
-      # ConCache.get(:dex, "list_dex")
-      # |> Logger.info()
-
-
+      |> LW.ipt("sx1 test in initialise")
 
       new_state
-      # |> IO.inspect(label: "sx1 new_state")
     end
   end
 
@@ -76,7 +67,7 @@ defmodule InitialiseDexBot do
         %{}
 
       {:error, error} ->
-        error |> IO.inspect(label: "state_file error: #{error}")
+        error |> LogWritter.ipt("state_file error: #{error}")
         %{}
 
       false ->
@@ -191,13 +182,13 @@ defmodule InitialiseDexBot do
 
   def archive do
     System.get_env("ALCHEMY_API_KEY")
-    |> IO.inspect(label: "sx1 ALCHEMY_API_KEY")
+    |> LogWritter.ipt("sx1 ALCHEMY_API_KEY")
 
     @dexs.uniswap.factory
-    |> IO.inspect(label: "sx1 FACTORY_ADDRESS")
+    |> LogWritter.ipt("sx1 FACTORY_ADDRESS")
 
     @dexs.uniswap.router
-    |> IO.inspect(label: "sx1 V2_ROUTER_02_ADDRESS")
+    |> LogWritter.ipt("sx1 V2_ROUTER_02_ADDRESS")
 
     {:ok, pair_address_uni} =
       Compute.get_pair_address(
@@ -215,28 +206,28 @@ defmodule InitialiseDexBot do
 
     pair_address_uni
     |> contract(:get_reserves)
-    |> IO.inspect(label: "sx1 pair_address_uni |> contract(:get_reserves)")
+    |> LogWritter.ipt("sx1 pair_address_uni |> contract(:get_reserves)")
 
     price_0 =
       pair_address_uni
       |> calculate_price()
-      |> IO.inspect(label: "sx1 price_0")
+      |> LogWritter.ipt("sx1 price_0")
 
     pair_address_sushi
     |> contract(:get_reserves)
-    |> IO.inspect(label: "sx1 pair_address_sushi |> contract(:get_reserves)")
+    |> LogWritter.ipt("sx1 pair_address_sushi |> contract(:get_reserves)")
 
     price_1 =
       pair_address_sushi
       |> calculate_price()
-      |> IO.inspect(label: "sx1 price_1")
+      |> LogWritter.ipt("sx1 price_1")
 
     calculate_difference(price_0, price_1)
-    |> IO.inspect(label: "sx1 calculate_difference")
+    |> LogWritter.ipt("sx1 calculate_difference")
 
     {:ok, _result} =
       Compute.get_all_pairs(@dexs.uniswap.factory, 0)
-      |> IO.inspect(label: "sx1 Compute.get_all_pairs")
+      |> LogWritter.ipt("sx1 Compute.get_all_pairs")
 
     {:ok, :done}
   end
@@ -246,10 +237,10 @@ end
 
 # LiquidityPoolContract.EventFilters.swap(pair_address_uni, nil)
 # |> Ethers.get_logs()
-# |> IO.inspect(label: "sx1 EventFilters")
+# |> LogWritter.ipt("sx1 EventFilters")
 
 # pair_address_uni |> contract_logs(:swap)
-# |> IO.inspect(label: "sx1 pair_address_uni |> contract(:swap)")
+# |> LogWritter.ipt("sx1 pair_address_uni |> contract(:swap)")
 
 # {:ok, _pair_address_uni} =
 #   Compute.get_pair_address(

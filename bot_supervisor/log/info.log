@@ -453,3 +453,1762 @@ State: []
 21:08:10.428 [info] tracking subscription 0x38 for #PID<0.516.0>
 21:08:10.434 [info] tracking subscription 0x39 for #PID<0.514.0>
 21:08:20.436 [info] [BlockPing] current block: 20840826 (0x13e017a)
+21:14:05.198 [info] tracking subscription 0x3a for #PID<0.520.0>
+21:14:05.204 [info] tracking subscription 0x3b for #PID<0.518.0>
+21:14:15.207 [info] [BlockPing] current block: 20840826 (0x13e017a)
+21:14:30.703 [info] Application arbitrage_bot_v1 exited: exited in: ArbitrageBotV1.Application.start(:normal, [])
+    ** (EXIT) an exception was raised:
+        ** (ArgumentError) The module LogSaver was given as a child to a supervisor but it does not exist
+            (elixir 1.17.0-dev) lib/supervisor.ex:797: Supervisor.init_child/1
+            (elixir 1.17.0-dev) lib/enum.ex:1703: Enum."-map/2-lists^map/1-1-"/2
+            (elixir 1.17.0-dev) lib/enum.ex:1703: Enum."-map/2-lists^map/1-1-"/2
+            (elixir 1.17.0-dev) lib/supervisor.ex:783: Supervisor.init/2
+            (elixir 1.17.0-dev) lib/supervisor.ex:707: Supervisor.start_link/2
+            (kernel 9.1) application_master.erl:293: :application_master.start_it_old/4
+21:14:30.708 [info] Application con_cache exited: :stopped
+21:14:30.708 [info] Application httpoison exited: :stopped
+21:14:30.708 [info] Application hackney exited: :stopped
+21:14:30.708 [info] Application metrics exited: :stopped
+21:14:30.708 [info] Application ssl_verify_fun exited: :stopped
+21:14:30.708 [info] Application parse_trans exited: :stopped
+21:14:30.708 [info] Application syntax_tools exited: :stopped
+21:14:30.708 [info] Application certifi exited: :stopped
+21:14:30.708 [info] Application mimerl exited: :stopped
+21:14:30.708 [info] Application w3ws exited: :stopped
+21:14:30.708 [info] Application wind exited: :stopped
+21:14:30.708 [info] Application mint_web_socket exited: :stopped
+21:14:30.708 [info] Application ethers exited: :stopped
+21:14:30.708 [info] Application idna exited: :stopped
+21:14:30.708 [info] Application unicode_util_compat exited: :stopped
+21:14:30.708 [info] Application ex_rlp exited: :stopped
+21:14:30.708 [info] Application ex_abi exited: :stopped
+21:14:30.708 [info] Application ex_keccak exited: :stopped
+21:14:30.708 [info] Application rustler_precompiled exited: :stopped
+21:14:30.709 [info] Application ethereumex exited: :stopped
+21:14:30.709 [info] Application poolboy exited: :stopped
+21:14:30.709 [info] Application finch exited: :stopped
+21:14:30.709 [info] Application nimble_options exited: :stopped
+21:14:30.709 [info] Application nimble_pool exited: :stopped
+21:14:30.710 [info] Application mint exited: :stopped
+21:14:30.710 [info] Application hpax exited: :stopped
+21:14:30.710 [info] Application castore exited: :stopped
+21:14:30.710 [info] Application jason exited: :stopped
+21:14:30.710 [info] Application decimal exited: :stopped
+21:14:30.711 [info] Application server exited: :stopped
+21:14:30.711 [info] Application plug_cowboy exited: :stopped
+21:14:30.711 [info] Application cowboy_telemetry exited: :stopped
+21:14:30.712 [info] Application cowboy exited: :stopped
+21:14:30.712 [info] Application ranch exited: :stopped
+21:14:30.712 [info] Application cowlib exited: :stopped
+21:14:30.712 [info] Application plug exited: :stopped
+21:14:30.713 [info] Application telemetry exited: :stopped
+21:14:30.713 [info] Application plug_crypto exited: :stopped
+21:14:30.713 [info] Application mime exited: :stopped
+21:14:30.713 [info] Application eex exited: :stopped
+21:16:35.935 [info] tracking subscription 0x3c for #PID<0.516.0>
+21:16:35.941 [info] tracking subscription 0x3d for #PID<0.514.0>
+21:16:45.944 [info] [BlockPing] current block: 20840826 (0x13e017a)
+21:21:35.944 [info] tracking subscription 0x3e for #PID<0.514.0>
+21:26:35.945 [info] tracking subscription 0x3f for #PID<0.514.0>
+21:31:35.946 [info] tracking subscription 0x40 for #PID<0.514.0>
+21:36:35.947 [info] tracking subscription 0x41 for #PID<0.514.0>
+21:41:35.948 [info] tracking subscription 0x42 for #PID<0.514.0>
+21:46:35.949 [info] tracking subscription 0x43 for #PID<0.514.0>
+21:51:35.950 [info] tracking subscription 0x44 for #PID<0.514.0>
+21:56:35.951 [info] tracking subscription 0x45 for #PID<0.514.0>
+22:01:35.952 [info] tracking subscription 0x46 for #PID<0.514.0>
+22:06:35.954 [info] tracking subscription 0x47 for #PID<0.514.0>
+22:11:35.956 [info] tracking subscription 0x48 for #PID<0.514.0>
+22:16:35.956 [info] tracking subscription 0x49 for #PID<0.514.0>
+22:21:35.958 [info] tracking subscription 0x4a for #PID<0.514.0>
+22:26:35.959 [info] tracking subscription 0x4b for #PID<0.514.0>
+22:31:35.960 [info] tracking subscription 0x4c for #PID<0.514.0>
+22:36:35.961 [info] tracking subscription 0x4d for #PID<0.514.0>
+22:41:35.962 [info] tracking subscription 0x4e for #PID<0.514.0>
+22:46:35.963 [info] tracking subscription 0x4f for #PID<0.514.0>
+22:51:35.964 [info] tracking subscription 0x50 for #PID<0.514.0>
+22:56:35.965 [info] tracking subscription 0x51 for #PID<0.514.0>
+23:01:35.966 [info] tracking subscription 0x52 for #PID<0.514.0>
+23:06:35.967 [info] tracking subscription 0x53 for #PID<0.514.0>
+23:11:35.968 [info] tracking subscription 0x54 for #PID<0.514.0>
+23:16:35.969 [info] tracking subscription 0x55 for #PID<0.514.0>
+23:21:35.971 [info] tracking subscription 0x56 for #PID<0.514.0>
+23:26:35.972 [info] tracking subscription 0x57 for #PID<0.514.0>
+23:31:35.972 [info] tracking subscription 0x58 for #PID<0.514.0>
+23:36:35.974 [info] tracking subscription 0x59 for #PID<0.514.0>
+23:41:35.974 [info] tracking subscription 0x5a for #PID<0.514.0>
+23:46:35.976 [info] tracking subscription 0x5b for #PID<0.514.0>
+23:51:35.976 [info] tracking subscription 0x5c for #PID<0.514.0>
+23:56:35.977 [info] tracking subscription 0x5d for #PID<0.514.0>
+00:01:35.979 [info] tracking subscription 0x5e for #PID<0.514.0>
+00:06:35.979 [info] tracking subscription 0x5f for #PID<0.514.0>
+00:11:35.980 [info] tracking subscription 0x60 for #PID<0.514.0>
+00:16:35.981 [info] tracking subscription 0x61 for #PID<0.514.0>
+00:21:35.983 [info] tracking subscription 0x62 for #PID<0.514.0>
+00:26:35.983 [info] tracking subscription 0x63 for #PID<0.514.0>
+00:31:35.985 [info] tracking subscription 0x64 for #PID<0.514.0>
+00:36:35.985 [info] tracking subscription 0x65 for #PID<0.514.0>
+00:41:35.986 [info] tracking subscription 0x66 for #PID<0.514.0>
+00:46:35.988 [info] tracking subscription 0x67 for #PID<0.514.0>
+00:51:35.988 [info] tracking subscription 0x68 for #PID<0.514.0>
+00:56:35.989 [info] tracking subscription 0x69 for #PID<0.514.0>
+01:01:35.990 [info] tracking subscription 0x6a for #PID<0.514.0>
+01:06:35.992 [info] tracking subscription 0x6b for #PID<0.514.0>
+01:11:35.993 [info] tracking subscription 0x6c for #PID<0.514.0>
+01:16:35.993 [info] tracking subscription 0x6d for #PID<0.514.0>
+01:21:35.994 [info] tracking subscription 0x6e for #PID<0.514.0>
+01:26:35.995 [info] tracking subscription 0x6f for #PID<0.514.0>
+01:31:35.996 [info] tracking subscription 0x70 for #PID<0.514.0>
+01:36:35.997 [info] tracking subscription 0x71 for #PID<0.514.0>
+01:41:35.998 [info] tracking subscription 0x72 for #PID<0.514.0>
+01:46:36.007 [info] tracking subscription 0x73 for #PID<0.514.0>
+01:51:36.000 [info] tracking subscription 0x74 for #PID<0.514.0>
+01:56:36.002 [info] tracking subscription 0x75 for #PID<0.514.0>
+02:01:36.002 [info] tracking subscription 0x76 for #PID<0.514.0>
+02:06:36.003 [info] tracking subscription 0x77 for #PID<0.514.0>
+02:11:36.004 [info] tracking subscription 0x78 for #PID<0.514.0>
+02:16:36.005 [info] tracking subscription 0x79 for #PID<0.514.0>
+02:21:36.007 [info] tracking subscription 0x7a for #PID<0.514.0>
+02:26:36.008 [info] tracking subscription 0x7b for #PID<0.514.0>
+02:31:36.008 [info] tracking subscription 0x7c for #PID<0.514.0>
+02:36:36.009 [info] tracking subscription 0x7d for #PID<0.514.0>
+02:41:36.010 [info] tracking subscription 0x7e for #PID<0.514.0>
+02:46:36.011 [info] tracking subscription 0x7f for #PID<0.514.0>
+02:51:36.012 [info] tracking subscription 0x80 for #PID<0.514.0>
+02:56:36.013 [info] tracking subscription 0x81 for #PID<0.514.0>
+03:01:36.014 [info] tracking subscription 0x82 for #PID<0.514.0>
+03:06:36.016 [info] tracking subscription 0x83 for #PID<0.514.0>
+03:11:36.016 [info] tracking subscription 0x84 for #PID<0.514.0>
+03:16:36.017 [info] tracking subscription 0x85 for #PID<0.514.0>
+03:21:36.018 [info] tracking subscription 0x86 for #PID<0.514.0>
+03:26:36.019 [info] tracking subscription 0x87 for #PID<0.514.0>
+03:31:36.020 [info] tracking subscription 0x88 for #PID<0.514.0>
+03:36:36.021 [info] tracking subscription 0x89 for #PID<0.514.0>
+03:41:36.022 [info] tracking subscription 0x8a for #PID<0.514.0>
+03:46:36.024 [info] tracking subscription 0x8b for #PID<0.514.0>
+03:51:36.024 [info] tracking subscription 0x8c for #PID<0.514.0>
+03:56:36.025 [info] tracking subscription 0x8d for #PID<0.514.0>
+04:01:36.026 [info] tracking subscription 0x8e for #PID<0.514.0>
+04:06:36.027 [info] tracking subscription 0x8f for #PID<0.514.0>
+04:11:36.028 [info] tracking subscription 0x90 for #PID<0.514.0>
+04:16:36.030 [info] tracking subscription 0x91 for #PID<0.514.0>
+04:21:36.030 [info] tracking subscription 0x92 for #PID<0.514.0>
+04:26:36.031 [info] tracking subscription 0x93 for #PID<0.514.0>
+04:31:36.032 [info] tracking subscription 0x94 for #PID<0.514.0>
+04:36:36.033 [info] tracking subscription 0x95 for #PID<0.514.0>
+04:41:36.035 [info] tracking subscription 0x96 for #PID<0.514.0>
+04:46:36.035 [info] tracking subscription 0x97 for #PID<0.514.0>
+04:51:36.036 [info] tracking subscription 0x98 for #PID<0.514.0>
+04:56:36.037 [info] tracking subscription 0x99 for #PID<0.514.0>
+05:01:36.038 [info] tracking subscription 0x9a for #PID<0.514.0>
+05:06:36.039 [info] tracking subscription 0x9b for #PID<0.514.0>
+05:11:36.040 [info] tracking subscription 0x9c for #PID<0.514.0>
+05:16:36.041 [info] tracking subscription 0x9d for #PID<0.514.0>
+05:21:36.042 [info] tracking subscription 0x9e for #PID<0.514.0>
+05:26:36.044 [info] tracking subscription 0x9f for #PID<0.514.0>
+05:31:36.044 [info] tracking subscription 0xa0 for #PID<0.514.0>
+05:36:36.045 [info] tracking subscription 0xa1 for #PID<0.514.0>
+05:41:36.047 [info] tracking subscription 0xa2 for #PID<0.514.0>
+05:46:36.047 [info] tracking subscription 0xa3 for #PID<0.514.0>
+05:51:36.048 [info] tracking subscription 0xa4 for #PID<0.514.0>
+05:56:36.049 [info] tracking subscription 0xa5 for #PID<0.514.0>
+06:01:36.050 [info] tracking subscription 0xa6 for #PID<0.514.0>
+06:06:36.052 [info] tracking subscription 0xa7 for #PID<0.514.0>
+06:11:36.052 [info] tracking subscription 0xa8 for #PID<0.514.0>
+06:16:36.053 [info] tracking subscription 0xa9 for #PID<0.514.0>
+06:21:36.054 [info] tracking subscription 0xaa for #PID<0.514.0>
+06:26:36.056 [info] tracking subscription 0xab for #PID<0.514.0>
+06:31:36.056 [info] tracking subscription 0xac for #PID<0.514.0>
+06:36:36.057 [info] tracking subscription 0xad for #PID<0.514.0>
+06:41:36.062 [info] tracking subscription 0xae for #PID<0.514.0>
+06:46:36.061 [info] tracking subscription 0xaf for #PID<0.514.0>
+06:51:36.063 [info] tracking subscription 0xb0 for #PID<0.514.0>
+06:56:36.063 [info] tracking subscription 0xb1 for #PID<0.514.0>
+07:01:36.064 [info] tracking subscription 0xb2 for #PID<0.514.0>
+07:06:36.065 [info] tracking subscription 0xb3 for #PID<0.514.0>
+07:11:36.066 [info] tracking subscription 0xb4 for #PID<0.514.0>
+07:16:36.067 [info] tracking subscription 0xb5 for #PID<0.514.0>
+07:21:36.068 [info] tracking subscription 0xb6 for #PID<0.514.0>
+07:26:36.069 [info] tracking subscription 0xb7 for #PID<0.514.0>
+07:31:36.070 [info] tracking subscription 0xb8 for #PID<0.514.0>
+07:36:36.071 [info] tracking subscription 0xb9 for #PID<0.514.0>
+07:41:36.072 [info] tracking subscription 0xba for #PID<0.514.0>
+07:46:36.073 [info] tracking subscription 0xbb for #PID<0.514.0>
+07:51:36.074 [info] tracking subscription 0xbc for #PID<0.514.0>
+07:56:36.075 [info] tracking subscription 0xbd for #PID<0.514.0>
+08:01:36.076 [info] tracking subscription 0xbe for #PID<0.514.0>
+08:06:36.078 [info] tracking subscription 0xbf for #PID<0.514.0>
+08:11:36.078 [info] tracking subscription 0xc0 for #PID<0.514.0>
+08:16:36.079 [info] tracking subscription 0xc1 for #PID<0.514.0>
+08:21:36.081 [info] tracking subscription 0xc2 for #PID<0.514.0>
+08:26:36.081 [info] tracking subscription 0xc3 for #PID<0.514.0>
+08:31:36.082 [info] tracking subscription 0xc4 for #PID<0.514.0>
+08:36:36.084 [info] tracking subscription 0xc5 for #PID<0.514.0>
+08:41:36.084 [info] tracking subscription 0xc6 for #PID<0.514.0>
+08:46:36.085 [info] tracking subscription 0xc7 for #PID<0.514.0>
+08:51:36.086 [info] tracking subscription 0xc8 for #PID<0.514.0>
+08:56:36.087 [info] tracking subscription 0xc9 for #PID<0.514.0>
+09:01:36.088 [info] tracking subscription 0xca for #PID<0.514.0>
+09:06:36.089 [info] tracking subscription 0xcb for #PID<0.514.0>
+09:11:36.090 [info] tracking subscription 0xcc for #PID<0.514.0>
+09:16:36.091 [info] tracking subscription 0xcd for #PID<0.514.0>
+09:21:36.093 [info] tracking subscription 0xce for #PID<0.514.0>
+09:26:36.093 [info] tracking subscription 0xcf for #PID<0.514.0>
+09:31:36.094 [info] tracking subscription 0xd0 for #PID<0.514.0>
+09:36:36.095 [info] tracking subscription 0xd1 for #PID<0.514.0>
+09:41:36.096 [info] tracking subscription 0xd2 for #PID<0.514.0>
+09:46:36.097 [info] tracking subscription 0xd3 for #PID<0.514.0>
+09:51:36.098 [info] tracking subscription 0xd4 for #PID<0.514.0>
+09:56:36.099 [info] tracking subscription 0xd5 for #PID<0.514.0>
+10:01:36.100 [info] tracking subscription 0xd6 for #PID<0.514.0>
+10:06:36.101 [info] tracking subscription 0xd7 for #PID<0.514.0>
+10:11:36.102 [info] tracking subscription 0xd8 for #PID<0.514.0>
+10:16:36.103 [info] tracking subscription 0xd9 for #PID<0.514.0>
+10:21:36.104 [info] tracking subscription 0xda for #PID<0.514.0>
+10:26:36.106 [info] tracking subscription 0xdb for #PID<0.514.0>
+10:31:36.107 [info] tracking subscription 0xdc for #PID<0.514.0>
+10:36:36.108 [info] tracking subscription 0xdd for #PID<0.514.0>
+10:41:36.109 [info] tracking subscription 0xde for #PID<0.514.0>
+10:46:36.111 [info] tracking subscription 0xdf for #PID<0.514.0>
+10:51:36.112 [info] tracking subscription 0xe0 for #PID<0.514.0>
+10:56:36.113 [info] tracking subscription 0xe1 for #PID<0.514.0>
+11:01:36.114 [info] tracking subscription 0xe2 for #PID<0.514.0>
+11:06:36.115 [info] tracking subscription 0xe3 for #PID<0.514.0>
+11:11:36.116 [info] tracking subscription 0xe4 for #PID<0.514.0>
+11:16:36.117 [info] tracking subscription 0xe5 for #PID<0.514.0>
+11:21:36.119 [info] tracking subscription 0xe6 for #PID<0.514.0>
+11:26:36.120 [info] tracking subscription 0xe7 for #PID<0.514.0>
+11:31:36.120 [info] tracking subscription 0xe8 for #PID<0.514.0>
+11:36:36.121 [info] tracking subscription 0xe9 for #PID<0.514.0>
+11:41:36.123 [info] tracking subscription 0xea for #PID<0.514.0>
+11:46:36.123 [info] tracking subscription 0xeb for #PID<0.514.0>
+11:51:36.124 [info] tracking subscription 0xec for #PID<0.514.0>
+11:56:36.125 [info] tracking subscription 0xed for #PID<0.514.0>
+12:01:36.126 [info] tracking subscription 0xee for #PID<0.514.0>
+12:06:36.127 [info] tracking subscription 0xef for #PID<0.514.0>
+12:11:36.128 [info] tracking subscription 0xf0 for #PID<0.514.0>
+12:16:36.130 [info] tracking subscription 0xf1 for #PID<0.514.0>
+12:21:36.130 [info] tracking subscription 0xf2 for #PID<0.514.0>
+12:26:36.131 [info] tracking subscription 0xf3 for #PID<0.514.0>
+12:31:36.133 [info] tracking subscription 0xf4 for #PID<0.514.0>
+12:36:36.134 [info] tracking subscription 0xf5 for #PID<0.514.0>
+12:41:36.135 [info] tracking subscription 0xf6 for #PID<0.514.0>
+12:46:36.136 [info] tracking subscription 0xf7 for #PID<0.514.0>
+12:51:36.138 [info] tracking subscription 0xf8 for #PID<0.514.0>
+12:56:36.138 [info] tracking subscription 0xf9 for #PID<0.514.0>
+13:01:36.139 [info] tracking subscription 0xfa for #PID<0.514.0>
+13:06:36.140 [info] tracking subscription 0xfb for #PID<0.514.0>
+13:11:36.141 [info] tracking subscription 0xfc for #PID<0.514.0>
+13:16:36.142 [info] tracking subscription 0xfd for #PID<0.514.0>
+13:17:32.720 [error] GenServer GasExtractor terminating
+** (CaseClauseError) no case clause matching: {:ok, %HTTPoison.Response{status_code: 503, body: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">\r\n<HTML><HEAD><TITLE>Service Unavailable</TITLE>\r\n<META HTTP-EQUIV=\"Content-Type\" Content=\"text/html; charset=us-ascii\"></HEAD>\r\n<BODY><h2>Service Unavailable</h2>\r\n<hr><p>HTTP Error 503. The service is unavailable.</p>\r\n</BODY></HTML>\r\n", headers: [{"Server", "nginx"}, {"Date", "Sat, 28 Sep 2024 03:17:32 GMT"}, {"Content-Type", "text/html; charset=us-ascii"}, {"Content-Length", "326"}, {"Connection", "keep-alive"}], request_url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", request: %HTTPoison.Request{method: :get, url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", headers: [{"Content-Type", "application/json"}], body: "", params: %{}, options: []}}}
+    (arbitrage_bot_v1 0.1.0) lib/api/etherscan_gas_tracker_api.ex:16: EtherscanGasTrackerApi.get_gas_oracle/0
+    (arbitrage_bot_v1 0.1.0) lib/gas_extractor.ex:23: GasExtractor.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :refresh}
+State: %{}
+13:17:33.024 [error] GenServer GasExtractor terminating
+** (CaseClauseError) no case clause matching: {:ok, %HTTPoison.Response{status_code: 503, body: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">\r\n<HTML><HEAD><TITLE>Service Unavailable</TITLE>\r\n<META HTTP-EQUIV=\"Content-Type\" Content=\"text/html; charset=us-ascii\"></HEAD>\r\n<BODY><h2>Service Unavailable</h2>\r\n<hr><p>HTTP Error 503. The service is unavailable.</p>\r\n</BODY></HTML>\r\n", headers: [{"Server", "nginx"}, {"Date", "Sat, 28 Sep 2024 03:17:32 GMT"}, {"Content-Type", "text/html; charset=us-ascii"}, {"Content-Length", "326"}, {"Connection", "keep-alive"}], request_url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", request: %HTTPoison.Request{method: :get, url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", headers: [{"Content-Type", "application/json"}], body: "", params: %{}, options: []}}}
+    (arbitrage_bot_v1 0.1.0) lib/api/etherscan_gas_tracker_api.ex:16: EtherscanGasTrackerApi.get_gas_oracle/0
+    (arbitrage_bot_v1 0.1.0) lib/gas_extractor.ex:23: GasExtractor.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :refresh}
+State: %{}
+13:17:33.304 [error] GenServer GasExtractor terminating
+** (CaseClauseError) no case clause matching: {:ok, %HTTPoison.Response{status_code: 503, body: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">\r\n<HTML><HEAD><TITLE>Service Unavailable</TITLE>\r\n<META HTTP-EQUIV=\"Content-Type\" Content=\"text/html; charset=us-ascii\"></HEAD>\r\n<BODY><h2>Service Unavailable</h2>\r\n<hr><p>HTTP Error 503. The service is unavailable.</p>\r\n</BODY></HTML>\r\n", headers: [{"Server", "nginx"}, {"Date", "Sat, 28 Sep 2024 03:17:33 GMT"}, {"Content-Type", "text/html; charset=us-ascii"}, {"Content-Length", "326"}, {"Connection", "keep-alive"}], request_url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", request: %HTTPoison.Request{method: :get, url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", headers: [{"Content-Type", "application/json"}], body: "", params: %{}, options: []}}}
+    (arbitrage_bot_v1 0.1.0) lib/api/etherscan_gas_tracker_api.ex:16: EtherscanGasTrackerApi.get_gas_oracle/0
+    (arbitrage_bot_v1 0.1.0) lib/gas_extractor.ex:23: GasExtractor.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :refresh}
+State: %{}
+13:17:33.641 [error] GenServer GasExtractor terminating
+** (CaseClauseError) no case clause matching: {:ok, %HTTPoison.Response{status_code: 503, body: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">\r\n<HTML><HEAD><TITLE>Service Unavailable</TITLE>\r\n<META HTTP-EQUIV=\"Content-Type\" Content=\"text/html; charset=us-ascii\"></HEAD>\r\n<BODY><h2>Service Unavailable</h2>\r\n<hr><p>HTTP Error 503. The service is unavailable.</p>\r\n</BODY></HTML>\r\n", headers: [{"Server", "nginx"}, {"Date", "Sat, 28 Sep 2024 03:17:33 GMT"}, {"Content-Type", "text/html; charset=us-ascii"}, {"Content-Length", "326"}, {"Connection", "keep-alive"}], request_url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", request: %HTTPoison.Request{method: :get, url: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=8EEHFC6M2Q4JK5C4DE7NNR6AJXPAA3J1YE", headers: [{"Content-Type", "application/json"}], body: "", params: %{}, options: []}}}
+    (arbitrage_bot_v1 0.1.0) lib/api/etherscan_gas_tracker_api.ex:16: EtherscanGasTrackerApi.get_gas_oracle/0
+    (arbitrage_bot_v1 0.1.0) lib/gas_extractor.ex:23: GasExtractor.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :refresh}
+State: %{}
+13:17:33.643 [info] Application arbitrage_bot_v1 exited: shutdown
+22:02:27.605 [info] SIGTERM received - shutting down
+
+07:34:28.840 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:34:28.855 [info] Application con_cache exited: :stopped
+07:34:28.856 [info] Application httpoison exited: :stopped
+07:34:28.856 [info] Application hackney exited: :stopped
+07:34:28.856 [info] Application metrics exited: :stopped
+07:34:28.856 [info] Application ssl_verify_fun exited: :stopped
+07:34:28.856 [info] Application parse_trans exited: :stopped
+07:34:28.856 [info] Application syntax_tools exited: :stopped
+07:34:28.856 [info] Application certifi exited: :stopped
+07:34:28.856 [info] Application mimerl exited: :stopped
+07:34:28.856 [info] Application w3ws exited: :stopped
+07:34:28.856 [info] Application wind exited: :stopped
+07:34:28.856 [info] Application mint_web_socket exited: :stopped
+07:34:28.857 [info] Application ethers exited: :stopped
+07:34:28.857 [info] Application idna exited: :stopped
+07:34:28.857 [info] Application unicode_util_compat exited: :stopped
+07:34:28.857 [info] Application ex_rlp exited: :stopped
+07:34:28.857 [info] Application ex_abi exited: :stopped
+07:34:28.857 [info] Application ex_keccak exited: :stopped
+07:34:28.857 [info] Application rustler_precompiled exited: :stopped
+07:34:28.857 [info] Application ethereumex exited: :stopped
+07:34:28.858 [info] Application poolboy exited: :stopped
+07:34:28.858 [info] Application finch exited: :stopped
+07:34:28.858 [info] Application nimble_options exited: :stopped
+07:34:28.858 [info] Application nimble_pool exited: :stopped
+07:34:28.859 [info] Application mint exited: :stopped
+07:34:28.859 [info] Application hpax exited: :stopped
+07:34:28.859 [info] Application castore exited: :stopped
+07:34:28.859 [info] Application jason exited: :stopped
+07:34:28.859 [info] Application decimal exited: :stopped
+07:34:28.860 [info] Application server exited: :stopped
+07:34:28.860 [info] Application plug_cowboy exited: :stopped
+07:34:28.860 [info] Application cowboy_telemetry exited: :stopped
+07:34:28.861 [info] Application cowboy exited: :stopped
+07:34:28.861 [info] Application ranch exited: :stopped
+07:34:28.861 [info] Application cowlib exited: :stopped
+07:34:28.862 [info] Application plug exited: :stopped
+07:34:28.862 [info] Application telemetry exited: :stopped
+07:34:28.862 [info] Application plug_crypto exited: :stopped
+07:34:28.862 [info] Application mime exited: :stopped
+07:34:28.863 [info] Application eex exited: :stopped
+07:34:34.669 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:34:34.683 [info] Application con_cache exited: :stopped
+07:34:34.683 [info] Application httpoison exited: :stopped
+07:34:34.684 [info] Application hackney exited: :stopped
+07:34:34.684 [info] Application metrics exited: :stopped
+07:34:34.684 [info] Application ssl_verify_fun exited: :stopped
+07:34:34.684 [info] Application parse_trans exited: :stopped
+07:34:34.684 [info] Application syntax_tools exited: :stopped
+07:34:34.684 [info] Application certifi exited: :stopped
+07:34:34.684 [info] Application mimerl exited: :stopped
+07:34:34.684 [info] Application w3ws exited: :stopped
+07:34:34.684 [info] Application wind exited: :stopped
+07:34:34.684 [info] Application mint_web_socket exited: :stopped
+07:34:34.684 [info] Application ethers exited: :stopped
+07:34:34.684 [info] Application idna exited: :stopped
+07:34:34.684 [info] Application unicode_util_compat exited: :stopped
+07:34:34.684 [info] Application ex_rlp exited: :stopped
+07:34:34.684 [info] Application ex_abi exited: :stopped
+07:34:34.684 [info] Application ex_keccak exited: :stopped
+07:34:34.684 [info] Application rustler_precompiled exited: :stopped
+07:34:34.685 [info] Application ethereumex exited: :stopped
+07:34:34.685 [info] Application poolboy exited: :stopped
+07:34:34.685 [info] Application finch exited: :stopped
+07:34:34.685 [info] Application nimble_options exited: :stopped
+07:34:34.685 [info] Application nimble_pool exited: :stopped
+07:34:34.686 [info] Application mint exited: :stopped
+07:34:34.686 [info] Application hpax exited: :stopped
+07:34:34.686 [info] Application castore exited: :stopped
+07:34:34.686 [info] Application jason exited: :stopped
+07:34:34.686 [info] Application decimal exited: :stopped
+07:34:34.687 [info] Application server exited: :stopped
+07:34:34.687 [info] Application plug_cowboy exited: :stopped
+07:34:34.687 [info] Application cowboy_telemetry exited: :stopped
+07:34:34.688 [info] Application cowboy exited: :stopped
+07:34:34.688 [info] Application ranch exited: :stopped
+07:34:34.688 [info] Application cowlib exited: :stopped
+07:34:34.688 [info] Application plug exited: :stopped
+07:34:34.689 [info] Application telemetry exited: :stopped
+07:34:34.689 [info] Application plug_crypto exited: :stopped
+07:34:34.689 [info] Application mime exited: :stopped
+07:34:34.689 [info] Application eex exited: :stopped
+07:40:31.250 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:40:31.259 [info] Application con_cache exited: :stopped
+07:40:31.259 [info] Application httpoison exited: :stopped
+07:40:31.259 [info] Application hackney exited: :stopped
+07:40:31.259 [info] Application metrics exited: :stopped
+07:40:31.259 [info] Application ssl_verify_fun exited: :stopped
+07:40:31.259 [info] Application parse_trans exited: :stopped
+07:40:31.260 [info] Application syntax_tools exited: :stopped
+07:40:31.260 [info] Application certifi exited: :stopped
+07:40:31.260 [info] Application mimerl exited: :stopped
+07:40:31.260 [info] Application w3ws exited: :stopped
+07:40:31.260 [info] Application wind exited: :stopped
+07:40:31.260 [info] Application mint_web_socket exited: :stopped
+07:40:31.260 [info] Application ethers exited: :stopped
+07:40:31.260 [info] Application idna exited: :stopped
+07:40:31.260 [info] Application unicode_util_compat exited: :stopped
+07:40:31.260 [info] Application ex_rlp exited: :stopped
+07:40:31.260 [info] Application ex_abi exited: :stopped
+07:40:31.260 [info] Application ex_keccak exited: :stopped
+07:40:31.260 [info] Application rustler_precompiled exited: :stopped
+07:40:31.260 [info] Application ethereumex exited: :stopped
+07:40:31.260 [info] Application poolboy exited: :stopped
+07:40:31.261 [info] Application finch exited: :stopped
+07:40:31.261 [info] Application nimble_options exited: :stopped
+07:40:31.261 [info] Application nimble_pool exited: :stopped
+07:40:31.261 [info] Application mint exited: :stopped
+07:40:31.261 [info] Application hpax exited: :stopped
+07:40:31.261 [info] Application castore exited: :stopped
+07:40:31.261 [info] Application jason exited: :stopped
+07:40:31.261 [info] Application decimal exited: :stopped
+07:40:31.262 [info] Application server exited: :stopped
+07:40:31.263 [info] Application plug_cowboy exited: :stopped
+07:40:31.263 [info] Application cowboy_telemetry exited: :stopped
+07:40:31.263 [info] Application cowboy exited: :stopped
+07:40:31.263 [info] Application ranch exited: :stopped
+07:40:31.263 [info] Application cowlib exited: :stopped
+07:40:31.263 [info] Application plug exited: :stopped
+07:40:31.264 [info] Application telemetry exited: :stopped
+07:40:31.264 [info] Application plug_crypto exited: :stopped
+07:40:31.264 [info] Application mime exited: :stopped
+07:40:31.264 [info] Application eex exited: :stopped
+07:41:33.604 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:41:33.613 [info] Application con_cache exited: :stopped
+07:41:33.613 [info] Application httpoison exited: :stopped
+07:41:33.613 [info] Application hackney exited: :stopped
+07:41:33.613 [info] Application metrics exited: :stopped
+07:41:33.613 [info] Application ssl_verify_fun exited: :stopped
+07:41:33.613 [info] Application parse_trans exited: :stopped
+07:41:33.613 [info] Application syntax_tools exited: :stopped
+07:41:33.613 [info] Application certifi exited: :stopped
+07:41:33.613 [info] Application mimerl exited: :stopped
+07:41:33.613 [info] Application w3ws exited: :stopped
+07:41:33.613 [info] Application wind exited: :stopped
+07:41:33.613 [info] Application mint_web_socket exited: :stopped
+07:41:33.613 [info] Application ethers exited: :stopped
+07:41:33.613 [info] Application idna exited: :stopped
+07:41:33.614 [info] Application unicode_util_compat exited: :stopped
+07:41:33.614 [info] Application ex_rlp exited: :stopped
+07:41:33.614 [info] Application ex_abi exited: :stopped
+07:41:33.614 [info] Application ex_keccak exited: :stopped
+07:41:33.614 [info] Application rustler_precompiled exited: :stopped
+07:41:33.614 [info] Application ethereumex exited: :stopped
+07:41:33.614 [info] Application poolboy exited: :stopped
+07:41:33.614 [info] Application finch exited: :stopped
+07:41:33.614 [info] Application nimble_options exited: :stopped
+07:41:33.615 [info] Application nimble_pool exited: :stopped
+07:41:33.615 [info] Application mint exited: :stopped
+07:41:33.615 [info] Application hpax exited: :stopped
+07:41:33.615 [info] Application castore exited: :stopped
+07:41:33.615 [info] Application jason exited: :stopped
+07:41:33.615 [info] Application decimal exited: :stopped
+07:41:33.616 [info] Application server exited: :stopped
+07:41:33.616 [info] Application plug_cowboy exited: :stopped
+07:41:33.616 [info] Application cowboy_telemetry exited: :stopped
+07:41:33.617 [info] Application cowboy exited: :stopped
+07:41:33.617 [info] Application ranch exited: :stopped
+07:41:33.617 [info] Application cowlib exited: :stopped
+07:41:33.618 [info] Application plug exited: :stopped
+07:41:33.618 [info] Application telemetry exited: :stopped
+07:41:33.619 [info] Application plug_crypto exited: :stopped
+07:41:33.619 [info] Application mime exited: :stopped
+07:41:33.619 [info] Application eex exited: :stopped
+07:42:25.391 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:42:25.400 [info] Application con_cache exited: :stopped
+07:42:25.400 [info] Application httpoison exited: :stopped
+07:42:25.400 [info] Application hackney exited: :stopped
+07:42:25.400 [info] Application metrics exited: :stopped
+07:42:25.400 [info] Application ssl_verify_fun exited: :stopped
+07:42:25.400 [info] Application parse_trans exited: :stopped
+07:42:25.400 [info] Application syntax_tools exited: :stopped
+07:42:25.400 [info] Application certifi exited: :stopped
+07:42:25.400 [info] Application mimerl exited: :stopped
+07:42:25.400 [info] Application w3ws exited: :stopped
+07:42:25.400 [info] Application wind exited: :stopped
+07:42:25.400 [info] Application mint_web_socket exited: :stopped
+07:42:25.400 [info] Application ethers exited: :stopped
+07:42:25.400 [info] Application idna exited: :stopped
+07:42:25.400 [info] Application unicode_util_compat exited: :stopped
+07:42:25.400 [info] Application ex_rlp exited: :stopped
+07:42:25.400 [info] Application ex_abi exited: :stopped
+07:42:25.400 [info] Application ex_keccak exited: :stopped
+07:42:25.400 [info] Application rustler_precompiled exited: :stopped
+07:42:25.401 [info] Application ethereumex exited: :stopped
+07:42:25.401 [info] Application poolboy exited: :stopped
+07:42:25.401 [info] Application finch exited: :stopped
+07:42:25.401 [info] Application nimble_options exited: :stopped
+07:42:25.401 [info] Application nimble_pool exited: :stopped
+07:42:25.402 [info] Application mint exited: :stopped
+07:42:25.402 [info] Application hpax exited: :stopped
+07:42:25.402 [info] Application castore exited: :stopped
+07:42:25.402 [info] Application jason exited: :stopped
+07:42:25.402 [info] Application decimal exited: :stopped
+07:42:25.403 [info] Application server exited: :stopped
+07:42:25.403 [info] Application plug_cowboy exited: :stopped
+07:42:25.403 [info] Application cowboy_telemetry exited: :stopped
+07:42:25.404 [info] Application cowboy exited: :stopped
+07:42:25.404 [info] Application ranch exited: :stopped
+07:42:25.404 [info] Application cowlib exited: :stopped
+07:42:25.405 [info] Application plug exited: :stopped
+07:42:25.405 [info] Application telemetry exited: :stopped
+07:42:25.405 [info] Application plug_crypto exited: :stopped
+07:42:25.405 [info] Application mime exited: :stopped
+07:42:25.405 [info] Application eex exited: :stopped
+07:43:08.151 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:43:08.159 [info] Application con_cache exited: :stopped
+07:43:08.159 [info] Application httpoison exited: :stopped
+07:43:08.160 [info] Application hackney exited: :stopped
+07:43:08.160 [info] Application metrics exited: :stopped
+07:43:08.160 [info] Application ssl_verify_fun exited: :stopped
+07:43:08.160 [info] Application parse_trans exited: :stopped
+07:43:08.160 [info] Application syntax_tools exited: :stopped
+07:43:08.160 [info] Application certifi exited: :stopped
+07:43:08.160 [info] Application mimerl exited: :stopped
+07:43:08.160 [info] Application w3ws exited: :stopped
+07:43:08.160 [info] Application wind exited: :stopped
+07:43:08.160 [info] Application mint_web_socket exited: :stopped
+07:43:08.160 [info] Application ethers exited: :stopped
+07:43:08.160 [info] Application idna exited: :stopped
+07:43:08.160 [info] Application unicode_util_compat exited: :stopped
+07:43:08.160 [info] Application ex_rlp exited: :stopped
+07:43:08.160 [info] Application ex_abi exited: :stopped
+07:43:08.160 [info] Application ex_keccak exited: :stopped
+07:43:08.160 [info] Application rustler_precompiled exited: :stopped
+07:43:08.161 [info] Application ethereumex exited: :stopped
+07:43:08.161 [info] Application poolboy exited: :stopped
+07:43:08.161 [info] Application finch exited: :stopped
+07:43:08.161 [info] Application nimble_options exited: :stopped
+07:43:08.161 [info] Application nimble_pool exited: :stopped
+07:43:08.162 [info] Application mint exited: :stopped
+07:43:08.162 [info] Application hpax exited: :stopped
+07:43:08.162 [info] Application castore exited: :stopped
+07:43:08.162 [info] Application jason exited: :stopped
+07:43:08.162 [info] Application decimal exited: :stopped
+07:43:08.163 [info] Application server exited: :stopped
+07:43:08.163 [info] Application plug_cowboy exited: :stopped
+07:43:08.163 [info] Application cowboy_telemetry exited: :stopped
+07:43:08.163 [info] Application cowboy exited: :stopped
+07:43:08.164 [info] Application ranch exited: :stopped
+07:43:08.164 [info] Application cowlib exited: :stopped
+07:43:08.164 [info] Application plug exited: :stopped
+07:43:08.164 [info] Application telemetry exited: :stopped
+07:43:08.165 [info] Application plug_crypto exited: :stopped
+07:43:08.165 [info] Application mime exited: :stopped
+07:43:08.165 [info] Application eex exited: :stopped
+07:43:41.830 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:43:41.840 [info] Application con_cache exited: :stopped
+07:43:41.840 [info] Application httpoison exited: :stopped
+07:43:41.840 [info] Application hackney exited: :stopped
+07:43:41.840 [info] Application metrics exited: :stopped
+07:43:41.840 [info] Application ssl_verify_fun exited: :stopped
+07:43:41.840 [info] Application parse_trans exited: :stopped
+07:43:41.840 [info] Application syntax_tools exited: :stopped
+07:43:41.841 [info] Application certifi exited: :stopped
+07:43:41.841 [info] Application mimerl exited: :stopped
+07:43:41.841 [info] Application w3ws exited: :stopped
+07:43:41.841 [info] Application wind exited: :stopped
+07:43:41.841 [info] Application mint_web_socket exited: :stopped
+07:43:41.841 [info] Application ethers exited: :stopped
+07:43:41.841 [info] Application idna exited: :stopped
+07:43:41.841 [info] Application unicode_util_compat exited: :stopped
+07:43:41.841 [info] Application ex_rlp exited: :stopped
+07:43:41.841 [info] Application ex_abi exited: :stopped
+07:43:41.841 [info] Application ex_keccak exited: :stopped
+07:43:41.841 [info] Application rustler_precompiled exited: :stopped
+07:43:41.841 [info] Application ethereumex exited: :stopped
+07:43:41.841 [info] Application poolboy exited: :stopped
+07:43:41.841 [info] Application finch exited: :stopped
+07:43:41.841 [info] Application nimble_options exited: :stopped
+07:43:41.842 [info] Application nimble_pool exited: :stopped
+07:43:41.842 [info] Application mint exited: :stopped
+07:43:41.842 [info] Application hpax exited: :stopped
+07:43:41.842 [info] Application castore exited: :stopped
+07:43:41.842 [info] Application jason exited: :stopped
+07:43:41.842 [info] Application decimal exited: :stopped
+07:43:41.843 [info] Application server exited: :stopped
+07:43:41.843 [info] Application plug_cowboy exited: :stopped
+07:43:41.843 [info] Application cowboy_telemetry exited: :stopped
+07:43:41.844 [info] Application cowboy exited: :stopped
+07:43:41.844 [info] Application ranch exited: :stopped
+07:43:41.844 [info] Application cowlib exited: :stopped
+07:43:41.844 [info] Application plug exited: :stopped
+07:43:41.845 [info] Application telemetry exited: :stopped
+07:43:41.845 [info] Application plug_crypto exited: :stopped
+07:43:41.845 [info] Application mime exited: :stopped
+07:43:41.845 [info] Application eex exited: :stopped
+07:44:05.554 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:44:05.562 [info] Application con_cache exited: :stopped
+07:44:05.562 [info] Application httpoison exited: :stopped
+07:44:05.563 [info] Application hackney exited: :stopped
+07:44:05.563 [info] Application metrics exited: :stopped
+07:44:05.563 [info] Application ssl_verify_fun exited: :stopped
+07:44:05.563 [info] Application parse_trans exited: :stopped
+07:44:05.563 [info] Application syntax_tools exited: :stopped
+07:44:05.563 [info] Application certifi exited: :stopped
+07:44:05.563 [info] Application mimerl exited: :stopped
+07:44:05.563 [info] Application w3ws exited: :stopped
+07:44:05.563 [info] Application wind exited: :stopped
+07:44:05.563 [info] Application mint_web_socket exited: :stopped
+07:44:05.563 [info] Application ethers exited: :stopped
+07:44:05.563 [info] Application idna exited: :stopped
+07:44:05.563 [info] Application unicode_util_compat exited: :stopped
+07:44:05.563 [info] Application ex_rlp exited: :stopped
+07:44:05.563 [info] Application ex_abi exited: :stopped
+07:44:05.563 [info] Application ex_keccak exited: :stopped
+07:44:05.563 [info] Application rustler_precompiled exited: :stopped
+07:44:05.564 [info] Application ethereumex exited: :stopped
+07:44:05.564 [info] Application poolboy exited: :stopped
+07:44:05.564 [info] Application finch exited: :stopped
+07:44:05.564 [info] Application nimble_options exited: :stopped
+07:44:05.564 [info] Application nimble_pool exited: :stopped
+07:44:05.565 [info] Application mint exited: :stopped
+07:44:05.565 [info] Application hpax exited: :stopped
+07:44:05.565 [info] Application castore exited: :stopped
+07:44:05.565 [info] Application jason exited: :stopped
+07:44:05.565 [info] Application decimal exited: :stopped
+07:44:05.566 [info] Application server exited: :stopped
+07:44:05.566 [info] Application plug_cowboy exited: :stopped
+07:44:05.566 [info] Application cowboy_telemetry exited: :stopped
+07:44:05.567 [info] Application cowboy exited: :stopped
+07:44:05.568 [info] Application ranch exited: :stopped
+07:44:05.568 [info] Application cowlib exited: :stopped
+07:44:05.568 [info] Application plug exited: :stopped
+07:44:05.568 [info] Application telemetry exited: :stopped
+07:44:05.569 [info] Application plug_crypto exited: :stopped
+07:44:05.569 [info] Application mime exited: :stopped
+07:44:05.569 [info] Application eex exited: :stopped
+07:44:43.264 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:44:43.275 [info] Application con_cache exited: :stopped
+07:44:43.275 [info] Application httpoison exited: :stopped
+07:44:43.275 [info] Application hackney exited: :stopped
+07:44:43.275 [info] Application metrics exited: :stopped
+07:44:43.275 [info] Application ssl_verify_fun exited: :stopped
+07:44:43.275 [info] Application parse_trans exited: :stopped
+07:44:43.275 [info] Application syntax_tools exited: :stopped
+07:44:43.275 [info] Application certifi exited: :stopped
+07:44:43.275 [info] Application mimerl exited: :stopped
+07:44:43.275 [info] Application w3ws exited: :stopped
+07:44:43.275 [info] Application wind exited: :stopped
+07:44:43.275 [info] Application mint_web_socket exited: :stopped
+07:44:43.276 [info] Application ethers exited: :stopped
+07:44:43.276 [info] Application idna exited: :stopped
+07:44:43.276 [info] Application unicode_util_compat exited: :stopped
+07:44:43.276 [info] Application ex_rlp exited: :stopped
+07:44:43.276 [info] Application ex_abi exited: :stopped
+07:44:43.276 [info] Application ex_keccak exited: :stopped
+07:44:43.276 [info] Application rustler_precompiled exited: :stopped
+07:44:43.276 [info] Application ethereumex exited: :stopped
+07:44:43.276 [info] Application poolboy exited: :stopped
+07:44:43.276 [info] Application finch exited: :stopped
+07:44:43.276 [info] Application nimble_options exited: :stopped
+07:44:43.277 [info] Application nimble_pool exited: :stopped
+07:44:43.277 [info] Application mint exited: :stopped
+07:44:43.277 [info] Application hpax exited: :stopped
+07:44:43.277 [info] Application castore exited: :stopped
+07:44:43.277 [info] Application jason exited: :stopped
+07:44:43.277 [info] Application decimal exited: :stopped
+07:44:43.278 [info] Application server exited: :stopped
+07:44:43.278 [info] Application plug_cowboy exited: :stopped
+07:44:43.278 [info] Application cowboy_telemetry exited: :stopped
+07:44:43.279 [info] Application cowboy exited: :stopped
+07:44:43.279 [info] Application ranch exited: :stopped
+07:44:43.279 [info] Application cowlib exited: :stopped
+07:44:43.279 [info] Application plug exited: :stopped
+07:44:43.280 [info] Application telemetry exited: :stopped
+07:44:43.280 [info] Application plug_crypto exited: :stopped
+07:44:43.280 [info] Application mime exited: :stopped
+07:44:43.280 [info] Application eex exited: :stopped
+07:49:46.310 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:35: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:36: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:49:46.325 [info] Application con_cache exited: :stopped
+07:49:46.325 [info] Application httpoison exited: :stopped
+07:49:46.326 [info] Application hackney exited: :stopped
+07:49:46.326 [info] Application metrics exited: :stopped
+07:49:46.326 [info] Application ssl_verify_fun exited: :stopped
+07:49:46.326 [info] Application parse_trans exited: :stopped
+07:49:46.326 [info] Application syntax_tools exited: :stopped
+07:49:46.326 [info] Application certifi exited: :stopped
+07:49:46.326 [info] Application mimerl exited: :stopped
+07:49:46.326 [info] Application w3ws exited: :stopped
+07:49:46.326 [info] Application wind exited: :stopped
+07:49:46.326 [info] Application mint_web_socket exited: :stopped
+07:49:46.326 [info] Application ethers exited: :stopped
+07:49:46.326 [info] Application idna exited: :stopped
+07:49:46.326 [info] Application unicode_util_compat exited: :stopped
+07:49:46.326 [info] Application ex_rlp exited: :stopped
+07:49:46.326 [info] Application ex_abi exited: :stopped
+07:49:46.326 [info] Application ex_keccak exited: :stopped
+07:49:46.326 [info] Application rustler_precompiled exited: :stopped
+07:49:46.327 [info] Application ethereumex exited: :stopped
+07:49:46.327 [info] Application poolboy exited: :stopped
+07:49:46.327 [info] Application finch exited: :stopped
+07:49:46.327 [info] Application nimble_options exited: :stopped
+07:49:46.328 [info] Application nimble_pool exited: :stopped
+07:49:46.328 [info] Application mint exited: :stopped
+07:49:46.328 [info] Application hpax exited: :stopped
+07:49:46.328 [info] Application castore exited: :stopped
+07:49:46.328 [info] Application jason exited: :stopped
+07:49:46.328 [info] Application decimal exited: :stopped
+07:49:46.329 [info] Application server exited: :stopped
+07:49:46.330 [info] Application plug_cowboy exited: :stopped
+07:49:46.330 [info] Application cowboy_telemetry exited: :stopped
+07:49:46.330 [info] Application cowboy exited: :stopped
+07:49:46.330 [info] Application ranch exited: :stopped
+07:49:46.330 [info] Application cowlib exited: :stopped
+07:49:46.331 [info] Application plug exited: :stopped
+07:49:46.331 [info] Application telemetry exited: :stopped
+07:49:46.332 [info] Application plug_crypto exited: :stopped
+07:49:46.332 [info] Application mime exited: :stopped
+07:49:46.332 [info] Application eex exited: :stopped
+07:53:42.614 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:20: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:53:42.623 [info] Application con_cache exited: :stopped
+07:53:42.623 [info] Application httpoison exited: :stopped
+07:53:42.624 [info] Application hackney exited: :stopped
+07:53:42.624 [info] Application metrics exited: :stopped
+07:53:42.624 [info] Application ssl_verify_fun exited: :stopped
+07:53:42.624 [info] Application parse_trans exited: :stopped
+07:53:42.624 [info] Application syntax_tools exited: :stopped
+07:53:42.624 [info] Application certifi exited: :stopped
+07:53:42.624 [info] Application mimerl exited: :stopped
+07:53:42.624 [info] Application w3ws exited: :stopped
+07:53:42.624 [info] Application wind exited: :stopped
+07:53:42.624 [info] Application mint_web_socket exited: :stopped
+07:53:42.624 [info] Application ethers exited: :stopped
+07:53:42.624 [info] Application idna exited: :stopped
+07:53:42.624 [info] Application unicode_util_compat exited: :stopped
+07:53:42.624 [info] Application ex_rlp exited: :stopped
+07:53:42.624 [info] Application ex_abi exited: :stopped
+07:53:42.624 [info] Application ex_keccak exited: :stopped
+07:53:42.624 [info] Application rustler_precompiled exited: :stopped
+07:53:42.625 [info] Application ethereumex exited: :stopped
+07:53:42.625 [info] Application poolboy exited: :stopped
+07:53:42.625 [info] Application finch exited: :stopped
+07:53:42.625 [info] Application nimble_options exited: :stopped
+07:53:42.625 [info] Application nimble_pool exited: :stopped
+07:53:42.625 [info] Application mint exited: :stopped
+07:53:42.625 [info] Application hpax exited: :stopped
+07:53:42.625 [info] Application castore exited: :stopped
+07:53:42.625 [info] Application jason exited: :stopped
+07:53:42.626 [info] Application decimal exited: :stopped
+07:53:42.626 [info] Application server exited: :stopped
+07:53:42.627 [info] Application plug_cowboy exited: :stopped
+07:53:42.627 [info] Application cowboy_telemetry exited: :stopped
+07:53:42.627 [info] Application cowboy exited: :stopped
+07:53:42.627 [info] Application ranch exited: :stopped
+07:53:42.627 [info] Application cowlib exited: :stopped
+07:53:42.628 [info] Application plug exited: :stopped
+07:53:42.628 [info] Application telemetry exited: :stopped
+07:53:42.628 [info] Application plug_crypto exited: :stopped
+07:53:42.628 [info] Application mime exited: :stopped
+07:53:42.629 [info] Application eex exited: :stopped
+07:54:06.697 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:19: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:54:06.706 [info] Application con_cache exited: :stopped
+07:54:06.706 [info] Application httpoison exited: :stopped
+07:54:06.706 [info] Application hackney exited: :stopped
+07:54:06.706 [info] Application metrics exited: :stopped
+07:54:06.706 [info] Application ssl_verify_fun exited: :stopped
+07:54:06.706 [info] Application parse_trans exited: :stopped
+07:54:06.706 [info] Application syntax_tools exited: :stopped
+07:54:06.706 [info] Application certifi exited: :stopped
+07:54:06.706 [info] Application mimerl exited: :stopped
+07:54:06.706 [info] Application w3ws exited: :stopped
+07:54:06.706 [info] Application wind exited: :stopped
+07:54:06.707 [info] Application mint_web_socket exited: :stopped
+07:54:06.707 [info] Application ethers exited: :stopped
+07:54:06.707 [info] Application idna exited: :stopped
+07:54:06.707 [info] Application unicode_util_compat exited: :stopped
+07:54:06.707 [info] Application ex_rlp exited: :stopped
+07:54:06.707 [info] Application ex_abi exited: :stopped
+07:54:06.707 [info] Application ex_keccak exited: :stopped
+07:54:06.707 [info] Application rustler_precompiled exited: :stopped
+07:54:06.707 [info] Application ethereumex exited: :stopped
+07:54:06.707 [info] Application poolboy exited: :stopped
+07:54:06.707 [info] Application finch exited: :stopped
+07:54:06.707 [info] Application nimble_options exited: :stopped
+07:54:06.708 [info] Application nimble_pool exited: :stopped
+07:54:06.708 [info] Application mint exited: :stopped
+07:54:06.708 [info] Application hpax exited: :stopped
+07:54:06.708 [info] Application castore exited: :stopped
+07:54:06.708 [info] Application jason exited: :stopped
+07:54:06.708 [info] Application decimal exited: :stopped
+07:54:06.709 [info] Application server exited: :stopped
+07:54:06.710 [info] Application plug_cowboy exited: :stopped
+07:54:06.710 [info] Application cowboy_telemetry exited: :stopped
+07:54:06.710 [info] Application cowboy exited: :stopped
+07:54:06.710 [info] Application ranch exited: :stopped
+07:54:06.711 [info] Application cowlib exited: :stopped
+07:54:06.711 [info] Application plug exited: :stopped
+07:54:06.711 [info] Application telemetry exited: :stopped
+07:54:06.711 [info] Application plug_crypto exited: :stopped
+07:54:06.712 [info] Application mime exited: :stopped
+07:54:06.712 [info] Application eex exited: :stopped
+07:55:12.482 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:19: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:55:12.492 [info] Application con_cache exited: :stopped
+07:55:12.492 [info] Application httpoison exited: :stopped
+07:55:12.493 [info] Application hackney exited: :stopped
+07:55:12.493 [info] Application metrics exited: :stopped
+07:55:12.493 [info] Application ssl_verify_fun exited: :stopped
+07:55:12.493 [info] Application parse_trans exited: :stopped
+07:55:12.493 [info] Application syntax_tools exited: :stopped
+07:55:12.493 [info] Application certifi exited: :stopped
+07:55:12.493 [info] Application mimerl exited: :stopped
+07:55:12.493 [info] Application w3ws exited: :stopped
+07:55:12.493 [info] Application wind exited: :stopped
+07:55:12.493 [info] Application mint_web_socket exited: :stopped
+07:55:12.493 [info] Application ethers exited: :stopped
+07:55:12.493 [info] Application idna exited: :stopped
+07:55:12.493 [info] Application unicode_util_compat exited: :stopped
+07:55:12.493 [info] Application ex_rlp exited: :stopped
+07:55:12.493 [info] Application ex_abi exited: :stopped
+07:55:12.493 [info] Application ex_keccak exited: :stopped
+07:55:12.493 [info] Application rustler_precompiled exited: :stopped
+07:55:12.493 [info] Application ethereumex exited: :stopped
+07:55:12.494 [info] Application poolboy exited: :stopped
+07:55:12.494 [info] Application finch exited: :stopped
+07:55:12.494 [info] Application nimble_options exited: :stopped
+07:55:12.494 [info] Application nimble_pool exited: :stopped
+07:55:12.494 [info] Application mint exited: :stopped
+07:55:12.494 [info] Application hpax exited: :stopped
+07:55:12.494 [info] Application castore exited: :stopped
+07:55:12.494 [info] Application jason exited: :stopped
+07:55:12.494 [info] Application decimal exited: :stopped
+07:55:12.495 [info] Application server exited: :stopped
+07:55:12.496 [info] Application plug_cowboy exited: :stopped
+07:55:12.496 [info] Application cowboy_telemetry exited: :stopped
+07:55:12.496 [info] Application cowboy exited: :stopped
+07:55:12.496 [info] Application ranch exited: :stopped
+07:55:12.497 [info] Application cowlib exited: :stopped
+07:55:12.497 [info] Application plug exited: :stopped
+07:55:12.497 [info] Application telemetry exited: :stopped
+07:55:12.497 [info] Application plug_crypto exited: :stopped
+07:55:12.497 [info] Application mime exited: :stopped
+07:55:12.498 [info] Application eex exited: :stopped
+07:56:45.736 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:19: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:56:45.746 [info] Application con_cache exited: :stopped
+07:56:45.746 [info] Application httpoison exited: :stopped
+07:56:45.747 [info] Application hackney exited: :stopped
+07:56:45.747 [info] Application metrics exited: :stopped
+07:56:45.747 [info] Application ssl_verify_fun exited: :stopped
+07:56:45.747 [info] Application parse_trans exited: :stopped
+07:56:45.747 [info] Application syntax_tools exited: :stopped
+07:56:45.747 [info] Application certifi exited: :stopped
+07:56:45.747 [info] Application mimerl exited: :stopped
+07:56:45.747 [info] Application w3ws exited: :stopped
+07:56:45.747 [info] Application wind exited: :stopped
+07:56:45.747 [info] Application mint_web_socket exited: :stopped
+07:56:45.747 [info] Application ethers exited: :stopped
+07:56:45.747 [info] Application idna exited: :stopped
+07:56:45.747 [info] Application unicode_util_compat exited: :stopped
+07:56:45.747 [info] Application ex_rlp exited: :stopped
+07:56:45.747 [info] Application ex_abi exited: :stopped
+07:56:45.747 [info] Application ex_keccak exited: :stopped
+07:56:45.747 [info] Application rustler_precompiled exited: :stopped
+07:56:45.747 [info] Application ethereumex exited: :stopped
+07:56:45.748 [info] Application poolboy exited: :stopped
+07:56:45.748 [info] Application finch exited: :stopped
+07:56:45.748 [info] Application nimble_options exited: :stopped
+07:56:45.748 [info] Application nimble_pool exited: :stopped
+07:56:45.748 [info] Application mint exited: :stopped
+07:56:45.748 [info] Application hpax exited: :stopped
+07:56:45.749 [info] Application castore exited: :stopped
+07:56:45.749 [info] Application jason exited: :stopped
+07:56:45.749 [info] Application decimal exited: :stopped
+07:56:45.750 [info] Application server exited: :stopped
+07:56:45.750 [info] Application plug_cowboy exited: :stopped
+07:56:45.750 [info] Application cowboy_telemetry exited: :stopped
+07:56:45.751 [info] Application cowboy exited: :stopped
+07:56:45.751 [info] Application ranch exited: :stopped
+07:56:45.751 [info] Application cowlib exited: :stopped
+07:56:45.751 [info] Application plug exited: :stopped
+07:56:45.751 [info] Application telemetry exited: :stopped
+07:56:45.752 [info] Application plug_crypto exited: :stopped
+07:56:45.752 [info] Application mime exited: :stopped
+07:56:45.752 [info] Application eex exited: :stopped
+07:58:05.520 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:19: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:58:05.529 [info] Application con_cache exited: :stopped
+07:58:05.529 [info] Application httpoison exited: :stopped
+07:58:05.529 [info] Application hackney exited: :stopped
+07:58:05.529 [info] Application metrics exited: :stopped
+07:58:05.529 [info] Application ssl_verify_fun exited: :stopped
+07:58:05.529 [info] Application parse_trans exited: :stopped
+07:58:05.529 [info] Application syntax_tools exited: :stopped
+07:58:05.529 [info] Application certifi exited: :stopped
+07:58:05.530 [info] Application mimerl exited: :stopped
+07:58:05.530 [info] Application w3ws exited: :stopped
+07:58:05.530 [info] Application wind exited: :stopped
+07:58:05.530 [info] Application mint_web_socket exited: :stopped
+07:58:05.530 [info] Application ethers exited: :stopped
+07:58:05.530 [info] Application idna exited: :stopped
+07:58:05.530 [info] Application unicode_util_compat exited: :stopped
+07:58:05.530 [info] Application ex_rlp exited: :stopped
+07:58:05.530 [info] Application ex_abi exited: :stopped
+07:58:05.530 [info] Application ex_keccak exited: :stopped
+07:58:05.530 [info] Application rustler_precompiled exited: :stopped
+07:58:05.530 [info] Application ethereumex exited: :stopped
+07:58:05.530 [info] Application poolboy exited: :stopped
+07:58:05.530 [info] Application finch exited: :stopped
+07:58:05.530 [info] Application nimble_options exited: :stopped
+07:58:05.531 [info] Application nimble_pool exited: :stopped
+07:58:05.531 [info] Application mint exited: :stopped
+07:58:05.531 [info] Application hpax exited: :stopped
+07:58:05.531 [info] Application castore exited: :stopped
+07:58:05.531 [info] Application jason exited: :stopped
+07:58:05.531 [info] Application decimal exited: :stopped
+07:58:05.532 [info] Application server exited: :stopped
+07:58:05.532 [info] Application plug_cowboy exited: :stopped
+07:58:05.532 [info] Application cowboy_telemetry exited: :stopped
+07:58:05.533 [info] Application cowboy exited: :stopped
+07:58:05.533 [info] Application ranch exited: :stopped
+07:58:05.533 [info] Application cowlib exited: :stopped
+07:58:05.534 [info] Application plug exited: :stopped
+07:58:05.534 [info] Application telemetry exited: :stopped
+07:58:05.535 [info] Application plug_crypto exited: :stopped
+07:58:05.535 [info] Application mime exited: :stopped
+07:58:05.535 [info] Application eex exited: :stopped
+07:59:11.029 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:19: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:59:11.038 [info] Application con_cache exited: :stopped
+07:59:11.038 [info] Application httpoison exited: :stopped
+07:59:11.039 [info] Application hackney exited: :stopped
+07:59:11.039 [info] Application metrics exited: :stopped
+07:59:11.039 [info] Application ssl_verify_fun exited: :stopped
+07:59:11.039 [info] Application parse_trans exited: :stopped
+07:59:11.039 [info] Application syntax_tools exited: :stopped
+07:59:11.039 [info] Application certifi exited: :stopped
+07:59:11.039 [info] Application mimerl exited: :stopped
+07:59:11.039 [info] Application w3ws exited: :stopped
+07:59:11.039 [info] Application wind exited: :stopped
+07:59:11.039 [info] Application mint_web_socket exited: :stopped
+07:59:11.039 [info] Application ethers exited: :stopped
+07:59:11.039 [info] Application idna exited: :stopped
+07:59:11.039 [info] Application unicode_util_compat exited: :stopped
+07:59:11.039 [info] Application ex_rlp exited: :stopped
+07:59:11.039 [info] Application ex_abi exited: :stopped
+07:59:11.039 [info] Application ex_keccak exited: :stopped
+07:59:11.039 [info] Application rustler_precompiled exited: :stopped
+07:59:11.039 [info] Application ethereumex exited: :stopped
+07:59:11.040 [info] Application poolboy exited: :stopped
+07:59:11.040 [info] Application finch exited: :stopped
+07:59:11.040 [info] Application nimble_options exited: :stopped
+07:59:11.040 [info] Application nimble_pool exited: :stopped
+07:59:11.040 [info] Application mint exited: :stopped
+07:59:11.040 [info] Application hpax exited: :stopped
+07:59:11.040 [info] Application castore exited: :stopped
+07:59:11.040 [info] Application jason exited: :stopped
+07:59:11.040 [info] Application decimal exited: :stopped
+07:59:11.041 [info] Application server exited: :stopped
+07:59:11.042 [info] Application plug_cowboy exited: :stopped
+07:59:11.042 [info] Application cowboy_telemetry exited: :stopped
+07:59:11.042 [info] Application cowboy exited: :stopped
+07:59:11.042 [info] Application ranch exited: :stopped
+07:59:11.042 [info] Application cowlib exited: :stopped
+07:59:11.043 [info] Application plug exited: :stopped
+07:59:11.043 [info] Application telemetry exited: :stopped
+07:59:11.043 [info] Application plug_crypto exited: :stopped
+07:59:11.043 [info] Application mime exited: :stopped
+07:59:11.043 [info] Application eex exited: :stopped
+08:00:54.470 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt([], "sx1 state_init")
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:19: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+08:00:54.497 [info] Application con_cache exited: :stopped
+08:00:54.497 [info] Application httpoison exited: :stopped
+08:00:54.497 [info] Application hackney exited: :stopped
+08:00:54.497 [info] Application metrics exited: :stopped
+08:00:54.497 [info] Application ssl_verify_fun exited: :stopped
+08:00:54.497 [info] Application parse_trans exited: :stopped
+08:00:54.497 [info] Application syntax_tools exited: :stopped
+08:00:54.497 [info] Application certifi exited: :stopped
+08:00:54.497 [info] Application mimerl exited: :stopped
+08:00:54.497 [info] Application w3ws exited: :stopped
+08:00:54.497 [info] Application wind exited: :stopped
+08:00:54.497 [info] Application mint_web_socket exited: :stopped
+08:00:54.498 [info] Application ethers exited: :stopped
+08:00:54.498 [info] Application idna exited: :stopped
+08:00:54.498 [info] Application unicode_util_compat exited: :stopped
+08:00:54.498 [info] Application ex_rlp exited: :stopped
+08:00:54.498 [info] Application ex_abi exited: :stopped
+08:00:54.498 [info] Application ex_keccak exited: :stopped
+08:00:54.498 [info] Application rustler_precompiled exited: :stopped
+08:00:54.504 [info] Application ethereumex exited: :stopped
+08:00:54.504 [info] Application poolboy exited: :stopped
+08:00:54.504 [info] Application finch exited: :stopped
+08:00:54.504 [info] Application nimble_options exited: :stopped
+08:00:54.505 [info] Application nimble_pool exited: :stopped
+08:00:54.508 [info] Application mint exited: :stopped
+08:00:54.508 [info] Application hpax exited: :stopped
+08:00:54.508 [info] Application castore exited: :stopped
+08:00:54.508 [info] Application jason exited: :stopped
+08:00:54.508 [info] Application decimal exited: :stopped
+08:00:54.510 [info] Application server exited: :stopped
+08:00:54.513 [info] Application plug_cowboy exited: :stopped
+08:00:54.514 [info] Application cowboy_telemetry exited: :stopped
+08:00:54.514 [info] Application cowboy exited: :stopped
+08:00:54.515 [info] Application ranch exited: :stopped
+08:00:54.515 [info] Application cowlib exited: :stopped
+08:00:54.515 [info] Application plug exited: :stopped
+08:00:54.516 [info] Application telemetry exited: :stopped
+08:00:54.517 [info] Application plug_crypto exited: :stopped
+08:00:54.517 [info] Application mime exited: :stopped
+08:00:54.517 [info] Application eex exited: :stopped
+08:03:30.044 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:35: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:37: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+08:03:30.055 [info] Application con_cache exited: :stopped
+08:03:30.055 [info] Application httpoison exited: :stopped
+08:03:30.060 [info] Application hackney exited: :stopped
+08:03:30.060 [info] Application metrics exited: :stopped
+08:03:30.060 [info] Application ssl_verify_fun exited: :stopped
+08:03:30.060 [info] Application parse_trans exited: :stopped
+08:03:30.060 [info] Application syntax_tools exited: :stopped
+08:03:30.060 [info] Application certifi exited: :stopped
+08:03:30.060 [info] Application mimerl exited: :stopped
+08:03:30.060 [info] Application w3ws exited: :stopped
+08:03:30.060 [info] Application wind exited: :stopped
+08:03:30.060 [info] Application mint_web_socket exited: :stopped
+08:03:30.060 [info] Application ethers exited: :stopped
+08:03:30.060 [info] Application idna exited: :stopped
+08:03:30.060 [info] Application unicode_util_compat exited: :stopped
+08:03:30.060 [info] Application ex_rlp exited: :stopped
+08:03:30.060 [info] Application ex_abi exited: :stopped
+08:03:30.060 [info] Application ex_keccak exited: :stopped
+08:03:30.060 [info] Application rustler_precompiled exited: :stopped
+08:03:30.061 [info] Application ethereumex exited: :stopped
+08:03:30.061 [info] Application poolboy exited: :stopped
+08:03:30.061 [info] Application finch exited: :stopped
+08:03:30.061 [info] Application nimble_options exited: :stopped
+08:03:30.061 [info] Application nimble_pool exited: :stopped
+08:03:30.062 [info] Application mint exited: :stopped
+08:03:30.062 [info] Application hpax exited: :stopped
+08:03:30.062 [info] Application castore exited: :stopped
+08:03:30.062 [info] Application jason exited: :stopped
+08:03:30.062 [info] Application decimal exited: :stopped
+08:03:30.063 [info] Application server exited: :stopped
+08:03:30.064 [info] Application plug_cowboy exited: :stopped
+08:03:30.064 [info] Application cowboy_telemetry exited: :stopped
+08:03:30.064 [info] Application cowboy exited: :stopped
+08:03:30.064 [info] Application ranch exited: :stopped
+08:03:30.064 [info] Application cowlib exited: :stopped
+08:03:30.065 [info] Application plug exited: :stopped
+08:03:30.065 [info] Application telemetry exited: :stopped
+08:03:30.065 [info] Application plug_crypto exited: :stopped
+08:03:30.065 [info] Application mime exited: :stopped
+08:03:30.065 [info] Application eex exited: :stopped
+08:05:34.863 [info] tracking subscription 0x1 for #PID<0.530.0>
+08:05:34.875 [info] tracking subscription 0x2 for #PID<0.526.0>
+08:05:44.878 [info] [BlockPing] current block: 20859112 (0x13e48e8)
+08:06:38.039 [error] #PID<0.541.0> running Server.Router (connection #PID<0.540.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: POST /event
+** (exit) an exception was raised:
+    ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+        LW.ipt(%{event: %{address: "0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f"}}, "sx1 event")
+        (server 0.1.0) lib/server_router.ex:25: anonymous fn/2 in Server.Router.do_match/4
+        (server 0.1.0) /home/shaun/Programs/sab/bot_supervisor/deps/plug/lib/plug/router.ex:246: anonymous fn/4 in Server.Router.dispatch/2
+        (telemetry 1.2.1) /home/shaun/Programs/sab/bot_supervisor/deps/telemetry/src/telemetry.erl:321: :telemetry.span/3
+        (server 0.1.0) /home/shaun/Programs/sab/bot_supervisor/deps/plug/lib/plug/router.ex:242: Server.Router.dispatch/2
+        (server 0.1.0) lib/server_router.ex:1: Server.Router.plug_builder_call/2
+        (plug_cowboy 2.7.1) lib/plug/cowboy/handler.ex:11: Plug.Cowboy.Handler.init/2
+        (cowboy 2.12.0) /home/shaun/Programs/sab/bot_supervisor/deps/cowboy/src/cowboy_handler.erl:37: :cowboy_handler.execute/2
+08:09:24.453 [info] tracking subscription 0x1 for #PID<0.516.0>
+08:09:24.461 [info] tracking subscription 0x2 for #PID<0.514.0>
+08:09:35.231 [info] [BlockPing] current block: 20859146 (0x13e490a)
+08:09:42.681 [error] #PID<0.527.0> running Server.Router (connection #PID<0.526.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: POST /event
+** (exit) an exception was raised:
+    ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+        LW.ipt(%{event: %{address: "0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f"}}, "sx1 event")
+        (server 0.1.0) lib/server_router.ex:25: anonymous fn/2 in Server.Router.do_match/4
+        (server 0.1.0) /home/shaun/Programs/sab/bot_supervisor/deps/plug/lib/plug/router.ex:246: anonymous fn/4 in Server.Router.dispatch/2
+        (telemetry 1.2.1) /home/shaun/Programs/sab/bot_supervisor/deps/telemetry/src/telemetry.erl:321: :telemetry.span/3
+        (server 0.1.0) /home/shaun/Programs/sab/bot_supervisor/deps/plug/lib/plug/router.ex:242: Server.Router.dispatch/2
+        (server 0.1.0) lib/server_router.ex:1: Server.Router.plug_builder_call/2
+        (plug_cowboy 2.7.1) lib/plug/cowboy/handler.ex:11: Plug.Cowboy.Handler.init/2
+        (cowboy 2.12.0) /home/shaun/Programs/sab/bot_supervisor/deps/cowboy/src/cowboy_handler.erl:37: :cowboy_handler.execute/2
+08:13:00.031 [error] GenServer GasExtractor terminating
+** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+    LW.ipt(%{"error" => :timeout}, "sx1 gas_extract error result")
+    (arbitrage_bot_v1 0.1.0) lib/gas_extractor.ex:47: GasExtractor.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :refresh}
+State: %{}
+08:14:29.647 [info] tracking subscription 0x1 for #PID<0.532.0>
+08:14:29.653 [info] tracking subscription 0x2 for #PID<0.530.0>
+08:14:39.881 [info] [BlockPing] current block: 20859167 (0x13e491f)
+08:14:45.556 [error] GenServer DexBot terminating
+** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+    LW.ipt(181265063849026.4, "sx1 price")
+    (arbitrage_bot_v1 0.1.0) lib/check_profit.ex:12: CheckProfit.run/2
+    (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:63: DexBot.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", {:swap_detected, %{event: %{address: "0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f"}}}}
+State: [%{"content" => %{"0x17c1ae82d99379240059940093762c5e4539aba5" => %{"address" => "0x17c1ae82d99379240059940093762c5e4539aba5", "price" => 374960895.0385574, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6" => %{"address" => "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6", "price" => 1002389234941.4633, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0x2e8135be71230c6b1b4045696d41c09db0414226" => %{"address" => "0x2e8135be71230c6b1b4045696d41c09db0414226", "price" => 2.6623905957279663e-9, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57" => %{"address" => "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57", "price" => 145650449.20846465, "token0" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b" => %{"address" => "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b", "price" => 0.975883172684146, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}}, "name" => "pancakeswap"}, %{"content" => %{"0x055cedfe14bce33f985c41d9a1934b7654611aac" => %{"address" => "0x055cedfe14bce33f985c41d9a1934b7654611aac", "price" => 979194014809.6653, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}, "0x06da0fd433c1a5d7a4faa01111c044910a184553" => %{"address" => "0x06da0fd433c1a5d7a4faa01111c044910a184553", "price" => 375291860.66234565, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a" => %{"address" => "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a", "price" => 135063109.23148438, "token0" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x397ff1542f962076d0bfe58ea045ffa2d347aca0" => %{"address" => "0x397ff1542f962076d0bfe58ea045ffa2d347aca0", "price" => 2.663467639529956e-9, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xaaf5110db6e744ff70fb339de037b990a20bdace" => %{"address" => "0xaaf5110db6e744ff70fb339de037b990a20bdace", "price" => 1003132864526.6185, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8" => %{"address" => "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8", "price" => 1.5496883340986632e-5, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}}, "0xba13afecda9beb75de5c56bbaf696b880a5a50dd" => %{"address" => "0xba13afecda9beb75de5c56bbaf696b880a5a50dd", "price" => 1.601807143423978, "token0" => %{"address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", "decimals" => 18, "name" => "Maker", "symbol" => "MKR"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f" => %{"address" => "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f", "price" => 2665.826214874136, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xd86a120a06255df8d4e2248ab04d4267e23adfaa" => %{"address" => "0xd86a120a06255df8d4e2248ab04d4267e23adfaa", "price" => 1.008513505910231, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}}, "name" => "sushiswap"}, %{"content" => %{"0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852" => %{"address" => "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852", "price" => 375307000.64385504, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e" => %{"address" => "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e", "price" => 15671.143416521358, "token0" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}, "token1" => %{"address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6", "decimals" => 18, "name" => "Wise Token", "symbol" => "WISE"}}, "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f" => %{"address" => "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f", "price" => 1.0014584326007905, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}, "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a" => %{"address" => "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a", "price" => 611206848.1162547, "token0" => %{"address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", "decimals" => 18, "name" => "Maker", "symbol" => "MKR"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0x4e6e41306c7ef6e53ecdb34e3155c73fcb7869f3" => %{"address" => "0x4e6e413 (truncated)
+07:27:31.849 [info] tracking subscription 0x1 for #PID<0.515.0>
+07:27:31.854 [info] tracking subscription 0x2 for #PID<0.513.0>
+07:27:41.857 [info] [BlockPing] current block: 20866109 (0x13e643d)
+07:28:00.342 [error] GenServer DexBot terminating
+** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+    LW.ipt(181259260702342.47, "sx1 price")
+    (arbitrage_bot_v1 0.1.0) lib/check_profit.ex:12: CheckProfit.run/2
+    (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:63: DexBot.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", {:swap_detected, %{event: %{address: "0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f"}}}}
+State: [%{"content" => %{"0x17c1ae82d99379240059940093762c5e4539aba5" => %{"address" => "0x17c1ae82d99379240059940093762c5e4539aba5", "price" => 382689532.61607134, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6" => %{"address" => "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6", "price" => 1002389234941.4633, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0x2e8135be71230c6b1b4045696d41c09db0414226" => %{"address" => "0x2e8135be71230c6b1b4045696d41c09db0414226", "price" => 2.609243739563413e-9, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57" => %{"address" => "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57", "price" => 145650449.20846465, "token0" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b" => %{"address" => "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b", "price" => 0.975883172684146, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}}, "name" => "pancakeswap"}, %{"content" => %{"0x055cedfe14bce33f985c41d9a1934b7654611aac" => %{"address" => "0x055cedfe14bce33f985c41d9a1934b7654611aac", "price" => 979194014809.6653, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}, "0x06da0fd433c1a5d7a4faa01111c044910a184553" => %{"address" => "0x06da0fd433c1a5d7a4faa01111c044910a184553", "price" => 382864934.9191711, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a" => %{"address" => "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a", "price" => 147706994.32365057, "token0" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x397ff1542f962076d0bfe58ea045ffa2d347aca0" => %{"address" => "0x397ff1542f962076d0bfe58ea045ffa2d347aca0", "price" => 2.609677550416995e-9, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xaaf5110db6e744ff70fb339de037b990a20bdace" => %{"address" => "0xaaf5110db6e744ff70fb339de037b990a20bdace", "price" => 986849993881.727, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8" => %{"address" => "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8", "price" => 1.5496883340986632e-5, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}}, "0xba13afecda9beb75de5c56bbaf696b880a5a50dd" => %{"address" => "0xba13afecda9beb75de5c56bbaf696b880a5a50dd", "price" => 1.6344746536041797, "token0" => %{"address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", "decimals" => 18, "name" => "Maker", "symbol" => "MKR"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f" => %{"address" => "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f", "price" => 2607.852682102243, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xd86a120a06255df8d4e2248ab04d4267e23adfaa" => %{"address" => "0xd86a120a06255df8d4e2248ab04d4267e23adfaa", "price" => 1.0022389309384465, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}}, "name" => "sushiswap"}, %{"content" => %{"0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852" => %{"address" => "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852", "price" => 382824288.4946345, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e" => %{"address" => "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e", "price" => 15670.92127545073, "token0" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}, "token1" => %{"address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6", "decimals" => 18, "name" => "Wise Token", "symbol" => "WISE"}}, "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f" => %{"address" => "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f", "price" => 0.9992648111945976, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}, "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a" => %{"address" => "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a", "price" => 611206848.1162547, "token0" => %{"address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", "decimals" => 18, "name" => "Maker", "symbol" => "MKR"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0x4e6e41306c7ef6e53ecdb34e3155c73fcb7869f3" => %{"address" => "0x4e6e41306 (truncated)
+07:33:09.723 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:35: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:35: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:33:09.741 [info] Application con_cache exited: :stopped
+07:33:09.741 [info] Application httpoison exited: :stopped
+07:33:09.743 [info] Application hackney exited: :stopped
+07:33:09.743 [info] Application metrics exited: :stopped
+07:33:09.743 [info] Application ssl_verify_fun exited: :stopped
+07:33:09.743 [info] Application parse_trans exited: :stopped
+07:33:09.743 [info] Application syntax_tools exited: :stopped
+07:33:09.743 [info] Application certifi exited: :stopped
+07:33:09.743 [info] Application mimerl exited: :stopped
+07:33:09.743 [info] Application w3ws exited: :stopped
+07:33:09.743 [info] Application wind exited: :stopped
+07:33:09.743 [info] Application mint_web_socket exited: :stopped
+07:33:09.744 [info] Application ethers exited: :stopped
+07:33:09.744 [info] Application idna exited: :stopped
+07:33:09.744 [info] Application unicode_util_compat exited: :stopped
+07:33:09.744 [info] Application ex_rlp exited: :stopped
+07:33:09.744 [info] Application ex_abi exited: :stopped
+07:33:09.744 [info] Application ex_keccak exited: :stopped
+07:33:09.744 [info] Application rustler_precompiled exited: :stopped
+07:33:09.744 [info] Application ethereumex exited: :stopped
+07:33:09.745 [info] Application poolboy exited: :stopped
+07:33:09.745 [info] Application finch exited: :stopped
+07:33:09.745 [info] Application nimble_options exited: :stopped
+07:33:09.745 [info] Application nimble_pool exited: :stopped
+07:33:09.745 [info] Application mint exited: :stopped
+07:33:09.745 [info] Application hpax exited: :stopped
+07:33:09.745 [info] Application castore exited: :stopped
+07:33:09.745 [info] Application jason exited: :stopped
+07:33:09.745 [info] Application decimal exited: :stopped
+07:33:09.746 [info] Application server exited: :stopped
+07:33:09.747 [info] Application plug_cowboy exited: :stopped
+07:33:09.747 [info] Application cowboy_telemetry exited: :stopped
+07:33:09.747 [info] Application cowboy exited: :stopped
+07:33:09.747 [info] Application ranch exited: :stopped
+07:33:09.747 [info] Application cowlib exited: :stopped
+07:33:09.748 [info] Application plug exited: :stopped
+07:33:09.748 [info] Application telemetry exited: :stopped
+07:33:09.748 [info] Application plug_crypto exited: :stopped
+07:33:09.748 [info] Application mime exited: :stopped
+07:33:09.748 [info] Application eex exited: :stopped
+07:34:38.736 [info] tracking subscription 0x1 for #PID<0.510.0>
+07:34:38.743 [info] tracking subscription 0x2 for #PID<0.508.0>
+07:34:48.746 [info] [BlockPing] current block: 20866145 (0x13e6461)
+07:37:01.560 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:35: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:35: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:37:01.571 [info] Application con_cache exited: :stopped
+07:37:01.571 [info] Application httpoison exited: :stopped
+07:37:01.572 [info] Application hackney exited: :stopped
+07:37:01.572 [info] Application metrics exited: :stopped
+07:37:01.572 [info] Application ssl_verify_fun exited: :stopped
+07:37:01.572 [info] Application parse_trans exited: :stopped
+07:37:01.572 [info] Application syntax_tools exited: :stopped
+07:37:01.572 [info] Application certifi exited: :stopped
+07:37:01.572 [info] Application mimerl exited: :stopped
+07:37:01.572 [info] Application w3ws exited: :stopped
+07:37:01.572 [info] Application wind exited: :stopped
+07:37:01.572 [info] Application mint_web_socket exited: :stopped
+07:37:01.572 [info] Application ethers exited: :stopped
+07:37:01.572 [info] Application idna exited: :stopped
+07:37:01.572 [info] Application unicode_util_compat exited: :stopped
+07:37:01.572 [info] Application ex_rlp exited: :stopped
+07:37:01.572 [info] Application ex_abi exited: :stopped
+07:37:01.572 [info] Application ex_keccak exited: :stopped
+07:37:01.572 [info] Application rustler_precompiled exited: :stopped
+07:37:01.573 [info] Application ethereumex exited: :stopped
+07:37:01.573 [info] Application poolboy exited: :stopped
+07:37:01.573 [info] Application finch exited: :stopped
+07:37:01.573 [info] Application nimble_options exited: :stopped
+07:37:01.574 [info] Application nimble_pool exited: :stopped
+07:37:01.574 [info] Application mint exited: :stopped
+07:37:01.574 [info] Application hpax exited: :stopped
+07:37:01.574 [info] Application castore exited: :stopped
+07:37:01.574 [info] Application jason exited: :stopped
+07:37:01.574 [info] Application decimal exited: :stopped
+07:37:01.575 [info] Application server exited: :stopped
+07:37:01.576 [info] Application plug_cowboy exited: :stopped
+07:37:01.576 [info] Application cowboy_telemetry exited: :stopped
+07:37:01.576 [info] Application cowboy exited: :stopped
+07:37:01.576 [info] Application ranch exited: :stopped
+07:37:01.576 [info] Application cowlib exited: :stopped
+07:37:01.577 [info] Application plug exited: :stopped
+07:37:01.577 [info] Application telemetry exited: :stopped
+07:37:01.577 [info] Application plug_crypto exited: :stopped
+07:37:01.577 [info] Application mime exited: :stopped
+07:37:01.577 [info] Application eex exited: :stopped
+07:46:47.413 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:36: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:35: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:46:47.421 [info] Application con_cache exited: :stopped
+07:46:47.421 [info] Application httpoison exited: :stopped
+07:46:47.421 [info] Application hackney exited: :stopped
+07:46:47.421 [info] Application metrics exited: :stopped
+07:46:47.421 [info] Application ssl_verify_fun exited: :stopped
+07:46:47.421 [info] Application parse_trans exited: :stopped
+07:46:47.421 [info] Application syntax_tools exited: :stopped
+07:46:47.421 [info] Application certifi exited: :stopped
+07:46:47.421 [info] Application mimerl exited: :stopped
+07:46:47.421 [info] Application w3ws exited: :stopped
+07:46:47.421 [info] Application wind exited: :stopped
+07:46:47.421 [info] Application mint_web_socket exited: :stopped
+07:46:47.421 [info] Application ethers exited: :stopped
+07:46:47.421 [info] Application idna exited: :stopped
+07:46:47.421 [info] Application unicode_util_compat exited: :stopped
+07:46:47.421 [info] Application ex_rlp exited: :stopped
+07:46:47.421 [info] Application ex_abi exited: :stopped
+07:46:47.421 [info] Application ex_keccak exited: :stopped
+07:46:47.421 [info] Application rustler_precompiled exited: :stopped
+07:46:47.422 [info] Application ethereumex exited: :stopped
+07:46:47.422 [info] Application poolboy exited: :stopped
+07:46:47.422 [info] Application finch exited: :stopped
+07:46:47.422 [info] Application nimble_options exited: :stopped
+07:46:47.423 [info] Application nimble_pool exited: :stopped
+07:46:47.423 [info] Application mint exited: :stopped
+07:46:47.423 [info] Application hpax exited: :stopped
+07:46:47.423 [info] Application castore exited: :stopped
+07:46:47.423 [info] Application jason exited: :stopped
+07:46:47.423 [info] Application decimal exited: :stopped
+07:46:47.424 [info] Application server exited: :stopped
+07:46:47.424 [info] Application plug_cowboy exited: :stopped
+07:46:47.424 [info] Application cowboy_telemetry exited: :stopped
+07:46:47.425 [info] Application cowboy exited: :stopped
+07:46:47.426 [info] Application ranch exited: :stopped
+07:46:47.426 [info] Application cowlib exited: :stopped
+07:46:47.426 [info] Application plug exited: :stopped
+07:46:47.427 [info] Application telemetry exited: :stopped
+07:46:47.427 [info] Application plug_crypto exited: :stopped
+07:46:47.427 [info] Application mime exited: :stopped
+07:46:47.427 [info] Application eex exited: :stopped
+07:48:16.925 [info] tracking subscription 0x4 for #PID<0.509.0>
+07:48:16.930 [info] tracking subscription 0x5 for #PID<0.507.0>
+07:48:26.934 [info] [BlockPing] current block: 20866147 (0x13e6463)
+07:50:41.290 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:36: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:35: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:50:41.299 [info] Application con_cache exited: :stopped
+07:50:41.299 [info] Application httpoison exited: :stopped
+07:50:41.300 [info] Application hackney exited: :stopped
+07:50:41.300 [info] Application metrics exited: :stopped
+07:50:41.300 [info] Application ssl_verify_fun exited: :stopped
+07:50:41.300 [info] Application parse_trans exited: :stopped
+07:50:41.300 [info] Application syntax_tools exited: :stopped
+07:50:41.300 [info] Application certifi exited: :stopped
+07:50:41.300 [info] Application mimerl exited: :stopped
+07:50:41.300 [info] Application w3ws exited: :stopped
+07:50:41.300 [info] Application wind exited: :stopped
+07:50:41.300 [info] Application mint_web_socket exited: :stopped
+07:50:41.300 [info] Application ethers exited: :stopped
+07:50:41.300 [info] Application idna exited: :stopped
+07:50:41.300 [info] Application unicode_util_compat exited: :stopped
+07:50:41.300 [info] Application ex_rlp exited: :stopped
+07:50:41.300 [info] Application ex_abi exited: :stopped
+07:50:41.300 [info] Application ex_keccak exited: :stopped
+07:50:41.300 [info] Application rustler_precompiled exited: :stopped
+07:50:41.301 [info] Application ethereumex exited: :stopped
+07:50:41.301 [info] Application poolboy exited: :stopped
+07:50:41.301 [info] Application finch exited: :stopped
+07:50:41.301 [info] Application nimble_options exited: :stopped
+07:50:41.301 [info] Application nimble_pool exited: :stopped
+07:50:41.301 [info] Application mint exited: :stopped
+07:50:41.301 [info] Application hpax exited: :stopped
+07:50:41.301 [info] Application castore exited: :stopped
+07:50:41.301 [info] Application jason exited: :stopped
+07:50:41.301 [info] Application decimal exited: :stopped
+07:50:41.302 [info] Application server exited: :stopped
+07:50:41.303 [info] Application plug_cowboy exited: :stopped
+07:50:41.303 [info] Application cowboy_telemetry exited: :stopped
+07:50:41.303 [info] Application cowboy exited: :stopped
+07:50:41.304 [info] Application ranch exited: :stopped
+07:50:41.304 [info] Application cowlib exited: :stopped
+07:50:41.304 [info] Application plug exited: :stopped
+07:50:41.304 [info] Application telemetry exited: :stopped
+07:50:41.305 [info] Application plug_crypto exited: :stopped
+07:50:41.305 [info] Application mime exited: :stopped
+07:50:41.305 [info] Application eex exited: :stopped
+07:51:46.551 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function LW.ipt/2 is undefined (module LW is not available)
+            LW.ipt(["pancakeswap", "sushiswap", "uniswap"], "sx1 list_dex with LW.ipt")
+            (arbitrage_bot_v1 0.1.0) lib/initialise_dex_bot.ex:36: InitialiseDexBot.extract_list_pairs/0
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:35: anonymous fn/2 in DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:51:46.559 [info] Application con_cache exited: :stopped
+07:51:46.559 [info] Application httpoison exited: :stopped
+07:51:46.560 [info] Application hackney exited: :stopped
+07:51:46.560 [info] Application metrics exited: :stopped
+07:51:46.560 [info] Application ssl_verify_fun exited: :stopped
+07:51:46.560 [info] Application parse_trans exited: :stopped
+07:51:46.560 [info] Application syntax_tools exited: :stopped
+07:51:46.560 [info] Application certifi exited: :stopped
+07:51:46.560 [info] Application mimerl exited: :stopped
+07:51:46.560 [info] Application w3ws exited: :stopped
+07:51:46.560 [info] Application wind exited: :stopped
+07:51:46.560 [info] Application mint_web_socket exited: :stopped
+07:51:46.560 [info] Application ethers exited: :stopped
+07:51:46.560 [info] Application idna exited: :stopped
+07:51:46.560 [info] Application unicode_util_compat exited: :stopped
+07:51:46.560 [info] Application ex_rlp exited: :stopped
+07:51:46.560 [info] Application ex_abi exited: :stopped
+07:51:46.560 [info] Application ex_keccak exited: :stopped
+07:51:46.560 [info] Application rustler_precompiled exited: :stopped
+07:51:46.561 [info] Application ethereumex exited: :stopped
+07:51:46.561 [info] Application poolboy exited: :stopped
+07:51:46.561 [info] Application finch exited: :stopped
+07:51:46.561 [info] Application nimble_options exited: :stopped
+07:51:46.562 [info] Application nimble_pool exited: :stopped
+07:51:46.562 [info] Application mint exited: :stopped
+07:51:46.562 [info] Application hpax exited: :stopped
+07:51:46.562 [info] Application castore exited: :stopped
+07:51:46.562 [info] Application jason exited: :stopped
+07:51:46.562 [info] Application decimal exited: :stopped
+07:51:46.563 [info] Application server exited: :stopped
+07:51:46.564 [info] Application plug_cowboy exited: :stopped
+07:51:46.564 [info] Application cowboy_telemetry exited: :stopped
+07:51:46.564 [info] Application cowboy exited: :stopped
+07:51:46.565 [info] Application ranch exited: :stopped
+07:51:46.565 [info] Application cowlib exited: :stopped
+07:51:46.565 [info] Application plug exited: :stopped
+07:51:46.566 [info] Application telemetry exited: :stopped
+07:51:46.566 [info] Application plug_crypto exited: :stopped
+07:51:46.566 [info] Application mime exited: :stopped
+07:51:46.566 [info] Application eex exited: :stopped
+07:53:10.818 [info] tracking subscription 0x6 for #PID<0.514.0>
+07:53:10.823 [info] tracking subscription 0x7 for #PID<0.512.0>
+07:53:20.826 [info] [BlockPing] current block: 20866147 (0x13e6463)
+07:53:37.422 [info] tracking subscription 0x8 for #PID<0.509.0>
+07:53:37.427 [info] tracking subscription 0x9 for #PID<0.507.0>
+07:53:47.432 [info] [BlockPing] current block: 20866147 (0x13e6463)
+07:54:08.622 [info] tracking subscription 0xa for #PID<0.503.0>
+07:54:08.627 [info] tracking subscription 0xb for #PID<0.501.0>
+07:54:18.630 [info] [BlockPing] current block: 20866147 (0x13e6463)
+07:57:00.285 [info] tracking subscription 0x1 for #PID<0.509.0>
+07:57:00.291 [info] tracking subscription 0x2 for #PID<0.507.0>
+07:57:10.294 [info] [BlockPing] current block: 20866264 (0x13e64d8)
+08:05:15.128 [info] tracking subscription 0x4 for #PID<0.507.0>
+08:06:23.062 [info] tracking subscription 0x5 for #PID<0.551.0>
+08:06:23.067 [info] tracking subscription 0x6 for #PID<0.549.0>
+08:06:33.072 [info] [BlockPing] current block: 20866266 (0x13e64da)
+08:14:37.605 [info] tracking subscription 0x1 for #PID<0.500.0>
+08:14:37.611 [info] tracking subscription 0x2 for #PID<0.498.0>
+08:14:47.614 [info] [BlockPing] current block: 20866347 (0x13e652b)
+07:22:10.839 [info] tracking subscription 0x1 for #PID<0.503.0>
+07:22:10.846 [info] tracking subscription 0x2 for #PID<0.501.0>
+07:22:20.849 [info] [BlockPing] current block: 20873258 (0x13e802a)
+07:25:14.447 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (ArgumentError) argument error
+            :erlang.++(nil, ["[]"])
+            (arbitrage_bot_v1 0.1.0) lib/libraries/log_writter.ex:6: LogWritter.ipt/2
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:25:14.462 [info] Application con_cache exited: :stopped
+07:25:14.462 [info] Application httpoison exited: :stopped
+07:25:14.462 [info] Application hackney exited: :stopped
+07:25:14.463 [info] Application metrics exited: :stopped
+07:25:14.463 [info] Application ssl_verify_fun exited: :stopped
+07:25:14.463 [info] Application parse_trans exited: :stopped
+07:25:14.463 [info] Application syntax_tools exited: :stopped
+07:25:14.463 [info] Application certifi exited: :stopped
+07:25:14.463 [info] Application mimerl exited: :stopped
+07:25:14.463 [info] Application w3ws exited: :stopped
+07:25:14.463 [info] Application wind exited: :stopped
+07:25:14.463 [info] Application mint_web_socket exited: :stopped
+07:25:14.463 [info] Application ethers exited: :stopped
+07:25:14.463 [info] Application idna exited: :stopped
+07:25:14.463 [info] Application unicode_util_compat exited: :stopped
+07:25:14.463 [info] Application ex_rlp exited: :stopped
+07:25:14.463 [info] Application ex_abi exited: :stopped
+07:25:14.463 [info] Application ex_keccak exited: :stopped
+07:25:14.463 [info] Application rustler_precompiled exited: :stopped
+07:25:14.464 [info] Application ethereumex exited: :stopped
+07:25:14.464 [info] Application poolboy exited: :stopped
+07:25:14.464 [info] Application finch exited: :stopped
+07:25:14.464 [info] Application nimble_options exited: :stopped
+07:25:14.464 [info] Application nimble_pool exited: :stopped
+07:25:14.465 [info] Application mint exited: :stopped
+07:25:14.465 [info] Application hpax exited: :stopped
+07:25:14.465 [info] Application castore exited: :stopped
+07:25:14.465 [info] Application jason exited: :stopped
+07:25:14.465 [info] Application decimal exited: :stopped
+07:25:14.466 [info] Application server exited: :stopped
+07:25:14.466 [info] Application plug_cowboy exited: :stopped
+07:25:14.467 [info] Application cowboy_telemetry exited: :stopped
+07:25:14.467 [info] Application cowboy exited: :stopped
+07:25:14.467 [info] Application ranch exited: :stopped
+07:25:14.467 [info] Application cowlib exited: :stopped
+07:25:14.468 [info] Application plug exited: :stopped
+07:25:14.468 [info] Application telemetry exited: :stopped
+07:25:14.468 [info] Application plug_crypto exited: :stopped
+07:25:14.468 [info] Application mime exited: :stopped
+07:25:14.468 [info] Application eex exited: :stopped
+07:27:54.588 [info] tracking subscription 0x4 for #PID<0.507.0>
+07:27:54.592 [info] tracking subscription 0x5 for #PID<0.505.0>
+07:28:00.489 [error] GenServer DexBot terminating
+** (ArithmeticError) bad argument in arithmetic expression
+    :erlang.-(320516438282802, nil)
+    (arbitrage_bot_v1 0.1.0) lib/check_profit.ex:173: CheckProfit.is_trade_profitable?/5
+    (arbitrage_bot_v1 0.1.0) lib/check_profit.ex:69: anonymous fn/4 in CheckProfit.get_profitable_trade/2
+    (elixir 1.17.0-dev) lib/enum.ex:2531: Enum."-reduce/3-lists^foldl/2-0-"/3
+    (arbitrage_bot_v1 0.1.0) lib/check_profit.ex:48: CheckProfit.get_profitable_trade/2
+    (arbitrage_bot_v1 0.1.0) lib/check_profit.ex:17: CheckProfit.run/2
+    (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:61: DexBot.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+Last message: {:"$gen_cast", {:swap_detected, %{event: %{address: "0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f"}}}}
+State: [%{"content" => %{"0x17c1ae82d99379240059940093762c5e4539aba5" => %{"address" => "0x17c1ae82d99379240059940093762c5e4539aba5", "price" => 407239280.82159245, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6" => %{"address" => "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6", "price" => 1002389234941.4633, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0x2e8135be71230c6b1b4045696d41c09db0414226" => %{"address" => "0x2e8135be71230c6b1b4045696d41c09db0414226", "price" => 2.449203727990573e-9, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57" => %{"address" => "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57", "price" => 145650449.20846465, "token0" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b" => %{"address" => "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b", "price" => 0.975883172684146, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}}, "name" => "pancakeswap"}, %{"content" => %{"0x055cedfe14bce33f985c41d9a1934b7654611aac" => %{"address" => "0x055cedfe14bce33f985c41d9a1934b7654611aac", "price" => 979194014809.6653, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}, "0x06da0fd433c1a5d7a4faa01111c044910a184553" => %{"address" => "0x06da0fd433c1a5d7a4faa01111c044910a184553", "price" => 407545204.8231373, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a" => %{"address" => "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a", "price" => 151708140.926022, "token0" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x397ff1542f962076d0bfe58ea045ffa2d347aca0" => %{"address" => "0x397ff1542f962076d0bfe58ea045ffa2d347aca0", "price" => 2.450805355814223e-9, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xaaf5110db6e744ff70fb339de037b990a20bdace" => %{"address" => "0xaaf5110db6e744ff70fb339de037b990a20bdace", "price" => 1002183189994.9325, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}}, "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8" => %{"address" => "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8", "price" => 1.5496883340986632e-5, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE", "decimals" => 18, "name" => "shib", "symbol" => "SHIB"}}, "0xba13afecda9beb75de5c56bbaf696b880a5a50dd" => %{"address" => "0xba13afecda9beb75de5c56bbaf696b880a5a50dd", "price" => 1.6524947136754764, "token0" => %{"address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", "decimals" => 18, "name" => "Maker", "symbol" => "MKR"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f" => %{"address" => "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f", "price" => 2449.0343011355517, "token0" => %{"address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F", "decimals" => 18, "name" => "Dai Stablecoin", "symbol" => "DAI"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0xd86a120a06255df8d4e2248ab04d4267e23adfaa" => %{"address" => "0xd86a120a06255df8d4e2248ab04d4267e23adfaa", "price" => 0.9976888461649471, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}}, "name" => "sushiswap"}, %{"content" => %{"0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852" => %{"address" => "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852", "price" => 407574385.5005695, "token0" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}, "token1" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}}, "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e" => %{"address" => "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e", "price" => 15672.318651691017, "token0" => %{"address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals" => 18, "name" => "weth", "symbol" => "WETH"}, "token1" => %{"address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6", "decimals" => 18, "name" => "Wise Token", "symbol" => "WISE"}}, "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f" => %{"address" => "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f", "price" => 0.9987644522782122, "token0" => %{"address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals" => 6, "name" => "usdc", "symbol" => "USDC"}, "token1" => %{"address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7", "decimals" => 6, "name" => "Tether USD", "symbol" => "USDT"}}, "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a" => %{"address" => "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a", "price" => 611206848.1162547, "token0" => %{"address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", "decimals" => 18, "name" => "Maker", "symbol" => "MKR"}, "token1"  (truncated)
+07:28:04.596 [info] [BlockPing] current block: 20873262 (0x13e802e)
+07:28:54.218 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817687]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, nil, \"WETH\"}", "[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{\"error\" => :connect_timeout}", "%{\"error\" => :timeout}"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:28:54.224 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817687]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, nil, \"WETH\"}", "[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{\"error\" => :connect_timeout}", "%{\"error\" => :timeout}"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:28:54.226 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817687]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, nil, \"WETH\"}", "[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{\"error\" => :connect_timeout}", "%{\"error\" => :timeout}"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:28:54.228 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817687]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, nil, \"WETH\"}", "[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{\"error\" => :connect_timeout}", "%{\"error\" => :timeout}"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:28:54.232 [info] Application arbitrage_bot_v1 exited: shutdown
+07:30:46.894 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:31:00.132 [info] tracking subscription 0x1 for #PID<0.515.0>
+07:31:00.138 [info] tracking subscription 0x2 for #PID<0.513.0>
+07:31:00.138 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:31:00.139 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:31:00.140 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]"])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:31:00.141 [info] Application arbitrage_bot_v1 exited: shutdown
+07:31:17.247 [error] #PID<0.521.0> running Server.Router (connection #PID<0.520.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: POST /event
+** (exit) no process: the process is not alive or there's no process currently associated with the given name, possibly because its application isn't started
+07:32:17.876 [info] tracking subscription 0x4 for #PID<0.513.0>
+07:32:17.882 [info] tracking subscription 0x5 for #PID<0.511.0>
+07:32:34.338 [info] [BlockPing] current block: 20873307 (0x13e805b)
+07:32:47.363 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, 0.00516818710485, \"WETH\"}", "320516438282802.0", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [124012920078110701939262159, 817444069389681513, 1727809595]}", "726035063661903.4", "151708140.926022", "{:ok, :O_I, 726034911953762.5}", "124012920078110701939262159", "{:ok, [85661271552, 62006460039055353141264384]}", "{:ok, [62006460039055353141264384, 271935848242079575]}", "271935762581448528", "{:ok, 271935762581448528, 85661271552}", "{:ok, 0.00516818710485, \"WETH\"}", "2.719357625814485e17", "{:ok, [{%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57\", \"price\" => 145650449.20846465, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"pancakeswap\", 320516438282802.0, \"WETH\", :O_I, 96900453, 0.00516818710485}, {%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x24d3dd4a62e29770cf98810b09f89d3a90279e7a\", \"price\" => 151708140.926022, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"sushiswap\", 2.719357625814485e17, \"WETH\", :O_I, 85661271552, 0.00516818710485}]}", "9999.979839077909", "0.00516818710485", "{:ok, true}", "\"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\"", "\"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "85661271552", ":O_I", "9999.979839077909", "{:ok, 9999.979839077909}", "0.0", "\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\"", "{:ok, 0}", "{:ok, 2924679710715887091248407}", "{:ok, 0}", ...])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:32:47.380 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, 0.00516818710485, \"WETH\"}", "320516438282802.0", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [124012920078110701939262159, 817444069389681513, 1727809595]}", "726035063661903.4", "151708140.926022", "{:ok, :O_I, 726034911953762.5}", "124012920078110701939262159", "{:ok, [85661271552, 62006460039055353141264384]}", "{:ok, [62006460039055353141264384, 271935848242079575]}", "271935762581448528", "{:ok, 271935762581448528, 85661271552}", "{:ok, 0.00516818710485, \"WETH\"}", "2.719357625814485e17", "{:ok, [{%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57\", \"price\" => 145650449.20846465, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"pancakeswap\", 320516438282802.0, \"WETH\", :O_I, 96900453, 0.00516818710485}, {%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x24d3dd4a62e29770cf98810b09f89d3a90279e7a\", \"price\" => 151708140.926022, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"sushiswap\", 2.719357625814485e17, \"WETH\", :O_I, 85661271552, 0.00516818710485}]}", "9999.979839077909", "0.00516818710485", "{:ok, true}", "\"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\"", "\"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "85661271552", ":O_I", "9999.979839077909", "{:ok, 9999.979839077909}", "0.0", "\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\"", "{:ok, 0}", "{:ok, 2924679710715887091248407}", "{:ok, 0}", ...])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:32:47.381 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, 0.00516818710485, \"WETH\"}", "320516438282802.0", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [124012920078110701939262159, 817444069389681513, 1727809595]}", "726035063661903.4", "151708140.926022", "{:ok, :O_I, 726034911953762.5}", "124012920078110701939262159", "{:ok, [85661271552, 62006460039055353141264384]}", "{:ok, [62006460039055353141264384, 271935848242079575]}", "271935762581448528", "{:ok, 271935762581448528, 85661271552}", "{:ok, 0.00516818710485, \"WETH\"}", "2.719357625814485e17", "{:ok, [{%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57\", \"price\" => 145650449.20846465, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"pancakeswap\", 320516438282802.0, \"WETH\", :O_I, 96900453, 0.00516818710485}, {%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x24d3dd4a62e29770cf98810b09f89d3a90279e7a\", \"price\" => 151708140.926022, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"sushiswap\", 2.719357625814485e17, \"WETH\", :O_I, 85661271552, 0.00516818710485}]}", "9999.979839077909", "0.00516818710485", "{:ok, true}", "\"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\"", "\"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "85661271552", ":O_I", "9999.979839077909", "{:ok, 9999.979839077909}", "0.0", "\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\"", "{:ok, 0}", "{:ok, 2924679710715887091248407}", "{:ok, 0}", ...])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:32:47.382 [error] GenServer LogSaver terminating
+** (FunctionClauseError) no function clause matching in LogSaver.file_log/1
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:64: LogSaver.file_log(["[]", "[\"pancakeswap\", \"sushiswap\", \"uniswap\"]", "%{event: %{address: \"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"}}", "726035063661903.4", "\"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xEfF92A263d31888d860bD50809A8D171709b7b1c\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [140284133136607360817484, 963156199647715, 1727263211]}", "726035063661903.4", "145650449.20846465", "{:ok, :O_I, 726034918011454.1}", "140284133136607360817484", "{:ok, [96900453, 70142066568303682256896]}", "{:ok, [70142066568303682256896, 320516533494110]}", "320516438282802", "{:ok, 320516438282802, 96900453}", "{:ok, 0.00516818710485, \"WETH\"}", "320516438282802.0", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "{:ok, [81036890885443410559719587047542, 111615671117476904, 1727817950]}", "{:ok, [124012920078110701939262159, 817444069389681513, 1727809595]}", "726035063661903.4", "151708140.926022", "{:ok, :O_I, 726034911953762.5}", "124012920078110701939262159", "{:ok, [85661271552, 62006460039055353141264384]}", "{:ok, [62006460039055353141264384, 271935848242079575]}", "271935762581448528", "{:ok, 271935762581448528, 85661271552}", "{:ok, 0.00516818710485, \"WETH\"}", "2.719357625814485e17", "{:ok, [{%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57\", \"price\" => 145650449.20846465, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"pancakeswap\", 320516438282802.0, \"WETH\", :O_I, 96900453, 0.00516818710485}, {%{\"address\" => \"0x811beed0119b4afce20d2583eb608c6f7af1954f\", \"price\" => 726035063661903.4, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, %{\"address\" => \"0x24d3dd4a62e29770cf98810b09f89d3a90279e7a\", \"price\" => 151708140.926022, \"token0\" => %{\"address\" => \"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\", \"decimals\" => 18, \"name\" => \"shib\", \"symbol\" => \"SHIB\"}, \"token1\" => %{\"address\" => \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\", \"decimals\" => 18, \"name\" => \"weth\", \"symbol\" => \"WETH\"}}, \"uniswap\", \"sushiswap\", 2.719357625814485e17, \"WETH\", :O_I, 85661271552, 0.00516818710485}]}", "9999.979839077909", "0.00516818710485", "{:ok, true}", "\"0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE\"", "\"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\"", "\"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D\"", "\"0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F\"", "85661271552", ":O_I", "9999.979839077909", "{:ok, 9999.979839077909}", "0.0", "\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\"", "{:ok, 0}", "{:ok, 2924679710715887091248407}", "{:ok, 0}", ...])
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:38: LogSaver.write_log/0
+    (arbitrage_bot_v1 0.1.0) lib/libraries/log_saver.ex:27: LogSaver.handle_cast/2
+    (stdlib 5.1.1) gen_server.erl:1103: :gen_server.try_handle_cast/3
+    (stdlib 5.1.1) gen_server.erl:1165: :gen_server.handle_msg/6
+    (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", :save_logs}
+State: []
+07:32:47.384 [info] Application arbitrage_bot_v1 exited: shutdown
+07:34:39.360 [info] Application arbitrage_bot_v1 exited: ArbitrageBotV1.Application.start(:normal, []) returned an error: shutdown: failed to start child: DexBot
+    ** (EXIT) an exception was raised:
+        ** (ArgumentError) construction of binary failed: segment 1 of type 'binary': expected a binary but got: nil
+            (arbitrage_bot_v1 0.1.0) lib/libraries/log_writter.ex:7: LogWritter.ipt/2
+            (arbitrage_bot_v1 0.1.0) lib/dex_bot.ex:18: DexBot.init/1
+            (stdlib 5.1.1) gen_server.erl:962: :gen_server.init_it/2
+            (stdlib 5.1.1) gen_server.erl:917: :gen_server.init_it/6
+            (stdlib 5.1.1) proc_lib.erl:241: :proc_lib.init_p_do_apply/3
+07:34:39.372 [info] Application con_cache exited: :stopped
+07:34:39.372 [info] Application httpoison exited: :stopped
+07:34:39.372 [info] Application hackney exited: :stopped
+07:34:39.372 [info] Application metrics exited: :stopped
+07:34:39.372 [info] Application ssl_verify_fun exited: :stopped
+07:34:39.373 [info] Application parse_trans exited: :stopped
+07:34:39.373 [info] Application syntax_tools exited: :stopped
+07:34:39.373 [info] Application certifi exited: :stopped
+07:34:39.373 [info] Application mimerl exited: :stopped
+07:34:39.373 [info] Application w3ws exited: :stopped
+07:34:39.373 [info] Application wind exited: :stopped
+07:34:39.373 [info] Application mint_web_socket exited: :stopped
+07:34:39.373 [info] Application ethers exited: :stopped
+07:34:39.373 [info] Application idna exited: :stopped
+07:34:39.373 [info] Application unicode_util_compat exited: :stopped
+07:34:39.373 [info] Application ex_rlp exited: :stopped
+07:34:39.373 [info] Application ex_abi exited: :stopped
+07:34:39.373 [info] Application ex_keccak exited: :stopped
+07:34:39.373 [info] Application rustler_precompiled exited: :stopped
+07:34:39.374 [info] Application ethereumex exited: :stopped
+07:34:39.374 [info] Application poolboy exited: :stopped
+07:34:39.374 [info] Application finch exited: :stopped
+07:34:39.374 [info] Application nimble_options exited: :stopped
+07:34:39.374 [info] Application nimble_pool exited: :stopped
+07:34:39.374 [info] Application mint exited: :stopped
+07:34:39.375 [info] Application hpax exited: :stopped
+07:34:39.375 [info] Application castore exited: :stopped
+07:34:39.375 [info] Application jason exited: :stopped
+07:34:39.375 [info] Application decimal exited: :stopped
+07:34:39.376 [info] Application server exited: :stopped
+07:34:39.376 [info] Application plug_cowboy exited: :stopped
+07:34:39.376 [info] Application cowboy_telemetry exited: :stopped
+07:34:39.376 [info] Application cowboy exited: :stopped
+07:34:39.377 [info] Application ranch exited: :stopped
+07:34:39.377 [info] Application cowlib exited: :stopped
+07:34:39.377 [info] Application plug exited: :stopped
+07:34:39.377 [info] Application telemetry exited: :stopped
+07:34:39.378 [info] Application plug_crypto exited: :stopped
+07:34:39.378 [info] Application mime exited: :stopped
+07:34:39.378 [info] Application eex exited: :stopped
+07:35:41.794 [info] tracking subscription 0x7 for #PID<0.513.0>
+07:35:41.799 [info] tracking subscription 0x8 for #PID<0.511.0>
+07:35:51.802 [info] [BlockPing] current block: 20873309 (0x13e805d)
+07:39:35.597 [info] tracking subscription 0xa for #PID<0.513.0>
+07:39:35.604 [info] tracking subscription 0xb for #PID<0.511.0>
+07:39:45.608 [info] [BlockPing] current block: 20873311 (0x13e805f)
+07:42:10.115 [info] tracking subscription 0xd for #PID<0.514.0>
+07:42:10.121 [info] tracking subscription 0xe for #PID<0.512.0>
+07:42:20.124 [info] [BlockPing] current block: 20873311 (0x13e805f)
+07:43:40.299 [info] tracking subscription 0x10 for #PID<0.508.0>
+07:43:40.305 [info] tracking subscription 0x11 for #PID<0.506.0>
+07:43:44.209 [info] tracking subscription 0x12 for #PID<0.488.0>
+07:43:44.214 [info] tracking subscription 0x13 for #PID<0.486.0>
+07:43:54.216 [info] [BlockPing] current block: 20873315 (0x13e8063)
+07:45:09.652 [info] tracking subscription 0x15 for #PID<0.519.0>
+07:45:09.658 [info] tracking subscription 0x16 for #PID<0.517.0>
+07:45:19.661 [info] [BlockPing] current block: 20873317 (0x13e8065)
+07:46:03.756 [info] tracking subscription 0x18 for #PID<0.514.0>
+07:46:03.762 [info] tracking subscription 0x19 for #PID<0.512.0>
+07:46:13.766 [info] [BlockPing] current block: 20873319 (0x13e8067)
+07:46:43.580 [info] tracking subscription 0x1b for #PID<0.514.0>
+07:46:43.584 [info] tracking subscription 0x1c for #PID<0.512.0>
+07:46:53.588 [info] [BlockPing] current block: 20873321 (0x13e8069)

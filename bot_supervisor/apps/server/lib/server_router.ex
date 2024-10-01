@@ -22,7 +22,7 @@ defmodule Server.Router do
     event_raw = Jason.decode!(body)
 
       event = %{event: %{address: event_raw["address"]}}
-      |> IO.inspect(label: "sx1 event")
+      |> LogWritter.ipt("sx1 event")
 
     GenServer.cast(DexBot, {:swap_detected, event})
 

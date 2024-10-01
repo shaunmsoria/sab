@@ -43,7 +43,7 @@ defmodule GasExtractor do
         ConCache.put(:gas, :estimated_gas_fee, estimated_gas_fee)
 
       {:error, reason} ->
-        %{"error" => reason} |> IO.inspect(label: "sx1 gas_extract error result")
+        %{"error" => reason} |> LogWritter.ipt("sx1 gas_extract error result")
     end
 
     :timer.sleep(1000)

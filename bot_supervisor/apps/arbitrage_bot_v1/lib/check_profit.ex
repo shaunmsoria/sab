@@ -8,8 +8,8 @@ defmodule CheckProfit do
   def run(_state, event_data) when is_map(event_data) do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
-         price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
-         address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
+         price <- calculate_price(event_data.event.address) |> LogWritter.ipt("sx1 price"),
+         address <- event_data.event.address |> LogWritter.ipt("sx1 address"),
          {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
          {:ok, token_pair_price_udpated} <-
            LD.update_token_pair_price(token_pair, dex_name, price),
@@ -18,7 +18,7 @@ defmodule CheckProfit do
       ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
-        {:error, error} |> IO.inspect(label: "sx1 error: no event address")
+        {:error, error} |> LogWritter.ipt("sx1 error: no event address")
     end
   end
 
@@ -95,7 +95,7 @@ defmodule CheckProfit do
                     token_content: token_pair_content,
                     token_searched: updated_token_pair_searched
                   }
-                  |> IO.inspect(label: "output: error in is_trade_profitable? for those tokens")
+                  |> LogWritter.ipt("output: error in is_trade_profitable? for those tokens")
 
                   acc
               end
@@ -107,7 +107,7 @@ defmodule CheckProfit do
       end
 
     {:ok, profitable_trades_result}
-    |> IO.inspect(label: "sx1 get_profitable_trades result")
+    |> LogWritter.ipt("sx1 get_profitable_trades result")
   end
 
   def profitable_trade_from_dex(%{"address" => _address} = token_pair_searched),
@@ -133,27 +133,27 @@ defmodule CheckProfit do
       ) do
     with router_address <-
            @dexs[dex_name]["router"]
-           |> IO.inspect(label: "sx1 router_address"),
+           |> LogWritter.ipt("sx1 router_address"),
          router_address_searched <-
            @dexs[dex_name_searched]["router"]
-           |> IO.inspect(label: "sx1 router_address_searched"),
+           |> LogWritter.ipt("sx1 router_address_searched"),
          {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
            token_pair_content["address"]
            |> contract(:get_reserves)
-           |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name"),
+           |> LogWritter.ipt("sx1 get_reserves pair_address_dex_name"),
          {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
            token_pair_searched["address"]
            |> contract(:get_reserves)
-           |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched"),
+           |> LogWritter.ipt("sx1 get_reserves pair_address_dex_name_searched"),
          content_pair_price_O_I <-
            (reserve0 / reserve1)
-           |> IO.inspect(label: "sx1 content_pair_price"),
+           |> LogWritter.ipt("sx1 content_pair_price"),
          searched_pair_price_O_I <-
            (reserve0_searched / reserve1_searched)
-           |> IO.inspect(label: "sx1 searched_pair_price"),
+           |> LogWritter.ipt("sx1 searched_pair_price"),
          {:ok, direction, _difference_pair_price_O_I} <-
            transaction_direction(searched_pair_price_O_I - content_pair_price_O_I)
-           |> IO.inspect(label: "sx1 transaction_direction"),
+           |> LogWritter.ipt("sx1 transaction_direction"),
          {:ok, simulated_profit_pre_gas, tradable_amount} <-
            simulate_profit_pre_gas(
              router_address,
@@ -165,13 +165,13 @@ defmodule CheckProfit do
              token_pair_content,
              direction
            )
-           |> IO.inspect(label: "sx1 simulate_profit_pre_gas"),
+           |> LogWritter.ipt("sx1 simulate_profit_pre_gas"),
          {:ok, gas_fee, simulated_profit_token_symbol} <-
            calculate_gas_price_for_trade(token_pair_content["token1"])
-           |> IO.inspect(label: "sx1 gas_fee in token1 amount"),
+           |> LogWritter.ipt("sx1 gas_fee in token1 amount"),
          simulated_profit <-
            (simulated_profit_pre_gas - gas_fee)
-           |> IO.inspect(label: "sx1 simulated_profit") do
+           |> LogWritter.ipt("sx1 simulated_profit") do
       {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol,
        tradable_amount, gas_fee}
     end
@@ -228,7 +228,7 @@ defmodule CheckProfit do
         :I_O
       ) do
     IO.puts("sx1 in simulate_profit_pre_gas :I_0")
-    reserve0 |> IO.inspect(label: "sx1 reserve0 value")
+    reserve0 |> LogWritter.ipt("sx1 reserve0 value")
 
     with {:ok, estimate} <-
            router_address_searched
@@ -238,7 +238,7 @@ defmodule CheckProfit do
              token_pair["token0"]["address"],
              18
            )
-           |> IO.inspect(label: "sx1 estimate :I_0"),
+           |> LogWritter.ipt("sx1 estimate :I_0"),
          {:ok, result} <-
            router_address
            |> simulate_amounts_output(
@@ -246,12 +246,12 @@ defmodule CheckProfit do
              token_pair["token0"]["address"],
              token_pair["token1"]["address"]
            )
-           |> IO.inspect(label: "sx1 result"),
+           |> LogWritter.ipt("sx1 result"),
          {:ok, amount_in, amount_out} <-
            simulate(estimate |> Enum.at(0), router_address_searched, router_address, token_pair),
          pre_direction_gas_price_difference <-
            (amount_out - amount_in)
-           |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :I_O") do
+           |> LogWritter.ipt("sx1 pre_direction_gas_price_difference :I_O") do
       {:ok, pre_direction_gas_price_difference, amount_in}
     end
   end
@@ -267,7 +267,7 @@ defmodule CheckProfit do
         :O_I
       ) do
     IO.puts("sx1 in simulate_profit_pre_gas :0_I")
-    reserve0_searched |> IO.inspect(label: "sx1 reserve0_searched value")
+    reserve0_searched |> LogWritter.ipt("sx1 reserve0_searched value")
 
     with {:ok, estimate} <-
            router_address
@@ -277,7 +277,7 @@ defmodule CheckProfit do
              token_pair["token0"]["address"],
              18
            )
-           |> IO.inspect(label: "sx1 estimate :0_I"),
+           |> LogWritter.ipt("sx1 estimate :0_I"),
          {:ok, result} <-
            router_address_searched
            |> simulate_amounts_output(
@@ -285,12 +285,12 @@ defmodule CheckProfit do
              token_pair["token0"]["address"],
              token_pair["token1"]["address"]
            )
-           |> IO.inspect(label: "sx1 result"),
+           |> LogWritter.ipt("sx1 result"),
          {:ok, amount_in, amount_out} <-
            simulate(estimate |> Enum.at(0), router_address, router_address_searched, token_pair),
          pre_direction_gas_price_difference <-
            (amount_out - amount_in)
-           |> IO.inspect(label: "sx1 pre_direction_gas_price_difference :O_I") do
+           |> LogWritter.ipt("sx1 pre_direction_gas_price_difference :O_I") do
       {:ok, pre_direction_gas_price_difference, amount_in}
     end
   end

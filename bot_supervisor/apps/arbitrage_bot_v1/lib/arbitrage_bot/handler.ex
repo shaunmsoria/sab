@@ -75,7 +75,7 @@ defmodule DexBot.Handler do
         } = event,
         _state
       ) do
-    # event |> IO.inspect(label: "sx1 event filtered")
+    # event |> LogWritter.ipt("sx1 event filtered")
 
     GenServer.cast(DexBot, {:swap_detected, event})
   end

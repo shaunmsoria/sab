@@ -15,7 +15,7 @@ defmodule DexBot do
 
   def init(state_init) do
     state_init
-    |> IO.inspect(label: "sx1 state_init")
+    |> LogWritter.ipt("sx1 state_init")
 
 
 
@@ -65,7 +65,7 @@ defmodule DexBot do
 
   def handle_cast(:gas_extractor, state) do
     EtherscanGasTrackerApi.get_gas_oracle()
-    |> IO.inspect(label: "sx1 result of etherscan api")
+    |> LogWritter.ipt("sx1 result of etherscan api")
 
 
     :timer.sleep(5000)

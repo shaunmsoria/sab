@@ -1,13 +1,15 @@
 defmodule LogWritter do
-  alias LogSaver, as: LS
-
-
-  ## TODO finish function to do the IO.inspect and save element in ConCache with label message
-
   def ipt(element, message \\ "") when is_binary(message) do
     with element_formatted <- element |> inspect(),
+         log_formatted <- message <> ":" <> " " <> element_formatted,
          current_log <- ConCache.get(:logs, :console) do
-      ConCache.put(:logs, :console, element_formatted)
+      case current_log do
+        nil ->
+          ConCache.put(:logs, :console, log_formatted)
+
+        current_log ->
+          ConCache.put(:logs, :console, current_log <> "\n" <> log_formatted)
+      end
 
       case message do
         "" ->
@@ -18,7 +20,7 @@ defmodule LogWritter do
           |> IO.inspect(label: message)
       end
     else
-      error -> LS.write_log(error)
+      error -> LogSaver.write_log(error)
     end
   end
 end

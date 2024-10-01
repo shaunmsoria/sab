@@ -10,9 +10,6 @@ smart_contract/typechain-types
 smart_contract/cache
 smart_contract/artifacts
 
-
-
-
 ## bot_supervisor gitignore
 # The directory Mix will write compiled artifacts to.
 bot_supervisor/_build/
@@ -37,3 +34,6 @@ bot_supervisor/*.ez
 
 # Temporary files, for example, from tests.
 bot_supervisor/tmp/
+
+# Remove logs from github
+bot_supervisor/log/
