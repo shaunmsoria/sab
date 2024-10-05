@@ -1,7 +1,7 @@
 defmodule LogWritter do
   def ipt(element, message \\ "") when is_binary(message) do
     with element_formatted <- element |> inspect(),
-         log_formatted <- message <> ":" <> " " <> element_formatted,
+         log_formatted <- message <> ":" <> "\n" <> element_formatted,
          current_log <- ConCache.get(:logs, :console) do
       case current_log do
         nil ->
