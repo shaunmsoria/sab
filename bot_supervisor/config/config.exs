@@ -16,7 +16,7 @@ config :logger,
   backends: [{LoggerFileBackend, :error_log}]
 
 config :logger, :error_log,
-  path: "log/error.log",
+  path: "/apps/arbitrage_bot_v1/lib/log/error.log",
   level: :error,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
@@ -25,7 +25,7 @@ config :logger,
   backends: [{LoggerFileBackend, :info_log}]
 
 config :logger, :info_log,
-  path: "log/info.log",
+  path: "/apps/arbitrage_bot_v1/lib/log/info.log",
   level: :info,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
