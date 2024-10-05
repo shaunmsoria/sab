@@ -26,7 +26,7 @@ config :logger,
 
 config :logger, :info_log,
   path: "/apps/arbitrage_bot_v1/lib/log/info.log",
-  level: :info,
+  level: :critical,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
