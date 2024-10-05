@@ -26,7 +26,8 @@ arbitrage_bot_v1-*.tar
 /tmp/
 
 # Logs
+/log/
 /apps/arbitrage_bot_v1/lib/log/
 
 # state
-/apps/arbitrage_bot_v1/lib/libraries/json/state.json
+/apps/arbitrage_bot_v1/lib/libraries/json/state.json/
