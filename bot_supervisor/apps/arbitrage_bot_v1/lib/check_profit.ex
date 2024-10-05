@@ -9,7 +9,7 @@ defmodule CheckProfit do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
          price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
-         address <- event_data.event.address |>  LogWritter.ipt("sx1 address"),
+         address <- event_data.event.address |>  IO.inspect(label: "sx1 address"),
          {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
          {:ok, token_pair_price_udpated} <-
            LD.update_token_pair_price(token_pair, dex_name, price),
@@ -139,6 +139,7 @@ defmodule CheckProfit do
            |> LogWritter.ipt("sx1 router_address_searched"),
          {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
            token_pair_content["address"]
+           |> LogWritter.ipt("sx1 pair_address")
            |> contract(:get_reserves)
            |> LogWritter.ipt("sx1 get_reserves pair_address_dex_name"),
          {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
