@@ -9,7 +9,7 @@ defmodule CheckProfit do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
          price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
-         address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
+         address <- event_data.event.address |>  LogWritter.ipt("sx1 address"),
          {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
          {:ok, token_pair_price_udpated} <-
            LD.update_token_pair_price(token_pair, dex_name, price),
