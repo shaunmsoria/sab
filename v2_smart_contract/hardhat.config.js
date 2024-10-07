@@ -16,10 +16,6 @@ module.exports = {
       forking: {
         url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
       },
-    //   mining: {
-    //     auto: true,
-    //     interval: 3 * 60 * 1000, // should be less then 5 minutes to make event subscription work
-    // }
     },
   }
 };

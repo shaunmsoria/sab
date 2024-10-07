@@ -5,16 +5,25 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat")
+const { ethers } = require("hardhat")
 
 const config = require("../config.json")
 
+
+
+
 async function main() {
+  const [deployer] = await ethers.getSigners();
+  console.log("sx1 deployer", deployer);
+  
   const SABV1 = await hre.ethers.deployContract(
     "SABV1",
-    []
+    [],
+    {signer: deployer}
   )
 
   await SABV1.waitForDeployment()
+
 
   console.log(`SABV1 contract deployed to ${await SABV1.getAddress()}`)
 }

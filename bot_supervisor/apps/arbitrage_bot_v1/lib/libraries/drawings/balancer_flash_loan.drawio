@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="GS-LAj8GKtuHsBEUhd14" name="Balancer FL Flow">
-        <mxGraphModel dx="1618" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1864" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -253,7 +253,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="hZPSvRqQnpIW0ilMayFJ" name="Implementation Flow">
-        <mxGraphModel dx="791" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1037" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -305,16 +305,16 @@
                         <mxPoint x="230" y="150" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-15" value="Breakdown&lt;br&gt;Different Logs&lt;br&gt;Categories" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-15" value="Breakdown&lt;br&gt;Different Logs&lt;br&gt;Categories" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
                     <mxGeometry x="241" y="225" width="120" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-16" value="Configure&lt;br&gt;config.ex to write&lt;br&gt;the logs" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-16" value="Configure&lt;br&gt;config.ex to write&lt;br&gt;the logs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
                     <mxGeometry x="442" y="225" width="120" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-18" value="Create GenServer" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-18" value="Create GenServer" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" parent="1" vertex="1">
                     <mxGeometry x="240" y="355" width="120" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-19" value="Use GenServer&lt;br&gt;to launch and stop&lt;br&gt;SAB at time intervals" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-19" value="Use GenServer&lt;br&gt;to launch and stop&lt;br&gt;SAB at time intervals" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" parent="1" vertex="1">
                     <mxGeometry x="430" y="340" width="140" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="UhlgqV1v0M_lInKnJqnQ-21" value="Set Alienware&lt;br&gt;to run project" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -344,7 +344,7 @@
                         <mxPoint x="230" y="509.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="3JztZfSmWXZ1rNvbyD9X-1" value="Clean Up&lt;br&gt;unnecessary logs" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="3JztZfSmWXZ1rNvbyD9X-1" value="Use the new ipt&lt;br&gt;to inspect / log&lt;br&gt;+ clean up" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
                     <mxGeometry x="640" y="225" width="120" height="70" as="geometry"/>
                 </mxCell>
             </root>

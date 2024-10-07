@@ -14,20 +14,9 @@ contract SABV1 is IFlashLoanRecipient {
         owner = msg.sender;
     }
 
-    modifier onlyOwner() {
-        // ensure it's the owner of the smart contract who can call it
-        require(msg.sender == owner, "your are not the owner");
-        _;
-    }
-
     modifier onlyVault() {
-        // ensure it's only the vault that can call this function
         require(msg.sender == address(vault), "your are not the vault");
         _;
-    }
-
-    function getString() public pure returns (string memory) {
-        return "Hello World";
     }
 
     function executeTrade(
@@ -37,8 +26,6 @@ contract SABV1 is IFlashLoanRecipient {
         IUniswapV2Router02 _router1,
         uint256 _flashAmount
     ) external {
-        // ) external onlyOwner {
-        // encode data about the transaction including tokens, and routers to be used in the receivedFlashLoan
         bytes memory data = abi.encode(
             owner,
             _token0,
@@ -47,15 +34,12 @@ contract SABV1 is IFlashLoanRecipient {
             _router1
         );
 
-        // token to be flash loaned, only one for now
         IERC20[] memory tokens = new IERC20[](1);
         tokens[0] = IERC20(_token0);
 
-        // flash loaned amount
         uint256[] memory amounts = new uint256[](1);
         amounts[0] = _flashAmount;
 
-        // request the flash loan from balancer
         vault.flashLoan(this, tokens, amounts, data);
     }
 
@@ -82,19 +66,13 @@ contract SABV1 is IFlashLoanRecipient {
                 )
             );
 
-        // // ensure data from balancer is for this contract
-        // require(_ownerData == owner, "this data isn't from the owner");
-
-        // store flosh loan amount
         uint256 flashAmount = amounts[0];
 
-        // router paths
         IUniswapV2Router02[] memory routerPath = new IUniswapV2Router02[](2);
 
         routerPath[0] = router0;
         routerPath[1] = router1;
 
-        // token paths
         address[] memory tokenPath = new address[](2);
 
         tokenPath[0] = token0;
