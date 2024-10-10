@@ -56,51 +56,18 @@ config :ethers,
 # # If using Ethereumex, you can specify a default JSON-RPC server url here for all requests.
 # # config :ethereumex, url: "http://localhost:8545"
 config :ethereumex,
-  # url:  "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw"
-  # url: "http://localhost:8545/"
-  # url: "http://127.0.0.1:8545/"
-  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  # url: "http://127.0.0.1:8545/"
-  # url: "http://127.0.0.1:8545/"
-  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  # url:  "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw"
-  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  # url: "http://127.0.0.1:8545/"
   # url: "http://127.0.0.1:8545"
   # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  # url: "http://127.0.0.1:8545"
-  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+  url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
 
 # in your config.exs
 config :arbitrage_bot_v1, W3WS,
   listeners: [
     [
       # the uri of the ethereum jsonrpc websocket server
-      # uri: "https://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw",
-      # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
-      # uri: "http://localhost:8545",
-      # uri: "ws://localhost:8545/",
-      # uri: "ws://127.0.0.1:8545/",
-      # uri: "http://127.0.0.1:8545/",
-      # uri: "wss://127.0.0.1:8545/",
-      # uri: "wss://localhost:8545/",
-      # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
-      # uri: "wss://localhost:8545/",
-
-      # uri: "ws://192.168.1.1/:8545",
-      # uri: "ws://192.168.1.1/:8545/",
-      # uri: "http://localhost:8545/",
-      # uri: "http://127.0.0.1:8545/",
-      # uri: "http://127.0.0.1:8545",
-      # uri: "ws://127.0.0.1:8545/",
-      # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
-      # uri: "wss://eth-sepolia.g.alchemy.com/v2/kDsQmG9DLRQC6_Ysaah0tPKqo3bZFAKw",
-      # uri: "ws://127.0.0.1:8545/",
-      # uri: "ws://localhost:8545",
       # uri: "ws://127.0.0.1:8545",
       # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
-      # uri: "ws://127.0.0.1:8545",
-      uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
+      uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
 
       # enable block ping every 10 seconds. this will cause the listener to
       # fetch and log the current block every 10 seconds. the last fetched block
@@ -127,9 +94,9 @@ config :arbitrage_bot_v1, W3WS,
           # abi: abi,                        # decoded json abi
           # list of paths to abi json files
           abi_files: [
-            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
+            "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
           ],
-          # abi_files: ["/home/server/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
+          # abi_files: ["/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
 
           # an optional `context` to provide in the `W3WS.Env` struct for any events
           # received from this subscription. Defaults to `%{}`.

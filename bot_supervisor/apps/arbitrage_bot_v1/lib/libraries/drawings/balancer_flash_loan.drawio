@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="GS-LAj8GKtuHsBEUhd14" name="Balancer FL Flow">
-        <mxGraphModel dx="1864" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1541" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -253,7 +253,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="hZPSvRqQnpIW0ilMayFJ" name="Implementation Flow">
-        <mxGraphModel dx="1037" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="714" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -317,10 +317,10 @@
                 <mxCell id="UhlgqV1v0M_lInKnJqnQ-19" value="Use GenServer&lt;br&gt;to launch and stop&lt;br&gt;SAB at time intervals" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" parent="1" vertex="1">
                     <mxGeometry x="430" y="340" width="140" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-21" value="Set Alienware&lt;br&gt;to run project" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-21" value="Set Alienware&lt;br&gt;to run project" style="ellipse;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
                     <mxGeometry x="240" y="475" width="120" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="UhlgqV1v0M_lInKnJqnQ-22" value="Set ssh to log&lt;br&gt;into server" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="UhlgqV1v0M_lInKnJqnQ-22" value="Set ssh to log&lt;br&gt;into server" style="ellipse;whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="441" y="475" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="UhlgqV1v0M_lInKnJqnQ-23" value="Allow way to stop and restart GenServer" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">

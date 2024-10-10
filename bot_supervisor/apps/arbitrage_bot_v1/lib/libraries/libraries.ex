@@ -85,7 +85,19 @@ defmodule Libraries do
         "symbol" => "WISE",
         "address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
         "decimals" => 18
-      }
+      },
+      "Eigen" => %{
+        "name" => "Eigen",
+        "symbol" => "EIGEN",
+        "address" => "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "decimals" => 18
+      },
+      "mog" => %{
+        "name" => "Mog Coin",
+        "symbol" => "MOG",
+        "address" => "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+        "decimals" => 18
+      },
     }
   end
 

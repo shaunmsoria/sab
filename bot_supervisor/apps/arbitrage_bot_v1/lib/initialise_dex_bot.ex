@@ -42,7 +42,7 @@ defmodule InitialiseDexBot do
 
     with {:ok, file} <-
            File.open(
-             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
+             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:write]
            ),
          :ok <-
@@ -55,7 +55,7 @@ defmodule InitialiseDexBot do
   def state_file() do
     with {:ok, file} <-
            File.open(
-             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
+             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:read]
            ),
          body <- IO.binread(file, :eof),
