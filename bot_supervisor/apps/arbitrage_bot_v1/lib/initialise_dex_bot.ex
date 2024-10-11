@@ -42,7 +42,7 @@ defmodule InitialiseDexBot do
 
     with {:ok, file} <-
            File.open(
-             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
+             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:write]
            ),
          :ok <-
@@ -55,7 +55,7 @@ defmodule InitialiseDexBot do
   def state_file() do
     with {:ok, file} <-
            File.open(
-             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
+             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/state.json",
              [:read]
            ),
          body <- IO.binread(file, :eof),
@@ -177,7 +177,8 @@ defmodule InitialiseDexBot do
   end
 
   def get_token_pair_price(token_pair) do
-    %{"price" => Compute.calculate_price(token_pair)}
+    # %{"price" => Compute.calculate_price(token_pair)}
+    %{"price" => 0}
   end
 
   def archive do

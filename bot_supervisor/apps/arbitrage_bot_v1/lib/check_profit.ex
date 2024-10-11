@@ -8,9 +8,10 @@ defmodule CheckProfit do
   def run(_state, event_data) when is_map(event_data) do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
-         price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
          address <- event_data.event.address |>  IO.inspect(label: "sx1 address"),
          {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
+         price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
+         {:ok, true} <- notComputed?(price, token_pair["price"]),
          {:ok, token_pair_price_udpated} <-
            LD.update_token_pair_price(token_pair, dex_name, price),
          {:ok, list_of_profitable_trades} <-
@@ -18,7 +19,7 @@ defmodule CheckProfit do
       ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
-        {:error, error} |> IO.inspect(label: "sx1 error: no event address")
+        {:error, error} |> IO.inspect(label: "sx1")
     end
   end
 
@@ -27,6 +28,13 @@ defmodule CheckProfit do
       {:ok, token_pair}
     else
       _ -> {:error, "no token_pair found"}
+    end
+  end
+
+  def notComputed?(current_price, new_price) do
+    case current_price != new_price do
+      true -> {:ok, true}
+      _ -> {:error, "already checked"}
     end
   end
 
