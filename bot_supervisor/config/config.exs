@@ -94,9 +94,9 @@ config :arbitrage_bot_v1, W3WS,
           # abi: abi,                        # decoded json abi
           # list of paths to abi json files
           abi_files: [
-            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
+            "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
           ],
-          # abi_files: ["/home/server/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
+          # abi_files: ["/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
 
           # an optional `context` to provide in the `W3WS.Env` struct for any events
           # received from this subscription. Defaults to `%{}`.

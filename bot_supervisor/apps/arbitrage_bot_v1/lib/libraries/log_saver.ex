@@ -38,7 +38,7 @@ defmodule LogSaver do
          {file_name, message} <- file_log(ConCache.get(:logs, :console)),
          :ok <-
            File.write(
-             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/log/#{file_name}",
+             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/log/#{file_name}",
              message,
              [:append]
            ) do
@@ -52,7 +52,7 @@ defmodule LogSaver do
     with message_formatted <- message_raw |> inspect(),
          {file_name, message} <- file_log(message_formatted) do
       File.write(
-        "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/log/#{file_name}",
+        "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/log/#{file_name}",
         message,
         [:append]
       )
