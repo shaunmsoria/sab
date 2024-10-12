@@ -98,6 +98,12 @@ defmodule Libraries do
         "address" => "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
         "decimals" => 18
       },
+      "kekec" => %{
+        "name" => "The Balkan Dwarf",
+        "symbol" => "KEKEC",
+        "address" => "0x8C7AC134ED985367EADC6F727d79E8295E11435c",
+        "decimals" => 18
+      }
     }
   end
 
