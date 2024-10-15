@@ -16,6 +16,7 @@ defmodule InitialiseDexBot do
          :ok <- ConCache.put(:dex, "list_dex", @dexs |> Map.keys()) do
       new_state =
         @dexs
+        # why not use ConCache :dex "list_dex"?
         |> Map.keys()
         |> Enum.map(fn dex_key ->
           %{
@@ -80,6 +81,7 @@ defmodule InitialiseDexBot do
          factory_address <-
            @dexs
            |> Map.get(name)
+           # why not using dex instead @dexs?
            |> Map.get("factory"),
          %{"content" => map_token_pair} <-
            state
@@ -108,6 +110,23 @@ defmodule InitialiseDexBot do
 
       processed_token_pair
     end
+  end
+
+  def fetch_tokens() do
+    with {:ok, file} <-
+           File.open(
+             "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/tokens.json",
+             [:read]
+           ),
+         body <- IO.binread(file, :eof),
+         :ok <- File.close(file),
+         true <- not String.equivalent?(body, "") do
+      body |> Jason.decode!()
+    else
+      _ ->
+        Libraries.tokens()
+    end
+    |> IO.inspect(label: "sx1 fetch_tokens")
   end
 
   def exist_token_pair(_factory_address, _map_token_pair, _token, %{}), do: %{}

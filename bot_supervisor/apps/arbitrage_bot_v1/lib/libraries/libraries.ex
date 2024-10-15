@@ -44,12 +44,12 @@ defmodule Libraries do
         "address" => "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "decimals" => 18
       },
-      "shib" => %{
-        "name" => "shib",
-        "symbol" => "SHIB",
-        "address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-        "decimals" => 18
-      },
+      # "shib" => %{
+      #   "name" => "shib",
+      #   "symbol" => "SHIB",
+      #   "address" => "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+      #   "decimals" => 18
+      # },
       "usdc" => %{
         "name" => "usdc",
         "symbol" => "USDC",
