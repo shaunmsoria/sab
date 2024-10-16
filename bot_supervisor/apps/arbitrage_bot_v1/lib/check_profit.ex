@@ -8,10 +8,10 @@ defmodule CheckProfit do
   def run(_state, event_data) when is_map(event_data) do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
-         address <- event_data.event.address |>  IO.inspect(label: "sx1 address"),
-         {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
+         address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
+         {:ok, {token_pair, dex_name}} <-
+           found_dex_token_pair?(address) |> IO.inspect(label: "sx1 found_dex_token_pair?"),
          price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
-         {:ok, true} <- notComputed?(price, token_pair["price"]),
          {:ok, token_pair_price_udpated} <-
            LD.update_token_pair_price(token_pair, dex_name, price),
          {:ok, list_of_profitable_trades} <-
@@ -19,7 +19,7 @@ defmodule CheckProfit do
       ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
-        {:error, error} |> IO.inspect(label: "sx1")
+        {:error, error} |> IO.inspect(label: "sx1 error: no event address")
     end
   end
 
@@ -27,14 +27,9 @@ defmodule CheckProfit do
     with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
       {:ok, token_pair}
     else
-      _ -> {:error, "no token_pair found"}
-    end
-  end
-
-  def notComputed?(current_price, new_price) do
-    case current_price != new_price do
-      true -> {:ok, true}
-      _ -> {:error, "already checked"}
+      _ ->
+        ## TODO create moralis api to get token meta via token address
+        {:error, "no token_pair found"}
     end
   end
 
@@ -184,6 +179,19 @@ defmodule CheckProfit do
       {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol,
        tradable_amount, gas_fee}
     end
+  end
+
+  def test() do
+    {:ok, address} =
+      "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6"
+      |> contract(:token0)
+      |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched")
+
+      address
+      |> contract(:symbol)
+      |> IO.inspect(label: "sx1 get_reserves symbol")
+
+      :init.restart()
   end
 
   def calculate_gas_price_for_trade(%{"symbol" => "WETH"}),
