@@ -1,6 +1,7 @@
 defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
+  alias Token, as: T
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
@@ -30,6 +31,30 @@ defmodule CheckProfit do
       _ ->
         ## TODO create moralis api to get token meta via token address
         {:error, "no token_pair found"}
+    end
+  end
+
+  def get_token_metadata_from_token_pair(token_pair_address) when is_binary(token_pair_address) do
+    with {:ok, token_address} <- token_pair_address |> contract(:token0) do
+      case T.isTokenInMemory?(token_address) do
+        true ->
+          {:error, "token already in memory"}
+
+        false ->
+          with {:ok, token_symbol} <- token_address |> contract(:symbol),
+               {:ok, token_name} <- token_address |> contract(:name),
+               {:ok, token_decimals} <- token_address |> contract(:token_address) do
+            {:ok,
+             %{
+               token_name => %{
+                 "name" => token_name,
+                 "symbol" => token_symbol,
+                 "address" => token_address,
+                 "decimals" => token_decimals
+               }
+             }}
+          end
+      end
     end
   end
 
@@ -187,11 +212,15 @@ defmodule CheckProfit do
       |> contract(:token0)
       |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched")
 
-      address
-      |> contract(:symbol)
-      |> IO.inspect(label: "sx1 get_reserves symbol")
+    address
+    |> contract(:symbol)
+    |> IO.inspect(label: "sx1 get_reserves symbol")
 
-      :init.restart()
+    address
+    |> contract(:decimals)
+    |> IO.inspect(label: "sx1 get_reserves decimal")
+
+    # :init.restart()
   end
 
   def calculate_gas_price_for_trade(%{"symbol" => "WETH"}),
