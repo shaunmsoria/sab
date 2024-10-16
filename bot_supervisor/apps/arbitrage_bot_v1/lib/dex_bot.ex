@@ -64,7 +64,7 @@ defmodule DexBot do
   end
 
   def handle_cast(:gas_extractor, state) do
-    EtherscanGasTrackerApi.get_gas_oracle()
+    EtherscanApi.get_gas_oracle()
     |> LogWritter.ipt("sx1 result of etherscan api")
 
 
@@ -73,6 +73,7 @@ defmodule DexBot do
 
     {:noreply, state}
   end
+
 
   def handle_info(:stop, state) do
     raise "Stopped"

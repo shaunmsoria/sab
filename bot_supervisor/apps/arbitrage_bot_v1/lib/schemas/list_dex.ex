@@ -38,8 +38,10 @@ defmodule ListDex do
 
   def token_pair_from_list_dex(list_dex, token_pair) do
 
+
     list_dex
     |> Enum.reduce_while(%{}, fn {_address, token_pair_searched}, acc ->
+
 
       if (String.equivalent?(token_pair["token0"]["address"],
           token_pair_searched["token0"]["address"]) and

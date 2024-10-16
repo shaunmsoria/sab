@@ -20,7 +20,7 @@ defmodule GasExtractor do
   end
 
   def handle_cast(:refresh, state) do
-    gas_result = EtherscanGasTrackerApi.get_gas_oracle()
+    gas_result = EtherscanApi.get_gas_oracle()
 
     case gas_result do
       %{
