@@ -30,7 +30,15 @@ defmodule CheckProfit do
     else
       _ ->
         ## TODO create moralis api to get token meta via token address
-        {:error, "no token_pair found"}
+        with {:ok, token_pair} <- get_token_metadata_from_token_pair(address),
+             new_tokens <- ConCache.get(:tokens, "new_tokens"),
+             update_tokens <- new_tokens |> Map.merge(%{token_pair["name"] => token_pair}),
+             :ok <- ConCache.put(:tokens, "new_tokens", update_tokens) do
+          {:ok, token_pair}
+        else
+          error ->
+            error |> LogWritter.ipt("sx1 found_dex_token_pair?")
+        end
     end
   end
 
