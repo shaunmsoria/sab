@@ -31,7 +31,7 @@ defmodule ArbitrageBotV1.MixProject do
       {:w3ws, "~> 0.3.0"},
       {:httpoison, "~> 2.2"},
       {:con_cache, "~> 1.0"},
-      {:decimal, "~> 2.0"}
+      {:decimal, "~> 2.0"},
     ]
   end
 end

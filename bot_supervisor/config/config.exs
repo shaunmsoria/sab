@@ -12,21 +12,15 @@ import Config
 # Sample configuration:
 #
 
-config :logger,
-  backends: [{LoggerFileBackend, :error_log}]
 
-config :logger, :error_log,
-  path: "/apps/arbitrage_bot_v1/lib/log/error.log",
-  level: :error,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+
 
 config :logger,
   backends: [{LoggerFileBackend, :info_log}]
 
 config :logger, :info_log,
-  path: "/apps/arbitrage_bot_v1/lib/log/info.log",
-  level: :critical,
+  path: "log/info.log",
+  level: :error,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
@@ -37,6 +31,10 @@ config :logger, :console,
   # level: :info,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
+
+
+
+
 
 
 config :ethers,
@@ -56,18 +54,19 @@ config :ethers,
 # # If using Ethereumex, you can specify a default JSON-RPC server url here for all requests.
 # # config :ethereumex, url: "http://localhost:8545"
 config :ethereumex,
-  url: "http://127.0.0.1:8545"
-  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+  # url: "http://127.0.0.1:8545"
+
+# url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
 
 # in your config.exs
 config :arbitrage_bot_v1, W3WS,
   listeners: [
     [
       # the uri of the ethereum jsonrpc websocket server
-      uri: "ws://127.0.0.1:8545",
+      # uri: "ws://127.0.0.1:8545",
       # uri: "wss://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}",
-      # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
+      uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
 
       # enable block ping every 10 seconds. this will cause the listener to
       # fetch and log the current block every 10 seconds. the last fetched block

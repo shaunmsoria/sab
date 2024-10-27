@@ -11,7 +11,7 @@ defmodule CheckProfit do
            not String.equivalent?(event_data.event.address, ""),
          address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
          {:ok, {token_pair, dex_name}} <-
-           found_dex_token_pair?(address) |> IO.inspect(label: "sx1 found_dex_token_pair?"),
+           found_dex_token_pair?(address),
          price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
          {:ok, token_pair_price_udpated} <-
            LD.update_token_pair_price(token_pair, dex_name, price),
@@ -20,49 +20,61 @@ defmodule CheckProfit do
       ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
-        {:error, error} |> IO.inspect(label: "sx1 error: no event address")
+        error |> IO.inspect(label: "sx1 error:")
     end
   end
 
   def found_dex_token_pair?(address) do
     with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
-      {:ok, token_pair}
+      {:ok, token_pair} |> LogWritter.ipt("sx1 found_dex_token_pair? token_pair found")
     else
       _ ->
-        ## TODO create moralis api to get token meta via token address
-        with {:ok, token_pair} <- get_token_metadata_from_token_pair(address),
+        IO.puts("sx1 found_dex_token_pair? in with else")
+        with {:ok, map_new_tokens} <- get_token_metadata_from_token_pair(address),
              new_tokens <- ConCache.get(:tokens, "new_tokens"),
-             update_tokens <- new_tokens |> Map.merge(%{token_pair["name"] => token_pair}),
-             :ok <- ConCache.put(:tokens, "new_tokens", update_tokens) do
-          {:ok, token_pair}
+             updated_tokens <- new_tokens |> Map.merge(map_new_tokens),
+              #  |> IO.inspect(label: "sx1 new_tokens"),
+             :ok <- ConCache.put(:tokens, "new_tokens", updated_tokens),
+             {:ok, file} <- StateConstructor.write_tokens_file(updated_tokens) do
+          {:error, "Tokens from #{address} will be added to the state"}
+          |> LogWritter.ipt("sx1 found_dex_token_pair? token_pair added:")
         else
           error ->
-            error |> LogWritter.ipt("sx1 found_dex_token_pair?")
+            error |> LogWritter.ipt("sx1 found_dex_token_pair? error:")
         end
     end
   end
 
   def get_token_metadata_from_token_pair(token_pair_address) when is_binary(token_pair_address) do
-    with {:ok, token_address} <- token_pair_address |> contract(:token0) do
-      case T.isTokenInMemory?(token_address) do
-        true ->
-          {:error, "token already in memory"}
+    IO.puts("sx1 get_token_metadata_from_token_pair")
+    with {:ok, token0_address} <- token_pair_address |> contract(:token0),
+         {:ok, token1_address} <- token_pair_address |> contract(:token1) do
+      IO.puts("sx1 get_token_metadata_from_token_pair in with ")
+      tokens_to_be_added =
+        [token0_address, token1_address]
+        |> Enum.reduce(%{}, fn token_address, acc ->
+          case T.isTokenInMemory?(token_address) do
+            true ->
+              acc
 
-        false ->
-          with {:ok, token_symbol} <- token_address |> contract(:symbol),
-               {:ok, token_name} <- token_address |> contract(:name),
-               {:ok, token_decimals} <- token_address |> contract(:token_address) do
-            {:ok,
-             %{
-               token_name => %{
-                 "name" => token_name,
-                 "symbol" => token_symbol,
-                 "address" => token_address,
-                 "decimals" => token_decimals
-               }
-             }}
+            false ->
+              with {:ok, token_symbol} <- token_address |> contract(:symbol),
+                   {:ok, token_name} <- token_address |> contract(:name),
+                   {:ok, token_decimals} <- token_address |> contract(:decimals) do
+                acc
+                |> Map.merge(%{
+                  token_name => %{
+                    "name" => token_name,
+                    "symbol" => token_symbol,
+                    "address" => token_address,
+                    "decimals" => token_decimals
+                  }
+                })
+              end
           end
-      end
+        end)
+
+      {:ok, tokens_to_be_added}
     end
   end
 

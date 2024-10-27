@@ -1,1 +1,2657 @@
-[{"content":{"0x17c1ae82d99379240059940093762c5e4539aba5":{"address":"0x17c1ae82d99379240059940093762c5e4539aba5","price":0,"token0":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0x2b561b3f99f2a872c4485c61aeec1e935a1968c6":{"address":"0x2b561b3f99f2a872c4485c61aeec1e935a1968c6","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"}},"0x2e8135be71230c6b1b4045696d41c09db0414226":{"address":"0x2e8135be71230c6b1b4045696d41c09db0414226","price":0,"token0":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xad6b7d0bee456e89b04064f0f750775cde0f4c9b":{"address":"0xad6b7d0bee456e89b04064f0f750775cde0f4c9b","price":0,"token0":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}}},"name":"pancakeswap"},{"content":{"0x055cedfe14bce33f985c41d9a1934b7654611aac":{"address":"0x055cedfe14bce33f985c41d9a1934b7654611aac","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}},"0x06da0fd433c1a5d7a4faa01111c044910a184553":{"address":"0x06da0fd433c1a5d7a4faa01111c044910a184553","price":0,"token0":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0x397ff1542f962076d0bfe58ea045ffa2d347aca0":{"address":"0x397ff1542f962076d0bfe58ea045ffa2d347aca0","price":0,"token0":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xaaf5110db6e744ff70fb339de037b990a20bdace":{"address":"0xaaf5110db6e744ff70fb339de037b990a20bdace","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"}},"0xba13afecda9beb75de5c56bbaf696b880a5a50dd":{"address":"0xba13afecda9beb75de5c56bbaf696b880a5a50dd","price":0,"token0":{"address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2","decimals":18,"name":"Maker","symbol":"MKR"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f":{"address":"0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xd86a120a06255df8d4e2248ab04d4267e23adfaa":{"address":"0xd86a120a06255df8d4e2248ab04d4267e23adfaa","price":0,"token0":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}}},"name":"sushiswap"},{"content":{"0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852":{"address":"0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852","price":0,"token0":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0x21b8065d10f73ee2e260e5b47d3344d3ced7596e":{"address":"0x21b8065d10f73ee2e260e5b47d3344d3ced7596e","price":0,"token0":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"},"token1":{"address":"0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6","decimals":18,"name":"Wise Token","symbol":"WISE"}},"0x3041cbd36888becc7bbcbc0045e3b1f144466f5f":{"address":"0x3041cbd36888becc7bbcbc0045e3b1f144466f5f","price":0,"token0":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}},"0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a":{"address":"0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a","price":0,"token0":{"address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2","decimals":18,"name":"Maker","symbol":"MKR"},"token1":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"}},"0x517f9dd285e75b599234f7221227339478d0fcc8":{"address":"0x517f9dd285e75b599234f7221227339478d0fcc8","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2","decimals":18,"name":"Maker","symbol":"MKR"}},"0x5a75ed4624bbda1e992dd006ea2aca83d64c30fb":{"address":"0x5a75ed4624bbda1e992dd006ea2aca83d64c30fb","price":0,"token0":{"address":"0x6982508145454Ce325dDbE47a25d4ec3d2311933","decimals":18,"name":"Pepe","symbol":"PEPE"},"token1":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"}},"0x930e607c92cfa7bca06d9143ad652c78a7885f7e":{"address":"0x930e607c92cfa7bca06d9143ad652c78a7885f7e","price":0,"token0":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"},"token1":{"address":"0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6","decimals":18,"name":"Wise Token","symbol":"WISE"}},"0xa14dfbaa23ee8e8b69878381f8fd1d0bc502c043":{"address":"0xa14dfbaa23ee8e8b69878381f8fd1d0bc502c043","price":0,"token0":{"address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2","decimals":18,"name":"Maker","symbol":"MKR"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}},"0xa43fe16908251ee70ef74718545e4fe6c5ccec9f":{"address":"0xa43fe16908251ee70ef74718545e4fe6c5ccec9f","price":0,"token0":{"address":"0x6982508145454Ce325dDbE47a25d4ec3d2311933","decimals":18,"name":"Pepe","symbol":"PEPE"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xa478c2975ab1ea89e8196811f51a7b7ade33eb11":{"address":"0xa478c2975ab1ea89e8196811f51a7b7ade33eb11","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5":{"address":"0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"}},"0xb20bd5d04be54f870d5c0d3ca85d82b34b836405":{"address":"0xb20bd5d04be54f870d5c0d3ca85d82b34b836405","price":0,"token0":{"address":"0x6B175474E89094C44Da98b954EedeAC495271d0F","decimals":18,"name":"Dai Stablecoin","symbol":"DAI"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}},"0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc":{"address":"0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc","price":0,"token0":{"address":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","decimals":6,"name":"usdc","symbol":"USDC"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xb676b41f577812c5d5d755d22d302bc7a84bb489":{"address":"0xb676b41f577812c5d5d755d22d302bc7a84bb489","price":0,"token0":{"address":"0x6982508145454Ce325dDbE47a25d4ec3d2311933","decimals":18,"name":"Pepe","symbol":"PEPE"},"token1":{"address":"0xdAC17F958D2ee523a2206206994597C13D831ec7","decimals":6,"name":"Tether USD","symbol":"USDT"}},"0xc2adda861f89bbb333c90c492cb837741916a225":{"address":"0xc2adda861f89bbb333c90c492cb837741916a225","price":0,"token0":{"address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2","decimals":18,"name":"Maker","symbol":"MKR"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}},"0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d":{"address":"0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d","price":0,"token0":{"address":"0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a","decimals":18,"name":"Mog Coin","symbol":"MOG"},"token1":{"address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","decimals":18,"name":"weth","symbol":"WETH"}}},"name":"uniswap"}]
+[
+  {
+    "content": {
+      "0x17c1ae82d99379240059940093762c5e4539aba5": {
+        "address": "0x17c1ae82d99379240059940093762c5e4539aba5",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6": {
+        "address": "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      },
+      "0x2e8135be71230c6b1b4045696d41c09db0414226": {
+        "address": "0x2e8135be71230c6b1b4045696d41c09db0414226",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x4ab6702b3ed3877e9b1f203f90cbef13d663b0e8": {
+        "address": "0x4ab6702b3ed3877e9b1f203f90cbef13d663b0e8",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57": {
+        "address": "0x9d306bdd31d0d8fafd65589cd6be6f7fe2d97d57",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b": {
+        "address": "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0xbc03ce3f4236c82a3a3270af02c15a6a42857e90": {
+        "address": "0xbc03ce3f4236c82a3a3270af02c15a6a42857e90",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      }
+    },
+    "name": "pancakeswap"
+  },
+  {
+    "content": {
+      "0x001b6450083e531a5a7bf310bd2c1af4247e23d4": {
+        "address": "0x001b6450083e531a5a7bf310bd2c1af4247e23d4",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+          "decimals": 18,
+          "name": "UMA Voting Token v1",
+          "symbol": "UMA"
+        }
+      },
+      "0x055cedfe14bce33f985c41d9a1934b7654611aac": {
+        "address": "0x055cedfe14bce33f985c41d9a1934b7654611aac",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x06da0fd433c1a5d7a4faa01111c044910a184553": {
+        "address": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x1d5ed255890a5c26d67c280cb835cca510ef3530": {
+        "address": "0x1d5ed255890a5c26d67c280cb835cca510ef3530",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x38e68a37e401f7271568cecaac63c6b1e19130b4",
+          "decimals": 18,
+          "name": "Banana",
+          "symbol": "BANANA"
+        }
+      },
+      "0x2101072e369761435a532a83369984ec3950aef2": {
+        "address": "0x2101072e369761435a532a83369984ec3950aef2",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      },
+      "0x23a1081bad58465e30a0a5083fbc8409c3d76960": {
+        "address": "0x23a1081bad58465e30a0a5083fbc8409c3d76960",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        }
+      },
+      "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a": {
+        "address": "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0x28ea6d47ed0d8256fe8ed225867c59ea5aee51de": {
+        "address": "0x28ea6d47ed0d8256fe8ed225867c59ea5aee51de",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xc56c7a0eaa804f854b536a5f3d5f49d2ec4b12b8",
+          "decimals": 9,
+          "name": "GameStop",
+          "symbol": "GME"
+        }
+      },
+      "0x397ff1542f962076d0bfe58ea045ffa2d347aca0": {
+        "address": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x622d4a772b72f56602546559c95d7ca214ebb24f": {
+        "address": "0x622d4a772b72f56602546559c95d7ca214ebb24f",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0x665daa5e280edd60b81c67d583ed85b9a5cc45a6": {
+        "address": "0x665daa5e280edd60b81c67d583ed85b9a5cc45a6",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x6d7c40746accd8e028da5848e38093e5bafe8a18": {
+        "address": "0x6d7c40746accd8e028da5848e38093e5bafe8a18",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+          "decimals": 18,
+          "name": "Enjin Coin",
+          "symbol": "ENJ"
+        }
+      },
+      "0x784178d58b641a4febf8d477a6abd28504273132": {
+        "address": "0x784178d58b641a4febf8d477a6abd28504273132",
+        "price": 0,
+        "token0": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0xaaf5110db6e744ff70fb339de037b990a20bdace": {
+        "address": "0xaaf5110db6e744ff70fb339de037b990a20bdace",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      },
+      "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8": {
+        "address": "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0xba13afecda9beb75de5c56bbaf696b880a5a50dd": {
+        "address": "0xba13afecda9beb75de5c56bbaf696b880a5a50dd",
+        "price": 0,
+        "token0": {
+          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f": {
+        "address": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xc40d16476380e4037e6b1a2594caf6a6cc8da967": {
+        "address": "0xc40d16476380e4037e6b1a2594caf6a6cc8da967",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xceff51756c56ceffca006cd410b03ffc46dd3a58": {
+        "address": "0xceff51756c56ceffca006cd410b03ffc46dd3a58",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0xd86a120a06255df8d4e2248ab04d4267e23adfaa": {
+        "address": "0xd86a120a06255df8d4e2248ab04d4267e23adfaa",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      }
+    },
+    "name": "sushiswap"
+  },
+  {
+    "content": {
+      "0xb823d4aebaa70c2a041b51c6c48390856b8392a8": {
+        "address": "0xb823d4aebaa70c2a041b51c6c48390856b8392a8",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x472bbc4a4626e9180de9b8ab7848b5b49cdbfc0f": {
+        "address": "0x472bbc4a4626e9180de9b8ab7848b5b49cdbfc0f",
+        "price": 0,
+        "token0": {
+          "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+          "decimals": 18,
+          "name": "Mog Coin",
+          "symbol": "MOG"
+        },
+        "token1": {
+          "address": "0xb90b2a35c65dbc466b04240097ca756ad2005295",
+          "decimals": 18,
+          "name": "BOBO",
+          "symbol": "BOBO"
+        }
+      },
+      "0x930e607c92cfa7bca06d9143ad652c78a7885f7e": {
+        "address": "0x930e607c92cfa7bca06d9143ad652c78a7885f7e",
+        "price": 0,
+        "token0": {
+          "address": "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
+          "decimals": 18,
+          "name": "Wise Token",
+          "symbol": "WISE"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a": {
+        "address": "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR"
+        }
+      },
+      "0x65cefc39950a1bb4d95985b85091b4f967b2fb36": {
+        "address": "0x65cefc39950a1bb4d95985b85091b4f967b2fb36",
+        "price": 0,
+        "token0": {
+          "address": "0xd0b6cf419ea6fdd61a63d158e3cd517cbb659951",
+          "decimals": 18,
+          "name": "Samoyedcoin",
+          "symbol": "SAMO"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x82b8ee01e63af40bec3cb555795d2a12c495ee23": {
+        "address": "0x82b8ee01e63af40bec3cb555795d2a12c495ee23",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xd4f4d0a10bcae123bb6655e8fe93a30d01eebd04",
+          "decimals": 18,
+          "name": "LinqAI",
+          "symbol": "LNQ"
+        }
+      },
+      "0x15b24d769f640b817cbfdb32f10b752eb95408f4": {
+        "address": "0x15b24d769f640b817cbfdb32f10b752eb95408f4",
+        "price": 0,
+        "token0": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        },
+        "token1": {
+          "address": "0xcf91b70017eabde82c9671e30e5502d312ea6eb2",
+          "decimals": 9,
+          "name": "I love puppies",
+          "symbol": "puppies"
+        }
+      },
+      "0xe9424259a3587014479451e55bd990174d095b60": {
+        "address": "0xe9424259a3587014479451e55bd990174d095b60",
+        "price": 0,
+        "token0": {
+          "address": "0x66b5228cfd34d9f4d9f03188d67816286c7c0b74",
+          "decimals": 18,
+          "name": "VOLT.WIN",
+          "symbol": "VOLT"
+        },
+        "token1": {
+          "address": "0xe9a53c43a0b58706e67341c4055de861e29ee943",
+          "decimals": 18,
+          "name": "Element 280",
+          "symbol": "ELMNT"
+        }
+      },
+      "0x18589c97e922df6581965683df1631b7771948c2": {
+        "address": "0x18589c97e922df6581965683df1631b7771948c2",
+        "price": 0,
+        "token0": {
+          "address": "0x8802269d1283cdb2a5a329649e5cb4cdcee91ab6",
+          "decimals": 9,
+          "name": "Fight to MAGA",
+          "symbol": "FIGHT"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x888d5234cd3bcd459b507641af72d2c44d46bab7": {
+        "address": "0x888d5234cd3bcd459b507641af72d2c44d46bab7",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x535887989b9edffb63b1fd5c6b99a4d45443b49a",
+          "decimals": 9,
+          "name": "47th President of the United States",
+          "symbol": "TRUMP47"
+        }
+      },
+      "0x16719e806e14fe5e1663bbec671f9c57abfc735d": {
+        "address": "0x16719e806e14fe5e1663bbec671f9c57abfc735d",
+        "price": 0,
+        "token0": {
+          "address": "0x93181f0625329fc0f5c35d1670ceb541867acc65",
+          "decimals": 9,
+          "name": "Sentra",
+          "symbol": "STRA"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x231b7589426ffe1b75405526fc32ac09d44364c4": {
+        "address": "0x231b7589426ffe1b75405526fc32ac09d44364c4",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0x088276d10561d8260de2afc2e06462ec95a17477": {
+        "address": "0x088276d10561d8260de2afc2e06462ec95a17477",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x4c44a8b7823b80161eb5e6d80c014024752607f2",
+          "decimals": 9,
+          "name": "America Pac",
+          "symbol": "PAC"
+        }
+      },
+      "0xf71edb61924ebf0cb5c7855d377876419d50faa3": {
+        "address": "0xf71edb61924ebf0cb5c7855d377876419d50faa3",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+          "decimals": 18,
+          "name": "Enjin Coin",
+          "symbol": "ENJ"
+        }
+      },
+      "0xfdb676331a4b37689b2ea12f14ff895b640a4379": {
+        "address": "0xfdb676331a4b37689b2ea12f14ff895b640a4379",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xc8f69a9b46b235de8d0b77c355fff7994f1b090f",
+          "decimals": 18,
+          "name": "SPEEDY",
+          "symbol": "$SPEEDY"
+        }
+      },
+      "0xa14dfbaa23ee8e8b69878381f8fd1d0bc502c043": {
+        "address": "0xa14dfbaa23ee8e8b69878381f8fd1d0bc502c043",
+        "price": 0,
+        "token0": {
+          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x3478b3ecc153ce61ea3c6788611fdbb374d4305d": {
+        "address": "0x3478b3ecc153ce61ea3c6788611fdbb374d4305d",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x94e9eb8b5ab9fd6b9ea3169d55ffade62a01702e",
+          "decimals": 18,
+          "name": "BreederDAO",
+          "symbol": "BREED"
+        }
+      },
+      "0x0804b8763a6ab2adabc4147cd24d3c04db4d8a33": {
+        "address": "0x0804b8763a6ab2adabc4147cd24d3c04db4d8a33",
+        "price": 0,
+        "token0": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        },
+        "token1": {
+          "address": "0x38e68a37e401f7271568cecaac63c6b1e19130b4",
+          "decimals": 18,
+          "name": "Banana",
+          "symbol": "BANANA"
+        }
+      },
+      "0xf8ee6f63f26a56bfb146671f27ac5dcd2a63e720": {
+        "address": "0xf8ee6f63f26a56bfb146671f27ac5dcd2a63e720",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x2d3a6c4f59632ff6b664119c66714c2d2026e4fb",
+          "decimals": 18,
+          "name": "Groypcoin",
+          "symbol": "GROYPER"
+        }
+      },
+      "0x58af8074568dc74583b90e6715b99c327f5305fc": {
+        "address": "0x58af8074568dc74583b90e6715b99c327f5305fc",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x6dd66e228d8d78516fbea31511204ed7f408730e",
+          "decimals": 18,
+          "name": "BabyNEIRO",
+          "symbol": "BNEIRO"
+        }
+      },
+      "0xe28ef9b0bbdd2e00dc048add56789323cfae04a3": {
+        "address": "0xe28ef9b0bbdd2e00dc048add56789323cfae04a3",
+        "price": 0,
+        "token0": {
+          "address": "0x82e0c62551ff39ee4ccc48f9ac390a6493cb7bde",
+          "decimals": 9,
+          "name": "ticker is ETH",
+          "symbol": "ETH"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x63a151d042dc870fb1b3f0c72cbbdd53a85898f6": {
+        "address": "0x63a151d042dc870fb1b3f0c72cbbdd53a85898f6",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x8802269d1283cdb2a5a329649e5cb4cdcee91ab6",
+          "decimals": 9,
+          "name": "Fight to MAGA",
+          "symbol": "FIGHT"
+        }
+      },
+      "0xd726e3b6858d81ab6ad5b7cbb7a62ea00c5c25bd": {
+        "address": "0xd726e3b6858d81ab6ad5b7cbb7a62ea00c5c25bd",
+        "price": 0,
+        "token0": {
+          "address": "0x155788dd4b3ccd955a5b2d461c7d6504f83f71fa",
+          "decimals": 9,
+          "name": "KAMALA HARRIS",
+          "symbol": "HARRIS"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x991f01dc9e492ef38142210fd675e7409b9bd4e2": {
+        "address": "0x991f01dc9e492ef38142210fd675e7409b9bd4e2",
+        "price": 0,
+        "token0": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        },
+        "token1": {
+          "address": "0x038480645079e61b2852c04e1465da01928a6a20",
+          "decimals": 9,
+          "name": "Joma",
+          "symbol": "JOMA"
+        }
+      },
+      "0xa46b0050542ed642185c19704a362eabb36cc99b": {
+        "address": "0xa46b0050542ed642185c19704a362eabb36cc99b",
+        "price": 0,
+        "token0": {
+          "address": "0x91f322e0d0bd688acd511a789431a2b672a28013",
+          "decimals": 18,
+          "name": "Fist Pump Trump",
+          "symbol": "FTP"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xaa9103d4749f4f50ba77dceb6fa4d524facb7071": {
+        "address": "0xaa9103d4749f4f50ba77dceb6fa4d524facb7071",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x420fa0434074703f1f54f69fa2b9301734a3bca1",
+          "decimals": 18,
+          "name": "FRY",
+          "symbol": "FRY"
+        }
+      },
+      "0x88d97d199b9ed37c29d846d00d443de980832a22": {
+        "address": "0x88d97d199b9ed37c29d846d00d443de980832a22",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+          "decimals": 18,
+          "name": "UMA Voting Token v1",
+          "symbol": "UMA"
+        }
+      },
+      "0x9c2f395d35de334975610a54d4555c5a577e4bda": {
+        "address": "0x9c2f395d35de334975610a54d4555c5a577e4bda",
+        "price": 0,
+        "token0": {
+          "address": "0x52602ad562d38a0839ba317e2e81defddb85515b",
+          "decimals": 9,
+          "name": "Baby Andy",
+          "symbol": "BABYANDY"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x56bc8f3293f53825c9fbd6ddfe0cafefa82820d0": {
+        "address": "0x56bc8f3293f53825c9fbd6ddfe0cafefa82820d0",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x6aa56e1d98b3805921c170eb4b3fe7d4fda6d89b",
+          "decimals": 9,
+          "name": "MAGA",
+          "symbol": "TRUMP"
+        }
+      },
+      "0x396f293b6ea2870aa619f83e1bdaa22e3e5447db": {
+        "address": "0x396f293b6ea2870aa619f83e1bdaa22e3e5447db",
+        "price": 0,
+        "token0": {
+          "address": "0xf799fb149bc14798fba42d6589e105c798743b57",
+          "decimals": 18,
+          "name": "Deployed by Steve",
+          "symbol": "STEVE"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x9b49a32b76216ead560d33076b3cabc51dbfe0f0": {
+        "address": "0x9b49a32b76216ead560d33076b3cabc51dbfe0f0",
+        "price": 0,
+        "token0": {
+          "address": "0x85bea4ee627b795a79583fcede229e198aa57055",
+          "decimals": 18,
+          "name": "Marvin Inu",
+          "symbol": "Marvin"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x4e6e41306c7ef6e53ecdb34e3155c73fcb7869f3": {
+        "address": "0x4e6e41306c7ef6e53ecdb34e3155c73fcb7869f3",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0xba261079e56cfa533604e070e784ea3b03ff7ebf": {
+        "address": "0xba261079e56cfa533604e070e784ea3b03ff7ebf",
+        "price": 0,
+        "token0": {
+          "address": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+          "decimals": 9,
+          "name": "Neiro",
+          "symbol": "Neiro"
+        },
+        "token1": {
+          "address": "0xed89fc0f41d8be2c98b13b7e3cd3e876d73f1d30",
+          "decimals": 9,
+          "name": "Gou",
+          "symbol": "GOU"
+        }
+      },
+      "0xa93ea93c6e48ddca564d46e0548ee49603e8aed4": {
+        "address": "0xa93ea93c6e48ddca564d46e0548ee49603e8aed4",
+        "price": 0,
+        "token0": {
+          "address": "0xaf7c261237376aab4476df5f93274de366864a86",
+          "decimals": 18,
+          "name": "Rocky the Hyrax",
+          "symbol": "HYRAX"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x39935c1e356f613f446a1b9f67a28bbe89a02cb5": {
+        "address": "0x39935c1e356f613f446a1b9f67a28bbe89a02cb5",
+        "price": 0,
+        "token0": {
+          "address": "0x230ea9aed5d08afdb22cd3c06c47cf24ad501301",
+          "decimals": 18,
+          "name": "SPX6900 2.0",
+          "symbol": "SPX2.0"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xbfbbdafb46c67222b0c904a4b7cd8e5e940c595e": {
+        "address": "0xbfbbdafb46c67222b0c904a4b7cd8e5e940c595e",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+          "decimals": 18,
+          "name": "UMA Voting Token v1",
+          "symbol": "UMA"
+        }
+      },
+      "0x9cb4c9de3d6cde726026ba2cf9d0486af50151d9": {
+        "address": "0x9cb4c9de3d6cde726026ba2cf9d0486af50151d9",
+        "price": 0,
+        "token0": {
+          "address": "0x31c8eacbffdd875c74b94b077895bd78cf1e64a3",
+          "decimals": 18,
+          "name": "Radicle",
+          "symbol": "RAD"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x3bee784b6ba24d50af08f7fe617206c375d9c2ad": {
+        "address": "0x3bee784b6ba24d50af08f7fe617206c375d9c2ad",
+        "price": 0,
+        "token0": {
+          "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+          "decimals": 18,
+          "name": "UMA Voting Token v1",
+          "symbol": "UMA"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc": {
+        "address": "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xe19abcdd64001fb4cad9e456efa366e07b3894a2": {
+        "address": "0xe19abcdd64001fb4cad9e456efa366e07b3894a2",
+        "price": 0,
+        "token0": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        },
+        "token1": {
+          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+          "decimals": 18,
+          "name": "Pepe",
+          "symbol": "PEPE"
+        }
+      },
+      "0xd677b2d0dd5c8f71ce22ccdb700dffc6558fd1d1": {
+        "address": "0xd677b2d0dd5c8f71ce22ccdb700dffc6558fd1d1",
+        "price": 0,
+        "token0": {
+          "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+          "decimals": 18,
+          "name": "Enjin Coin",
+          "symbol": "ENJ"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0xb676b41f577812c5d5d755d22d302bc7a84bb489": {
+        "address": "0xb676b41f577812c5d5d755d22d302bc7a84bb489",
+        "price": 0,
+        "token0": {
+          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+          "decimals": 18,
+          "name": "Pepe",
+          "symbol": "PEPE"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x8a01ba64fbc7b12ee13f817dfa862881fec531b8": {
+        "address": "0x8a01ba64fbc7b12ee13f817dfa862881fec531b8",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f": {
+        "address": "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+          "decimals": 18,
+          "name": "Pepe",
+          "symbol": "PEPE"
+        }
+      },
+      "0x8c1c499b1796d7f3c2521ac37186b52de024e58c": {
+        "address": "0x8c1c499b1796d7f3c2521ac37186b52de024e58c",
+        "price": 0,
+        "token0": {
+          "address": "0x31c8eacbffdd875c74b94b077895bd78cf1e64a3",
+          "decimals": 18,
+          "name": "Radicle",
+          "symbol": "RAD"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      },
+      "0x45761300f2c78e4e202ebcf9c304444ef6e16b79": {
+        "address": "0x45761300f2c78e4e202ebcf9c304444ef6e16b79",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0xf43b871cf7236ffe8ae7d8c76c8d869453403a87": {
+        "address": "0xf43b871cf7236ffe8ae7d8c76c8d869453403a87",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x05893fd00f6fb0cd1b0395fa4da9a0af4ef39a17",
+          "decimals": 9,
+          "name": "Starfleet",
+          "symbol": "Starfleet"
+        }
+      },
+      "0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5": {
+        "address": "0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      },
+      "0xb82a3e36248efed4d81dbfcdbb35c370aa23039d": {
+        "address": "0xb82a3e36248efed4d81dbfcdbb35c370aa23039d",
+        "price": 0,
+        "token0": {
+          "address": "0x16c7e28c7059b5385c7505aa2a65b134b91f0103",
+          "decimals": 9,
+          "name": "MIKO6900",
+          "symbol": "$MIKO"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x6174c2da99cd65ccfcad48fc12c28f44730c81f5": {
+        "address": "0x6174c2da99cd65ccfcad48fc12c28f44730c81f5",
+        "price": 0,
+        "token0": {
+          "address": "0x44dcf99ab04772146aa366c046425b99e0a0e45f",
+          "decimals": 9,
+          "name": " Hedz By Matt Furie ",
+          "symbol": " HEDZ "
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xbb2b8038a1640196fbe3e38816f3e67cba72d940": {
+        "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0xadd4e14e07fb0e2a63de9f506685e6dca1d58935": {
+        "address": "0xadd4e14e07fb0e2a63de9f506685e6dca1d58935",
+        "price": 0,
+        "token0": {
+          "address": "0x71853e30a958694cf623d6eca2711233971a6b86",
+          "decimals": 9,
+          "name": "AlphaProtocol-X",
+          "symbol": "APX"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x05b1ad78501cf9b69ca6b768664e4177203ebfc1": {
+        "address": "0x05b1ad78501cf9b69ca6b768664e4177203ebfc1",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+          "decimals": 18,
+          "name": "UMA Voting Token v1",
+          "symbol": "UMA"
+        }
+      },
+      "0x28cc964cfb20bc68a5a3a6b6322b26b568feebc9": {
+        "address": "0x28cc964cfb20bc68a5a3a6b6322b26b568feebc9",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x4b41a481a7a3e0396751aa49bee970b842fdaede",
+          "decimals": 9,
+          "name": "KYRA",
+          "symbol": "KYRA"
+        }
+      },
+      "0x6a516271870a48f4f6c72044ca64ec9c69ac4efc": {
+        "address": "0x6a516271870a48f4f6c72044ca64ec9c69ac4efc",
+        "price": 0,
+        "token0": {
+          "address": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+          "decimals": 9,
+          "name": "Neiro",
+          "symbol": "Neiro"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x926381b8a1237585303051f376c74192e82b7a7e": {
+        "address": "0x926381b8a1237585303051f376c74192e82b7a7e",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x6969f3a3754ab674b48b7829a8572360e98132ba",
+          "decimals": 9,
+          "name": "Izzy",
+          "symbol": "IZZY"
+        }
+      },
+      "0x3f92b191ea40f2e02b62fd9d792d2486091f5537": {
+        "address": "0x3f92b191ea40f2e02b62fd9d792d2486091f5537",
+        "price": 0,
+        "token0": {
+          "address": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+          "decimals": 9,
+          "name": "Neiro",
+          "symbol": "Neiro"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x43de4318b6eb91a7cf37975dbb574396a7b5b5c6": {
+        "address": "0x43de4318b6eb91a7cf37975dbb574396a7b5b5c6",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x38e68a37e401f7271568cecaac63c6b1e19130b4",
+          "decimals": 18,
+          "name": "Banana",
+          "symbol": "BANANA"
+        }
+      },
+      "0x80ae422337bf2f8f559377438f27fc76b36c122f": {
+        "address": "0x80ae422337bf2f8f559377438f27fc76b36c122f",
+        "price": 0,
+        "token0": {
+          "address": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+          "decimals": 9,
+          "name": "Neiro",
+          "symbol": "Neiro"
+        },
+        "token1": {
+          "address": "0x240cd7b53d364a208ed41f8ced4965d11f571b7a",
+          "decimals": 9,
+          "name": "Doggo",
+          "symbol": "DOGGO"
+        }
+      },
+      "0x811beed0119b4afce20d2583eb608c6f7af1954f": {
+        "address": "0x811beed0119b4afce20d2583eb608c6f7af1954f",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0xe56c60b5f9f7b5fc70de0eb79c6ee7d00efa2625": {
+        "address": "0xe56c60b5f9f7b5fc70de0eb79c6ee7d00efa2625",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+          "decimals": 18,
+          "name": "Enjin Coin",
+          "symbol": "ENJ"
+        }
+      },
+      "0xdb9f4fb18362e7043d763bf6a62e64d420c24c53": {
+        "address": "0xdb9f4fb18362e7043d763bf6a62e64d420c24c53",
+        "price": 0,
+        "token0": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x6f118ecebc31a5ffe49b87c47ea80f93a2af0a8a": {
+        "address": "0x6f118ecebc31a5ffe49b87c47ea80f93a2af0a8a",
+        "price": 0,
+        "token0": {
+          "address": "0x7659ce147d0e714454073a5dd7003544234b6aa0",
+          "decimals": 18,
+          "name": "XCAD Token",
+          "symbol": "XCAD"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x7054b0f980a7eb5b3a6b3446f3c947d80162775c": {
+        "address": "0x7054b0f980a7eb5b3a6b3446f3c947d80162775c",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x1ce270557c1f68cfb577b856766310bf8b47fd9c",
+          "decimals": 18,
+          "name": "MongCoin",
+          "symbol": "$MONG"
+        }
+      },
+      "0xbb780a65a9d3668d762d4e9d5eadbce5a66efc4e": {
+        "address": "0xbb780a65a9d3668d762d4e9d5eadbce5a66efc4e",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xf9fbd6665c816acf2ce28d09a6f50f63909f3630",
+          "decimals": 9,
+          "name": "FAIL Coin",
+          "symbol": "FAIL"
+        }
+      },
+      "0xc2adda861f89bbb333c90c492cb837741916a225": {
+        "address": "0xc2adda861f89bbb333c90c492cb837741916a225",
+        "price": 0,
+        "token0": {
+          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x21a1b706a1f193e7269f463a53117d323fd2f1b7": {
+        "address": "0x21a1b706a1f193e7269f463a53117d323fd2f1b7",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x21174ec0649f0138c16fd2c6eca4ff3eee19beef",
+          "decimals": 9,
+          "name": "Golden Good Boy",
+          "symbol": "GOLDEN"
+        }
+      },
+      "0x8f4e5d6b4ec386c5e7df984178ef12b87e3d3f95": {
+        "address": "0x8f4e5d6b4ec386c5e7df984178ef12b87e3d3f95",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+          "decimals": 18,
+          "name": "Enjin Coin",
+          "symbol": "ENJ"
+        }
+      },
+      "0x6fd370fec2a4801815ec274f6829cc3c5f547980": {
+        "address": "0x6fd370fec2a4801815ec274f6829cc3c5f547980",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x69000e11c86b4f61dbefd7dbcffd1c53fcd506e4",
+          "decimals": 9,
+          "name": "Microsoft 6900",
+          "symbol": "MSFT"
+        }
+      },
+      "0x2325e3f261cadb1c30cebf66c9f95f6fb016c0d4": {
+        "address": "0x2325e3f261cadb1c30cebf66c9f95f6fb016c0d4",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xcf91b70017eabde82c9671e30e5502d312ea6eb2",
+          "decimals": 9,
+          "name": "I love puppies",
+          "symbol": "puppies"
+        }
+      },
+      "0x773dd321873fe70553acc295b1b49a104d968cc8": {
+        "address": "0x773dd321873fe70553acc295b1b49a104d968cc8",
+        "price": 0,
+        "token0": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x94647e59aa38abaccc78a809761ca62345c7752b": {
+        "address": "0x94647e59aa38abaccc78a809761ca62345c7752b",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x4e0a925c5a252242ee6e825b6257297595e4d6f5",
+          "decimals": 18,
+          "name": "EveOneCAT",
+          "symbol": "CAT"
+        }
+      },
+      "0xa14e051af256157ce093aa54cb3b2f775358f559": {
+        "address": "0xa14e051af256157ce093aa54cb3b2f775358f559",
+        "price": 0,
+        "token0": {
+          "address": "0x7659ce147d0e714454073a5dd7003544234b6aa0",
+          "decimals": 18,
+          "name": "XCAD Token",
+          "symbol": "XCAD"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x69c7bd26512f52bf6f76fab834140d13dda673ca": {
+        "address": "0x69c7bd26512f52bf6f76fab834140d13dda673ca",
+        "price": 0,
+        "token0": {
+          "address": "0x8ed97a637a790be1feff5e888d43629dc05408f6",
+          "decimals": 18,
+          "name": "Non-Playable Coin",
+          "symbol": "NPC"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x791843425fe0df20f8010f0e1e6e2c7869eb6edc": {
+        "address": "0x791843425fe0df20f8010f0e1e6e2c7869eb6edc",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x3a601fc38698efd8c88d5fbd8fcb44f14aea4805",
+          "decimals": 9,
+          "name": "MAGA THE GOAT",
+          "symbol": "$MAGAGOAT"
+        }
+      },
+      "0x8cf818cb22983ef9a7ec7a6ef0bccee05c441e7c": {
+        "address": "0x8cf818cb22983ef9a7ec7a6ef0bccee05c441e7c",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x62e3b3c557c792c4a70765b3cdb5b56b1879f82d",
+          "decimals": 9,
+          "name": "Fox",
+          "symbol": "FOX"
+        }
+      },
+      "0xeda4550a0c57ca7c3335baad1cf59c816f9336b0": {
+        "address": "0xeda4550a0c57ca7c3335baad1cf59c816f9336b0",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x218f1d9cdf3984f188a4a8f7931c737f75251f5b",
+          "decimals": 9,
+          "name": "MOOWAN",
+          "symbol": "MOOWAN"
+        }
+      },
+      "0x3fa10431db9a639edc84afa2c8a45d7403769f13": {
+        "address": "0x3fa10431db9a639edc84afa2c8a45d7403769f13",
+        "price": 0,
+        "token0": {
+          "address": "0x847f6695874fe9d2abb6fe8bf56d809bbf1e83da",
+          "decimals": 18,
+          "name": "Goatseus Maximus",
+          "symbol": "GOAT"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x5b1f15aa094113d337e1f4e1a190909bdd7cca55": {
+        "address": "0x5b1f15aa094113d337e1f4e1a190909bdd7cca55",
+        "price": 0,
+        "token0": {
+          "address": "0x155788dd4b3ccd955a5b2d461c7d6504f83f71fa",
+          "decimals": 9,
+          "name": "KAMALA HARRIS",
+          "symbol": "HARRIS"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x180efc1349a69390ade25667487a826164c9c6e4": {
+        "address": "0x180efc1349a69390ade25667487a826164c9c6e4",
+        "price": 0,
+        "token0": {
+          "address": "0x62d0a8458ed7719fdaf978fe5929c6d342b0bfce",
+          "decimals": 18,
+          "name": "Beam",
+          "symbol": "BEAM"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f": {
+        "address": "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0xa2107fa5b38d9bbd2c461d6edf11b11a50f6b974": {
+        "address": "0xa2107fa5b38d9bbd2c461d6edf11b11a50f6b974",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x5a75ed4624bbda1e992dd006ea2aca83d64c30fb": {
+        "address": "0x5a75ed4624bbda1e992dd006ea2aca83d64c30fb",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+          "decimals": 18,
+          "name": "Pepe",
+          "symbol": "PEPE"
+        }
+      },
+      "0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d": {
+        "address": "0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d",
+        "price": 0,
+        "token0": {
+          "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+          "decimals": 18,
+          "name": "Mog Coin",
+          "symbol": "MOG"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852": {
+        "address": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x9db10c305c671153662119d453c4d2c123725566": {
+        "address": "0x9db10c305c671153662119d453c4d2c123725566",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x28e2318828a8dc332078fd95c15d43a2b227169b": {
+        "address": "0x28e2318828a8dc332078fd95c15d43a2b227169b",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x78db79e4594e835542eb514404ae374f6f50236c",
+          "decimals": 9,
+          "name": "ai16z",
+          "symbol": "ai16z"
+        }
+      },
+      "0x1563e9af51616e78830de3325da752de369c1714": {
+        "address": "0x1563e9af51616e78830de3325da752de369c1714",
+        "price": 0,
+        "token0": {
+          "address": "0x5e7f6e008c6d9d7ad4c7eb75bd4ce62864cc7454",
+          "decimals": 18,
+          "name": "tap",
+          "symbol": "tap"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x9d40dd9bc95d0a8632521589de4c353f709e1ac3": {
+        "address": "0x9d40dd9bc95d0a8632521589de4c353f709e1ac3",
+        "price": 0,
+        "token0": {
+          "address": "0xda0c0d0a0ff8262f3ee9ee8a712b988df897be65",
+          "decimals": 9,
+          "name": "World Liberty Financial",
+          "symbol": "WLF"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x9de27b2ff015140c02bbf38a9cf049b9ddad705f": {
+        "address": "0x9de27b2ff015140c02bbf38a9cf049b9ddad705f",
+        "price": 0,
+        "token0": {
+          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x308c6fbd6a14881af333649f17f2fde9cd75e2a6": {
+        "address": "0x308c6fbd6a14881af333649f17f2fde9cd75e2a6",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x1121acc14c63f3c872bfca497d10926a6098aac5",
+          "decimals": 18,
+          "name": "Department Of Government Efficiency",
+          "symbol": "DOGE"
+        }
+      },
+      "0xc33ff9be50799a346afa1d28eba4e3d444edfef4": {
+        "address": "0xc33ff9be50799a346afa1d28eba4e3d444edfef4",
+        "price": 0,
+        "token0": {
+          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+          "decimals": 18,
+          "name": "Pepe",
+          "symbol": "PEPE"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x6d4fd456edeca58cf53a8b586cd50754547dbdb2": {
+        "address": "0x6d4fd456edeca58cf53a8b586cd50754547dbdb2",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        }
+      },
+      "0x517f9dd285e75b599234f7221227339478d0fcc8": {
+        "address": "0x517f9dd285e75b599234f7221227339478d0fcc8",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR"
+        }
+      },
+      "0x2172009e620ab2fc52b3c52648e1dcc28c16bf7d": {
+        "address": "0x2172009e620ab2fc52b3c52648e1dcc28c16bf7d",
+        "price": 0,
+        "token0": {
+          "address": "0x69fd9281a920717ee54193a1c130b689ef341933",
+          "decimals": 9,
+          "name": "FWOG",
+          "symbol": "FWOG"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405": {
+        "address": "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x03058769e699f6fb2bd8df8d49a39447b706a1b0": {
+        "address": "0x03058769e699f6fb2bd8df8d49a39447b706a1b0",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x1f19d846d99a0e75581913b64510fe0e18bbc31f",
+          "decimals": 18,
+          "name": "Feels Good Man",
+          "symbol": "FGM"
+        }
+      },
+      "0xc64040034282cd8f66e4d2ba41eb7500e55a4756": {
+        "address": "0xc64040034282cd8f66e4d2ba41eb7500e55a4756",
+        "price": 0,
+        "token0": {
+          "address": "0x92cc70c785a56597785d0e8e4b56672b759afc56",
+          "decimals": 9,
+          "name": "Neiro2.0",
+          "symbol": "Neiro2.0"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xca7b34486391b8ea5c062844eeff33c70bab1c0b": {
+        "address": "0xca7b34486391b8ea5c062844eeff33c70bab1c0b",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xd34ef3cc025c203ea1742ee076f0a0bb5a6f08b0",
+          "decimals": 9,
+          "name": "BABY SPX6900",
+          "symbol": "BabySPX"
+        }
+      },
+      "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11": {
+        "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+        "price": 0,
+        "token0": {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18,
+          "name": "Dai Stablecoin",
+          "symbol": "DAI"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x7eb6d3466600b4857eb60a19e0d2115e65aa815e": {
+        "address": "0x7eb6d3466600b4857eb60a19e0d2115e65aa815e",
+        "price": 0,
+        "token0": {
+          "address": "0x240cd7b53d364a208ed41f8ced4965d11f571b7a",
+          "decimals": 9,
+          "name": "Doggo",
+          "symbol": "DOGGO"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x3075ff29511446fec10a662d1866475bec1b3637": {
+        "address": "0x3075ff29511446fec10a662d1866475bec1b3637",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xf211b655431c10e72c1caeae37688ae9f7f7a549",
+          "decimals": 18,
+          "name": "TRUMP MAGA",
+          "symbol": "MAGA"
+        }
+      },
+      "0x5694a92a69775a010e65d610d78b9eaf950c897e": {
+        "address": "0x5694a92a69775a010e65d610d78b9eaf950c897e",
+        "price": 0,
+        "token0": {
+          "address": "0xed89fc0f41d8be2c98b13b7e3cd3e876d73f1d30",
+          "decimals": 9,
+          "name": "Gou",
+          "symbol": "GOU"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xc555d55279023e732ccd32d812114caf5838fd46": {
+        "address": "0xc555d55279023e732ccd32d812114caf5838fd46",
+        "price": 0,
+        "token0": {
+          "address": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+          "decimals": 9,
+          "name": "Neiro",
+          "symbol": "Neiro"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x54ccc9347c5dc65ed5fbcb837880badfe4f00dfc": {
+        "address": "0x54ccc9347c5dc65ed5fbcb837880badfe4f00dfc",
+        "price": 0,
+        "token0": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        },
+        "token1": {
+          "address": "0x1121acc14c63f3c872bfca497d10926a6098aac5",
+          "decimals": 18,
+          "name": "Department Of Government Efficiency",
+          "symbol": "DOGE"
+        }
+      },
+      "0x09d1d767edf8fa23a64c51fa559e0688e526812f": {
+        "address": "0x09d1d767edf8fa23a64c51fa559e0688e526812f",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x0001a500a6b18995b03f44bb040a5ffc28e45cb0",
+          "decimals": 18,
+          "name": "Autonolas",
+          "symbol": "OLAS"
+        }
+      },
+      "0xb9dce40ac352c84ca11f94c3ce8ec37b747fa658": {
+        "address": "0xb9dce40ac352c84ca11f94c3ce8ec37b747fa658",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x634769eb87542eaf41c0008c05d5d8f5d8bec3a5",
+          "decimals": 14,
+          "name": "Book of Meme 3.0",
+          "symbol": "BOME"
+        }
+      },
+      "0x530b43707e03ba2d590e6da662dda45d4c3ce0da": {
+        "address": "0x530b43707e03ba2d590e6da662dda45d4c3ce0da",
+        "price": 0,
+        "token0": {
+          "address": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+          "decimals": 9,
+          "name": "Neiro",
+          "symbol": "Neiro"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0x2aeee741fa1e21120a21e57db9ee545428e683c9": {
+        "address": "0x2aeee741fa1e21120a21e57db9ee545428e683c9",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xc56c7a0eaa804f854b536a5f3d5f49d2ec4b12b8",
+          "decimals": 9,
+          "name": "GameStop",
+          "symbol": "GME"
+        }
+      },
+      "0x881d5c98866a08f90a6f60e3f94f0e461093d049": {
+        "address": "0x881d5c98866a08f90a6f60e3f94f0e461093d049",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        }
+      },
+      "0x5af64fdf4801726348d17a50169a456f51cc85d8": {
+        "address": "0x5af64fdf4801726348d17a50169a456f51cc85d8",
+        "price": 0,
+        "token0": {
+          "address": "0xc94729d93cb660bb346ce0084393015f99810919",
+          "decimals": 18,
+          "name": "THE TICKER IS",
+          "symbol": "ETH"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xc2e86fec23f576721b998d4c96f4976fc8c94b08": {
+        "address": "0xc2e86fec23f576721b998d4c96f4976fc8c94b08",
+        "price": 0,
+        "token0": {
+          "address": "0x1ce270557c1f68cfb577b856766310bf8b47fd9c",
+          "decimals": 18,
+          "name": "MongCoin",
+          "symbol": "$MONG"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x9e27e0aedfc6b300d5c87b4e00f7687a5a1e8912": {
+        "address": "0x9e27e0aedfc6b300d5c87b4e00f7687a5a1e8912",
+        "price": 0,
+        "token0": {
+          "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          "decimals": 18,
+          "name": "SHIBA INU",
+          "symbol": "SHIB"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x9b801dec0d0413bf27bdc00118da4697b55dffbb": {
+        "address": "0x9b801dec0d0413bf27bdc00118da4697b55dffbb",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xf275452d09eb8662d184657bc159a1f1a6ec8430",
+          "decimals": 9,
+          "name": "𝓜𝓪𝓽𝓽 𝓕𝓾𝓻𝓲𝓮's Dog",
+          "symbol": "DOGGY"
+        }
+      },
+      "0xe72cbdced30d8f816b7ce78edd193734befe866f": {
+        "address": "0xe72cbdced30d8f816b7ce78edd193734befe866f",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x6b2d50cb3d6b9651b796f173325a8f2da5e523d0",
+          "decimals": 9,
+          "name": "MoonCatRescue",
+          "symbol": "MOONCAT"
+        }
+      },
+      "0xf2f98cbd5d84640a2c5cfda5c996cd830067bc95": {
+        "address": "0xf2f98cbd5d84640a2c5cfda5c996cd830067bc95",
+        "price": 0,
+        "token0": {
+          "address": "0x31c8eacbffdd875c74b94b077895bd78cf1e64a3",
+          "decimals": 18,
+          "name": "Radicle",
+          "symbol": "RAD"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e": {
+        "address": "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
+          "decimals": 18,
+          "name": "Wise Token",
+          "symbol": "WISE"
+        }
+      },
+      "0xa3706ee172dcc7f4dc971283a0c1ae41ffdf3fe4": {
+        "address": "0xa3706ee172dcc7f4dc971283a0c1ae41ffdf3fe4",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x69420eea8b66241c3eba937861daeb6464c2559d",
+          "decimals": 9,
+          "name": "Memecoin Supercycle",
+          "symbol": "MEME"
+        }
+      },
+      "0x004375dff511095cc5a197a54140a24efef3a416": {
+        "address": "0x004375dff511095cc5a197a54140a24efef3a416",
+        "price": 0,
+        "token0": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        },
+        "token1": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        }
+      },
+      "0x0de0fa91b6dbab8c8503aaa2d1dfa91a192cb149": {
+        "address": "0x0de0fa91b6dbab8c8503aaa2d1dfa91a192cb149",
+        "price": 0,
+        "token0": {
+          "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+          "decimals": 8,
+          "name": "Wrapped BTC",
+          "symbol": "WBTC"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0x470e8de2ebaef52014a47cb5e6af86884947f08c": {
+        "address": "0x470e8de2ebaef52014a47cb5e6af86884947f08c",
+        "price": 0,
+        "token0": {
+          "address": "0xc770eefad204b5180df6a14ee197d99d808ee52d",
+          "decimals": 18,
+          "name": "FOX",
+          "symbol": "FOX"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x9e9b4581df8fd0bc9f7fb832ed98d48279d0d323": {
+        "address": "0x9e9b4581df8fd0bc9f7fb832ed98d48279d0d323",
+        "price": 0,
+        "token0": {
+          "address": "0x44e18207b6e98f4a786957954e462ed46b8c95be",
+          "decimals": 9,
+          "name": "Terminus",
+          "symbol": "Terminus"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x4d6fd0207a584620afe023fbeed33b423ffe852c": {
+        "address": "0x4d6fd0207a584620afe023fbeed33b423ffe852c",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xccc2a118053aa3fd927bd8b2add5c8c2f195841e",
+          "decimals": 9,
+          "name": "🐱BABYCAT",
+          "symbol": "🐱BABYCAT"
+        }
+      },
+      "0xe945683b3462d2603a18bdfbb19261c6a4f03ad1": {
+        "address": "0xe945683b3462d2603a18bdfbb19261c6a4f03ad1",
+        "price": 0,
+        "token0": {
+          "address": "0xb90b2a35c65dbc466b04240097ca756ad2005295",
+          "decimals": 18,
+          "name": "BOBO",
+          "symbol": "BOBO"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x4a9c920848720e9dd5910d385a3d85b15c7c5cb9": {
+        "address": "0x4a9c920848720e9dd5910d385a3d85b15c7c5cb9",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x7ce89243cc0d9e746609c57845eccbd9bb4b7315",
+          "decimals": 18,
+          "name": "Lily's Coin",
+          "symbol": "LILY"
+        }
+      },
+      "0x5b551250f062727543d9d31b572b53ca4b3ccfb9": {
+        "address": "0x5b551250f062727543d9d31b572b53ca4b3ccfb9",
+        "price": 0,
+        "token0": {
+          "address": "0xc56c7a0eaa804f854b536a5f3d5f49d2ec4b12b8",
+          "decimals": 9,
+          "name": "GameStop",
+          "symbol": "GME"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0xb7c8a2c55b5dcf074977e62fee98a5055878c122": {
+        "address": "0xb7c8a2c55b5dcf074977e62fee98a5055878c122",
+        "price": 0,
+        "token0": {
+          "address": "0x19077113992eb8db6741fb1bd358ca486abfe2c1",
+          "decimals": 18,
+          "name": "Comedian",
+          "symbol": "Ban"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x539937ea44ad51297cea28a7d90dc3f737df381a": {
+        "address": "0x539937ea44ad51297cea28a7d90dc3f737df381a",
+        "price": 0,
+        "token0": {
+          "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+          "decimals": 18,
+          "name": "UMA Voting Token v1",
+          "symbol": "UMA"
+        },
+        "token1": {
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6,
+          "name": "Tether USD",
+          "symbol": "USDT"
+        }
+      },
+      "0xd744c01ed82c61fa8cd1bfac89c988292ff5e0da": {
+        "address": "0xd744c01ed82c61fa8cd1bfac89c988292ff5e0da",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x038480645079e61b2852c04e1465da01928a6a20",
+          "decimals": 9,
+          "name": "Joma",
+          "symbol": "JOMA"
+        }
+      },
+      "0x315ed60258702f8d159b98df4c0dbeb1d7d776df": {
+        "address": "0x315ed60258702f8d159b98df4c0dbeb1d7d776df",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0xe92344b4edf545f3209094b192e46600a19e7c2d",
+          "decimals": 18,
+          "name": "zKML",
+          "symbol": "ZKML"
+        }
+      },
+      "0x3727131bc6cb180dd87e20dc457e020f994f4401": {
+        "address": "0x3727131bc6cb180dd87e20dc457e020f994f4401",
+        "price": 0,
+        "token0": {
+          "address": "0x737edddfd0bca031ff1e09de0f6e5d0ab6049886",
+          "decimals": 18,
+          "name": "Banana And Tape",
+          "symbol": "BAN"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x18f59e81dfd21db8923469be3bbad8d7ff9c84a1": {
+        "address": "0x18f59e81dfd21db8923469be3bbad8d7ff9c84a1",
+        "price": 0,
+        "token0": {
+          "address": "0x85bea4ee627b795a79583fcede229e198aa57055",
+          "decimals": 18,
+          "name": "Marvin Inu",
+          "symbol": "Marvin"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x26b90491440c9c83cf82111a8bae5603853ee293": {
+        "address": "0x26b90491440c9c83cf82111a8bae5603853ee293",
+        "price": 0,
+        "token0": {
+          "address": "0x723abbea6e985fb21c57f550d9cceba1c676a6a9",
+          "decimals": 9,
+          "name": "Smoking Chicken Fish",
+          "symbol": "SCF"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0x54f5044efd8538c41ccd4bffb06cf375c9bbb6c4": {
+        "address": "0x54f5044efd8538c41ccd4bffb06cf375c9bbb6c4",
+        "price": 0,
+        "token0": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        },
+        "token1": {
+          "address": "0x44e18207b6e98f4a786957954e462ed46b8c95be",
+          "decimals": 9,
+          "name": "Terminus",
+          "symbol": "Terminus"
+        }
+      },
+      "0xab058dc5f02c5134ea4593cd322cb1ba6f7c8b57": {
+        "address": "0xab058dc5f02c5134ea4593cd322cb1ba6f7c8b57",
+        "price": 0,
+        "token0": {
+          "address": "0x42069026eac8eee0fd9b5f7adfa4f6e6d69a2b39",
+          "decimals": 9,
+          "name": "MSTR2100",
+          "symbol": "MSTR"
+        },
+        "token1": {
+          "address": "0xceb67a66c2c8a90980da3a50a3f96c07525a26cb",
+          "decimals": 9,
+          "name": "Kabosu",
+          "symbol": "KABOSU"
+        }
+      },
+      "0x3fa5db0910afc2a1e6de45039ea217410fb8641d": {
+        "address": "0x3fa5db0910afc2a1e6de45039ea217410fb8641d",
+        "price": 0,
+        "token0": {
+          "address": "0x7659ce147d0e714454073a5dd7003544234b6aa0",
+          "decimals": 18,
+          "name": "XCAD Token",
+          "symbol": "XCAD"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      },
+      "0x318ba85ca49a3b12d3cf9c72cc72b29316971802": {
+        "address": "0x318ba85ca49a3b12d3cf9c72cc72b29316971802",
+        "price": 0,
+        "token0": {
+          "address": "0x42069026eac8eee0fd9b5f7adfa4f6e6d69a2b39",
+          "decimals": 9,
+          "name": "MSTR2100",
+          "symbol": "MSTR"
+        },
+        "token1": {
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xd8c8a2b125527bf97c8e4845b25de7e964468f77": {
+        "address": "0xd8c8a2b125527bf97c8e4845b25de7e964468f77",
+        "price": 0,
+        "token0": {
+          "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK"
+        },
+        "token1": {
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6,
+          "name": "usdc",
+          "symbol": "USDC"
+        }
+      }
+    },
+    "name": "uniswap"
+  }
+]
