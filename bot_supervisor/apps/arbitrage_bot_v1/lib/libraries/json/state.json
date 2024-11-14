@@ -1,40 +1,6 @@
 [
   {
     "content": {
-      "0x17c1ae82d99379240059940093762c5e4539aba5": {
-        "address": "0x17c1ae82d99379240059940093762c5e4539aba5",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6": {
-        "address": "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
       "0x2e8135be71230c6b1b4045696d41c09db0414226": {
         "address": "0x2e8135be71230c6b1b4045696d41c09db0414226",
         "price": 0,
@@ -68,63 +34,12 @@
           "name": "weth",
           "symbol": "WETH"
         }
-      },
-      "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b": {
-        "address": "0xad6b7d0bee456e89b04064f0f750775cde0f4c9b",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
       }
     },
     "name": "pancakeswap"
   },
   {
     "content": {
-      "0x055cedfe14bce33f985c41d9a1934b7654611aac": {
-        "address": "0x055cedfe14bce33f985c41d9a1934b7654611aac",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0x06da0fd433c1a5d7a4faa01111c044910a184553": {
-        "address": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
       "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a": {
         "address": "0x24d3dd4a62e29770cf98810b09f89d3a90279e7a",
         "price": 0,
@@ -158,208 +73,21 @@
           "name": "weth",
           "symbol": "WETH"
         }
-      },
-      "0x61eb53ee427ab4e007d78a9134aacb3101a2dc23": {
-        "address": "0x61eb53ee427ab4e007d78a9134aacb3101a2dc23",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
-          "decimals": 18,
-          "name": "Frax Share",
-          "symbol": "FXS"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xaaf5110db6e744ff70fb339de037b990a20bdace": {
-        "address": "0xaaf5110db6e744ff70fb339de037b990a20bdace",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8": {
-        "address": "0xb011ea8096ce5986f3e89b4c2c02f193c82abea8",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-          "decimals": 18,
-          "name": "shib",
-          "symbol": "SHIB"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0xba13afecda9beb75de5c56bbaf696b880a5a50dd": {
-        "address": "0xba13afecda9beb75de5c56bbaf696b880a5a50dd",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-          "decimals": 18,
-          "name": "Maker",
-          "symbol": "MKR"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f": {
-        "address": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0xd86a120a06255df8d4e2248ab04d4267e23adfaa": {
-        "address": "0xd86a120a06255df8d4e2248ab04d4267e23adfaa",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
       }
     },
     "name": "sushiswap"
   },
   {
     "content": {
-      "0x930e607c92cfa7bca06d9143ad652c78a7885f7e": {
-        "address": "0x930e607c92cfa7bca06d9143ad652c78a7885f7e",
+      "0x6c2b607bf0a8ede629d58ba5e05d0448ff7f890a": {
+        "address": "0x6c2b607bf0a8ede629d58ba5e05d0448ff7f890a",
         "price": 0,
         "status": "inactive",
         "token0": {
-          "address": "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
-          "decimals": 18,
-          "name": "Wise Token",
-          "symbol": "WISE"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a": {
-        "address": "0x340a5a2f73ebaa181ec2826802fdf8ed21fc759a",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-          "decimals": 18,
-          "name": "Maker",
-          "symbol": "MKR"
-        },
-        "token1": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        }
-      },
-      "0x26730be460831edbba5b293bf09eb9aa9590f0ba": {
-        "address": "0x26730be460831edbba5b293bf09eb9aa9590f0ba",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x230ea9aed5d08afdb22cd3c06c47cf24ad501301",
-          "decimals": 18,
-          "name": "SPX6900 2.0",
-          "symbol": "SPX2.0"
-        },
-        "token1": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        }
-      },
-      "0xa14dfbaa23ee8e8b69878381f8fd1d0bc502c043": {
-        "address": "0xa14dfbaa23ee8e8b69878381f8fd1d0bc502c043",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-          "decimals": 18,
-          "name": "Maker",
-          "symbol": "MKR"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0xb2a1ca2219131bbf901d0711acbdd6d05e3e80f2": {
-        "address": "0xb2a1ca2219131bbf901d0711acbdd6d05e3e80f2",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x1842f548295b222c56939745d8ddf74981d40030",
-          "decimals": 18,
-          "name": "QuDefi",
-          "symbol": "QUDEFI"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xccbde6fa526070fcd4ac34e15d91cf297629fb8e": {
-        "address": "0xccbde6fa526070fcd4ac34e15d91cf297629fb8e",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x44b758e89c74cbc64d7bc96f7e5f7b2819b2af84",
+          "address": "0x1ae7e1d0ce06364ced9ad58225a1705b3e5db92b",
           "decimals": 9,
-          "name": "Do Only Good Everyday",
-          "symbol": "D.O.G.E"
+          "name": "lmeow",
+          "symbol": "LMEOW"
         },
         "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -368,25 +96,8 @@
           "symbol": "WETH"
         }
       },
-      "0x1112956589a2bea1b038732db4ea6b0c416ef130": {
-        "address": "0x1112956589a2bea1b038732db4ea6b0c416ef130",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x32b053f2cba79f80ada5078cb6b305da92bde6e1",
-          "decimals": 18,
-          "name": "NeuralAI",
-          "symbol": "NEURAL"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x4e6e41306c7ef6e53ecdb34e3155c73fcb7869f3": {
-        "address": "0x4e6e41306c7ef6e53ecdb34e3155c73fcb7869f3",
+      "0x811beed0119b4afce20d2583eb608c6f7af1954f": {
+        "address": "0x811beed0119b4afce20d2583eb608c6f7af1954f",
         "price": 0,
         "status": "active",
         "token0": {
@@ -396,89 +107,21 @@
           "symbol": "SHIB"
         },
         "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0x8e56f0264f64174412a91169f0f0d71fe92fd288": {
-        "address": "0x8e56f0264f64174412a91169f0f0d71fe92fd288",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x786f112c9a6bc840cdc07cfd840105efd6ef2d4b",
-          "decimals": 9,
-          "name": "Ethereum Doge",
-          "symbol": "EDOGE"
-        },
-        "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "decimals": 18,
           "name": "weth",
           "symbol": "WETH"
         }
       },
-      "0x9bac32d4f3322bc7588bb119283bad7073145355": {
-        "address": "0x9bac32d4f3322bc7588bb119283bad7073145355",
+      "0x881d5c98866a08f90a6f60e3f94f0e461093d049": {
+        "address": "0x881d5c98866a08f90a6f60e3f94f0e461093d049",
         "price": 0,
         "status": "inactive",
         "token0": {
-          "address": "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+          "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
           "decimals": 18,
-          "name": "Frax Share",
-          "symbol": "FXS"
-        },
-        "token1": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        }
-      },
-      "0x39935c1e356f613f446a1b9f67a28bbe89a02cb5": {
-        "address": "0x39935c1e356f613f446a1b9f67a28bbe89a02cb5",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x230ea9aed5d08afdb22cd3c06c47cf24ad501301",
-          "decimals": 18,
-          "name": "SPX6900 2.0",
-          "symbol": "SPX2.0"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xf7cbe7cb3a3bf14e836d855bbcd4aa76cf104ca8": {
-        "address": "0xf7cbe7cb3a3bf14e836d855bbcd4aa76cf104ca8",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x69420cb71f5fa439a84545e79557977c0600c46e",
-          "decimals": 9,
-          "name": "TrumpEffect69420",
-          "symbol": "TRUMP"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x0ccb62c623d9d27ade6f3b24bb01bb1376a949bf": {
-        "address": "0x0ccb62c623d9d27ade6f3b24bb01bb1376a949bf",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x786f112c9a6bc840cdc07cfd840105efd6ef2d4b",
-          "decimals": 9,
-          "name": "Ethereum Doge",
-          "symbol": "EDOGE"
+          "name": "shib",
+          "symbol": "SHIB"
         },
         "token1": {
           "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -504,66 +147,15 @@
           "symbol": "WETH"
         }
       },
-      "0xe19abcdd64001fb4cad9e456efa366e07b3894a2": {
-        "address": "0xe19abcdd64001fb4cad9e456efa366e07b3894a2",
+      "0xb771f724c504b329623b0ce9199907137670600e": {
+        "address": "0xb771f724c504b329623b0ce9199907137670600e",
         "price": 0,
         "status": "inactive",
         "token0": {
-          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+          "address": "0x40e3d1a4b2c47d9aa61261f5606136ef73e28042",
           "decimals": 18,
-          "name": "Pepe",
-          "symbol": "PEPE"
-        },
-        "token1": {
-          "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-          "decimals": 18,
-          "name": "shib",
-          "symbol": "SHIB"
-        }
-      },
-      "0x62e3c242b5e903071458ad90a160493d84911c77": {
-        "address": "0x62e3c242b5e903071458ad90a160493d84911c77",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x3b9be07d622accaed78f479bc0edabfd6397e320",
-          "decimals": 18,
-          "name": "Lossless Token",
-          "symbol": "LSS"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0xb676b41f577812c5d5d755d22d302bc7a84bb489": {
-        "address": "0xb676b41f577812c5d5d755d22d302bc7a84bb489",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
-          "decimals": 18,
-          "name": "Pepe",
-          "symbol": "PEPE"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f": {
-        "address": "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
-          "decimals": 18,
-          "name": "Pepe",
-          "symbol": "PEPE"
+          "name": "OpenServ",
+          "symbol": "SERV"
         },
         "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -572,66 +164,15 @@
           "symbol": "WETH"
         }
       },
-      "0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5": {
-        "address": "0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0x811beed0119b4afce20d2583eb608c6f7af1954f": {
-        "address": "0x811beed0119b4afce20d2583eb608c6f7af1954f",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-          "decimals": 18,
-          "name": "shib",
-          "symbol": "SHIB"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xc2adda861f89bbb333c90c492cb837741916a225": {
-        "address": "0xc2adda861f89bbb333c90c492cb837741916a225",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-          "decimals": 18,
-          "name": "Maker",
-          "symbol": "MKR"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xa0aae1b665ba3f0c3f9faa9f2e94ff865b4420d3": {
-        "address": "0xa0aae1b665ba3f0c3f9faa9f2e94ff865b4420d3",
+      "0xb90e94e9f339900901da7ea57cacd9afa6d5030d": {
+        "address": "0xb90e94e9f339900901da7ea57cacd9afa6d5030d",
         "price": 0,
         "status": "inactive",
         "token0": {
-          "address": "0x161a95ae00e89e047dbb9b02a8e3085122a64bcd",
+          "address": "0x05cc088f819173c5062dff2a169d8a89bc614532",
           "decimals": 9,
-          "name": "Ad Astra",
-          "symbol": "Ad Astra"
+          "name": "Gary Gonesler",
+          "symbol": "GONESLER"
         },
         "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -640,49 +181,49 @@
           "symbol": "WETH"
         }
       },
-      "0x2325e3f261cadb1c30cebf66c9f95f6fb016c0d4": {
-        "address": "0x2325e3f261cadb1c30cebf66c9f95f6fb016c0d4",
+      "0xbf36abdf1ac7536adc354fb5a0dedb4c155520d3": {
+        "address": "0xbf36abdf1ac7536adc354fb5a0dedb4c155520d3",
         "price": 0,
         "status": "inactive",
         "token0": {
+          "address": "0x2025bf4e0c1117685b1bf2ea2be56c7deb11bc99",
+          "decimals": 18,
+          "name": "Robie",
+          "symbol": "$Robie"
+        },
+        "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "decimals": 18,
           "name": "weth",
           "symbol": "WETH"
+        }
+      },
+      "0xcbe856765eeec3fdc505ddebf9dc612da995e593": {
+        "address": "0xcbe856765eeec3fdc505ddebf9dc612da995e593",
+        "price": 0,
+        "status": "inactive",
+        "token0": {
+          "address": "0x12970e6868f88f6557b76120662c1b3e50a646bf",
+          "decimals": 18,
+          "name": "Milady",
+          "symbol": "LADYS"
         },
         "token1": {
-          "address": "0xcf91b70017eabde82c9671e30e5502d312ea6eb2",
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18,
+          "name": "weth",
+          "symbol": "WETH"
+        }
+      },
+      "0xcd62765f444318e5db9bb11aabcf934251ae63d8": {
+        "address": "0xcd62765f444318e5db9bb11aabcf934251ae63d8",
+        "price": 0,
+        "status": "inactive",
+        "token0": {
+          "address": "0x46b7cb31a4a6375c69a6d0b9ed9261fb649adb83",
           "decimals": 9,
-          "name": "I love puppies",
-          "symbol": "puppies"
-        }
-      },
-      "0x773dd321873fe70553acc295b1b49a104d968cc8": {
-        "address": "0x773dd321873fe70553acc295b1b49a104d968cc8",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-          "decimals": 18,
-          "name": "shib",
-          "symbol": "SHIB"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0xecba967d84fcf0405f6b32bc45f4d36bfdbb2e81": {
-        "address": "0xecba967d84fcf0405f6b32bc45f4d36bfdbb2e81",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
-          "decimals": 18,
-          "name": "Frax Share",
-          "symbol": "FXS"
+          "name": "0xPrivacy",
+          "symbol": "0xP"
         },
         "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -691,355 +232,15 @@
           "symbol": "WETH"
         }
       },
-      "0xc0dadf2ff8d8ea2ebdc5d0a8ab034db457cd1eaf": {
-        "address": "0xc0dadf2ff8d8ea2ebdc5d0a8ab034db457cd1eaf",
+      "0xd9d9c81d4ca043fb7ae4d3db701375b2ed8a617d": {
+        "address": "0xd9d9c81d4ca043fb7ae4d3db701375b2ed8a617d",
         "price": 0,
         "status": "inactive",
         "token0": {
-          "address": "0x85abb57b3b15ea75fe27dcc1ea5d99457b14ac65",
-          "decimals": 9,
-          "name": "A New Internet Money Era",
-          "symbol": "ANIME"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f": {
-        "address": "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0x5a75ed4624bbda1e992dd006ea2aca83d64c30fb": {
-        "address": "0x5a75ed4624bbda1e992dd006ea2aca83d64c30fb",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
-          "decimals": 18,
-          "name": "Pepe",
-          "symbol": "PEPE"
-        },
-        "token1": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        }
-      },
-      "0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d": {
-        "address": "0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
-          "decimals": 18,
-          "name": "Mog Coin",
-          "symbol": "MOG"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852": {
-        "address": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0x370ab65d0b04a34446faebeac6a1f6e0a1e32a07": {
-        "address": "0x370ab65d0b04a34446faebeac6a1f6e0a1e32a07",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x4e09ac09eb332f4dd167b8bfb90c7f247f7350ac",
-          "decimals": 18,
-          "name": "MemeCoinGirl",
-          "symbol": "MIKO"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x769f539486b31ef310125c44d7f405c6d470cd1f": {
-        "address": "0x769f539486b31ef310125c44d7f405c6d470cd1f",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x1258d60b224c0c5cd888d37bbf31aa5fcfb7e870",
-          "decimals": 18,
-          "name": "NodeAI",
-          "symbol": "GPU"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x308c6fbd6a14881af333649f17f2fde9cd75e2a6": {
-        "address": "0x308c6fbd6a14881af333649f17f2fde9cd75e2a6",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x1121acc14c63f3c872bfca497d10926a6098aac5",
+          "address": "0x0ccf34d2233e5c203b7047aa57be82eea985d128",
           "decimals": 18,
           "name": "Department Of Government Efficiency",
-          "symbol": "DOGE"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x517f9dd285e75b599234f7221227339478d0fcc8": {
-        "address": "0x517f9dd285e75b599234f7221227339478d0fcc8",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-          "decimals": 18,
-          "name": "Maker",
-          "symbol": "MKR"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405": {
-        "address": "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11": {
-        "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
-        "price": 0,
-        "status": "active",
-        "token0": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        },
-        "token1": {
-          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "decimals": 18,
-          "name": "Dai Stablecoin",
-          "symbol": "DAI"
-        }
-      },
-      "0x881d5c98866a08f90a6f60e3f94f0e461093d049": {
-        "address": "0x881d5c98866a08f90a6f60e3f94f0e461093d049",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-          "decimals": 18,
-          "name": "shib",
-          "symbol": "SHIB"
-        },
-        "token1": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        }
-      },
-      "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e": {
-        "address": "0x21b8065d10f73ee2e260e5b47d3344d3ced7596e",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
-          "decimals": 18,
-          "name": "Wise Token",
-          "symbol": "WISE"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xa86aca6d7c393c06dcdc30473ea3d1b05c358dff": {
-        "address": "0xa86aca6d7c393c06dcdc30473ea3d1b05c358dff",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x03aa6298f1370642642415edc0db8b957783e8d6",
-          "decimals": 18,
-          "name": "NetMind Token",
-          "symbol": "NMT"
-        },
-        "token1": {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 6,
-          "name": "usdc",
-          "symbol": "USDC"
-        }
-      },
-      "0xa924e5636f89d67e8ba792cfeee15bbf820ff18e": {
-        "address": "0xa924e5636f89d67e8ba792cfeee15bbf820ff18e",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x1a3a8cf347b2bf5890d3d6a1b981c4f4432c8661",
-          "decimals": 18,
-          "name": "Flying Avocado Cat",
-          "symbol": "FAC"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xe03a51f852f0b1e8865b1fe4aa1d1eea8e4c45bd": {
-        "address": "0xe03a51f852f0b1e8865b1fe4aa1d1eea8e4c45bd",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x13df224f2ae606e5feb98c0f1c05b4fdb76a92b2",
-          "decimals": 9,
-          "name": "Martian Alliance for Resilient Society",
-          "symbol": "MARS"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x40b3841f7a0a720443f89ad6740c1fa62b5a6bb7": {
-        "address": "0x40b3841f7a0a720443f89ad6740c1fa62b5a6bb7",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x1e9a15e5eca9bdeb71c531ddd4fdfa949c9f242b",
-          "decimals": 9,
-          "name": "Make Altcoin Great Again",
-          "symbol": "MAGA"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x33f79134b3c40f42744998870a0cbfc3c60f9806": {
-        "address": "0x33f79134b3c40f42744998870a0cbfc3c60f9806",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x9cb78dafb19053fd1ad0d2ba0c10cf4250bfd1aa",
-          "decimals": 18,
-          "name": "Texas Institute of Technology and Science",
-          "symbol": "TITS"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0xc9919a9eb691f571e41db417f911135b4ac46fe7": {
-        "address": "0xc9919a9eb691f571e41db417f911135b4ac46fe7",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x3b9be07d622accaed78f479bc0edabfd6397e320",
-          "decimals": 18,
-          "name": "Lossless Token",
-          "symbol": "LSS"
-        },
-        "token1": {
-          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "decimals": 18,
-          "name": "weth",
-          "symbol": "WETH"
-        }
-      },
-      "0x79d4eaa5768a4a71727bdb35eae5148991a6551e": {
-        "address": "0x79d4eaa5768a4a71727bdb35eae5148991a6551e",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
-          "decimals": 18,
-          "name": "Frax Share",
-          "symbol": "FXS"
-        },
-        "token1": {
-          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "decimals": 6,
-          "name": "Tether USD",
-          "symbol": "USDT"
-        }
-      },
-      "0xe7b4e528308c84fd6698906b6224615e9e30d236": {
-        "address": "0xe7b4e528308c84fd6698906b6224615e9e30d236",
-        "price": 0,
-        "status": "inactive",
-        "token0": {
-          "address": "0xb3912b20b3abc78c15e85e13ec0bf334fbb924f7",
-          "decimals": 9,
-          "name": "Hana",
-          "symbol": "HANA"
+          "symbol": "D.O.G.E."
         },
         "token1": {
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",

@@ -56,48 +56,48 @@ defmodule Libraries do
         "address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "decimals" => 6
       },
-      "0x6B175474E89094C44Da98b954EedeAC495271d0F" => %{
-        "name" => "Dai Stablecoin",
-        "symbol" => "DAI",
-        "address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "decimals" => 18
-      },
-      "0X6B175474E89094C44DA98B954EEDEAC495271D0F" => %{
-        "name" => "Tether USD",
-        "symbol" => "USDT",
-        "address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "decimals" => 6
-      },
-      "0X6982508145454CE325DDBE47A25D4EC3D2311933" => %{
-        "name" => "Pepe",
-        "symbol" => "PEPE",
-        "address" => "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
-        "decimals" => 18
-      },
-      "0X9F8F72AA9304C8B593D555F12EF6589CC3A579A2" => %{
-        "name" => "Maker",
-        "symbol" => "MKR",
-        "address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-        "decimals" => 18
-      },
-      "0X66A0F676479CEE1D7373F3DC2E2952778BFF5BD6" => %{
-        "name" => "Wise Token",
-        "symbol" => "WISE",
-        "address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
-        "decimals" => 18
-      },
-      "0XEC53BF9167F50CDEB3AE105F56099AAAB9061F83" => %{
-        "name" => "Eigen",
-        "symbol" => "EIGEN",
-        "address" => "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-        "decimals" => 18
-      },
-      "0XAAEE1A9723AADB7AFA2810263653A34BA2C21C7A" => %{
-        "name" => "Mog Coin",
-        "symbol" => "MOG",
-        "address" => "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
-        "decimals" => 18
-      },
+      # "0x6B175474E89094C44Da98b954EedeAC495271d0F" => %{
+      #   "name" => "Dai Stablecoin",
+      #   "symbol" => "DAI",
+      #   "address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      #   "decimals" => 18
+      # },
+      # "0X6B175474E89094C44DA98B954EEDEAC495271D0F" => %{
+      #   "name" => "Tether USD",
+      #   "symbol" => "USDT",
+      #   "address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      #   "decimals" => 6
+      # },
+      # "0X6982508145454CE325DDBE47A25D4EC3D2311933" => %{
+      #   "name" => "Pepe",
+      #   "symbol" => "PEPE",
+      #   "address" => "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+      #   "decimals" => 18
+      # },
+      # "0X9F8F72AA9304C8B593D555F12EF6589CC3A579A2" => %{
+      #   "name" => "Maker",
+      #   "symbol" => "MKR",
+      #   "address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+      #   "decimals" => 18
+      # },
+      # "0X66A0F676479CEE1D7373F3DC2E2952778BFF5BD6" => %{
+      #   "name" => "Wise Token",
+      #   "symbol" => "WISE",
+      #   "address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
+      #   "decimals" => 18
+      # },
+      # "0XEC53BF9167F50CDEB3AE105F56099AAAB9061F83" => %{
+      #   "name" => "Eigen",
+      #   "symbol" => "EIGEN",
+      #   "address" => "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      #   "decimals" => 18
+      # },
+      # "0XAAEE1A9723AADB7AFA2810263653A34BA2C21C7A" => %{
+      #   "name" => "Mog Coin",
+      #   "symbol" => "MOG",
+      #   "address" => "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+      #   "decimals" => 18
+      # },
     }
   end
 

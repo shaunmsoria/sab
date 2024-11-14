@@ -35,17 +35,57 @@ defmodule StateConstructor do
       end)
     end
 
-    state
+    {:ok, state}
   end
 
   def extract_list_pairs(limit) do
-    with state <- state_file(),
-         {:ok, tokens} <- fetch_tokens(),
-         :ok <- ConCache.put(:dex, "list_dex", @dexs |> Map.keys()),
-         current_tokens <- ConCache.get(:tokens, "current_tokens"),
+    list_dex_names = inspect(ConCache.get(:dex, "list_dex"))
+
+    with {:ok, _tokens} <- fetch_tokens(),
+         {:ok, state_file} <- state_file(),
+         {:ok, state} <- maybe_build_state(state_file, ConCache.get(:system, :new_start)),
+         {:ok, state_in_concache} <- reinitialise_state(state) do
+      ConCache.put(:system, :new_start, false)
+
+      LW.ipt("sx1 state first initialise from state file for dexs: #{list_dex_names}")
+
+      {:ok, state}
+    else
+      {:initialise, _reason} ->
+        with {:ok, new_state} <- build_state(%{}, limit) do
+          LW.ipt("sx1 state initialised for dexs: #{list_dex_names}")
+          {:ok, new_state}
+        end
+
+      {:rebuild, state} ->
+        with {:ok, new_state} <- build_state(state, limit) do
+          LW.ipt("sx1 state rebuilt for dexs: #{list_dex_names}")
+          {:ok, new_state}
+        end
+    end
+  end
+
+  def maybe_build_state(state, true), do: {:ok, state}
+  def maybe_build_state(state, false), do: {:rebuild, state}
+
+  def build_state(initialised_state, limit) do
+    with {:ok, new_state_without_status, current_tokens, new_tokens_for_processing} <-
+           build_state_without_status(initialised_state, limit),
+         {:ok, state_with_status} <- add_status_to_state(new_state_without_status),
+         {:ok, new_state} <- reinitialise_state(state_with_status),
+         {:ok, _file} <- write_state_file(new_state),
+         {:ok, updated_tokens} <-
+           update_tokens_with_new_tokens(current_tokens, new_tokens_for_processing),
+         :ok <- ConCache.put(:system, :new_start, false) do
+      {:ok, new_state}
+    end
+  end
+
+  def build_state_without_status(state, limit) do
+    with current_tokens <- ConCache.get(:tokens, "current_tokens"),
          {:ok, new_tokens_for_processing} <- fetch_new_tokens(limit),
          tokens <- Map.merge(current_tokens, new_tokens_for_processing) do
-      new_state_raw =
+      new_state =
         ConCache.get(:dex, "list_dex")
         |> Enum.map(fn dex_key ->
           %{
@@ -56,47 +96,47 @@ defmodule StateConstructor do
               |> dex_token_pair_state_constructor(state, limit, tokens)
           }
         end)
-        # |> reinitialise_state()
-
-        # {:ok, _file} = write_state_file(new_state_raw)
 
       LogWritter.ipt("sx1 state construction pre status finished")
 
-      new_state =
-        ConCache.get(:dex, "list_dex")
-        |> Enum.map(fn dex_key ->
-
-         %{
-            "name" => dex_key,
-            "content" =>
-            new_state_raw
-              |> LD.get_list_dex_from_name(dex_key)
-              |> Map.get("content")
-              |> Enum.reduce(%{}, fn token_pair, acc2 ->
-                Map.merge(
-                  acc2,
-                  set_token_pair_status(token_pair, new_state_raw, dex_key)
-                )
-              end)
-          }
-        end)
-        # |> IO.inspect(label: "sx1 new_state")
-        |> reinitialise_state()
-
-      {:ok, _file} = write_state_file(new_state)
-
-      update_tokens_with_new_tokens(current_tokens, new_tokens_for_processing)
-
-      ConCache.get(:dex, "list_dex")
-      |> LW.ipt("sx1 test in initialise")
-
-      {:ok, new_state}
-      # {:ok, new_state_raw}
+      {:ok, new_state, current_tokens, new_tokens_for_processing}
     end
   end
 
-  def set_token_pair_status({_token_pair_address , %{"status" => _status}} = token_pair, _state, _current_list_dex_name), do: token_pair
-  def set_token_pair_status({token_pair_address , token_pair_content} = token_pair, state, current_list_dex_name) do
+  def add_status_to_state(state_without_status) do
+    state_with_status =
+      ConCache.get(:dex, "list_dex")
+      |> Enum.map(fn dex_key ->
+        %{
+          "name" => dex_key,
+          "content" =>
+            state_without_status
+            |> LD.get_list_dex_from_name(dex_key)
+            |> Map.get("content")
+            |> Enum.reduce(%{}, fn token_pair, acc2 ->
+              Map.merge(
+                acc2,
+                set_token_pair_status(token_pair, state_without_status, dex_key)
+              )
+            end)
+        }
+      end)
+
+    {:ok, state_with_status}
+  end
+
+  def set_token_pair_status(
+        {_token_pair_address, %{"status" => _status}} = token_pair,
+        _state,
+        _current_list_dex_name
+      ),
+      do: token_pair
+
+  def set_token_pair_status(
+        {token_pair_address, token_pair_content} = token_pair,
+        state,
+        current_list_dex_name
+      ) do
     with list_dex_names_to_check <-
            ConCache.get(:dex, "list_dex")
            |> Enum.filter(fn list_dex_name -> list_dex_name != current_list_dex_name end) do
@@ -107,8 +147,9 @@ defmodule StateConstructor do
             LD.get_list_dex_from_name(state, dex_name)
 
           test_result =
-            LD.token_pair_from_list_dex(dex_searched_content , token_pair_content)
-            # |> IO.inspect(label: "sx1 test_result")
+            LD.token_pair_from_list_dex(dex_searched_content, token_pair_content)
+
+          # |> IO.inspect(label: "sx1 test_result")
 
           case test_result do
             %{"address" => _address} -> {:halt, "active"}
@@ -145,17 +186,17 @@ defmodule StateConstructor do
          body <- IO.binread(file, :eof),
          :ok <- File.close(file),
          true <- body != :eof do
-      body |> Jason.decode!()
+      {:ok, body |> Jason.decode!()}
     else
       {:error, :enoent} ->
-        %{}
+        {:initialise, :enoent}
 
       {:error, error} ->
         error |> LogWritter.ipt("state_file error: #{error}")
-        %{}
+        {:initialise, error}
 
       false ->
-        %{}
+        {:initialise, :eof}
     end
   end
 

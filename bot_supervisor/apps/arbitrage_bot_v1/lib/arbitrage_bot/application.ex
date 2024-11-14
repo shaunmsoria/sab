@@ -14,8 +14,11 @@ defmodule ArbitrageBotV1.Application do
         id: :con_cache_gas
       ),
       Supervisor.child_spec({ConCache, [name: :tokens, ttl_check_interval: false]},
-      id: :con_cache_tokens
-    ),
+        id: :con_cache_tokens
+      ),
+      Supervisor.child_spec({ConCache, [name: :system, ttl_check_interval: false]},
+        id: :con_cache_system
+      ),
       {LogSaver, []},
       {GasExtractor, %{}},
       {StateGenServer, %{}},

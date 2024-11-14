@@ -8,6 +8,9 @@ defmodule InitialiseDexBot do
   @balancer Libraries.balancer()
 
   def run(_state) do
+    ConCache.put(:system, :new_start, true)
+    ConCache.put(:dex, "list_dex", @dexs |> Map.keys())
+
     with {:ok, state} <- SC.run() do
       state
     end
