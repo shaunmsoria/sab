@@ -9,6 +9,14 @@
 # move said applications out of the umbrella.
 import Config
 
+config :arbitrage_bot_v1, Sab.Repo,
+  database: "server_db",
+  username: "server",
+  password: "password",
+  hostname: "localhost"
+
+config :arbitrage_bot_v1, ecto_repos: [Sab.Repo]
+
 # Sample configuration:
 #
 
@@ -28,11 +36,6 @@ config :logger, :console,
   # level: :info,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
-
-
-
-
-
 
 config :ethers,
   # Defaults to: Ethereumex.HttpClient
@@ -92,9 +95,9 @@ config :arbitrage_bot_v1, W3WS,
           # abi: abi,                        # decoded json abi
           # list of paths to abi json files
           abi_files: [
-            "/home/shaun/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
+            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
           ],
-          # abi_files: ["/home/shaun/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
+          # abi_files: ["/home/server/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
 
           # an optional `context` to provide in the `W3WS.Env` struct for any events
           # received from this subscription. Defaults to `%{}`.

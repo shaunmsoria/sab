@@ -32,6 +32,8 @@ defmodule ArbitrageBotV1.MixProject do
       {:httpoison, "~> 2.2"},
       {:con_cache, "~> 1.0"},
       {:decimal, "~> 2.0"},
+      {:ecto_sql, "~> 3.2"},
+      {:postgrex, "~> 0.15"}
     ]
   end
 end
