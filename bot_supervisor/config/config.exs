@@ -9,13 +9,13 @@
 # move said applications out of the umbrella.
 import Config
 
-config :arbitrage_bot_v1, Sab.Repo,
+config :arbitrage_bot_v1, Repo,
   database: "server_db",
   username: "server",
   password: "password",
   hostname: "localhost"
 
-config :arbitrage_bot_v1, ecto_repos: [Sab.Repo]
+config :arbitrage_bot_v1, ecto_repos: [Repo]
 
 # Sample configuration:
 #

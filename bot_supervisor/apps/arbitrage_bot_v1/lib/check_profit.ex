@@ -1,7 +1,7 @@
 defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
-  alias Token, as: T
+  alias TokenContext, as: TC
   alias StateConstructor,as: SC
 
   @dexs Libraries.dexs()
@@ -64,7 +64,7 @@ defmodule CheckProfit do
       tokens_to_be_added =
         [token0_address, token1_address]
         |> Enum.reduce(%{}, fn token_address, acc ->
-          case T.isTokenInMemory?(token_address) do
+          case TC.isTokenInMemory?(token_address) do
             true ->
               acc
 
