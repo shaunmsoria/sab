@@ -23,7 +23,7 @@ defmodule ProfitableTrade do
 
 
     profitable_trade
-    |> cast(params, @required + @optional)
+    |> cast(params, @required ++ @optional)
     |> put_assoc(:token_pair, token_pair)
     |> put_assoc(:dex_emitted, dex_emitted)
     |> put_assoc(:dex_searched, dex_searched)
