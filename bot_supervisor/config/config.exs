@@ -17,8 +17,9 @@ config :arbitrage_bot_v1, Repo,
 
 config :arbitrage_bot_v1, ecto_repos: [Repo]
 
-# Sample configuration:
-#
+config :seedex,
+  repo: Repo,
+  seeds_path: "priv/repo/seeds"
 
 config :logger,
   backends: [{LoggerFileBackend, :info_log}]
