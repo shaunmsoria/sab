@@ -21,22 +21,6 @@ defmodule StateConstructor do
     end
   end
 
-  def reinitialise_state(state) do
-    with list_dex <- ConCache.get(:dex, "list_dex") do
-      list_dex
-      |> Enum.map(fn dex_name ->
-        dex_state = ListDex.get_list_dex_from_name(state, dex_name)
-
-        dex_content =
-          dex_state
-          |> Map.get("content")
-
-        ConCache.put(:dex, dex_name, dex_content)
-      end)
-    end
-
-    {:ok, state}
-  end
 
   def extract_list_pairs(limit) do
     list_dex_names = inspect(ConCache.get(:dex, "list_dex"))
@@ -159,6 +143,23 @@ defmodule StateConstructor do
 
       %{token_pair_address => Map.merge(token_pair_content, %{"status" => token_pair_status})}
     end
+  end
+
+  def reinitialise_state(state) do
+    with list_dex <- ConCache.get(:dex, "list_dex") do
+      list_dex
+      |> Enum.map(fn dex_name ->
+        dex_state = ListDex.get_list_dex_from_name(state, dex_name)
+
+        dex_content =
+          dex_state
+          |> Map.get("content")
+
+        ConCache.put(:dex, dex_name, dex_content)
+      end)
+    end
+
+    {:ok, state}
   end
 
   def write_state_file(state) do
