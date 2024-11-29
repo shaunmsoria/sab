@@ -27,7 +27,7 @@ defmodule DexSearch do
     from(t in query, where: t.version == ^version)
   end
 
-  def with_all_pair_length(query \\ query(), all_pair_length) do
-    from(t in query, where: t.all_pair_length == ^all_pair_length)
+  def with_all_pairs_length(query \\ query(), all_pairs_length) do
+    from(t in query, where: t.all_pairs_length == ^all_pairs_length)
   end
 end

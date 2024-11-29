@@ -7,7 +7,7 @@ defmodule Repo.Migrations.CreateDexsTable do
       add :router, :string
       add :factory, :string
       add :version, :integer
-      add :all_pair_length, :integer
+      add :all_pairs_length, :integer
     end
   end
 end

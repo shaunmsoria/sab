@@ -7,7 +7,6 @@ defmodule DexContext do
     |> Repo.insert()
   end
 
-  ##TODO to be tested
   def update(%Dex{} = dex, params) do
     dex
     |> Dex.changeset(params)
