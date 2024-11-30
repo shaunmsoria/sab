@@ -10,7 +10,7 @@ defmodule TokenPairDex do
 
   end
 
-  @required []
+  @required [:token_pair_id, :dex_id]
   @optional [:address, :price]
 
   def update_changeset(%TokenPairDex{} = token_pair_dex, params) do
