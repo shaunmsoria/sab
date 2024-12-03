@@ -21,10 +21,10 @@ defmodule TokenPairContext do
     dex2 = DexSearch.with_id(2) |> Repo.one()
 
     token_pair =
-      TokenPairSearch.with_id(2)
+      TokenPairSearch.with_id(9)
       |> Repo.one()
       |> Repo.preload([:token0, :token1, :dexs])
-      |> TokenPairContext.update(%{dexs: [dex2], status: "test"})
+      # |> TokenPairContext.update(%{dexs: [dex2], status: "test"})
 
     # TokenPairContext.insert(%{token0_id: 5, token1_id: 6, dexs: [dex], status: "test"})
   end

@@ -1,8 +1,11 @@
 defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
+  alias DexSearch, as: DS
   alias TokenContext, as: TC
-  alias StateConstructor,as: SC
+  alias StateConstructor, as: SC
+  alias TokenPairDexSearch, as: TPDS
+  alias TokenPairDexContext, as: TPDC
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
@@ -10,15 +13,16 @@ defmodule CheckProfit do
   def run(_state, event_data) when is_map(event_data) do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
-         address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
-         {:ok, {%{"status" => token_pair_status} = token_pair, dex_name}} <-
-           found_dex_token_pair?(address),
-           true <- token_pair_status == "active",
-         price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
-         {:ok, token_pair_price_udpated} <-
-           LD.update_token_pair_price(token_pair, dex_name, price),
+         token_pair_dex_address <- event_data.event.address |> IO.inspect(label: "sx1 address"),
+         {:ok,
+          %TokenPairDex{
+            token_pair: %TokenPair{status: "active"} = token,
+            dex: %Dex{name: dex_name} = dex
+          } = token_pair_dex} <-
+           extract_token_pair_dex_details(token_pair_dex_address),
+         {:ok, token_pair_dex_udpated} <- TPDC.update_token_pair_dex_price(token_pair_dex),
          {:ok, list_of_profitable_trades} <-
-           get_profitable_trade(token_pair_price_udpated, dex_name) do
+           get_profitable_trade(token_pair_dex_udpated) do
       ExecuteTrade.run(list_of_profitable_trades)
     else
       error ->
@@ -26,70 +30,74 @@ defmodule CheckProfit do
     end
   end
 
-  def found_dex_token_pair?(address) do
-    with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
-      {:ok, token_pair} |> LogWritter.ipt("sx1 found_dex_token_pair? token_pair found")
-    else
-      _ ->
-        with {:ok, map_new_tokens} <- get_token_metadata_from_token_pair(address),
-        {:ok, new_tokens} <- SC.fetch_new_tokens(),
-        updated_new_tokens <-
-          map_new_tokens
-          |> Enum.reduce(new_tokens, fn {map_new_token_key, map_new_token_value}, acc ->
-            Map.update(acc,  map_new_token_key, map_new_token_value, fn existing_value -> existing_value end)
-          end),
-          :ok <- ConCache.put(:tokens, "new_tokens", updated_new_tokens) do
-
-
-
-
-
-          {:error, "Tokens from #{address} will be added to the state"}
-          # |> LogWritter.ipt("sx1 found_dex_token_pair? token_pair added:")
-        else
-          error ->
-            error
-            |> IO.inspect(
-              label: "sx1 found_dex_token_pair? \n Token already waiting for processing"
-            )
-        end
+  def extract_token_pair_dex_details(token_pair_dex_address) do
+    with token_pair_dex_searched <- TPDS.with_address(token_pair_dex_address) |> Repo.one(),
+         true <- not is_nil(token_pair_dex_searched),
+         token_pair_dex_preloaded <-
+           token_pair_dex_searched
+           |> Repo.preload([[token_pair: [:dexs, :token0, :token1]], :dex]) do
+      {:ok, token_pair_dex_preloaded}
     end
   end
 
-  def get_token_metadata_from_token_pair(token_pair_address) when is_binary(token_pair_address) do
+  # def found_dex_token_pair?(address) do
+  #   with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
+  #     {:ok, token_pair} |> LogWritter.ipt("sx1 found_dex_token_pair? token_pair found")
+  #   else
+  #     _ ->
+  #       with {:ok, map_new_tokens} <- get_token_metadata_from_token_pair(address),
+  #       {:ok, new_tokens} <- SC.fetch_new_tokens(),
+  #       updated_new_tokens <-
+  #         map_new_tokens
+  #         |> Enum.reduce(new_tokens, fn {map_new_token_key, map_new_token_value}, acc ->
+  #           Map.update(acc,  map_new_token_key, map_new_token_value, fn existing_value -> existing_value end)
+  #         end),
+  #         :ok <- ConCache.put(:tokens, "new_tokens", updated_new_tokens) do
 
-    with {:ok, token0_address} <- token_pair_address |> contract(:token0),
-         {:ok, token1_address} <- token_pair_address |> contract(:token1) do
+  #         {:error, "Tokens from #{address} will be added to the state"}
+  #         # |> LogWritter.ipt("sx1 found_dex_token_pair? token_pair added:")
+  #       else
+  #         error ->
+  #           error
+  #           |> IO.inspect(
+  #             label: "sx1 found_dex_token_pair? \n Token already waiting for processing"
+  #           )
+  #       end
+  #   end
+  # end
 
-      tokens_to_be_added =
-        [token0_address, token1_address]
-        |> Enum.reduce(%{}, fn token_address, acc ->
-          case TC.isTokenInMemory?(token_address) do
-            true ->
-              acc
+  # def get_token_metadata_from_token_pair(token_pair_address) when is_binary(token_pair_address) do
+  #   with {:ok, token0_address} <- token_pair_address |> contract(:token0),
+  #        {:ok, token1_address} <- token_pair_address |> contract(:token1) do
+  #     tokens_to_be_added =
+  #       [token0_address, token1_address]
+  #       |> Enum.reduce(%{}, fn token_address, acc ->
+  #         case TC.isTokenInMemory?(token_address) do
+  #           true ->
+  #             acc
 
-            false ->
-              with {:ok, token_symbol} <- token_address |> contract(:symbol),
-                   {:ok, token_name} <- token_address |> contract(:name),
-                   {:ok, token_decimals} <- token_address |> contract(:decimals) do
-                acc
-                |> Map.merge(%{
-                  String.upcase(token_address) => %{
-                    "name" => token_name,
-                    "symbol" => token_symbol,
-                    "address" => token_address,
-                    "decimals" => token_decimals
-                  }
-                })
-                else
-                  _ -> %{}
-              end
-          end
-        end)
+  #           false ->
+  #             with {:ok, token_symbol} <- token_address |> contract(:symbol),
+  #                  {:ok, token_name} <- token_address |> contract(:name),
+  #                  {:ok, token_decimals} <- token_address |> contract(:decimals) do
+  #               acc
+  #               |> Map.merge(%{
+  #                 String.upcase(token_address) => %{
+  #                   "name" => token_name,
+  #                   "symbol" => token_symbol,
+  #                   "address" => token_address,
+  #                   "decimals" => token_decimals
+  #                 }
+  #               })
+  #             else
+  #               _ -> %{}
+  #             end
+  #         end
+  #       end)
 
-      {:ok, tokens_to_be_added}
-    end
-  end
+  #     {:ok, tokens_to_be_added}
+  #   end
+  # end
 
   def update_token_pair_price(token_pair, dex_name, price) do
     with :ok <-
@@ -100,17 +108,66 @@ defmodule CheckProfit do
     end
   end
 
-  def get_profitable_trade(token_pair_content, dex_name) do
+  def maybe_profitable_trade(
+        %TokenPairDex{price: token_pair_dex_price} = token_pair_dex,
+        %TokenPairDex{price: token_pair_dex_searched_price} = token_pair_dex_searched
+      ) do
+        with price_difference <- Compute.calculate_difference(
+          token_pair_dex_price,
+          token_pair_dex_searched_price
+        ) do
+          case price_difference do
+            0 -> []
+            price_difference ->
+
+          end
+
+        end
+  end
+
+  def get_profitable_trade(
+        %TokenPairDex{
+          dex:
+            %Dex{
+              name: dex_name
+            } = dex,
+          token_pair:
+            %TokenPair{
+              dexs: dexs,
+              token0: token0,
+              token1: token1
+            } = token_pair,
+          price: token_pair_dex_price,
+          address: token_pair_dex_address
+        } =
+          token_pair_dex
+      ) do
     profitable_trades_result =
-      with list_dex <-
-             ConCache.get(:dex, "list_dex")
-             |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end) do
+      with {:ok, other_token_pair_dexs} <- TPDC.extract_other_token_pair_dexs(token_pair, dex) do
+        other_token_pair_dexs
+        |> Enum.reduce([], fn token_pair_dex_searched, acc ->
+          ## TODO create a function that pass token_pair_dex and token_pair_dex_searched to see if its profitable
+
+          {:ok,
+           %TokenPairDex{price: token_pair_dex_searched_price, dex: %Dex{name: dex_searched_name}} =
+             token_pair_dex_searched} =
+            TPDC.update_token_pair_dex_price(token_pair_dex_searched)
+
+          price_difference =
+            Compute.calculate_difference(
+              token_pair_dex_price,
+              token_pair_dex_searched_price
+            )
+        end)
+
+        ###### broken from below
+
         list_dex
         |> Enum.reduce([], fn dex_name_searched, acc ->
           case profitable_trade_from_dex(
                  LD.token_pair_from_list_dex(
                    ConCache.get(:dex, dex_name_searched),
-                   token_pair_content
+                   token_pair_dex
                  )
                ) do
             {true, token_pair_searched} ->
@@ -124,13 +181,13 @@ defmodule CheckProfit do
               price_difference =
                 Compute.calculate_difference(
                   updated_token_pair_searched["price"],
-                  token_pair_content["price"]
+                  token_pair_dex["price"]
                 )
 
               case is_trade_profitable?(
                      price_difference,
                      dex_name,
-                     token_pair_content,
+                     token_pair_dex,
                      dex_name_searched,
                      updated_token_pair_searched
                    ) do
@@ -142,9 +199,9 @@ defmodule CheckProfit do
                  tradable_amount, gas_fee} ->
                   acc ++
                     [
-                      {token_pair_content, updated_token_pair_searched, dex_name,
-                       dex_name_searched, estimated_profit, simulated_profit_token_symbol,
-                       direction, tradable_amount, gas_fee}
+                      {token_pair_dex, updated_token_pair_searched, dex_name, dex_name_searched,
+                       estimated_profit, simulated_profit_token_symbol, direction,
+                       tradable_amount, gas_fee}
                     ]
 
                 {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol,
@@ -153,7 +210,7 @@ defmodule CheckProfit do
 
                 _ ->
                   %{
-                    token_content: token_pair_content,
+                    token_content: token_pair_dex,
                     token_searched: updated_token_pair_searched
                   }
                   |> LogWritter.ipt("output: error in is_trade_profitable? for those tokens")
@@ -170,6 +227,87 @@ defmodule CheckProfit do
     {:ok, profitable_trades_result}
     |> LogWritter.ipt("sx1 get_profitable_trades result")
   end
+
+  # def get_profitable_trade(
+  #       %TokenPairDex{
+  #         dex:
+  #           %Dex{
+  #             name: dex_name
+  #           } = dex,
+  #         token_pair: %TokenPair{}
+  #       } =
+  #         token_pair_dex
+  #     ) do
+  #   # with list_dex <-
+  #   #        ConCache.get(:dex, "list_dex")
+  #   #        |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end) do
+  #   profitable_trades_result =
+  #     with list_dex <- DS.with_not_name(dex_name) |> Repo.all() do
+  #       list_dex
+  #       |> Enum.reduce([], fn dex_name_searched, acc ->
+  #         case profitable_trade_from_dex(
+  #                LD.token_pair_from_list_dex(
+  #                  ConCache.get(:dex, dex_name_searched),
+  #                  token_pair_dex
+  #                )
+  #              ) do
+  #           {true, token_pair_searched} ->
+  #             {:ok, updated_token_pair_searched} =
+  #               LD.update_token_pair_price(
+  #                 token_pair_searched,
+  #                 dex_name_searched,
+  #                 Compute.calculate_price(token_pair_searched["address"])
+  #               )
+
+  #             price_difference =
+  #               Compute.calculate_difference(
+  #                 updated_token_pair_searched["price"],
+  #                 token_pair_dex["price"]
+  #               )
+
+  #             case is_trade_profitable?(
+  #                    price_difference,
+  #                    dex_name,
+  #                    token_pair_dex,
+  #                    dex_name_searched,
+  #                    updated_token_pair_searched
+  #                  ) do
+  #               {:ok, false, _price_difference_result, _estimated_profit,
+  #                _simulated_profit_token_symbol, _tradable_amount, _gas_fee} ->
+  #                 acc
+
+  #               {:ok, direction, true, estimated_profit, simulated_profit_token_symbol,
+  #                tradable_amount, gas_fee} ->
+  #                 acc ++
+  #                   [
+  #                     {token_pair_dex, updated_token_pair_searched, dex_name, dex_name_searched,
+  #                      estimated_profit, simulated_profit_token_symbol, direction,
+  #                      tradable_amount, gas_fee}
+  #                   ]
+
+  #               {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol,
+  #                _tradable_amount, _gas_fee} ->
+  #                 acc
+
+  #               _ ->
+  #                 %{
+  #                   token_content: token_pair_dex,
+  #                   token_searched: updated_token_pair_searched
+  #                 }
+  #                 |> LogWritter.ipt("output: error in is_trade_profitable? for those tokens")
+
+  #                 acc
+  #             end
+
+  #           false ->
+  #             acc
+  #         end
+  #       end)
+  #     end
+
+  #   {:ok, profitable_trades_result}
+  #   |> LogWritter.ipt("sx1 get_profitable_trades result")
+  # end
 
   def profitable_trade_from_dex(%{"address" => _address} = token_pair_searched),
     do: {true, token_pair_searched}
@@ -188,7 +326,7 @@ defmodule CheckProfit do
   def is_trade_profitable?(
         _price_difference,
         dex_name,
-        token_pair_content,
+        token_pair_dex,
         dex_name_searched,
         token_pair_searched
       ) do
@@ -199,7 +337,7 @@ defmodule CheckProfit do
            @dexs[dex_name_searched]["router"]
            |> LogWritter.ipt("sx1 router_address_searched"),
          {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
-           token_pair_content["address"]
+           token_pair_dex["address"]
            |> LogWritter.ipt("sx1 pair_address")
            |> contract(:get_reserves)
            |> LogWritter.ipt("sx1 get_reserves pair_address_dex_name"),
@@ -224,12 +362,12 @@ defmodule CheckProfit do
              router_address_searched,
              reserve0_searched,
              reserve1_searched,
-             token_pair_content,
+             token_pair_dex,
              direction
            )
            |> LogWritter.ipt("sx1 simulate_profit_pre_gas"),
          {:ok, gas_fee, simulated_profit_token_symbol} <-
-           calculate_gas_price_for_trade(token_pair_content["token1"])
+           calculate_gas_price_for_trade(token_pair_dex["token1"])
            |> LogWritter.ipt("sx1 gas_fee in token1 amount"),
          simulated_profit <-
            (simulated_profit_pre_gas - gas_fee)
@@ -316,7 +454,7 @@ defmodule CheckProfit do
              token_pair["token1"]["address"],
              token_pair["token0"]["address"],
              4
-            #  18
+             #  18
            )
            |> LogWritter.ipt("sx1 estimate :I_0"),
          {:ok, result} <-
@@ -356,7 +494,7 @@ defmodule CheckProfit do
              token_pair["token1"]["address"],
              token_pair["token0"]["address"],
              4
-            #  18
+             #  18
            )
            |> LogWritter.ipt("sx1 estimate :0_I"),
          {:ok, result} <-
@@ -390,6 +528,7 @@ defmodule CheckProfit do
       100,
       2
     ]
+
     # list_divider = [
     #   1_000_000_000_000,
     #   500_000_000_000,

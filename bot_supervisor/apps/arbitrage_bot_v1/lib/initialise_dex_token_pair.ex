@@ -43,7 +43,8 @@ defmodule InitialiseDexTokenPair do
         } = dex
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
-      if dex_all_pairs_length == current_all_pairs_length do
+      # if dex_all_pairs_length == current_all_pairs_length do
+      if 15 == current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)

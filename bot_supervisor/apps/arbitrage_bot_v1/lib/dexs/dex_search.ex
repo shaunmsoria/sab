@@ -19,6 +19,10 @@ defmodule DexSearch do
     from(t in query, where: t.name == ^name)
   end
 
+  def with_not_name(query \\ query(), name) do
+    from(t in query, where: t.name != ^name)
+  end
+
   def with_factory(query \\ query(), factory) do
     from(t in query, where: t.factory == ^factory)
   end
