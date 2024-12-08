@@ -22,7 +22,7 @@ defmodule ArbitrageBotV1.Application do
       ),
       {LogSaver, []},
       {GasExtractor, %{}},
-      {StateGenServer, %{}},
+      # {StateGenServer, %{}},
       {DexBot, []},
       {W3WS.ListenerManager, otp_app: :arbitrage_bot_v1}
     ]

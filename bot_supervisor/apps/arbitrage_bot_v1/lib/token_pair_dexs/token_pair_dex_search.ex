@@ -24,5 +24,8 @@ defmodule TokenPairDexSearch do
   def with_price(query \\ query(), price) do
     from(t in query, where: t.price == ^price)
   end
+  def with_upcase_address(query \\ query(), upcase_address) do
+    from(t in query, where: t.upcase_address == ^upcase_address)
+  end
 
 end

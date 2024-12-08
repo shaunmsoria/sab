@@ -11,13 +11,13 @@ defmodule InitialiseDexTokenPair do
   alias TokenPairDexContext, as: TPDC
   alias LogWritter, as: LW
 
-  ##TODO
+  ## TODO
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
   def run() do
     with list_dexs <- DS.query() |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs) do
-          {:ok, :database_ready}
+      {:ok, :database_ready}
     end
   end
 
@@ -44,7 +44,7 @@ defmodule InitialiseDexTokenPair do
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
       # if dex_all_pairs_length == current_all_pairs_length do
-      if 15 == current_all_pairs_length do
+      if 240 == current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -57,7 +57,7 @@ defmodule InitialiseDexTokenPair do
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
     # start_all_pairs_length..dex_all_pairs_length
-    start_all_pairs_length..15
+    start_all_pairs_length..240
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -75,7 +75,10 @@ defmodule InitialiseDexTokenPair do
          {:ok, token1} <- maybe_add_token(token1_address),
          {:ok, token_pair} <- maybe_add_token_pair(token0, token1, dex),
          {:ok, token_pair_dex} <-
-           TPDC.update_with_token_pair_and_dex(token_pair, dex, %{address: pair_address}),
+           TPDC.update_with_token_pair_and_dex(token_pair, dex, %{
+             address: pair_address,
+             upcase_address: pair_address |> String.upcase()
+           }),
          {:ok, updated_dex} <- dex |> DC.update(%{all_pairs_length: n_pair}) do
       {:ok, token_pair_dex}
     else
@@ -125,9 +128,7 @@ defmodule InitialiseDexTokenPair do
   def maybe_add_token(token_address) do
     case TS.with_address(token_address) |> Repo.one() do
       nil ->
-        with {:ok, symbol} <- token_address |> contract(:symbol),
-             {:ok, name} <- token_address |> contract(:name),
-             {:ok, decimals} <- token_address |> contract(:decimals),
+        with {:ok, symbol, name, decimals} <- token_address |> get_contract_for_token_address(),
              {:ok, token} <-
                %{
                  symbol: symbol,
@@ -141,6 +142,36 @@ defmodule InitialiseDexTokenPair do
 
       %Token{} = token ->
         {:ok, token}
+    end
+  end
+
+  def get_contract_for_token_address(token_address) do
+    with {:ok, symbol} <-
+           (try do
+              token_address |> contract(:symbol)
+            rescue
+              e ->
+                {:ok, token_address}
+            end),
+         {:ok, name} <-
+           (try do
+              token_address |> contract(:name)
+            rescue
+              e ->
+                {:ok, token_address}
+            end),
+         {:ok, decimals} <-
+           (try do
+              token_address |> contract(:decimals)
+            rescue
+              e ->
+                {:ok, 0}
+            end) do
+
+
+      {:ok, symbol, name, decimals}
+    else
+      _ -> {:ok, nil, nil, 0}
     end
   end
 end

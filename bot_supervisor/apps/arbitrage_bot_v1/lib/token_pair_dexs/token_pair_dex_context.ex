@@ -1,7 +1,7 @@
 defmodule TokenPairDexContext do
   import Ecto.{Changeset, Query}
   alias TokenPairDexSearch, as: TPDS
-  alias TokenPairDexContext, as: TOPDC
+  alias TokenPairDexContext, as: TPDC
   alias DexSearch, as: DS
   alias LogWritter, as: LW
 
@@ -48,14 +48,31 @@ defmodule TokenPairDexContext do
   end
 
   def update_token_pair_dex_price(
-        %TokenPairDex{id: token_pair_dex_id, address: token_pair_dex_address} = token_pair_dex
+        %TokenPairDex{
+          id: token_pair_dex_id,
+          address: token_pair_dex_address,
+          price: token_pair_dex_price
+        } = token_pair_dex,
+        test \\ false
       ) do
-    with new_token_pair_dex_price <- Compute.calculate_price(token_pair_dex_address),
-      {:ok,updated_token_pair_dex} <- TPDC.update(token_pair_dex, %{price: new_token_pair_price}) do
-        LW.ipt("TokenPairDex id: #{token_pair_dex_id} price updated to: #{new_token_pair_dex_price}")
+    with new_token_pair_dex_price <-
+           Compute.calculate_price(token_pair_dex_address) |> IO.inspect(label: "sx1 calculate price with test: #{test}"),
+         true <- token_pair_dex_price != "#{new_token_pair_dex_price}",
+         {:ok, updated_token_pair_dex} <-
+           TPDC.update(token_pair_dex, %{price: "#{new_token_pair_dex_price}"}) do
+      LW.ipt(
+        "TokenPairDex id: #{token_pair_dex_id} price updated to: #{new_token_pair_dex_price}"
+      )
 
-        {:ok, updated_token_pair_dex}
-      end
+      {:ok, updated_token_pair_dex}
+    else
+      _error ->
+        if test == :return_test do
+          {:error, "price same as db"}
+        else
+          {:ok, token_pair_dex}
+        end
+    end
   end
 
   def test() do

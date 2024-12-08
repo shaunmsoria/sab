@@ -7,6 +7,7 @@ defmodule Repo.Migrations.CreateTokenPairsDexsTable do
       add :dex_id, references(:dexs)
       add :address, :string
       add :price, :string
+      add :upcase_address, :string
 
     end
 

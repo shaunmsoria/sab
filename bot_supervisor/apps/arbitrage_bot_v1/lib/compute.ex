@@ -50,7 +50,6 @@ defmodule Compute do
     end
   end
 
-
   def calculate_price(pair_address),
     do: calculate_price(pair_address, :O_I)
 
@@ -85,7 +84,10 @@ defmodule Compute do
   end
 
   def calculate_difference(price_0, price_1) do
-    price_0 - price_1
+    with price_0_value <- String.to_float(price_0),
+         price_1_value <- String.to_float(price_1) do
+      price_0_value - price_1_value
+    end
   end
 
   def simulate_amount_input(router_address, amount_in, reserve0, reserve1) do
@@ -98,7 +100,6 @@ defmodule Compute do
     |> Ethers.call(to: router_address)
   end
 
-
   # This returns the amount of WETH needed to swap for X amount of SHIB
   def simulate_amounts_input(router_address, amount_out, token0_address, token1_address) do
     IO.puts("mx1 simulate_amounts_input")
@@ -106,12 +107,14 @@ defmodule Compute do
     token0_address |> IO.inspect(label: "mx1 token0_address")
     token1_address |> IO.inspect(label: "mx1 token1_address")
 
-
     LiquidityPoolRouterContract.get_amounts_in(amount_out, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
+
+
   #  This returns the amount of WETH for swapping X amount of SHIB
+   def simulate_amounts_output(router_address, 0, token0_address, token1_address), do: {:error, "Input amount 0 for simulate_amounts_output"}
   def simulate_amounts_output(router_address, amount_in, token0_address, token1_address) do
     IO.puts("mx1 simulate_amounts_output")
     amount_in |> IO.inspect(label: "mx1 amount_in")
@@ -122,30 +125,49 @@ defmodule Compute do
     |> Ethers.call(to: router_address)
   end
 
-  def simulate(amount, router_from, router_to, token_pair) do
+  def simulate_v2(amount, router_from, router_to, token0_address, token1_address) do
     with {:ok, trade1} <-
-      router_from
-      |> simulate_amounts_output(
-        amount,
-        token_pair["token1"]["address"],
-        token_pair["token0"]["address"]
-        ) |> IO.inspect(label: "sx1 simulate_amounts_output trade1"),
-      {:ok, trade2} <-
-        router_to
-        |> simulate_amounts_output(
-          trade1 |> Enum.at(1),
-          token_pair["token0"]["address"],
-          token_pair["token1"]["address"]
-          ) |> IO.inspect(label: "sx1 simulate_amounts_output trade2"),
-          amount_in <- trade1 |> Enum.at(0),
-          amount_out <- trade2 |> Enum.at(1) do
-            {:ok, amount_in, amount_out}
-
+           router_from
+           |> simulate_amounts_output(
+             amount,
+             token1_address,
+             token0_address
+           ),
+         {:ok, trade2} <-
+           router_to
+           |> simulate_amounts_output(
+             trade1 |> Enum.at(1),
+             token0_address,
+             token1_address
+           ),
+         amount_in <- trade1 |> Enum.at(0),
+         amount_out <- trade2 |> Enum.at(1) do
+      {:ok, amount_in, amount_out}
     end
-
   end
 
-
+  def simulate(amount, router_from, router_to, token_pair) do
+    with {:ok, trade1} <-
+           router_from
+           |> simulate_amounts_output(
+             amount,
+             token_pair["token1"]["address"],
+             token_pair["token0"]["address"]
+           )
+           |> IO.inspect(label: "sx1 simulate_amounts_output trade1"),
+         {:ok, trade2} <-
+           router_to
+           |> simulate_amounts_output(
+             trade1 |> Enum.at(1),
+             token_pair["token0"]["address"],
+             token_pair["token1"]["address"]
+           )
+           |> IO.inspect(label: "sx1 simulate_amounts_output trade2"),
+         amount_in <- trade1 |> Enum.at(0),
+         amount_out <- trade2 |> Enum.at(1) do
+      {:ok, amount_in, amount_out}
+    end
+  end
 
   def get_wallet_balance() do
     wallet_address = System.get_env("ACCOUNT_NUMBER")
@@ -193,7 +215,6 @@ defmodule Compute do
     router_address |> IO.inspect(label: "sx1 router_address")
     router_address_searched |> IO.inspect(label: "sx1 router_address_searched")
     tradable_amount |> IO.inspect(label: "sx1 tradable_amount")
-
 
     Sabv1Contract.execute_trade(
       token0_address,

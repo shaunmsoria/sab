@@ -1,9 +1,11 @@
 defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
+  alias LogWritter, as: LW
   alias DexSearch, as: DS
   alias TokenContext, as: TC
   alias StateConstructor, as: SC
+  alias ProfitableTradeContext, as: PTC
   alias TokenPairDexSearch, as: TPDS
   alias TokenPairDexContext, as: TPDC
 
@@ -20,18 +22,21 @@ defmodule CheckProfit do
             dex: %Dex{name: dex_name} = dex
           } = token_pair_dex} <-
            extract_token_pair_dex_details(token_pair_dex_address),
-         {:ok, token_pair_dex_udpated} <- TPDC.update_token_pair_dex_price(token_pair_dex),
+         {:ok, token_pair_dex_udpated} <-
+           TPDC.update_token_pair_dex_price(token_pair_dex, :return_test),
          {:ok, list_of_profitable_trades} <-
            get_profitable_trade(token_pair_dex_udpated) do
-      ExecuteTrade.run(list_of_profitable_trades)
+      ExecuteTrade.run_v2(list_of_profitable_trades)
     else
       error ->
-        error |> IO.inspect(label: "sx1 error:")
+        error |> IO.inspect(label: "sx1 error")
     end
   end
 
   def extract_token_pair_dex_details(token_pair_dex_address) do
-    with token_pair_dex_searched <- TPDS.with_address(token_pair_dex_address) |> Repo.one(),
+    with upcase_token_dex_address <- String.upcase(token_pair_dex_address),
+         token_pair_dex_searched <-
+           TPDS.with_upcase_address(upcase_token_dex_address) |> Repo.one(),
          true <- not is_nil(token_pair_dex_searched),
          token_pair_dex_preloaded <-
            token_pair_dex_searched
@@ -39,7 +44,6 @@ defmodule CheckProfit do
       {:ok, token_pair_dex_preloaded}
     end
   end
-
 
   def update_token_pair_price(token_pair, dex_name, price) do
     with :ok <-
@@ -93,9 +97,221 @@ defmodule CheckProfit do
           []
 
         price_difference ->
-          ##TODO calculate is profitable trade here
-          nil
+          maybe_profitable_trade(token_pair_dex, token_pair_dex_searched, price_difference)
       end
+    end
+  end
+
+  def maybe_profitable_trade(
+        %TokenPairDex{
+          dex:
+            %Dex{
+              router: router_address
+            } = dex_emitted,
+          token_pair:
+            %TokenPair{
+              token0: %Token{
+                address: token0_address
+              },
+              token1:
+                %Token{
+                  address: token1_address
+                } = token_profit
+            } = token_pair,
+          address: token_pair_dex_address
+        } = token_pair_dex,
+        %TokenPairDex{
+          dex:
+            %Dex{
+              router: router_searched_address
+            } = dex_searched,
+          address: token_pair_dex_searched_address
+        } = token_pair_dex_searched,
+        price_difference
+      ) do
+    with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
+           token_pair_dex_address |> contract(:get_reserves),
+         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
+           token_pair_dex_searched_address |> contract(:get_reserves),
+         token_pair_dex_price_O_I <- reserve0 / reserve1,
+         token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
+         {:ok, direction, _difference_pair_price_O_I} <-
+           transaction_direction(token_pair_dex_searched_price_O_I - token_pair_dex_price_O_I),
+         {:ok, simulated_profit_pre_gas, tradable_amount} <-
+           simulate_profit_pre_gas_v2(
+             router_address,
+             token0_address,
+             token1_address,
+             reserve0,
+             reserve1,
+             router_searched_address,
+             reserve0_searched,
+             reserve1_searched,
+             direction
+           ),
+         {:ok, gas_fee, simulated_profit_token_symbol} <-
+           calculate_gas_price_for_trade_v2(token_profit),
+         simulated_profit <-
+           simulated_profit_pre_gas - gas_fee do
+      simulated_profit |> IO.inspect(label: "sx1 simulated_profit")
+
+      if simulated_profit > 0 do
+        {:ok, profitable_trade} =
+          PTC.insert(%{
+            token_pair: token_pair,
+            dex_emitted: dex_emitted,
+            dex_searched: dex_searched,
+            token_profit: token_profit,
+            estimated_profit: "#{simulated_profit}",
+            direction: direction,
+            tradable_amount: "#{tradable_amount}",
+            gas_fee: "#{gas_fee}",
+            smart_contract_response: "not_sent_to_smart_contract"
+          })
+
+        [profitable_trade]
+      else
+        []
+      end
+    else
+      error ->
+        error |> LW.ipt("sx1 error in maybe_profitable_trade")
+        []
+    end
+  end
+
+  def calculate_gas_price_for_trade_v2(%Token{symbol: "WETH"}),
+    do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
+
+  def calculate_gas_price_for_trade_v2(%Token{
+        symbol: token_profit_symbol,
+        address: token_profit_address
+      }) do
+    with estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee),
+         {:ok, gas_token_pair_address} <-
+           Compute.get_pair_address(
+             "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+             "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+             token_profit_address
+           ),
+         gas_token_pair <-
+           TPDS.with_upcase_address(gas_token_pair_address |> String.upcase())
+           |> Repo.one()
+           |> LW.ipt("sx1 pre-repo.preload gas_token_pair")
+           |> Repo.preload(token_pair: [:token0, :token1])
+           |> LW.ipt("sx1 gas_token_pair"),
+         {:ok, weth_location} <-
+           locate_weth_in_token_pair_v2(gas_token_pair) |> LW.ipt("sx1 weth_location"),
+         {:ok, [reserve0, reserve1, _block_timestamp]} <-
+          gas_token_pair_address |> contract(:get_reserves),
+         {:ok, unit_weth_token_profit_price} <-
+           calculate_gas_price_weth_price_v2(weth_location, reserve0, reserve1) do
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
+    end
+  end
+
+  def calculate_gas_price_weth_price_v2(:token0_weth, reserve0, reserve1),
+    do: {:ok, reserve1 / (reserve0 * 1_000_000_000)}
+
+  def calculate_gas_price_weth_price_v2(:token1_weth, reserve0, reserve1),
+    do: {:ok, reserve0 / (reserve1 * 1_000_000_000)}
+
+  def locate_weth_in_token_pair_v2(%TokenPairDex{
+        token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token0_weth}
+
+  def locate_weth_in_token_pair_v2(%TokenPairDex{
+        token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token1_weth}
+
+  def locate_weth_in_token_pair_v2(_), do: {:error, "WETH not find in token_pair"}
+
+  def simulate_profit_pre_gas_v2(
+        router_address,
+        token0_address,
+        token1_address,
+        reserve0,
+        reserve1,
+        router_searched_address,
+        reserve0_searched,
+        reserve1_searched,
+        :I_O
+      ) do
+    IO.puts("sx1 in simulate_profit_pre_gas :I_0")
+
+    reserve0 |> IO.inspect(label: "sx1 reserve0")
+
+    with {:ok, estimate} <-
+           router_searched_address
+           |> estimate_extractor(
+             reserve0,
+             token1_address,
+             token0_address,
+             4
+           ),
+         {:ok, result} <-
+           router_address
+           |> simulate_amounts_output(
+             estimate |> Enum.at(1),
+             token0_address,
+             token1_address
+           ),
+         {:ok, amount_in, amount_out} <-
+           simulate_v2(
+             estimate |> Enum.at(0),
+             router_searched_address,
+             router_address,
+             token0_address,
+             token1_address
+           ),
+         pre_direction_gas_price_difference <- amount_out - amount_in do
+      {:ok, pre_direction_gas_price_difference, amount_in}
+    end
+  end
+
+  def simulate_profit_pre_gas_v2(
+        router_address,
+        token0_address,
+        token1_address,
+        reserve0,
+        reserve1,
+        router_searched_address,
+        reserve0_searched,
+        reserve1_searched,
+        :O_I
+      ) do
+    IO.puts("sx1 in simulate_profit_pre_gas :0_I")
+
+    reserve0_searched |> IO.inspect(label: "sx1 reserve0_searched")
+
+    with {:ok, estimate} <-
+           router_address
+           |> estimate_extractor(
+             reserve0_searched,
+             token0_address,
+             token1_address,
+             4
+           ),
+         {:ok, result} <-
+           router_searched_address
+           |> simulate_amounts_output(
+             estimate |> Enum.at(1),
+             token0_address,
+             token1_address
+           ),
+         {:ok, amount_in, amount_out} <-
+           simulate_v2(
+             estimate |> Enum.at(0),
+             router_address,
+             router_searched_address,
+             token0_address,
+             token1_address
+           ),
+         pre_direction_gas_price_difference <-
+           amount_out - amount_in do
+      {:ok, pre_direction_gas_price_difference, amount_in}
     end
   end
 
@@ -160,23 +376,6 @@ defmodule CheckProfit do
       {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol,
        tradable_amount, gas_fee}
     end
-  end
-
-  def test() do
-    {:ok, address} =
-      "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6"
-      |> contract(:token0)
-      |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched")
-
-    address
-    |> contract(:symbol)
-    |> IO.inspect(label: "sx1 get_reserves symbol")
-
-    address
-    |> contract(:decimals)
-    |> IO.inspect(label: "sx1 get_reserves decimal")
-
-    # :init.restart()
   end
 
   def calculate_gas_price_for_trade(%{"symbol" => "WETH"}),
@@ -363,5 +562,22 @@ defmodule CheckProfit do
        }} ->
         estimate_extractor(router, amount, token0, token1, counter + 1)
     end
+  end
+
+  def test() do
+    {:ok, address} =
+      "0x2b561b3f99f2a872c4485c61aeec1e935a1968c6"
+      |> contract(:token0)
+      |> IO.inspect(label: "sx1 get_reserves pair_address_dex_name_searched")
+
+    address
+    |> contract(:symbol)
+    |> IO.inspect(label: "sx1 get_reserves symbol")
+
+    address
+    |> contract(:decimals)
+    |> IO.inspect(label: "sx1 get_reserves decimal")
+
+    # :init.restart()
   end
 end
