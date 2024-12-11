@@ -23,6 +23,7 @@ defmodule InitialiseDexTokenPair do
 
   def get_all_token_pairs_length(list_dexs) do
     list_dexs
+    |> IO.inspect(label: "sx1 list_dexs")
     |> Enum.map(fn dex ->
       maybe_update_dex_all_pairs(dex)
     end)
@@ -43,8 +44,15 @@ defmodule InitialiseDexTokenPair do
         } = dex
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
+      max_length =
+        if dex_name == "pancakeswap" do
+          668
+        else
+          1920
+        end
+
       # if dex_all_pairs_length == current_all_pairs_length do
-      if 240 == current_all_pairs_length do
+      if max_length == current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -57,7 +65,7 @@ defmodule InitialiseDexTokenPair do
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
     # start_all_pairs_length..dex_all_pairs_length
-    start_all_pairs_length..240
+    start_all_pairs_length..1920
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -68,7 +76,8 @@ defmodule InitialiseDexTokenPair do
   end
 
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: factory} = dex, n_pair) do
-    with {:ok, pair_address} <- get_all_pairs(factory, n_pair),
+    with {:ok, pair_address} <-
+           get_all_pairs(factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
          {:ok, token0_address} <- pair_address |> contract(:token0),
          {:ok, token1_address} <- pair_address |> contract(:token1),
          {:ok, token0} <- maybe_add_token(token0_address),
@@ -77,13 +86,14 @@ defmodule InitialiseDexTokenPair do
          {:ok, token_pair_dex} <-
            TPDC.update_with_token_pair_and_dex(token_pair, dex, %{
              address: pair_address,
-             upcase_address: pair_address |> String.upcase()
+             upcase_address: pair_address |> String.upcase(),
+             n_pair: n_pair
            }),
          {:ok, updated_dex} <- dex |> DC.update(%{all_pairs_length: n_pair}) do
       {:ok, token_pair_dex}
     else
       error ->
-        :timer.sleep(30000)
+        :timer.sleep(10000)
 
         LW.ipt(
           "dex: #{dex_name} for n_pair: #{n_pair} not retrieved because of: #{inspect(error)}"
@@ -146,32 +156,43 @@ defmodule InitialiseDexTokenPair do
   end
 
   def get_contract_for_token_address(token_address) do
-    with {:ok, symbol} <-
+    with symbol_result <-
            (try do
               token_address |> contract(:symbol)
             rescue
               e ->
                 {:ok, token_address}
             end),
-         {:ok, name} <-
+         name_result <-
            (try do
               token_address |> contract(:name)
             rescue
               e ->
                 {:ok, token_address}
             end),
-         {:ok, decimals} <-
+         decimals_result <-
            (try do
               token_address |> contract(:decimals)
             rescue
               e ->
                 {:ok, 0}
             end) do
+      {:ok, sanitise_param(symbol_result), sanitise_param(name_result),
+       sanitise_param(decimals_result, :decimals)}
+      |> IO.inspect(label: "sx1 get_contract_for_token_address")
 
-
-      {:ok, symbol, name, decimals}
-    else
-      _ -> {:ok, nil, nil, 0}
     end
   end
+
+  def sanitise_param({:ok, param}) when is_binary(param) do
+    case param do
+      "0x" -> nil
+      param -> param
+    end
+  end
+
+  def sanitise_param(_), do: nil
+
+  def sanitise_param({:ok, param}, :decimals) when is_integer(param), do: param
+  def sanitise_param(_, :decimals), do: 0
 end

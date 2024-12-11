@@ -8,11 +8,12 @@ defmodule TokenPairDex do
     field(:address, :string)
     field(:price, :string)
     field(:upcase_address, :string)
+    field(:n_pair, :integer)
 
   end
 
   @required [:token_pair_id, :dex_id]
-  @optional [:address, :price, :upcase_address]
+  @optional [:address, :price, :upcase_address, :n_pair]
 
   def update_changeset(%TokenPairDex{} = token_pair_dex, params) do
     token_pair_dex

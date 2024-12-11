@@ -102,24 +102,24 @@ defmodule Compute do
 
   # This returns the amount of WETH needed to swap for X amount of SHIB
   def simulate_amounts_input(router_address, amount_out, token0_address, token1_address) do
-    IO.puts("mx1 simulate_amounts_input")
-    amount_out |> IO.inspect(label: "mx1 amount_out")
-    token0_address |> IO.inspect(label: "mx1 token0_address")
-    token1_address |> IO.inspect(label: "mx1 token1_address")
+    IO.puts("mx1 simulate_amounts_input amount_out: #{amount_out} token0_address: #{token0_address} token1_address: #{token1_address}")
+    # amount_out |> IO.inspect(label: "mx1 amount_out")
+    # token0_address |> IO.inspect(label: "mx1 token0_address")
+    # token1_address |> IO.inspect(label: "mx1 token1_address")
 
     LiquidityPoolRouterContract.get_amounts_in(amount_out, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
-
-
   #  This returns the amount of WETH for swapping X amount of SHIB
-   def simulate_amounts_output(router_address, 0, token0_address, token1_address), do: {:error, "Input amount 0 for simulate_amounts_output"}
+  def simulate_amounts_output(router_address, 0, token0_address, token1_address),
+    do: {:error, "Input amount 0 for simulate_amounts_output"}
+
   def simulate_amounts_output(router_address, amount_in, token0_address, token1_address) do
-    IO.puts("mx1 simulate_amounts_output")
-    amount_in |> IO.inspect(label: "mx1 amount_in")
-    token0_address |> IO.inspect(label: "mx1 token0_address")
-    token1_address |> IO.inspect(label: "mx1 token1_address")
+    IO.puts("mx1 simulate_amounts_output amount_in: #{amount_in} token0_address: #{token0_address} token1_address: #{token1_address}")
+    # amount_in |> IO.inspect(label: "mx1 amount_in")
+    # token0_address |> IO.inspect(label: "mx1 token0_address")
+    # token1_address |> IO.inspect(label: "mx1 token1_address")
 
     LiquidityPoolRouterContract.get_amounts_out(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)

@@ -30,4 +30,10 @@ defmodule ProfitableTrade do
     |> put_assoc(:token_profit, token_profit)
     |> validate_required(@required)
   end
+
+  def update_changeset(%ProfitableTrade{} = profitable_trade, params) do
+    profitable_trade
+    |> cast(params, @required ++ @optional)
+    |> validate_required(@required)
+  end
 end

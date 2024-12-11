@@ -13,8 +13,6 @@ defmodule TokenPair do
   @optional [:status]
 
   def changeset(%TokenPair{} = token_pair, %{dexs: list_dexs} = params) do
-    params |> IO.inspect(label: "sx1 params")
-
     token_pair
     |> cast(params, @required ++ @optional)
     |> IO.inspect(label: "sx1 cast")
@@ -28,6 +26,5 @@ defmodule TokenPair do
       |> cast(params, @optional)
       |> put_assoc(:dexs, current_list_dexs ++ new_list_dexs)
     end
-
   end
 end

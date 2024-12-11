@@ -53,15 +53,15 @@ defmodule TokenPairDexContext do
           address: token_pair_dex_address,
           price: token_pair_dex_price
         } = token_pair_dex,
-        test \\ false
+        test \\ :TPD_searched
       ) do
-    with new_token_pair_dex_price <-
-           Compute.calculate_price(token_pair_dex_address) |> IO.inspect(label: "sx1 calculate price with test: #{test}"),
+    with {:ok, new_token_pair_dex_price} <-
+           Compute.calculate_price(token_pair_dex_address),
          true <- token_pair_dex_price != "#{new_token_pair_dex_price}",
          {:ok, updated_token_pair_dex} <-
            TPDC.update(token_pair_dex, %{price: "#{new_token_pair_dex_price}"}) do
       LW.ipt(
-        "TokenPairDex id: #{token_pair_dex_id} price updated to: #{new_token_pair_dex_price}"
+        "TokenPairDex id: #{token_pair_dex_id} price updated to: #{new_token_pair_dex_price} with test: #{test}"
       )
 
       {:ok, updated_token_pair_dex}
