@@ -6,6 +6,7 @@ defmodule Sab.Repo.Migrations.CreateTokensTable do
       add :symbol, :string
       add :name, :string
       add :address, :string
+      add :upcase_address, :string
       add :decimals, :integer
     end
   end

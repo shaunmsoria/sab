@@ -47,29 +47,62 @@ defmodule TokenPairDexContext do
     end
   end
 
+  def update_token_pair_dex_price(%TokenPairDex{} = token_pair_dex),
+    do: update_token_pair_dex_price(token_pair_dex, :TPD_searched)
+
   def update_token_pair_dex_price(
         %TokenPairDex{
           id: token_pair_dex_id,
           address: token_pair_dex_address,
-          price: token_pair_dex_price
+          price: nil,
+          dex: %Dex{name: dex_name}
         } = token_pair_dex,
-        test \\ :TPD_searched
+        test
       ) do
     with {:ok, new_token_pair_dex_price} <-
            Compute.calculate_price(token_pair_dex_address),
-         true <- token_pair_dex_price != "#{new_token_pair_dex_price}",
          {:ok, updated_token_pair_dex} <-
            TPDC.update(token_pair_dex, %{price: "#{new_token_pair_dex_price}"}) do
       LW.ipt(
-        "TokenPairDex id: #{token_pair_dex_id} price updated to: #{new_token_pair_dex_price} with test: #{test}"
+        "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name} price updated to: #{new_token_pair_dex_price}"
+      )
+
+      {:ok, updated_token_pair_dex}
+    else
+      error ->
+        {:error, error}
+    end
+  end
+
+  def update_token_pair_dex_price(
+        %TokenPairDex{
+          id: token_pair_dex_id,
+          address: token_pair_dex_address,
+          price: token_pair_dex_price,
+          dex: %Dex{name: dex_name}
+        } = token_pair_dex,
+        test
+      ) do
+    with {:ok, new_token_pair_dex_price} <-
+           Compute.calculate_price(token_pair_dex_address),
+         true <-
+           token_pair_dex_price != "#{new_token_pair_dex_price}",
+         {:ok, updated_token_pair_dex} <-
+           TPDC.update(token_pair_dex, %{price: "#{new_token_pair_dex_price}"}) do
+      LW.ipt(
+        "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name}  price updated to: #{new_token_pair_dex_price}"
       )
 
       {:ok, updated_token_pair_dex}
     else
       _error ->
-        if test == :return_test do
+        if test == :TPD_event do
           {:error, "price same as db"}
         else
+          LW.ipt(
+            "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name}  price not updated: #{token_pair_dex_price}"
+          )
+
           {:ok, token_pair_dex}
         end
     end
@@ -81,11 +114,11 @@ defmodule TokenPairDexContext do
     dex1 = DexSearch.with_id(1) |> Repo.one()
     dex2 = DexSearch.with_id(2) |> Repo.one()
 
-    token_pair =
-      TokenPairSearch.with_id(3)
-      |> Repo.one()
-      |> Repo.preload([:dexs, :token0, :token1])
-      |> IO.inspect(label: "token_pair")
+    # token_pair =
+    #   TokenPairSearch.with_id(3)
+    #   |> Repo.one()
+    #   |> Repo.preload([:dexs, :token0, :token1])
+    #   |> IO.inspect(label: "token_pair")
 
     # token_pair_dex = TokenPairDexSearch.with_id(5) |> Repo.one()
     # |> TokenPairDexContext.update(%{address: "address_test", price: "1000"})
@@ -101,7 +134,13 @@ defmodule TokenPairDexContext do
     #   |> Repo.preload([[token_pair: [:dexs, :token0, :token1]], :dex])
     # |> IO.inspect(label: "token_pair_dex")
 
-    extract_other_token_pair_dexs(token_pair, dex2)
-    |> IO.inspect(label: "sx1 extract_other_token_pair_dexs")
+    # extract_other_token_pair_dexs(token_pair, dex2)
+    # |> IO.inspect(label: "sx1 extract_other_token_pair_dexs")
+
+    token_pair =
+      TokenPairDexSearch.with_upcase_token_address_and_weth("0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48")
+      |> Repo.one()
+      |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+      |> IO.inspect(label: "token_pair")
   end
 end

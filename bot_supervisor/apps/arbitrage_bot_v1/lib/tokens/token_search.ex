@@ -23,6 +23,10 @@ defmodule TokenSearch do
     from(t in query, where: t.address == ^address)
   end
 
+  def with_upcase_address(query \\ query(), upcase_address) do
+    from(t in query, where: t.upcase_address == ^upcase_address)
+  end
+
   def with_decimals(query \\ query(), decimals) do
     from(t in query, where: t.decimals == ^decimals)
   end

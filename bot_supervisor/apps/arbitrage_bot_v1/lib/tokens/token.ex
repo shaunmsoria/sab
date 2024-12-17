@@ -6,11 +6,12 @@ defmodule Token do
     field(:symbol, :string)
     field(:name, :string)
     field(:address, :string)
+    field(:upcase_address, :string)
     field(:decimals, :integer, default: 0)
   end
 
   @required [:address]
-  @optional [:symbol, :name, :decimals]
+  @optional [:symbol, :name, :decimals, :upcase_address]
 
   def changeset(%Token{} = token, params \\ %{}) do
     token

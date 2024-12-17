@@ -1,5 +1,6 @@
 defmodule ExecuteTrade do
   alias ProfitableTradeContext, as: PTC
+  alias LogWritter, as: LW
 
   @dexs Libraries.dexs()
 
@@ -16,7 +17,6 @@ defmodule ExecuteTrade do
         :desc
       )
       |> Enum.reduce_while([], fn trade, acc ->
-
         case maybe_execute_trade_v2(trade, eth_wallet_amount) do
           {:error, trade} ->
             trade |> LogWritter.ipt("sx1 trade failed to execute, continuing to next trade...")
@@ -36,14 +36,14 @@ defmodule ExecuteTrade do
         dex_content_address,
         dex_searched_address,
         tradable_amount,
-        :O_I
+        "O_I"
       ) do
     Compute.execute_trade(
       token1,
       token0,
       dex_content_address,
       dex_searched_address,
-      tradable_amount
+      String.to_integer(tradable_amount)
     )
 
     # Compute.execute_trade(
@@ -61,14 +61,14 @@ defmodule ExecuteTrade do
         dex_content_address,
         dex_searched_address,
         tradable_amount,
-        :I_O
+        "I_O"
       ) do
     Compute.execute_trade(
       token1,
       token0,
       dex_searched_address,
       dex_content_address,
-      tradable_amount
+      String.to_integer(tradable_amount)
     )
   end
 
@@ -112,11 +112,13 @@ defmodule ExecuteTrade do
              tradable_amount,
              direction
            ) do
-      PTC.update(profitable_trade, %{smart_contract_response: trade_result})
+
+            trade_result |> LW.ipt("sx1 trade_result")
+      PTC.update(profitable_trade, %{smart_contract_response: inspect(trade_result)})
     else
       msg ->
         {:ok, profitable_trade} =
-          PTC.update(profitable_trade, %{smart_contract_response: msg})
+          PTC.update(profitable_trade, %{smart_contract_response: inspect(msg)})
 
         {:error, profitable_trade}
     end
@@ -126,6 +128,6 @@ defmodule ExecuteTrade do
     eth_wallet_amount |> LogWritter.ipt("sx1 eth_wallet_amount")
     gas_fee |> LogWritter.ipt("sx1 gas_fee")
 
-    {:ok, eth_wallet_amount > gas_fee}
+    {:ok, eth_wallet_amount > String.to_float(gas_fee)}
   end
 end

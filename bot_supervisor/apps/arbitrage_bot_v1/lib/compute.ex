@@ -59,7 +59,7 @@ defmodule Compute do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
            pair_address |> contract(:get_reserves) do
       case {is_integer(amount_0), is_integer(amount_1)} do
-        {true, true} -> amount_0 / amount_1
+        {true, true} -> {:ok, amount_0 / amount_1}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
 
@@ -73,7 +73,7 @@ defmodule Compute do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
            pair_address |> contract(:get_reserves) do
       case {is_integer(amount_0), is_integer(amount_1)} do
-        {true, true} -> amount_1 / amount_0
+        {true, true} -> {:ok, amount_1 / amount_0}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
 
@@ -100,26 +100,21 @@ defmodule Compute do
     |> Ethers.call(to: router_address)
   end
 
-  # This returns the amount of WETH needed to swap for X amount of SHIB
+  # This returns the minimum amount of WETH needed to get the specified amount of SHIB
   def simulate_amounts_input(router_address, amount_out, token0_address, token1_address) do
     IO.puts("mx1 simulate_amounts_input amount_out: #{amount_out} token0_address: #{token0_address} token1_address: #{token1_address}")
-    # amount_out |> IO.inspect(label: "mx1 amount_out")
-    # token0_address |> IO.inspect(label: "mx1 token0_address")
-    # token1_address |> IO.inspect(label: "mx1 token1_address")
+
 
     LiquidityPoolRouterContract.get_amounts_in(amount_out, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
-  #  This returns the amount of WETH for swapping X amount of SHIB
+  #  This returns the maximum amount of output asset for the amount of input asset specified
   def simulate_amounts_output(router_address, 0, token0_address, token1_address),
     do: {:error, "Input amount 0 for simulate_amounts_output"}
 
   def simulate_amounts_output(router_address, amount_in, token0_address, token1_address) do
     IO.puts("mx1 simulate_amounts_output amount_in: #{amount_in} token0_address: #{token0_address} token1_address: #{token1_address}")
-    # amount_in |> IO.inspect(label: "mx1 amount_in")
-    # token0_address |> IO.inspect(label: "mx1 token0_address")
-    # token1_address |> IO.inspect(label: "mx1 token1_address")
 
     LiquidityPoolRouterContract.get_amounts_out(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)

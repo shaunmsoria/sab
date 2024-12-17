@@ -23,7 +23,6 @@ defmodule InitialiseDexTokenPair do
 
   def get_all_token_pairs_length(list_dexs) do
     list_dexs
-    |> IO.inspect(label: "sx1 list_dexs")
     |> Enum.map(fn dex ->
       maybe_update_dex_all_pairs(dex)
     end)
@@ -45,14 +44,15 @@ defmodule InitialiseDexTokenPair do
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
       max_length =
-        if dex_name == "pancakeswap" do
-          668
-        else
-          1920
+        case  dex_name  do
+          "pancakeswap" ->  668
+          "sushiswap" -> 4144
+          _ -> 5000
         end
 
       # if dex_all_pairs_length == current_all_pairs_length do
-      if max_length == current_all_pairs_length do
+      # if max_length == current_all_pairs_length do
+      if 15 == current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -65,7 +65,7 @@ defmodule InitialiseDexTokenPair do
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
     # start_all_pairs_length..dex_all_pairs_length
-    start_all_pairs_length..1920
+    start_all_pairs_length..15
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -74,6 +74,7 @@ defmodule InitialiseDexTokenPair do
 
     {:ok, :all_pairs_retrieved}
   end
+
 
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: factory} = dex, n_pair) do
     with {:ok, pair_address} <-
@@ -93,7 +94,7 @@ defmodule InitialiseDexTokenPair do
       {:ok, token_pair_dex}
     else
       error ->
-        :timer.sleep(10000)
+        :timer.sleep(3600000)
 
         LW.ipt(
           "dex: #{dex_name} for n_pair: #{n_pair} not retrieved because of: #{inspect(error)}"
@@ -144,6 +145,7 @@ defmodule InitialiseDexTokenPair do
                  symbol: symbol,
                  name: name,
                  address: token_address,
+                 upcase_address: token_address |> String.upcase(),
                  decimals: decimals
                }
                |> TC.insert() do
