@@ -129,12 +129,12 @@ defmodule CheckProfit do
              token_pair_dex_event,
              token_pair_dex_searched
            ),
-         {:ok, gas_fee, simulated_profit_token_symbol} <-
+         {:ok, gas_fee_in_token_profit_amount, simulated_profit_token_symbol} <-
            calculate_gas_price_for_trade_v3(token_profit),
          simulated_profit <-
-           simulated_profit_pre_gas - gas_fee do
+           simulated_profit_pre_gas - gas_fee_in_token_profit_amount do
       simulated_profit_pre_gas |> IO.inspect(label: "sx1 simulated_profit_pre_gas")
-      gas_fee |> IO.inspect(label: "sx1 gas_fee")
+      gas_fee_in_token_profit_amount |> IO.inspect(label: "sx1 gas_fee_in_token_profit_amount")
       simulated_profit |> IO.inspect(label: "sx1 simulated_profit")
 
       if simulated_profit > 0 do
@@ -147,7 +147,7 @@ defmodule CheckProfit do
             estimated_profit: "#{simulated_profit}",
             direction: Atom.to_string(direction),
             tradable_amount: "#{tradable_amount}",
-            gas_fee: "#{gas_fee}",
+            gas_fee: "#{gas_fee_in_token_profit_amount}",
             smart_contract_response: "not_sent_to_smart_contract"
           })
 
@@ -254,6 +254,9 @@ defmodule CheckProfit do
   # ? DONE add to TokenPair table token0_address_upcase and token1_address_upcase
   # ? DONE search in db by upcase addresses to find the TPD
   ## TODO calculate gas price in eth by converting the reserve amount to eth with decimals instead of Gwei or Wei
+  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = _token_profit),
+    do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
+
   def calculate_gas_price_for_trade_v3(%Token{
         symbol: token_profit_symbol,
         address: token_profit_address,
@@ -262,14 +265,14 @@ defmodule CheckProfit do
     estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
 
     gas_token_pair =
-      TPS.with_upcase_address_and_weth(token_profit_address |> String.upcase())
+      TPDS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
       |> Repo.one()
       |> Repo.preload([:dex, token_pair: [:token0, :token1]])
 
     with {:ok, weth_location} <-
            locate_weth_in_token_pair_v3(gas_token_pair),
          {:ok, [reserve0, reserve1, _block_timestamp]} <-
-           gas_token_pair_address |> contract(:get_reserves),
+           gas_token_pair.address |> contract(:get_reserves),
          {:ok, unit_weth_token_profit_price} <-
            calculate_gas_price_weth_price_v3(
              weth_location,
@@ -277,15 +280,15 @@ defmodule CheckProfit do
              reserve1,
              token_profit_decimals
            ) do
-      nil
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
     end
   end
 
   def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
-    do: {:ok, reserve1 / (reserve0 * 1_000_000_000)}
+    do: {:ok, reserve1 * 10 ** 18 / (reserve0 * 10 ** token_profit_decimals)}
 
   def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
-    do: {:ok, reserve0 / (reserve1 * 1_000_000_000)}
+    do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
 
   def locate_weth_in_token_pair_v3(%TokenPairDex{
         token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
