@@ -110,6 +110,7 @@ defmodule CheckProfit do
               },
               token1:
                 %Token{
+                  symbol: token_profit_symbol,
                   address: token1_address
                 } = token_profit
             } = token_pair,
@@ -133,9 +134,9 @@ defmodule CheckProfit do
            calculate_gas_price_for_trade_v3(token_profit),
          simulated_profit <-
            simulated_profit_pre_gas - gas_fee_in_token_profit_amount do
-      simulated_profit_pre_gas |> IO.inspect(label: "sx1 simulated_profit_pre_gas")
-      gas_fee_in_token_profit_amount |> IO.inspect(label: "sx1 gas_fee_in_token_profit_amount")
-      simulated_profit |> IO.inspect(label: "sx1 simulated_profit")
+      simulated_profit_pre_gas |> LW.ipt("sx1 simulated_profit_pre_gas")
+      gas_fee_in_token_profit_amount |> LW.ipt("sx1 gas_fee_in_token_profit_amount")
+      simulated_profit |> LW.ipt("sx1 simulated_profit in #{token_profit_symbol}")
 
       if simulated_profit > 0 do
         {:ok, profitable_trade} =
@@ -188,11 +189,11 @@ defmodule CheckProfit do
     with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
            token_pair_dex_event_address
            |> contract(:get_reserves)
-           |> IO.inspect(label: "get_reserves event"),
+           |> LW.ipt("get_reserves event"),
          {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
            token_pair_dex_searched_address
            |> contract(:get_reserves)
-           |> IO.inspect(label: "get_reserves searched"),
+           |> LW.ipt("get_reserves searched"),
          token_pair_dex_event_price_O_I <- reserve0 / reserve1,
          token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
          {:ok, direction} <-
@@ -209,7 +210,7 @@ defmodule CheckProfit do
                    token0_address,
                    22
                  )
-                 |> IO.inspect(label: "sx1 estimate"),
+                 |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
                  simulate_v2(
                    estimate |> Enum.at(0),
@@ -218,7 +219,7 @@ defmodule CheckProfit do
                    token0_address,
                    token1_address
                  )
-                 |> IO.inspect(label: "sx1 {amount_in, amount_out}"),
+                 |> LW.ipt("sx1 {amount_in, amount_out}"),
                pre_direction_gas_price_difference <-
                  (amount_out - amount_in) / 10 ** token1_decimals do
             {:ok, pre_direction_gas_price_difference, amount_in, direction}
@@ -233,7 +234,7 @@ defmodule CheckProfit do
                    token0_address,
                    22
                  )
-                 |> IO.inspect(label: "sx1 estimate"),
+                 |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
                  simulate_v2(
                    estimate |> Enum.at(0),
@@ -242,7 +243,7 @@ defmodule CheckProfit do
                    token0_address,
                    token1_address
                  )
-                 |> IO.inspect(label: "sx1 {amount_in, amount_out}"),
+                 |> LW.ipt("sx1 {amount_in, amount_out}"),
                pre_direction_gas_price_difference <-
                  (amount_out - amount_in) / 10 ** token1_decimals do
             {:ok, pre_direction_gas_price_difference, amount_in, direction}
