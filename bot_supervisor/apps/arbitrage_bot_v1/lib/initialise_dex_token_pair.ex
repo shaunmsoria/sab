@@ -46,7 +46,7 @@ defmodule InitialiseDexTokenPair do
       max_length =
         case  dex_name  do
           "pancakeswap" ->  668
-          "sushiswap" -> 4144
+          "sushiswap" -> 4143
           _ -> 5000
         end
 
@@ -66,6 +66,7 @@ defmodule InitialiseDexTokenPair do
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
     start_all_pairs_length..dex_all_pairs_length
     # start_all_pairs_length..2000
+    # start_all_pairs_length..5000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 

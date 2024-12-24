@@ -14,10 +14,13 @@ const IUniswapV2Factory = require("@uniswap/v2-core/build/IUniswapV2Factory.json
 
 let provider
 
+console.log("sx1 isLocal", config.PROJECT_SETTINGS.isLocal);
+console.log("sx1 ARBITRAGE_ADDRESS", config.PROJECT_SETTINGS.ARBITRAGE_ADDRESS);
+
 if (config.PROJECT_SETTINGS.isLocal) {
   provider = new hre.ethers.WebSocketProvider(`ws://127.0.0.1:8545/`)
 } else {
-  provider = new hre.ethers.WebSocketProvider(`wss://mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY_2}`)
+  provider = new hre.ethers.WebSocketProvider(`wss://mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`)
   // provider = new hre.ethers.WebSocketProvider(`wss://mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`)
   // provider = new hre.ethers.WebSocketProvider(`wss://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`)
 }

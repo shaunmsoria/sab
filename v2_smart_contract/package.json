@@ -13,6 +13,6 @@
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@openzeppelin/contracts": "4.9.1",
     "@uniswap/v2-periphery": "1.1.0-beta.0",
-    "hardhat": "^2.22.12"
+    "hardhat": "^2.22.17"
   }
 }

@@ -12,6 +12,11 @@ const IUniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair.json")
 const IERC20 = require('@openzeppelin/contracts/build/contracts/ERC20.json')
 
 async function getTokenAndContract(_token0Address, _token1Address, _provider) {
+
+    console.log("sx1 _token0Address", _token0Address);
+    console.log("sx1 _token1Address", _token1Address);
+    console.log("sx1 _provider", _provider);
+
     const token0Contract = new ethers.Contract(_token0Address, IERC20.abi, _provider)
     const token1Contract = new ethers.Contract(_token1Address, IERC20.abi, _provider)
 
