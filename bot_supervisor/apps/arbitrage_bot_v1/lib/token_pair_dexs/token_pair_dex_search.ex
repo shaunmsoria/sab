@@ -1,0 +1,66 @@
+defmodule TokenPairDexSearch do
+  import Ecto.Query
+
+  ## add Repo.all() or Repo.one() get the results
+  def query() do
+    from(TokenPairDex)
+    # |> Repo.all()
+  end
+
+  def with_id(query \\ query(), id) do
+    from(t in query, where: t.id == ^id)
+  end
+
+  def with_token_pair_id(query \\ query(), token_pair_id) do
+    from(t in query, where: t.token_pair_id == ^token_pair_id)
+  end
+
+  def with_dex_id(query \\ query(), dex_id) do
+    from(t in query, where: t.dex_id == ^dex_id)
+  end
+
+  def with_address(query \\ query(), address) do
+    from(t in query, where: t.address == ^address)
+  end
+
+  def with_price(query \\ query(), price) do
+    from(t in query, where: t.price == ^price)
+  end
+
+  def with_upcase_address(query \\ query(), upcase_address) do
+    from(t in query, where: t.upcase_address == ^upcase_address)
+  end
+
+  def with_upcase_token_address_and_weth(query \\ query(), upcase_token_address) do
+    token_id =
+      from(t in Token,
+        where: t.upcase_address == ^upcase_token_address,
+        select: t.id
+      )
+      |> Repo.one()
+
+    weth_id =
+      from(t in Token,
+        where: t.upcase_address == "0XC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",
+        select: t.id
+      )
+      |> Repo.one()
+
+    ## TODO use sub_query above to find weth token pair
+
+    token_weth_pair_id =
+      from(tp in TokenPair,
+        where:
+          (tp.token0_id == ^token_id and
+             tp.token1_id == ^weth_id) or
+            (tp.token0_id == ^weth_id and
+               tp.token1_id == ^token_id),
+        select: tp.id
+      )
+      |> Repo.one()
+
+    from(tpd in query,
+      where: tpd.token_pair_id == ^token_weth_pair_id and tpd.dex_id == 1
+    )
+  end
+end

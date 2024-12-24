@@ -9,24 +9,24 @@
 # move said applications out of the umbrella.
 import Config
 
-# Sample configuration:
-#
+config :arbitrage_bot_v1, Repo,
+  database: "server_db",
+  username: "server",
+  password: "password",
+  hostname: "localhost"
 
-config :logger,
-  backends: [{LoggerFileBackend, :error_log}]
+config :arbitrage_bot_v1, ecto_repos: [Repo]
 
-config :logger, :error_log,
-  path: "/apps/arbitrage_bot_v1/lib/log/error.log",
-  level: :error,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+config :seedex,
+  repo: Repo,
+  seeds_path: "priv/repo/seeds"
 
 config :logger,
   backends: [{LoggerFileBackend, :info_log}]
 
 config :logger, :info_log,
-  path: "/apps/arbitrage_bot_v1/lib/log/info.log",
-  level: :critical,
+  path: "log/info.log",
+  level: :error,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
@@ -37,7 +37,6 @@ config :logger, :console,
   # level: :info,
   # level: :critical,
   format: "$date $time [$level] $metadata$message\n"
-
 
 config :ethers,
   # Defaults to: Ethereumex.HttpClient
@@ -57,8 +56,10 @@ config :ethers,
 # # config :ethereumex, url: "http://localhost:8545"
 config :ethereumex,
   # url: "http://127.0.0.1:8545"
-  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
-  url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+
+url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+# url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+# url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY2")}"
 
 # in your config.exs
 config :arbitrage_bot_v1, W3WS,
@@ -66,8 +67,9 @@ config :arbitrage_bot_v1, W3WS,
     [
       # the uri of the ethereum jsonrpc websocket server
       # uri: "ws://127.0.0.1:8545",
-      # uri: "wss://eth-mainnet.g.alchemy.com/v2/W1V4spC6bt6pWQIrKOMBTv7goOa5AOh6",
-      uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
+      uri: "wss://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}",
+      # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
+      # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY2")}",
 
       # enable block ping every 10 seconds. this will cause the listener to
       # fetch and log the current block every 10 seconds. the last fetched block

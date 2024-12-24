@@ -1,6 +1,12 @@
 defmodule CheckProfit do
   import Compute
   alias ListDex, as: LD
+  alias LogWritter, as: LW
+  alias DexSearch, as: DS
+  alias TokenContext, as: TC
+  alias ProfitableTradeContext, as: PTC
+  alias TokenPairDexSearch, as: TPDS
+  alias TokenPairDexContext, as: TPDC
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
@@ -8,337 +14,389 @@ defmodule CheckProfit do
   def run(_state, event_data) when is_map(event_data) do
     with true <-
            not String.equivalent?(event_data.event.address, ""),
-         address <- event_data.event.address |>  IO.inspect(label: "sx1 address"),
-         {:ok, {token_pair, dex_name}} <- found_dex_token_pair?(address),
-         price <- calculate_price(event_data.event.address) |> IO.inspect(label: "sx1 price"),
-         {:ok, true} <- notComputed?(price, token_pair["price"]),
-         {:ok, token_pair_price_udpated} <-
-           LD.update_token_pair_price(token_pair, dex_name, price),
+         token_pair_dex_address <- event_data.event.address,
+         {:ok,
+          %TokenPairDex{
+            token_pair: %TokenPair{status: "active"} = token,
+            dex: %Dex{name: dex_name} = dex
+          } = token_pair_dex_event} <-
+           extract_token_pair_dex_details(token_pair_dex_address),
+         {:ok, token_pair_dex_event_udpated} <-
+           TPDC.update_token_pair_dex_price(token_pair_dex_event, :TPD_event),
          {:ok, list_of_profitable_trades} <-
-           get_profitable_trade(token_pair_price_udpated, dex_name) do
-      ExecuteTrade.run(list_of_profitable_trades)
+           get_profitable_trade(token_pair_dex_event_udpated) do
+      ExecuteTrade.run_v2(list_of_profitable_trades)
     else
-      error ->
-        {:error, error} |> IO.inspect(label: "sx1")
+      {:ok, %TokenPairDex{id: token_pair_id, token_pair: %TokenPair{status: "inactive"}}} ->
+        IO.puts("sx1 TokenPair id: #{token_pair_id} Inactive")
+
+      {:error, error_message} ->
+        {:error, error_message} |> IO.inspect(label: "sx1")
     end
   end
 
-  def found_dex_token_pair?(address) do
-    with {:ok, token_pair} <- LD.get_dex_token_pair_from_address(address) do
-      {:ok, token_pair}
+  def extract_token_pair_dex_details(token_pair_dex_event_address) do
+    with upcase_token_dex_event_address <- String.upcase(token_pair_dex_event_address),
+         token_pair_dex_event <-
+           TPDS.with_upcase_address(upcase_token_dex_event_address) |> Repo.one(),
+         true <- not is_nil(token_pair_dex_event),
+         token_pair_dex_event_preloaded <-
+           token_pair_dex_event
+           |> Repo.preload([[token_pair: [:dexs, :token0, :token1]], :dex]) do
+      {:ok, token_pair_dex_event_preloaded}
     else
-      _ -> {:error, "no token_pair found"}
+      _ -> {:error, "No TPD for #{token_pair_dex_event_address}"}
     end
   end
 
-  def notComputed?(current_price, new_price) do
-    case current_price != new_price do
-      true -> {:ok, true}
-      _ -> {:error, "already checked"}
-    end
-  end
-
-  def update_token_pair_price(token_pair, dex_name, price) do
-    with :ok <-
-           ConCache.update(:dex, dex_name, fn dex_content ->
-             {:ok, %{dex_content | token_pair["address"] => %{token_pair | "price" => price}}}
-           end) do
-      {:ok, ConCache.get(:dex, dex_name) |> Map.get(token_pair["address"])}
-    end
-  end
-
-  def get_profitable_trade(token_pair_content, dex_name) do
+  def get_profitable_trade(
+        %TokenPairDex{
+          dex:
+            %Dex{
+              name: dex_name
+            } = dex,
+          token_pair:
+            %TokenPair{
+              dexs: dexs,
+              token0: token0,
+              token1: token1
+            } = token_pair,
+          price: token_pair_dex_event_price,
+          address: token_pair_dex_address
+        } =
+          token_pair_dex_event
+      ) do
     profitable_trades_result =
-      with list_dex <-
-             ConCache.get(:dex, "list_dex")
-             |> Enum.filter(fn list_dex_name -> list_dex_name != dex_name end) do
-        list_dex
-        |> Enum.reduce([], fn dex_name_searched, acc ->
-          case profitable_trade_from_dex(
-                 LD.token_pair_from_list_dex(
-                   ConCache.get(:dex, dex_name_searched),
-                   token_pair_content
-                 )
-               ) do
-            {true, token_pair_searched} ->
-              {:ok, updated_token_pair_searched} =
-                LD.update_token_pair_price(
-                  token_pair_searched,
-                  dex_name_searched,
-                  Compute.calculate_price(token_pair_searched["address"])
-                )
-
-              price_difference =
-                Compute.calculate_difference(
-                  updated_token_pair_searched["price"],
-                  token_pair_content["price"]
-                )
-
-              case is_trade_profitable?(
-                     price_difference,
-                     dex_name,
-                     token_pair_content,
-                     dex_name_searched,
-                     updated_token_pair_searched
-                   ) do
-                {:ok, false, _price_difference_result, _estimated_profit,
-                 _simulated_profit_token_symbol, _tradable_amount, _gas_fee} ->
-                  acc
-
-                {:ok, direction, true, estimated_profit, simulated_profit_token_symbol,
-                 tradable_amount, gas_fee} ->
-                  acc ++
-                    [
-                      {token_pair_content, updated_token_pair_searched, dex_name,
-                       dex_name_searched, estimated_profit, simulated_profit_token_symbol,
-                       direction, tradable_amount, gas_fee}
-                    ]
-
-                {:ok, _direction, false, _estimated_profit, _simulated_profit_token_symbol,
-                 _tradable_amount, _gas_fee} ->
-                  acc
-
-                _ ->
-                  %{
-                    token_content: token_pair_content,
-                    token_searched: updated_token_pair_searched
-                  }
-                  |> LogWritter.ipt("output: error in is_trade_profitable? for those tokens")
-
-                  acc
-              end
-
-            false ->
-              acc
-          end
+      with {:ok, other_token_pair_dexs} <- TPDC.extract_other_token_pair_dexs(token_pair, dex) do
+        other_token_pair_dexs
+        |> Enum.reduce([], fn token_pair_dex_searched, acc ->
+          acc ++ maybe_profitable_trade(token_pair_dex_event, token_pair_dex_searched)
         end)
+      else
+        {:error, message} ->
+          message |> LogWritter.ipt("sx1 no_profitable_trades")
+          []
       end
 
     {:ok, profitable_trades_result}
     |> LogWritter.ipt("sx1 get_profitable_trades result")
   end
 
-  def profitable_trade_from_dex(%{"address" => _address} = token_pair_searched),
-    do: {true, token_pair_searched}
-
-  def profitable_trade_from_dex(%{}), do: false
-
-  def is_trade_profitable?(
-        0,
-        _dex_name,
-        _is_trade_profitable,
-        _dex_name_searched,
-        _updated_token_pair_searched
-      ),
-      do: {false, 0}
-
-  def is_trade_profitable?(
-        _price_difference,
-        dex_name,
-        token_pair_content,
-        dex_name_searched,
-        token_pair_searched
+  def maybe_profitable_trade(
+        %TokenPairDex{price: token_pair_dex_event_price} = token_pair_dex_event,
+        %TokenPairDex{} = token_pair_dex_searched
       ) do
-    with router_address <-
-           @dexs[dex_name]["router"]
-           |> LogWritter.ipt("sx1 router_address"),
-         router_address_searched <-
-           @dexs[dex_name_searched]["router"]
-           |> LogWritter.ipt("sx1 router_address_searched"),
-         {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
-           token_pair_content["address"]
-           |> LogWritter.ipt("sx1 pair_address")
-           |> contract(:get_reserves)
-           |> LogWritter.ipt("sx1 get_reserves pair_address_dex_name"),
-         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
-           token_pair_searched["address"]
-           |> contract(:get_reserves)
-           |> LogWritter.ipt("sx1 get_reserves pair_address_dex_name_searched"),
-         content_pair_price_O_I <-
-           (reserve0 / reserve1)
-           |> LogWritter.ipt("sx1 content_pair_price"),
-         searched_pair_price_O_I <-
-           (reserve0_searched / reserve1_searched)
-           |> LogWritter.ipt("sx1 searched_pair_price"),
-         {:ok, direction, _difference_pair_price_O_I} <-
-           transaction_direction(searched_pair_price_O_I - content_pair_price_O_I)
-           |> LogWritter.ipt("sx1 transaction_direction"),
-         {:ok, simulated_profit_pre_gas, tradable_amount} <-
-           simulate_profit_pre_gas(
-             router_address,
-             reserve0,
-             reserve1,
-             router_address_searched,
-             reserve0_searched,
-             reserve1_searched,
-             token_pair_content,
-             direction
-           )
-           |> LogWritter.ipt("sx1 simulate_profit_pre_gas"),
-         {:ok, gas_fee, simulated_profit_token_symbol} <-
-           calculate_gas_price_for_trade(token_pair_content["token1"])
-           |> LogWritter.ipt("sx1 gas_fee in token1 amount"),
-         simulated_profit <-
-           (simulated_profit_pre_gas - gas_fee)
-           |> LogWritter.ipt("sx1 simulated_profit") do
-      {:ok, direction, simulated_profit > 0, simulated_profit, simulated_profit_token_symbol,
-       tradable_amount, gas_fee}
+    with {:ok,
+          %TokenPairDex{price: token_pair_dex_searched_price, dex: %Dex{name: dex_searched_name}}} <-
+           TPDC.update_token_pair_dex_price(token_pair_dex_searched),
+         price_difference <-
+           Compute.calculate_difference(token_pair_dex_event_price, token_pair_dex_searched_price) do
+      case price_difference do
+        0 ->
+          []
+
+        price_difference ->
+          maybe_profitable_trade(token_pair_dex_event, token_pair_dex_searched, price_difference)
+      end
     end
   end
 
-  def calculate_gas_price_for_trade(%{"symbol" => "WETH"}),
+  def maybe_profitable_trade(
+        %TokenPairDex{
+          dex:
+            %Dex{
+              router: router_address
+            } = dex_emitted,
+          token_pair:
+            %TokenPair{
+              token0: %Token{
+                address: token0_address
+              },
+              token1:
+                %Token{
+                  symbol: token_profit_symbol,
+                  address: token1_address
+                } = token_profit
+            } = token_pair,
+          address: token_pair_dex_event_address
+        } = token_pair_dex_event,
+        %TokenPairDex{
+          dex:
+            %Dex{
+              router: router_searched_address
+            } = dex_searched,
+          address: token_pair_dex_searched_address
+        } = token_pair_dex_searched,
+        price_difference
+      ) do
+    with {:ok, simulated_profit_pre_gas, tradable_amount, direction} <-
+           simulate_profit_pre_gas_v3(
+             token_pair_dex_event,
+             token_pair_dex_searched
+           ),
+         {:ok, gas_fee_in_token_profit_amount, simulated_profit_token_symbol} <-
+           calculate_gas_price_for_trade_v3(token_profit),
+         simulated_profit <-
+           simulated_profit_pre_gas - gas_fee_in_token_profit_amount do
+      simulated_profit_pre_gas |> LW.ipt("sx1 simulated_profit_pre_gas")
+      gas_fee_in_token_profit_amount |> LW.ipt("sx1 gas_fee_in_token_profit_amount")
+      simulated_profit |> LW.ipt("sx1 simulated_profit in #{token_profit_symbol}")
+
+      if simulated_profit > 0 do
+        {:ok, profitable_trade} =
+          PTC.insert(%{
+            token_pair: token_pair,
+            dex_emitted: dex_emitted,
+            dex_searched: dex_searched,
+            token_profit: token_profit,
+            estimated_profit: "#{simulated_profit}",
+            direction: Atom.to_string(direction),
+            tradable_amount: "#{tradable_amount}",
+            gas_fee: "#{gas_fee_in_token_profit_amount}",
+            smart_contract_response: "not_sent_to_smart_contract"
+          })
+
+        [profitable_trade]
+      else
+        []
+      end
+    else
+      error ->
+        error |> LW.ipt("sx1 error in maybe_profitable_trade")
+        []
+    end
+  end
+
+  def simulate_profit_pre_gas_v3(
+        %TokenPairDex{
+          dex: %Dex{
+            router: router_event_address
+          },
+          token_pair: %TokenPair{
+            token0: %Token{
+              address: token0_address
+            },
+            token1: %Token{
+              address: token1_address,
+              decimals: token1_decimals
+            }
+          },
+          address: token_pair_dex_event_address
+        },
+        %TokenPairDex{
+          dex: %Dex{
+            router: router_searched_address
+          },
+          address: token_pair_dex_searched_address
+        }
+      ) do
+    with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
+           token_pair_dex_event_address
+           |> contract(:get_reserves)
+           |> LW.ipt("get_reserves event"),
+         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
+           token_pair_dex_searched_address
+           |> contract(:get_reserves)
+           |> LW.ipt("get_reserves searched"),
+         token_pair_dex_event_price_O_I <- reserve0 / reserve1,
+         token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
+         {:ok, direction} <-
+           transaction_direction(
+             token_pair_dex_searched_price_O_I - token_pair_dex_event_price_O_I
+           ) do
+      case direction do
+        :O_I ->
+          with {:ok, estimate} <-
+                 router_event_address
+                 |> estimate_extractor(
+                   reserve0_searched,
+                   token1_address,
+                   token0_address,
+                   22
+                 )
+                 |> LW.ipt("sx1 estimate"),
+               {:ok, amount_in, amount_out} <-
+                 simulate_v2(
+                   estimate |> Enum.at(0),
+                   router_event_address,
+                   router_searched_address,
+                   token0_address,
+                   token1_address
+                 )
+                 |> LW.ipt("sx1 {amount_in, amount_out}"),
+               pre_direction_gas_price_difference <-
+                 (amount_out - amount_in) / 10 ** token1_decimals do
+            {:ok, pre_direction_gas_price_difference, amount_in, direction}
+          end
+
+        :I_O ->
+          with {:ok, estimate} <-
+                 router_searched_address
+                 |> estimate_extractor(
+                   reserve0_searched,
+                   token1_address,
+                   token0_address,
+                   22
+                 )
+                 |> LW.ipt("sx1 estimate"),
+               {:ok, amount_in, amount_out} <-
+                 simulate_v2(
+                   estimate |> Enum.at(0),
+                   router_searched_address,
+                   router_event_address,
+                   token0_address,
+                   token1_address
+                 )
+                 |> LW.ipt("sx1 {amount_in, amount_out}"),
+               pre_direction_gas_price_difference <-
+                 (amount_out - amount_in) / 10 ** token1_decimals do
+            {:ok, pre_direction_gas_price_difference, amount_in, direction}
+          end
+      end
+    end
+  end
+
+  # ? DONE add to TokenPair table token0_address_upcase and token1_address_upcase
+  # ? DONE search in db by upcase addresses to find the TPD
+  ## TODO calculate gas price in eth by converting the reserve amount to eth with decimals instead of Gwei or Wei
+  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = _token_profit),
     do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
 
-  def calculate_gas_price_for_trade(profit_token) do
+  def calculate_gas_price_for_trade_v3(%Token{
+        symbol: token_profit_symbol,
+        address: token_profit_address,
+        decimals: token_profit_decimals
+      }) do
+    estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
+
+    gas_token_pair =
+      TPDS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+      |> Repo.one()
+      |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+
+    with {:ok, weth_location} <-
+           locate_weth_in_token_pair_v3(gas_token_pair),
+         {:ok, [reserve0, reserve1, _block_timestamp]} <-
+           gas_token_pair.address |> contract(:get_reserves),
+         {:ok, unit_weth_token_profit_price} <-
+           calculate_gas_price_weth_price_v3(
+             weth_location,
+             reserve0,
+             reserve1,
+             token_profit_decimals
+           ) do
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
+    end
+  end
+
+  def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
+    do: {:ok, reserve1 * 10 ** 18 / (reserve0 * 10 ** token_profit_decimals)}
+
+  def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
+    do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
+
+  def locate_weth_in_token_pair_v3(%TokenPairDex{
+        token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token0_weth}
+
+  def locate_weth_in_token_pair_v3(%TokenPairDex{
+        token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token1_weth}
+
+  def calculate_gas_price_for_trade_v2(%Token{symbol: "WETH"}),
+    do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
+
+  def calculate_gas_price_for_trade_v2(%Token{
+        symbol: token_profit_symbol,
+        address: token_profit_address
+      }) do
     with estimated_gas_fee <- ConCache.get(:gas, :estimated_gas_fee),
-         {:ok, gas_token_pair} <-
+         {:ok, gas_token_pair_address} <-
            Compute.get_pair_address(
              "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-             profit_token["address"]
+             token_profit_address
            ),
-         {:ok, weth_location} <- locate_weth_in_token_pair(gas_token_pair),
+         gas_token_pair <-
+           TPDS.with_upcase_address(gas_token_pair_address |> String.upcase())
+           |> Repo.one()
+           |> Repo.preload(token_pair: [:token0, :token1]),
+         {:ok, weth_location} <-
+           locate_weth_in_token_pair_v2(gas_token_pair),
          {:ok, [reserve0, reserve1, _block_timestamp]} <-
-           gas_token_pair |> contract(:get_reserves),
+           gas_token_pair_address |> contract(:get_reserves),
          {:ok, unit_weth_token_profit_price} <-
-           calculate_gas_price_weth_price(weth_location, reserve0, reserve1) do
-      {:ok, unit_weth_token_profit_price * estimated_gas_fee, profit_token["symbol"]}
+           calculate_gas_price_weth_price_v2(weth_location, reserve0, reserve1) do
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
     end
   end
 
-  def calculate_gas_price_weth_price(:token0_weth, reserve0, reserve1),
+  def calculate_gas_price_weth_price_v2(:token0_weth, reserve0, reserve1),
     do: {:ok, reserve1 / (reserve0 * 1_000_000_000)}
 
-  def calculate_gas_price_weth_price(:token1_weth, reserve0, reserve1),
+  def calculate_gas_price_weth_price_v2(:token1_weth, reserve0, reserve1),
     do: {:ok, reserve0 / (reserve1 * 1_000_000_000)}
 
-  def locate_weth_in_token_pair(%{"token0" => %{"symbol" => "WETH"}}), do: {:ok, :token0_weth}
-  def locate_weth_in_token_pair(%{"token1" => %{"symbol" => "WETH"}}), do: {:ok, :token1_weth}
-  def locate_weth_in_token_pair(_), do: {:error, "WETH not find in token_pair"}
+  def locate_weth_in_token_pair_v2(%TokenPairDex{
+        token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token0_weth}
+
+  def locate_weth_in_token_pair_v2(%TokenPairDex{
+        token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token1_weth}
+
+  def locate_weth_in_token_pair_v2(_), do: {:error, "WETH not find in token_pair"}
 
   def transaction_direction(pre_direction_gas_price_difference)
       when pre_direction_gas_price_difference < 0,
-      do: {:ok, :O_I, pre_direction_gas_price_difference * -1}
+      do: {:ok, :O_I}
 
   def transaction_direction(pre_gas_direction_price_difference)
       when pre_gas_direction_price_difference > 0,
-      do: {:ok, :I_O, pre_gas_direction_price_difference}
+      do: {:ok, :I_O}
 
   def transaction_direction(0), do: {:ok, false, 0}
 
-  def simulate_profit_pre_gas(
-        router_address,
-        reserve0,
-        reserve1,
-        router_address_searched,
-        reserve0_searched,
-        reserve1_searched,
-        token_pair,
-        :I_O
-      ) do
-    IO.puts("sx1 in simulate_profit_pre_gas :I_0")
-    reserve0 |> LogWritter.ipt("sx1 reserve0 value")
-
-    with {:ok, estimate} <-
-           router_address_searched
-           |> estimate_extractor(
-             reserve0,
-             token_pair["token1"]["address"],
-             token_pair["token0"]["address"],
-             18
-           )
-           |> LogWritter.ipt("sx1 estimate :I_0"),
-         {:ok, result} <-
-           router_address
-           |> simulate_amounts_output(
-             estimate |> Enum.at(1),
-             token_pair["token0"]["address"],
-             token_pair["token1"]["address"]
-           )
-           |> LogWritter.ipt("sx1 result"),
-         {:ok, amount_in, amount_out} <-
-           simulate(estimate |> Enum.at(0), router_address_searched, router_address, token_pair),
-         pre_direction_gas_price_difference <-
-           (amount_out - amount_in)
-           |> LogWritter.ipt("sx1 pre_direction_gas_price_difference :I_O") do
-      {:ok, pre_direction_gas_price_difference, amount_in}
-    end
-  end
-
-  def simulate_profit_pre_gas(
-        router_address,
-        reserve0,
-        reserve1,
-        router_address_searched,
-        reserve0_searched,
-        reserve1_searched,
-        token_pair,
-        :O_I
-      ) do
-    IO.puts("sx1 in simulate_profit_pre_gas :0_I")
-    reserve0_searched |> LogWritter.ipt("sx1 reserve0_searched value")
-
-    with {:ok, estimate} <-
-           router_address
-           |> estimate_extractor(
-             reserve0_searched,
-             token_pair["token1"]["address"],
-             token_pair["token0"]["address"],
-             18
-           )
-           |> LogWritter.ipt("sx1 estimate :0_I"),
-         {:ok, result} <-
-           router_address_searched
-           |> simulate_amounts_output(
-             estimate |> Enum.at(1),
-             token_pair["token0"]["address"],
-             token_pair["token1"]["address"]
-           )
-           |> LogWritter.ipt("sx1 result"),
-         {:ok, amount_in, amount_out} <-
-           simulate(estimate |> Enum.at(0), router_address, router_address_searched, token_pair),
-         pre_direction_gas_price_difference <-
-           (amount_out - amount_in)
-           |> LogWritter.ipt("sx1 pre_direction_gas_price_difference :O_I") do
-      {:ok, pre_direction_gas_price_difference, amount_in}
-    end
-  end
-
-  def safety_tradable_amount(reserve0, reserve1),
-    do: if(reserve0 > reserve1, do: {:ok, reserve1}, else: {:ok, reserve0})
-
-  def estimate_extractor(router, amount, token0, token1, counter) when counter <= 0,
+  def estimate_extractor(router, amount, token0, token1, counter) when counter < 0,
     do: {:error, "event not tradable"}
 
   def estimate_extractor(router, amount, token0, token1, counter) do
     list_divider = [
       1_000_000_000_000,
       500_000_000_000,
+      10_000_000_000,
+      5_000_000_000,
       1_000_000_000,
       500_000_000,
+      100_000_000,
+      50_000_000,
+      10_000_000,
+      5_000_000,
       1_000_000,
       500_000,
+      100_000,
+      50000,
+      10000,
+      5000,
       1000,
       500,
       100,
       50,
       10,
-      9,
-      8,
-      7,
-      6,
       5,
-      4,
-      3,
       2
     ]
 
     with divider <- list_divider |> Enum.at(counter) |> trunc(),
-         min_amount <- (amount / divider) |> trunc(),
+         max_swappable_amount <- (amount / divider) |> trunc(),
          {:ok, estimate} <-
            router
            |> simulate_amounts_input(
-             min_amount,
+             max_swappable_amount,
              token0,
              token1
            ) do
@@ -348,17 +406,14 @@ defmodule CheckProfit do
        %{
          "code" => _code,
          "data" => _data,
-         "message" => "execution reverted: ds-math-sub-underflow"
+         "message" => message
        }} ->
-        estimate_extractor(router, amount, token0, token1, counter - 2)
-
-      {:error,
-       %{
-         "code" => _code,
-         "data" => _data,
-         "message" => "execution reverted: UniswapV2Library: INSUFFICIENT_OUTPUT_AMOUNT"
-       }} ->
-        estimate_extractor(router, amount, token0, token1, counter + 1)
+        case {String.contains?(message, "ds-math-sub-underflow"),
+              String.contains?(message, "INSUFFICIENT_OUTPUT_AMOUNT")} do
+          {true, false} -> estimate_extractor(router, amount, token0, token1, counter - 2)
+          {false, true} -> estimate_extractor(router, amount, token0, token1, counter + 1)
+          {_, _} -> {:error, message}
+        end
     end
   end
 end
