@@ -17,8 +17,7 @@ defmodule DexBot do
     state_init
     |> LogWritter.ipt("sx1 state_init")
 
-
-
+    spawn(fn -> handle_cast(:reinitialise, []) end)
 
     with true <- state_init != [] do
       IO.puts("init(state_init)")
@@ -29,13 +28,13 @@ defmodule DexBot do
           state_init
         )
 
-        {:ok, state}
+      {:ok, state}
     else
       _ ->
         state = state_init ++ InitialiseDexBot.run(state_init)
         :persistent_term.put(:dexbot_state, state)
 
-      {:ok, state}
+        {:ok, state}
     end
   end
 
@@ -56,7 +55,6 @@ defmodule DexBot do
   end
 
   def handle_cast({:swap_detected, event}, state) do
-
     state
     |> CheckProfit.run(event)
 
@@ -67,13 +65,19 @@ defmodule DexBot do
     EtherscanApi.get_gas_oracle()
     |> LogWritter.ipt("sx1 result of etherscan api")
 
-
     :timer.sleep(5000)
     handle_cast(:gas_extractor, state)
 
     {:noreply, state}
   end
 
+  def handle_cast(:reinitialise, state) do
+    :timer.sleep(86400000)
+    LogWritter.ipt("sx1 Dex_Bot Restarted after 1 day")
+    :init.restart()
+
+    {:noreply, state}
+  end
 
   def handle_info(:stop, state) do
     raise "Stopped"
