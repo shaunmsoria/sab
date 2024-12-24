@@ -72,6 +72,10 @@ defmodule CheckProfit do
         |> Enum.reduce([], fn token_pair_dex_searched, acc ->
           acc ++ maybe_profitable_trade(token_pair_dex_event, token_pair_dex_searched)
         end)
+      else
+        {:error, message} ->
+          message |> LogWritter.ipt("sx1 no_profitable_trades")
+          []
       end
 
     {:ok, profitable_trades_result}
