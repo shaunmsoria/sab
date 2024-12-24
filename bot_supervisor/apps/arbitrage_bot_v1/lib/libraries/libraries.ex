@@ -56,58 +56,9 @@ defmodule Libraries do
         "address" => "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "decimals" => 6
       },
-<<<<<<< HEAD
-      "dai" => %{
-        "name" => "Dai Stablecoin",
-        "symbol" => "DAI",
-        "address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "decimals" => 18
-      },
-      "usdt" => %{
-        "name" => "Tether USD",
-        "symbol" => "USDT",
-        "address" => "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "decimals" => 6
-      },
-      "pepe" => %{
-        "name" => "Pepe",
-        "symbol" => "PEPE",
-        "address" => "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
-        "decimals" => 18
-      },
-      "mkr" => %{
-        "name" => "Maker",
-        "symbol" => "MKR",
-        "address" => "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-        "decimals" => 18
-      },
-      "wise" => %{
-        "name" => "Wise Token",
-        "symbol" => "WISE",
-        "address" => "0x66a0f676479Cee1d7373f3DC2e2952778BfF5bd6",
-        "decimals" => 18
-      },
-      "Eigen" => %{
-        "name" => "Eigen",
-        "symbol" => "EIGEN",
-        "address" => "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-        "decimals" => 18
-      },
-      "mog" => %{
-        "name" => "Mog Coin",
-        "symbol" => "MOG",
-        "address" => "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
-        "decimals" => 18
-      },
-      "kekec" => %{
-        "name" => "The Balkan Dwarf",
-        "symbol" => "KEKEC",
-        "address" => "0x8C7AC134ED985367EADC6F727d79E8295E11435c",
-        "decimals" => 18
-      }
-=======
       # "0x6B175474E89094C44Da98b954EedeAC495271d0F" => %{
-      #   "name" => "Dai Stablecoin",
+      #   "name" => "Dai Stablecoin",:w
+
       #   "symbol" => "DAI",
       #   "address" => "0x6B175474E89094C44Da98b954EedeAC495271d0F",
       #   "decimals" => 18
@@ -148,7 +99,6 @@ defmodule Libraries do
       #   "address" => "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
       #   "decimals" => 18
       # },
->>>>>>> 79269f510e2b3c00e5a1f5709ef15fa95f6a5b7d
     }
   end
 
