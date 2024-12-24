@@ -50,9 +50,9 @@ defmodule InitialiseDexTokenPair do
           _ -> 5000
         end
 
-      # if dex_all_pairs_length == current_all_pairs_length do
+      if dex_all_pairs_length - 2 < current_all_pairs_length do
       # if max_length == current_all_pairs_length do
-      if max_length <= current_all_pairs_length do
+      # if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -64,8 +64,8 @@ defmodule InitialiseDexTokenPair do
   end
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
-    # start_all_pairs_length..dex_all_pairs_length
-    start_all_pairs_length..2000
+    start_all_pairs_length..dex_all_pairs_length
+    # start_all_pairs_length..2000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
