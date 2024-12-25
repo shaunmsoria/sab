@@ -193,7 +193,9 @@ defmodule InitialiseDexTokenPair do
   def sanitise_param({:ok, param}) when is_binary(param) do
     case param do
       "0x" -> nil
-      param -> param |> String.slice(0..254)
+      param ->
+        split_param = param |> String.slice(0..254) |> inspect() |> String.trim("\"")
+
     end
   end
 
