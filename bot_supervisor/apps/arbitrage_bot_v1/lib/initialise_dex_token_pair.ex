@@ -83,6 +83,7 @@ defmodule InitialiseDexTokenPair do
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: factory} = dex, n_pair) do
     with {:ok, pair_address} <-
            get_all_pairs(factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
+           false <- String.contains?(pair_address |> inspect(), "<<"),
          {:ok, token0_address} <- pair_address |> contract(:token0),
          {:ok, token1_address} <- pair_address |> contract(:token1),
          {:ok, token0} <- maybe_add_token(token0_address),
