@@ -29,7 +29,7 @@ defmodule InitialiseDexTokenPair do
   end
 
   def maybe_update_dex_all_pairs(%Dex{all_pairs_length: nil, factory: factory} = dex) do
-    with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) ,
+    with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory),
          {:ok, :all_pairs_retrieved} <- get_pairs_for_dex(dex, dex_all_pairs_length) do
       {:ok, dex}
     end
@@ -44,16 +44,15 @@ defmodule InitialiseDexTokenPair do
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
       max_length =
-        case  dex_name  do
-          "pancakeswap" ->  668
+        case dex_name do
+          "pancakeswap" -> 668
           "sushiswap" -> 4143
           _ -> 5000
         end
 
-
       if dex_all_pairs_length <= current_all_pairs_length do
-      # if max_length == current_all_pairs_length do
-      # if max_length <= current_all_pairs_length do
+        # if max_length == current_all_pairs_length do
+        # if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -65,7 +64,9 @@ defmodule InitialiseDexTokenPair do
   end
 
   def sanitise_current_all_pairs_length(0), do: 0
-  def sanitise_current_all_pairs_length(current_all_pairs_length), do: (current_all_pairs_length - 1)
+
+  def sanitise_current_all_pairs_length(current_all_pairs_length),
+    do: current_all_pairs_length - 1
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
     sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
@@ -78,7 +79,6 @@ defmodule InitialiseDexTokenPair do
 
     {:ok, :all_pairs_retrieved}
   end
-
 
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: factory} = dex, n_pair) do
     with {:ok, pair_address} <-
@@ -98,13 +98,13 @@ defmodule InitialiseDexTokenPair do
       {:ok, token_pair_dex}
     else
       error ->
-        :timer.sleep(3600000)
+        :timer.sleep(5000)
 
         LW.ipt(
           "dex: #{dex_name} for n_pair: #{n_pair} not retrieved because of: #{inspect(error)}"
         )
 
-        get_or_create_pair_for_dex(%Dex{factory: factory} = dex, n_pair)
+        get_or_create_pair_for_dex(%Dex{factory: factory} = dex, n_pair + 1)
     end
   end
 
@@ -141,23 +141,31 @@ defmodule InitialiseDexTokenPair do
   end
 
   def maybe_add_token(token_address) do
-    case TS.with_address(token_address) |> Repo.one() do
-      nil ->
-        with {:ok, symbol, name, decimals} <- token_address |> get_contract_for_token_address(),
-             {:ok, token} <-
-               %{
-                 symbol: symbol,
-                 name: name,
-                 address: token_address,
-                 upcase_address: token_address |> String.upcase(),
-                 decimals: decimals
-               }
-               |> TC.insert() do
-          {:ok, token}
-        end
+    with true <- String.contains?(token_address |> inspect(), "<<") do
+      {:error, "token with address #{token_address} couldn't be retrieved"}
+    else
+      false ->
+        case TS.with_address(token_address)
+             |> Repo.one() do
+          nil ->
+            with {:ok, symbol, name, decimals} <-
+                   token_address
+                   |> get_contract_for_token_address(),
+                 {:ok, token} <-
+                   %{
+                     symbol: symbol,
+                     name: name,
+                     address: token_address,
+                     upcase_address: token_address |> String.upcase(),
+                     decimals: decimals
+                   }
+                   |> TC.insert() do
+              {:ok, token}
+            end
 
-      %Token{} = token ->
-        {:ok, token}
+          %Token{} = token ->
+            {:ok, token}
+        end
     end
   end
 
@@ -186,16 +194,16 @@ defmodule InitialiseDexTokenPair do
       {:ok, sanitise_param(symbol_result), sanitise_param(name_result),
        sanitise_param(decimals_result, :decimals)}
       |> IO.inspect(label: "sx1 get_contract_for_token_address")
-
     end
   end
 
   def sanitise_param({:ok, param}) when is_binary(param) do
     case param do
-      "0x" -> nil
+      "0x" ->
+        nil
+
       param ->
         split_param = param |> String.slice(0..254) |> inspect() |> String.trim("\"")
-
     end
   end
 
@@ -203,5 +211,4 @@ defmodule InitialiseDexTokenPair do
 
   def sanitise_param({:ok, param}, :decimals) when is_integer(param), do: param
   def sanitise_param(_, :decimals), do: 0
-
 end
