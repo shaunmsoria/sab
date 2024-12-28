@@ -45,14 +45,14 @@ defmodule InitialiseDexTokenPair do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
       max_length =
         case dex_name do
-          "pancakeswap" -> 668
+          "pancakeswap" -> 671
           "sushiswap" -> 4143
           _ -> 5000
         end
 
-      if dex_all_pairs_length <= current_all_pairs_length do
+      # if dex_all_pairs_length <= current_all_pairs_length do
         # if max_length == current_all_pairs_length do
-        # if max_length <= current_all_pairs_length do
+        if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -69,8 +69,8 @@ defmodule InitialiseDexTokenPair do
     do: current_all_pairs_length - 1
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
-    sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
-    # start_all_pairs_length..5000
+    # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
+    sanitise_current_all_pairs_length(start_all_pairs_length)..5000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 

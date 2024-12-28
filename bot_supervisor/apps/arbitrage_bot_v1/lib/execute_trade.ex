@@ -12,7 +12,7 @@ defmodule ExecuteTrade do
       list_profitable_trades
       |> Enum.sort_by(
         fn %ProfitableTrade{estimated_profit: estimated_profit} ->
-          estimated_profit
+          estimated_profit |> String.to_float()
         end,
         :desc
       )
