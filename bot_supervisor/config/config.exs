@@ -110,7 +110,7 @@ config :arbitrage_bot_v1, W3WS,
           # In the MFA tuple case  the arguments will be a `%W3WS.Env{}` struct followed
           # by any arguments provided.
           # defaults to `W3WS.Handler.DefaultHandler` which logs received events.
-          handler: {W3WS.Handler.BlockRemovalHandler, blocks: 12, handler: DexBot.Handler}
+          handler: {W3WS.Handler.BlockRemovalHandler, blocks: 12, handler: DexBot.Handler},
 
           # a list of log event topics to subscribe to for the given subscription. this is
           # optional. not passing `:topics` will subscribe to all log events. See

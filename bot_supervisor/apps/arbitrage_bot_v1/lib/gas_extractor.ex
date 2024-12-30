@@ -46,7 +46,7 @@ defmodule GasExtractor do
         %{"error" => reason} |> LogWritter.ipt("sx1 gas_extract error result")
     end
 
-    :timer.sleep(1000)
+    :timer.sleep(10000)
     GenServer.cast(__MODULE__, :refresh)
 
     {:noreply, state}

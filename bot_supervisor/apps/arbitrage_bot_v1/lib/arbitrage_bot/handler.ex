@@ -71,19 +71,36 @@ defmodule DexBot.Handler do
   def handle_event(
         %Env{
           decoded?: true,
-          event: %Event{name: "Swap", data: _data}
+          event: %Event{name: "Swap", data: data}
         } = event,
         _state
       ) do
     # event |> LogWritter.ipt("sx1 event filtered")
+    # data |> LogWritter.ipt("sx1 event decoded? true")
 
     GenServer.cast(DexBot, {:swap_detected, event})
   end
 
+  # def handle_event(
+  #       %Env{
+  #         event: %Event{name: "Swap", data: data}
+  #       } = event,
+  #       _state
+  #     ) do
+  #   data |> LogWritter.ipt("sx1 event decoded? false")
+
+  #   nil
+  # end
+
   def handle_event(
-        _event,
+        event,
         _state
       ) do
+    # event |> LogWritter.ipt("sx1 event")
+    # event[:event] |> LogWritter.ipt("sx1 event[:event]")
+    # event.event |> LogWritter.ipt("sx1 event.event")
+    # event |> Map.get(:event) |> LogWritter.ipt("sx1 event |> Map.get(:event) ")
+    # event[:event][:data] |> LogWritter.ipt("sx1 event.event.data")
     nil
   end
 

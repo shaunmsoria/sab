@@ -204,7 +204,7 @@ defmodule InitialiseDexTokenPair do
         nil
 
       param ->
-        split_param = param |> String.slice(0..254) |> inspect() |> String.trim("\"")
+        split_param = param |> String.slice(0..15) |> inspect() |> String.trim("\"")
     end
   end
 
