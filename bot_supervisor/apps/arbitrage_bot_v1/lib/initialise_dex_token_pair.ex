@@ -44,8 +44,8 @@ defmodule InitialiseDexTokenPair do
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(factory) do
       max_length =
-        case  dex_name  do
-          "pancakeswap" ->  668
+        case dex_name do
+          "pancakeswap" -> 671
           "sushiswap" -> 4143
           _ -> 5000
         end
@@ -68,8 +68,8 @@ defmodule InitialiseDexTokenPair do
   def sanitise_current_all_pairs_length(current_all_pairs_length), do: (current_all_pairs_length - 1)
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
-    sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
-    # start_all_pairs_length..5000
+    # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
+    sanitise_current_all_pairs_length(start_all_pairs_length)..5000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -195,7 +195,6 @@ defmodule InitialiseDexTokenPair do
       "0x" -> nil
       param ->
         split_param = param |> String.slice(0..15) |> inspect() |> String.trim("\"")
-
     end
   end
 
