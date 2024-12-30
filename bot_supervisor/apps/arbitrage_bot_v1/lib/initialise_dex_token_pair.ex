@@ -68,8 +68,8 @@ defmodule InitialiseDexTokenPair do
   def sanitise_current_all_pairs_length(current_all_pairs_length), do: (current_all_pairs_length - 1)
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
-    # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
-    sanitise_current_all_pairs_length(start_all_pairs_length)..5000
+    sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
+    # sanitise_current_all_pairs_length(start_all_pairs_length)..5000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
