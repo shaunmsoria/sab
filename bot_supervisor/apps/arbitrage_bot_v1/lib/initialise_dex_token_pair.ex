@@ -15,7 +15,7 @@ defmodule InitialiseDexTokenPair do
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
   def run() do
-    with list_dexs <- DS.query() |> Repo.all(),
+    with list_dexs <- DS.with_abi("uniswapV2") |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs) do
       {:ok, :database_ready}
     end
@@ -47,7 +47,7 @@ defmodule InitialiseDexTokenPair do
         case dex_name do
           "pancakeswap" -> 671
           "sushiswap" -> 4143
-          _ -> 5000
+          _ -> 115871
         end
 
       # if dex_all_pairs_length <= current_all_pairs_length do
@@ -70,7 +70,7 @@ defmodule InitialiseDexTokenPair do
 
   def get_pairs_for_dex(%Dex{} = dex, dex_all_pairs_length, start_all_pairs_length \\ 0) do
     # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
-    sanitise_current_all_pairs_length(start_all_pairs_length)..5000
+    sanitise_current_all_pairs_length(start_all_pairs_length)..115871
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -84,8 +84,8 @@ defmodule InitialiseDexTokenPair do
     with {:ok, pair_address} <-
            get_all_pairs(factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
            false <- String.contains?(pair_address |> inspect(), "<<"),
-         {:ok, token0_address} <- pair_address |> contract(:token0),
-         {:ok, token1_address} <- pair_address |> contract(:token1),
+         {:ok, token0_address} <- pair_address |> pool("uniswapV2", :token0),
+         {:ok, token1_address} <- pair_address |> pool("uniswapV2", :token1),
          {:ok, token0} <- maybe_add_token(token0_address),
          {:ok, token1} <- maybe_add_token(token1_address),
          {:ok, token_pair} <- maybe_add_token_pair(token0, token1, dex),
@@ -173,21 +173,21 @@ defmodule InitialiseDexTokenPair do
   def get_contract_for_token_address(token_address) do
     with symbol_result <-
            (try do
-              token_address |> contract(:symbol)
+              token_address |> token_erc20(:symbol)
             rescue
               e ->
                 {:ok, token_address}
             end),
          name_result <-
            (try do
-              token_address |> contract(:name)
+              token_address |> token_erc20(:name)
             rescue
               e ->
                 {:ok, token_address}
             end),
          decimals_result <-
            (try do
-              token_address |> contract(:decimals)
+              token_address |> token_erc20(:decimals)
             rescue
               e ->
                 {:ok, 0}

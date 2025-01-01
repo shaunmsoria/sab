@@ -192,11 +192,11 @@ defmodule CheckProfit do
       ) do
     with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
            token_pair_dex_event_address
-           |> contract(:get_reserves)
+           |> pool("uniswapV2", :get_reserves)
            |> LW.ipt("get_reserves event"),
          {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
            token_pair_dex_searched_address
-           |> contract(:get_reserves)
+           |> pool("uniswapV2", :get_reserves)
            |> LW.ipt("get_reserves searched"),
          token_pair_dex_event_price_O_I <- reserve0 / reserve1,
          token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
@@ -277,7 +277,7 @@ defmodule CheckProfit do
     with {:ok, weth_location} <-
            locate_weth_in_token_pair_v3(gas_token_pair),
          {:ok, [reserve0, reserve1, _block_timestamp]} <-
-           gas_token_pair.address |> contract(:get_reserves),
+           gas_token_pair.address |> pool("uniswapV2", :get_reserves),
          {:ok, unit_weth_token_profit_price} <-
            calculate_gas_price_weth_price_v3(
              weth_location,
@@ -326,7 +326,7 @@ defmodule CheckProfit do
          {:ok, weth_location} <-
            locate_weth_in_token_pair_v2(gas_token_pair),
          {:ok, [reserve0, reserve1, _block_timestamp]} <-
-           gas_token_pair_address |> contract(:get_reserves),
+           gas_token_pair_address |> pool("uniswapV2", :get_reserves),
          {:ok, unit_weth_token_profit_price} <-
            calculate_gas_price_weth_price_v2(weth_location, reserve0, reserve1) do
       {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}

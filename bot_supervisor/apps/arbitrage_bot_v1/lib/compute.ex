@@ -1,52 +1,65 @@
 defmodule Compute do
-  def get_weth_balance(wallet_address) do
-    WethContract.balance_of(wallet_address)
-    |> Ethers.call(to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
-  end
-
-  def get_shib_balance(wallet_address) do
-    WethContract.balance_of(wallet_address)
-    |> Ethers.call(to: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE")
-  end
-
-  def weth_total_supply() do
-    WethContract.total_supply()
-    |> Ethers.call(to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
-  end
-
   def get_all_pairs(factory_address, n_pair) do
-    DexContract.all_pairs(n_pair)
+    FactoryContractV2.all_pairs(n_pair)
     |> Ethers.call(to: factory_address)
   end
 
   def get_all_pairs_length(factory_address) do
-    DexContract.all_pairs_length()
+    FactoryContractV2.all_pairs_length()
     |> Ethers.call(to: factory_address)
   end
 
   def get_pair_address(factory_address, token0_address, token1_address) do
-    DexContract.get_pair(token0_address, token1_address)
+    FactoryContractV2.get_pair(token0_address, token1_address)
     |> Ethers.call(to: factory_address)
   end
 
-  defmacro contract(pair_address, function_contract) do
-    quote do
-      LiquidityPoolContract.unquote(function_contract)()
-      |> Ethers.call(to: unquote(pair_address))
+  def get_pool_address(factory_address, token0_address, token1_address, fee) do
+    FactoryContractV3.get_pool(token0_address, token1_address, fee)
+    |> Ethers.call(to: factory_address)
+  end
+
+  defmacro pool(pair_address, abi, function, params \\ nil) do
+    case {abi, params} do
+      {"uniswapV2", nil} ->
+        quote do
+          PoolContractV2.unquote(function)()
+          |> Ethers.call(to: unquote(pair_address))
+        end
+
+      {"uniswapV2", params} ->
+        quote do
+          PoolContractV2.unquote(function)(unquote(params))
+          |> Ethers.call(to: unquote(pair_address))
+        end
+
+      {"uniswapV3", nil} ->
+        quote do
+          PoolContractV3.unquote(function)()
+          |> Ethers.call(to: unquote(pair_address))
+        end
+
+      {"uniswapV3", params} ->
+        quote do
+          PoolContractV3.unquote(function)(unquote(params))
+          |> Ethers.call(to: unquote(pair_address))
+        end
     end
   end
 
-  defmacro contract(pair_address, function_contract, params) do
-    quote do
-      LiquidityPoolContract.unquote(function_contract)(unquote(params))
-      |> Ethers.call(to: unquote(pair_address))
-    end
-  end
+  defmacro token_erc20(token_address, function, params \\ nil) do
+    case params do
+      nil ->
+        quote do
+          TokenERC20Contract.unquote(function)()
+          |> Ethers.call(to: unquote(token_address))
+        end
 
-  defmacro contract_logs(pair_address, function_contract) do
-    quote do
-      LiquidityPoolContract.unquote(function_contract)()
-      |> Ethers.get_logs(to: unquote(pair_address))
+      params ->
+        quote do
+          TokenERC20Contract.unquote(function)(unquote(params))
+          |> Ethers.call(to: unquote(token_address))
+        end
     end
   end
 
@@ -57,13 +70,11 @@ defmodule Compute do
 
   def calculate_price(pair_address, :O_I) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
-           pair_address |> contract(:get_reserves) do
+           pair_address |> pool("uniswapV2", :get_reserves) do
       case {is_integer(amount_0), is_integer(amount_1)} do
         {true, true} -> {:ok, amount_0 / amount_1}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
-
-      # amount_0 / amount_1
     else
       _ -> {:error, "no price found for the pair #{pair_address}"}
     end
@@ -71,13 +82,11 @@ defmodule Compute do
 
   def calculate_price(pair_address, :I_O) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
-           pair_address |> contract(:get_reserves) do
+           pair_address |> pool("uniswapV2", :get_reserves) do
       case {is_integer(amount_0), is_integer(amount_1)} do
         {true, true} -> {:ok, amount_1 / amount_0}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
-
-      # amount_1 / amount_0
     else
       _ -> {:error, "no price found for the pair #{pair_address}"}
     end
@@ -91,21 +100,22 @@ defmodule Compute do
   end
 
   def simulate_amount_input(router_address, amount_in, reserve0, reserve1) do
-    LiquidityPoolRouterContract.get_amount_in(amount_in, reserve0, reserve1)
+    RouterContractV2.get_amount_in(amount_in, reserve0, reserve1)
     |> Ethers.call(to: router_address)
   end
 
   def simulate_amount_output(router_address, amount_in, reserve0, reserve1) do
-    LiquidityPoolRouterContract.get_amount_out(amount_in, reserve0, reserve1)
+    RouterContractV2.get_amount_out(amount_in, reserve0, reserve1)
     |> Ethers.call(to: router_address)
   end
 
   # This returns the minimum amount of WETH needed to get the specified amount of SHIB
   def simulate_amounts_input(router_address, amount_out, token0_address, token1_address) do
-    IO.puts("mx1 simulate_amounts_input amount_out: #{amount_out} token0_address: #{token0_address} token1_address: #{token1_address}")
+    IO.puts(
+      "mx1 simulate_amounts_input amount_out: #{amount_out} token0_address: #{token0_address} token1_address: #{token1_address}"
+    )
 
-
-    LiquidityPoolRouterContract.get_amounts_in(amount_out, [token0_address, token1_address])
+    RouterContractV2.get_amounts_in(amount_out, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
@@ -114,9 +124,11 @@ defmodule Compute do
     do: {:error, "Input amount 0 for simulate_amounts_output"}
 
   def simulate_amounts_output(router_address, amount_in, token0_address, token1_address) do
-    IO.puts("mx1 simulate_amounts_output amount_in: #{amount_in} token0_address: #{token0_address} token1_address: #{token1_address}")
+    IO.puts(
+      "mx1 simulate_amounts_output amount_in: #{amount_in} token0_address: #{token0_address} token1_address: #{token1_address}"
+    )
 
-    LiquidityPoolRouterContract.get_amounts_out(amount_in, [token0_address, token1_address])
+    RouterContractV2.get_amounts_out(amount_in, [token0_address, token1_address])
     |> Ethers.call(to: router_address)
   end
 
@@ -135,29 +147,6 @@ defmodule Compute do
              token0_address,
              token1_address
            ),
-         amount_in <- trade1 |> Enum.at(0),
-         amount_out <- trade2 |> Enum.at(1) do
-      {:ok, amount_in, amount_out}
-    end
-  end
-
-  def simulate(amount, router_from, router_to, token_pair) do
-    with {:ok, trade1} <-
-           router_from
-           |> simulate_amounts_output(
-             amount,
-             token_pair["token1"]["address"],
-             token_pair["token0"]["address"]
-           )
-           |> IO.inspect(label: "sx1 simulate_amounts_output trade1"),
-         {:ok, trade2} <-
-           router_to
-           |> simulate_amounts_output(
-             trade1 |> Enum.at(1),
-             token_pair["token0"]["address"],
-             token_pair["token1"]["address"]
-           )
-           |> IO.inspect(label: "sx1 simulate_amounts_output trade2"),
          amount_in <- trade1 |> Enum.at(0),
          amount_out <- trade2 |> Enum.at(1) do
       {:ok, amount_in, amount_out}
@@ -219,18 +208,8 @@ defmodule Compute do
       tradable_amount
     )
     |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
-
-    # Sabv1Contract.execute_trade(
-    #   true,
-    #   token0_address,
-    #   token1_address,
-    #   tradable_amount
-    # )
-    # |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
     |> Ethers.call(to: smart_contract_address)
     |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
-
-    # |> Ethers.call(from: owner_wallet_address, to: smart_contract_address)
   end
 
   def execute_trade(
