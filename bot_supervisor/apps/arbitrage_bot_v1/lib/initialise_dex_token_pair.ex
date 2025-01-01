@@ -147,7 +147,6 @@ defmodule InitialiseDexTokenPair do
       else
         {:error, "token with address #{inspect(token_address)} is invalid"}
       end
-      |> IO.inspect(label: "sx1 token")
 
     case token_found do
       nil ->
@@ -200,11 +199,6 @@ defmodule InitialiseDexTokenPair do
   end
 
   def sanitise_param({:ok, param}) when is_binary(param) do
-    # param |> IO.inspect(label: "sx1 param")
-
-    # if String.contains?(inspect(param), "<<") do
-    #   nil
-    # else
       case param do
         "0x" ->
           nil
@@ -212,7 +206,6 @@ defmodule InitialiseDexTokenPair do
         param ->
           split_param = param |> String.slice(0..15) |> inspect() |> String.trim("\"")
       end
-    # end
   end
 
   def sanitise_param(_), do: nil
