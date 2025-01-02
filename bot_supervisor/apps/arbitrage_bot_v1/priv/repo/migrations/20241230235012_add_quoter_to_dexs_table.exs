@@ -3,8 +3,7 @@ defmodule Repo.Migrations.AddQuoterToDexsTable do
 
   def change do
     alter table("dexs") do
-       add :quoter, :string
+      add(:quoter, :string)
     end
-
   end
 end
