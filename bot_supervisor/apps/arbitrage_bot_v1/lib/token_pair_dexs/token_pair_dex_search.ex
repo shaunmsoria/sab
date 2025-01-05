@@ -31,6 +31,10 @@ defmodule TokenPairDexSearch do
     from(t in query, where: t.upcase_address == ^upcase_address)
   end
 
+  def with_n_pair(query \\ query(), n_pair) do
+    from(t in query, where: t.n_pair == ^n_pair)
+  end
+
   def with_fee(query \\ query(), fee) do
     from(t in query, where: t.fee == ^fee)
   end
