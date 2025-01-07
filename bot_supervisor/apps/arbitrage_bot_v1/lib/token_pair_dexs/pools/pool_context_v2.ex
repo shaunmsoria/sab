@@ -22,10 +22,13 @@ defmodule PoolContextV2 do
   end
 
   def get_all_token_pairs_length(list_dexs) do
+    list_processed_dexs =
     list_dexs
     |> Enum.map(fn dex ->
       maybe_update_dex_all_pairs(dex)
     end)
+
+    {:ok, list_processed_dexs}
   end
 
   def maybe_update_dex_all_pairs(
@@ -33,7 +36,7 @@ defmodule PoolContextV2 do
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(dex_factory),
          {:ok, :all_pairs_retrieved} <- get_pairs_for_dex(dex, dex_all_pairs_length) do
-      {:ok, dex}
+      dex
     end
   end
 
@@ -61,7 +64,7 @@ defmodule PoolContextV2 do
         IO.puts("dex: #{dex_name} have been updated")
       end
 
-      {:ok, dex}
+      dex
     end
   end
 
