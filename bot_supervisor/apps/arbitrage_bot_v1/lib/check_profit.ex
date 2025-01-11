@@ -181,26 +181,32 @@ defmodule CheckProfit do
               decimals: token1_decimals
             }
           },
-          address: token_pair_dex_event_address
+          address: token_pair_dex_event_address,
+          price: token_pair_dex_event_price_O_I,
+          reserve0: reserve0,
+          reserve1: reserve1
         },
         %TokenPairDex{
           dex: %Dex{
             router: router_searched_address
           },
-          address: token_pair_dex_searched_address
+          address: token_pair_dex_searched_address,
+          price: token_pair_dex_searched_price_O_I,
+          reserve0: reserve0_searched,
+          reserve1: reserve1_searched
         }
       ) do
-    with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
-           token_pair_dex_event_address
-           |> pool("uniswapV2", :get_reserves)
-           |> LW.ipt("get_reserves event"),
-         {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
-           token_pair_dex_searched_address
-           |> pool("uniswapV2", :get_reserves)
-           |> LW.ipt("get_reserves searched"),
-         token_pair_dex_event_price_O_I <- reserve0 / reserve1,
-         token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
-         {:ok, direction} <-
+    # with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
+    #        token_pair_dex_event_address
+    #        |> pool("uniswapV2", :get_reserves)
+    #        |> LW.ipt("get_reserves event"),
+    #      {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
+    #        token_pair_dex_searched_address
+    #        |> pool("uniswapV2", :get_reserves)
+    #        |> LW.ipt("get_reserves searched"),
+    # token_pair_dex_event_price_O_I <- reserve0 / reserve1,
+    #  token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
+      with   {:ok, direction} <-
            transaction_direction(
              token_pair_dex_searched_price_O_I - token_pair_dex_event_price_O_I
            ) do
@@ -212,7 +218,8 @@ defmodule CheckProfit do
                    reserve0_searched,
                    token1_address,
                    token0_address,
-                   22
+                  #  22
+                  2
                  )
                  |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
@@ -236,7 +243,8 @@ defmodule CheckProfit do
                    reserve0_searched,
                    token1_address,
                    token0_address,
-                   22
+                  #  22
+                  2
                  )
                  |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
@@ -366,26 +374,26 @@ defmodule CheckProfit do
 
   def estimate_extractor(router, amount, token0, token1, counter) do
     list_divider = [
-      1_000_000_000_000,
-      500_000_000_000,
-      10_000_000_000,
-      5_000_000_000,
-      1_000_000_000,
-      500_000_000,
-      100_000_000,
-      50_000_000,
-      10_000_000,
-      5_000_000,
-      1_000_000,
-      500_000,
-      100_000,
-      50000,
-      10000,
-      5000,
-      1000,
-      500,
-      100,
-      50,
+      # 1_000_000_000_000,
+      # 500_000_000_000,
+      # 10_000_000_000,
+      # 5_000_000_000,
+      # 1_000_000_000,
+      # 500_000_000,
+      # 100_000_000,
+      # 50_000_000,
+      # 10_000_000,
+      # 5_000_000,
+      # 1_000_000,
+      # 500_000,
+      # 100_000,
+      # 50000,
+      # 10000,
+      # 5000,
+      # 1000,
+      # 500,
+      # 100,
+      # 50,
       10,
       5,
       2

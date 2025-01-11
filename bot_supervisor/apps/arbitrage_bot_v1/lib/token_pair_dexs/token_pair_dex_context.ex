@@ -41,8 +41,6 @@ defmodule TokenPairDexContext do
         [] ->
           {:error, "no_profitable_trades"}
 
-
-
         list_token_pair_dexs ->
           {:ok, list_token_pair_dexs}
       end
@@ -61,10 +59,14 @@ defmodule TokenPairDexContext do
         } = token_pair_dex,
         test
       ) do
-    with {:ok, new_token_pair_dex_price} <-
+    with {:ok, new_token_pair_dex_price, reserve0, reserve1} <-
            Compute.calculate_price(token_pair_dex_address),
          {:ok, updated_token_pair_dex} <-
-           TPDC.update(token_pair_dex, %{price: "#{new_token_pair_dex_price}"}) do
+           TPDC.update(token_pair_dex, %{
+            price: "#{new_token_pair_dex_price}",
+            reserve0: "#{reserve0}",
+            reserve1: "#{reserve1}"
+            }) do
       LW.ipt(
         "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name} price updated to: #{new_token_pair_dex_price}"
       )
@@ -85,12 +87,16 @@ defmodule TokenPairDexContext do
         } = token_pair_dex,
         test
       ) do
-    with {:ok, new_token_pair_dex_price} <-
+    with {:ok, new_token_pair_dex_price, reserve0, reserve1} <-
            Compute.calculate_price(token_pair_dex_address),
          true <-
            token_pair_dex_price != "#{new_token_pair_dex_price}",
          {:ok, updated_token_pair_dex} <-
-           TPDC.update(token_pair_dex, %{price: "#{new_token_pair_dex_price}"}) do
+           TPDC.update(token_pair_dex, %{
+            price: "#{new_token_pair_dex_price}",
+            reserve0: "#{reserve0}",
+            reserve1: "#{reserve1}"
+            }) do
       LW.ipt(
         "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name}  price updated to: #{new_token_pair_dex_price}"
       )
@@ -140,7 +146,9 @@ defmodule TokenPairDexContext do
     # |> IO.inspect(label: "sx1 extract_other_token_pair_dexs")
 
     token_pair =
-      TokenPairDexSearch.with_upcase_token_address_and_weth("0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48")
+      TokenPairDexSearch.with_upcase_token_address_and_weth(
+        "0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48"
+      )
       |> Repo.one()
       |> Repo.preload([:dex, token_pair: [:token0, :token1]])
       |> IO.inspect(label: "token_pair")
