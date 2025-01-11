@@ -7,8 +7,8 @@ defmodule InitialiseDexTokenPair do
   def run() do
     IO.puts("sx1 IDTP before with")
 
-    with {:ok, list_dex_token_pairs_length_updated} <- PCV2.initialise(),
-         {:ok, :test} <- PCV3.initialise() do
+    with {:ok, list_dex_token_pairs_length_updated} <- PCV2.initialise() do
+        #  {:ok, :test} <- PCV3.initialise() do
       IO.puts("sx1 in IDTP.run")
 
       {:ok, :database_ready}

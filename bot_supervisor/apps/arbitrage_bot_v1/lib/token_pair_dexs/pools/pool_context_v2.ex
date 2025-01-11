@@ -23,10 +23,10 @@ defmodule PoolContextV2 do
 
   def get_all_token_pairs_length(list_dexs) do
     list_processed_dexs =
-    list_dexs
-    |> Enum.map(fn dex ->
-      maybe_update_dex_all_pairs(dex)
-    end)
+      list_dexs
+      |> Enum.map(fn dex ->
+        maybe_update_dex_all_pairs(dex)
+      end)
 
     {:ok, list_processed_dexs}
   end
@@ -71,10 +71,7 @@ defmodule PoolContextV2 do
   def sanitise_current_all_pairs_length(0), do: 0
 
   def sanitise_current_all_pairs_length(current_all_pairs_length),
-    do: current_all_pairs_length - 1    # with list_dexs <- DS.with_abi("uniswapV2") |> Repo.all(),
-    #      {:ok, list_dex_token_pairs_length_updated} <- PCV2.get_all_token_pairs_length(list_dexs) do
-    #   {:ok, :database_ready}
-    # end
+    do: current_all_pairs_length - 1
 
   def get_pairs_for_dex(
         dex,
@@ -82,7 +79,8 @@ defmodule PoolContextV2 do
         start_all_pairs_length \\ 0
       ) do
     # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
-    sanitise_current_all_pairs_length(start_all_pairs_length)..237_720
+    # sanitise_current_all_pairs_length(start_all_pairs_length)..237_720
+    sanitise_current_all_pairs_length(start_all_pairs_length)..130
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -101,11 +99,15 @@ defmodule PoolContextV2 do
          {:ok, token0} <- maybe_add_token(token0_address),
          {:ok, token1} <- maybe_add_token(token1_address),
          {:ok, token_pair} <- maybe_add_token_pair(token0, token1, dex),
+         {:ok, price, reserve0, reserve1} <- calculate_price(pair_address),
          {:ok, token_pair_dex} <-
            TPDC.update_with_token_pair_and_dex(token_pair, dex, %{
              address: pair_address,
              upcase_address: pair_address |> String.upcase(),
-             n_pair: n_pair
+             n_pair: n_pair,
+             price: "#{price}",
+             reserve0: "#{reserve0}",
+             reserve1: "#{reserve1}"
            }),
          {:ok, updated_dex} <- dex |> DC.update(%{all_pairs_length: n_pair}) do
       {:ok, token_pair_dex}

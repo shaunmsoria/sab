@@ -17,15 +17,11 @@ defmodule CheckProfit do
          token_pair_dex_address <- event_data.event.address,
          {:ok,
           %TokenPairDex{
-            token_pair: %TokenPair{status: "active"} = token,
+            token_pair: %TokenPair{status: "active"} = token_pair,
             dex: %Dex{name: dex_name} = dex
           } = token_pair_dex_event} <-
-           extract_token_pair_dex_details(token_pair_dex_address),
-         {:ok, token_pair_dex_event_udpated} <-
-           TPDC.update_token_pair_dex_price(token_pair_dex_event, :TPD_event),
-         {:ok, list_of_profitable_trades} <-
-           get_profitable_trade(token_pair_dex_event_udpated) do
-      ExecuteTrade.run_v2(list_of_profitable_trades)
+           extract_token_pair_dex_details(token_pair_dex_address) do
+      maybe_investigate_event(event_data.event.data, event_data.event.name, token_pair_dex_event)
     else
       {:ok, %TokenPairDex{id: token_pair_id, token_pair: %TokenPair{status: "inactive"}}} ->
         IO.puts("sx1 TokenPair id: #{token_pair_id} Inactive")
@@ -34,6 +30,151 @@ defmodule CheckProfit do
         {:error, error_message} |> IO.inspect(label: "sx1")
     end
   end
+
+  def maybe_investigate_event(
+        %{
+          "amount0In" => amount0_in,
+          "amount0Out" => amount0_out,
+          "amount1In" => amount1_in,
+          "amount1Out" => amount1_out,
+          "sender" => _sender_address,
+          "to" => _to_address
+        },
+        "Swap",
+        %TokenPairDex{
+
+          token_pair: %TokenPair{status: "active"} = token_pair,
+          dex: %Dex{name: dex_name} = dex,
+          price: pool_price,
+          reserve0: reserve0,
+          reserve1: reserve1
+        } = token_pair_dex_event
+      ) do
+    case {amount0_in, amount0_out, amount1_in, amount1_out} do
+      {0, amount0_out, amount1_in, 0} ->
+        calculate_event_ratio(amount1_in, reserve1) >=
+          calculate_pool_ratio(reserve1)
+          |> case do
+            true ->
+              action_event(token_pair_dex_event)
+
+            false ->
+              {:ok, updated_token_pair_dex} =
+                update_reserves_from_event(
+                  token_pair_dex_event,
+                  :token1_token0,
+                  amount1_in,
+                  amount0_out
+                )
+          end
+
+      {amount0_in, 0, 0, amount1_out} ->
+        calculate_event_ratio(amount0_in, reserve0) >=
+          calculate_pool_ratio(reserve0)
+          |> case do
+            true ->
+              action_event(token_pair_dex_event)
+
+            false ->
+              {:ok, updated_token_pair_dex} =
+                update_reserves_from_event(
+                  token_pair_dex_event,
+                  :token1_token0,
+                  amount0_in,
+                  amount1_out
+                )
+          end
+    end
+  end
+
+  def update_reserves_from_event(
+        %TokenPairDex{
+          id: token_pair_dex_id,
+          price: price,
+          reserve0: reserve0,
+          reserve1: reserve1
+        } = token_pair_dex,
+        direction,
+        amount_in,
+        amount_out
+      ) do
+    {updated_price, updated_reserve0, updated_reserve1} =
+      case direction do
+        :token0_token1 ->
+          updated_reserve0 = (reserve0 |> String.to_integer()) + amount_in
+          updated_reserve1 = (reserve1 |> String.to_integer()) - amount_out
+
+          updated_price = sanitise_price(updated_reserve0, updated_reserve1)
+          {updated_price, updated_reserve0, updated_reserve1}
+
+        :token1_token0 ->
+          updated_reserve1 = (reserve1 |> String.to_integer()) + amount_in
+          updated_reserve0 = (reserve0 |> String.to_integer()) - amount_out
+
+          updated_price = sanitise_price(updated_reserve0, updated_reserve1)
+          {updated_price, updated_reserve0, updated_reserve1}
+      end
+
+    {:ok, updated_token_pair_dex} =
+      token_pair_dex
+      |> TPDC.update(%{
+        price: updated_price |> Float.to_string(),
+        reserve0: updated_reserve0 |> Integer.to_string(),
+        reserve1: updated_reserve1 |> Integer.to_string()
+      })
+
+    IO.puts(
+      "TokenPairDex with id: #{token_pair_dex_id} updated price: #{updated_price} / reserve0: #{updated_reserve0} / reserve1: #{updated_reserve1} updated"
+    )
+
+    {:ok, updated_token_pair_dex}
+  end
+
+  def sanitise_price(reserve0, reserve1)
+      when is_integer(reserve0) and is_integer(reserve1) and reserve1 > 0,
+      do: reserve0 / reserve1
+
+  def sanitise_price(_reserve0, _reserve1), do: 0
+
+  def action_event(%TokenPairDex{} = token_pair_dex_event) do
+    with {:ok, token_pair_dex_event_udpated} <-
+           TPDC.update_token_pair_dex_price(token_pair_dex_event, :TPD_event),
+         {:ok, list_of_profitable_trades} <-
+           get_profitable_trade(token_pair_dex_event_udpated) do
+      ExecuteTrade.run_v2(list_of_profitable_trades)
+    end
+  end
+
+  def calculate_event_ratio(amount_event, 0), do: 0
+  def calculate_event_ratio(amount_event, amount_pool), do: amount_event / amount_pool
+
+  @threshold_percentage 0.001
+  def calculate_pool_ratio(0), do: 0
+  def calculate_pool_ratio(amount_pool), do: amount_pool * @threshold_percentage
+
+  # def run(_state, event_data) when is_map(event_data) do
+  #   with true <-
+  #          not String.equivalent?(event_data.event.address, ""),
+  #        token_pair_dex_address <- event_data.event.address,
+  #        {:ok,
+  #         %TokenPairDex{
+  #           token_pair: %TokenPair{status: "active"} = token,
+  #           dex: %Dex{name: dex_name} = dex
+  #         } = token_pair_dex_event} <-
+  #          extract_token_pair_dex_details(token_pair_dex_address),
+  #        {:ok, token_pair_dex_event_udpated} <-
+  #          TPDC.update_token_pair_dex_price(token_pair_dex_event, :TPD_event),
+  #        {:ok, list_of_profitable_trades} <-
+  #          get_profitable_trade(token_pair_dex_event_udpated) do
+  #     ExecuteTrade.run_v2(list_of_profitable_trades)
+  #   else
+  #     {:ok, %TokenPairDex{id: token_pair_id, token_pair: %TokenPair{status: "inactive"}}} ->
+  #       IO.puts("sx1 TokenPair id: #{token_pair_id} Inactive")
+
+  #     {:error, error_message} ->
+  #       {:error, error_message} |> IO.inspect(label: "sx1")
+  #   end
+  # end
 
   def extract_token_pair_dex_details(token_pair_dex_event_address) do
     with upcase_token_dex_event_address <- String.upcase(token_pair_dex_event_address),
@@ -196,17 +337,7 @@ defmodule CheckProfit do
           reserve1: reserve1_searched
         }
       ) do
-    # with {:ok, [reserve0, reserve1, _block_timestamp_last]} <-
-    #        token_pair_dex_event_address
-    #        |> pool("uniswapV2", :get_reserves)
-    #        |> LW.ipt("get_reserves event"),
-    #      {:ok, [reserve0_searched, reserve1_searched, _block_timestamp_last]} <-
-    #        token_pair_dex_searched_address
-    #        |> pool("uniswapV2", :get_reserves)
-    #        |> LW.ipt("get_reserves searched"),
-    # token_pair_dex_event_price_O_I <- reserve0 / reserve1,
-    #  token_pair_dex_searched_price_O_I <- reserve0_searched / reserve1_searched,
-      with   {:ok, direction} <-
+    with {:ok, direction} <-
            transaction_direction(
              token_pair_dex_searched_price_O_I - token_pair_dex_event_price_O_I
            ) do
@@ -218,8 +349,8 @@ defmodule CheckProfit do
                    reserve0_searched,
                    token1_address,
                    token0_address,
-                  #  22
-                  2
+                   #  22
+                   2
                  )
                  |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
@@ -243,8 +374,8 @@ defmodule CheckProfit do
                    reserve0_searched,
                    token1_address,
                    token0_address,
-                  #  22
-                  2
+                   #  22
+                   2
                  )
                  |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-

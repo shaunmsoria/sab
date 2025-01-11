@@ -71,8 +71,9 @@ defmodule Compute do
   def calculate_price(pair_address, :O_I) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
            pair_address |> pool("uniswapV2", :get_reserves) do
-      case {is_integer(amount_0), is_integer(amount_1)} do
-        {true, true} -> {:ok, amount_0 / amount_1, amount_0, amount_1}
+      case {is_integer(amount_0), is_integer(amount_1), amount_1 != 0} do
+        {true, true, true} -> {:ok, amount_0 / amount_1, amount_0, amount_1}
+        {true, true, false} -> {:ok, 0, amount_0, amount_1}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
     else
@@ -83,8 +84,9 @@ defmodule Compute do
   def calculate_price(pair_address, :I_O) do
     with {:ok, [amount_0, amount_1, _time_stamp]} <-
            pair_address |> pool("uniswapV2", :get_reserves) do
-      case {is_integer(amount_0), is_integer(amount_1)} do
-        {true, true} -> {:ok, amount_1 / amount_0, amount_0, amount_1}
+      case {is_integer(amount_0), is_integer(amount_1), amount_0 != 0} do
+        {true, true, true} -> {:ok, amount_1 / amount_0, amount_0, amount_1}
+        {true, true, false} -> {:ok, 0, amount_0, amount_1}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
     else
