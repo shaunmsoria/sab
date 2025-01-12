@@ -1,4 +1,4 @@
-defmodule PoolContextV3 do
+defmodule PoolV3Context do
   import Compute
   alias DexSearch, as: DS
   alias TokenPairDexSearch, as: TPDS

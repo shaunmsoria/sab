@@ -1,4 +1,4 @@
-defmodule PoolContextV2 do
+defmodule PoolV2Initialise do
   import Compute
   alias LogWritter, as: LW
   alias ListDex, as: LD
@@ -14,7 +14,7 @@ defmodule PoolContextV2 do
   ## TODO
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
-  def initialise() do
+  def run() do
     with list_dexs_v2 <- DS.with_abi("uniswapV2") |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs_v2) do
       {:ok, list_dex_token_pairs_length_updated}

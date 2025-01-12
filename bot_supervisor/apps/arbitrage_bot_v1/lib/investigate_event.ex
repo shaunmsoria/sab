@@ -1,4 +1,4 @@
-defmodule CheckProfit do
+defmodule InvestigateEvent do
   import Compute
   alias ListDex, as: LD
   alias LogWritter, as: LW
@@ -42,7 +42,6 @@ defmodule CheckProfit do
         },
         "Swap",
         %TokenPairDex{
-
           token_pair: %TokenPair{status: "active"} = token_pair,
           dex: %Dex{name: dex_name} = dex,
           price: pool_price,
@@ -52,38 +51,38 @@ defmodule CheckProfit do
       ) do
     case {amount0_in, amount0_out, amount1_in, amount1_out} do
       {0, amount0_out, amount1_in, 0} ->
-        calculate_event_ratio(amount1_in, reserve1) >=
-          calculate_pool_ratio(reserve1)
-          |> case do
-            true ->
-              action_event(token_pair_dex_event)
+        (calculate_event_ratio(amount1_in, reserve1) >=
+           calculate_pool_ratio(reserve1))
+        |> case do
+          true ->
+            action_event(token_pair_dex_event)
 
-            false ->
-              {:ok, updated_token_pair_dex} =
-                update_reserves_from_event(
-                  token_pair_dex_event,
-                  :token1_token0,
-                  amount1_in,
-                  amount0_out
-                )
-          end
+          false ->
+            {:ok, updated_token_pair_dex} =
+              update_reserves_from_event(
+                token_pair_dex_event,
+                :token1_token0,
+                amount1_in,
+                amount0_out
+              )
+        end
 
       {amount0_in, 0, 0, amount1_out} ->
-        calculate_event_ratio(amount0_in, reserve0) >=
-          calculate_pool_ratio(reserve0)
-          |> case do
-            true ->
-              action_event(token_pair_dex_event)
+        (calculate_event_ratio(amount0_in, reserve0) >=
+           calculate_pool_ratio(reserve0))
+        |> case do
+          true ->
+            action_event(token_pair_dex_event)
 
-            false ->
-              {:ok, updated_token_pair_dex} =
-                update_reserves_from_event(
-                  token_pair_dex_event,
-                  :token1_token0,
-                  amount0_in,
-                  amount1_out
-                )
-          end
+          false ->
+            {:ok, updated_token_pair_dex} =
+              update_reserves_from_event(
+                token_pair_dex_event,
+                :token1_token0,
+                amount0_in,
+                amount1_out
+              )
+        end
     end
   end
 
@@ -145,12 +144,23 @@ defmodule CheckProfit do
     end
   end
 
-  def calculate_event_ratio(amount_event, 0), do: 0
-  def calculate_event_ratio(amount_event, amount_pool), do: amount_event / amount_pool
+  def calculate_event_ratio(_amount_event, nil), do: 0
+  def calculate_event_ratio(nil, _amount_pool), do: 0
+  def calculate_event_ratio(_amount_event, 0), do: 0
+
+  def calculate_event_ratio(amount_event, amount_pool) do
+    amount_event |> IO.inspect(label: "sx1 amount_event")
+    amount_pool |> IO.inspect(label: "sx1 amount_pool")
+
+    amount_event / (amount_pool |> String.to_integer())
+  end
 
   @threshold_percentage 0.001
+  def calculate_pool_ratio(nil), do: 0
   def calculate_pool_ratio(0), do: 0
-  def calculate_pool_ratio(amount_pool), do: amount_pool * @threshold_percentage
+
+  def calculate_pool_ratio(amount_pool),
+    do: (amount_pool |> String.to_integer()) * @threshold_percentage
 
   # def run(_state, event_data) when is_map(event_data) do
   #   with true <-
