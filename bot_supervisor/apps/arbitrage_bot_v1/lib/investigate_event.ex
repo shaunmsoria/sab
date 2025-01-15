@@ -23,6 +23,8 @@ defmodule InvestigateEvent do
             dex: %Dex{name: dex_name} = dex
           } = token_pair_dex_event} <-
            extract_token_pair_dex_details(token_pair_dex_address) do
+      event_data.event.data |> IO.inspect(label: "sx1 event_data.event.data")
+
       maybe_investigate_event(event_data.event.data, event_data.event.name, token_pair_dex_event)
     else
       {:ok, %TokenPairDex{id: token_pair_id, token_pair: %TokenPair{status: "inactive"}}} ->
@@ -51,10 +53,8 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = token_pair_dex_event
       ) do
-        PV2CP.run(token_pair_dex_event, {amount0_in,amount0_out, amount1_in, amount1_out})
-
+    PV2CP.run(token_pair_dex_event, {amount0_in, amount0_out, amount1_in, amount1_out})
   end
-
 
   def extract_token_pair_dex_details(token_pair_dex_event_address) do
     with upcase_token_dex_event_address <- String.upcase(token_pair_dex_event_address),
@@ -69,5 +69,4 @@ defmodule InvestigateEvent do
       _ -> {:error, "No TPD for #{token_pair_dex_event_address}"}
     end
   end
-
 end

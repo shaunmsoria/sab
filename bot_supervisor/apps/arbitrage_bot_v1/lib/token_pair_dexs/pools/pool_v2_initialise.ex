@@ -80,7 +80,7 @@ defmodule PoolV2Initialise do
       ) do
     # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
     # sanitise_current_all_pairs_length(start_all_pairs_length)..237_720
-    sanitise_current_all_pairs_length(start_all_pairs_length)..130
+    sanitise_current_all_pairs_length(start_all_pairs_length)..500
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -99,7 +99,8 @@ defmodule PoolV2Initialise do
          {:ok, token0} <- maybe_add_token(token0_address),
          {:ok, token1} <- maybe_add_token(token1_address),
          {:ok, token_pair} <- maybe_add_token_pair(token0, token1, dex),
-         {:ok, price, reserve0, reserve1} <- calculate_price(pair_address),
+         {:ok, price, reserve0, reserve1} <-
+           calculate_price(pair_address),
          {:ok, token_pair_dex} <-
            TPDC.update_with_token_pair_and_dex(token_pair, dex, %{
              address: pair_address,

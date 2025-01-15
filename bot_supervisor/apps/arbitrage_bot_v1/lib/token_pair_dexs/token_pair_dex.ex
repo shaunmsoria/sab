@@ -12,10 +12,11 @@ defmodule TokenPairDex do
     field(:fee, :string, default: "0")
     field(:reserve0, :string)
     field(:reserve1, :string)
+    field(:refresh_reserve, :boolean, default: true)
   end
 
   @required [:token_pair_id, :dex_id]
-  @optional [:address, :price, :upcase_address, :n_pair, :fee, :reserve0, :reserve1]
+  @optional [:address, :price, :upcase_address, :n_pair, :fee, :reserve0, :reserve1, :refresh_reserve]
 
   def update_changeset(%TokenPairDex{} = token_pair_dex, params) do
     token_pair_dex

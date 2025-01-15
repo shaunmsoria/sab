@@ -39,6 +39,10 @@ defmodule TokenPairDexSearch do
     from(t in query, where: t.fee == ^fee)
   end
 
+  def with_refresh_reserve(query \\ query(), refresh_reserve) do
+    from(t in query, where: t.refresh_reserve == ^refresh_reserve)
+  end
+
   def with_upcase_token_address_and_weth(query \\ query(), upcase_token_address) do
     token_id =
       from(t in Token,

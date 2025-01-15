@@ -12,93 +12,64 @@ defmodule PoolV2CheckProfit do
   @balancer Libraries.balancer()
 
   def run(
-        %TokenPairDex{
-          token_pair: %TokenPair{} = token_pair,
-          dex: %Dex{} = dex,
-          price: pool_price,
-          reserve0: reserve0,
-          reserve1: reserve1
-        } = token_pair_dex_event,
-        {amount0_in, amount0_out, amount1_in, amount1_out}
-      ) do
-    case {amount0_in, amount0_out, amount1_in, amount1_out} do
-      {0, amount0_out, amount1_in, 0} ->
-        (calculate_event_ratio(amount1_in, reserve1) >=
-           calculate_pool_ratio(reserve1))
-        |> case do
-          true ->
-            action_event(token_pair_dex_event)
+        %TokenPairDex{reserve0: reserve0, reserve1: reserve1} = token_pair_dex_event,
+        {0, amount0_out, amount1_in, 0}
+      ),
+      do: calculate_ratio(token_pair_dex_event, amount1_in, reserve1)
 
-          false ->
-            {:ok, updated_token_pair_dex} =
-              update_reserves_from_event(
-                token_pair_dex_event,
-                :token1_token0,
-                amount1_in,
-                amount0_out
-              )
-        end
+  def run(
+        %TokenPairDex{reserve0: reserve0, reserve1: reserve1} = token_pair_dex_event,
+        {amount0_in, 0, 0, amount1_out}
+      ),
+      do: calculate_ratio(token_pair_dex_event, amount0_in, reserve0)
 
-      {amount0_in, 0, 0, amount1_out} ->
-        (calculate_event_ratio(amount0_in, reserve0) >=
-           calculate_pool_ratio(reserve0))
-        |> case do
-          true ->
-            action_event(token_pair_dex_event)
+  def calculate_ratio(token_pair_dex, _amount, nil),
+    do: update_reserves_from_event(token_pair_dex)
 
-          false ->
-            {:ok, updated_token_pair_dex} =
-              update_reserves_from_event(
-                token_pair_dex_event,
-                :token1_token0,
-                amount0_in,
-                amount1_out
-              )
-        end
+  def calculate_ratio(token_pair_dex, amount, reserve) do
+    calculate_event_ratio(amount, reserve)
+    |> IO.inspect(label: "sx1 calculate_event_ratio(amount0_in, reserve0) ")
+
+    calculate_pool_ratio(reserve) |> IO.inspect(label: "sx1 calculate_pool_ratio(reserve0)")
+    reserve |> IO.inspect(label: "sx1 reserve0")
+
+    if calculate_event_ratio(amount, reserve) >= calculate_pool_ratio(reserve) do
+      action_event(token_pair_dex)
+    else
+      update_reserves_from_event(token_pair_dex)
     end
   end
+
+
+  def update_reserves_from_event(%TokenPairDex{refresh_reserve: false} = token_pair_dex),
+    do: {:ok, token_pair_dex}
 
   def update_reserves_from_event(
         %TokenPairDex{
           id: token_pair_dex_id,
-          price: price,
-          reserve0: reserve0,
-          reserve1: reserve1
-        } = token_pair_dex,
-        direction,
-        amount_in,
-        amount_out
+          address: token_pair_dex_address,
+          refresh_reserve: true
+        } = token_pair_dex
       ) do
-    {updated_price, updated_reserve0, updated_reserve1} =
-      case direction do
-        :token0_token1 ->
-          updated_reserve0 = (reserve0 |> String.to_integer()) + amount_in
-          updated_reserve1 = (reserve1 |> String.to_integer()) - amount_out
+    with {:ok, updated_price, updated_reserve0, updated_reserve1} <-
+           calculate_price(token_pair_dex_address) do
+      {:ok, updated_token_pair_dex} =
+        token_pair_dex
+        |> TPDC.update(%{
+          price: updated_price |> Float.to_string(),
+          reserve0: updated_reserve0 |> Integer.to_string(),
+          reserve1: updated_reserve1 |> Integer.to_string(),
+          refresh_reserve: false
+        })
 
-          updated_price = sanitise_price(updated_reserve0, updated_reserve1)
-          {updated_price, updated_reserve0, updated_reserve1}
+      IO.puts(
+        "TokenPairDex with id: #{token_pair_dex_id} updated price: #{updated_price} / reserve0: #{updated_reserve0} / reserve1: #{updated_reserve1} / refresh_reserve: false updated"
+      )
 
-        :token1_token0 ->
-          updated_reserve1 = (reserve1 |> String.to_integer()) + amount_in
-          updated_reserve0 = (reserve0 |> String.to_integer()) - amount_out
-
-          updated_price = sanitise_price(updated_reserve0, updated_reserve1)
-          {updated_price, updated_reserve0, updated_reserve1}
-      end
-
-    {:ok, updated_token_pair_dex} =
-      token_pair_dex
-      |> TPDC.update(%{
-        price: updated_price |> Float.to_string(),
-        reserve0: updated_reserve0 |> Integer.to_string(),
-        reserve1: updated_reserve1 |> Integer.to_string()
-      })
-
-    IO.puts(
-      "TokenPairDex with id: #{token_pair_dex_id} updated price: #{updated_price} / reserve0: #{updated_reserve0} / reserve1: #{updated_reserve1} updated"
-    )
-
-    {:ok, updated_token_pair_dex}
+      {:ok, updated_token_pair_dex}
+    else
+      {:error, message} -> message |> LW.ipt("update_reserves_from_event failed: ")
+    end
   end
 
   def sanitise_price(reserve0, reserve1)
@@ -120,11 +91,10 @@ defmodule PoolV2CheckProfit do
   def calculate_event_ratio(nil, _amount_pool), do: 0
   def calculate_event_ratio(_amount_event, 0), do: 0
 
-  def calculate_event_ratio(amount_event, amount_pool) do
-    amount_event |> IO.inspect(label: "sx1 amount_event")
-    amount_pool |> IO.inspect(label: "sx1 amount_pool")
+  def calculate_event_ratio(amount_event, amount_pool_raw) do
+    amount_pool = String.to_integer(amount_pool_raw)
 
-    amount_event / (amount_pool |> String.to_integer())
+    amount_event / amount_pool
   end
 
   @threshold_percentage 0.001
@@ -133,7 +103,6 @@ defmodule PoolV2CheckProfit do
 
   def calculate_pool_ratio(amount_pool),
     do: (amount_pool |> String.to_integer()) * @threshold_percentage
-
 
   def get_profitable_trade(
         %TokenPairDex{
@@ -284,14 +253,15 @@ defmodule PoolV2CheckProfit do
       ) do
     with {:ok, direction} <-
            transaction_direction(
-             token_pair_dex_searched_price_O_I - token_pair_dex_event_price_O_I
+             String.to_float(token_pair_dex_searched_price_O_I) -
+               String.to_float(token_pair_dex_event_price_O_I)
            ) do
       case direction do
         :O_I ->
           with {:ok, estimate} <-
                  router_event_address
                  |> estimate_extractor(
-                   reserve0_searched,
+                   String.to_integer(reserve0_searched),
                    token1_address,
                    token0_address,
                    #  22
@@ -316,7 +286,7 @@ defmodule PoolV2CheckProfit do
           with {:ok, estimate} <-
                  router_searched_address
                  |> estimate_extractor(
-                   reserve0_searched,
+                   String.to_integer(reserve0_searched),
                    token1_address,
                    token0_address,
                    #  22
