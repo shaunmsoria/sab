@@ -8,7 +8,7 @@ defmodule InvestigateEvent do
   alias TokenPairDexSearch, as: TPDS
   alias TokenPairDexContext, as: TPDC
 
-  alias PoolV2CheckProfit, as: PV2CP
+  alias PoolV2Context, as: PV2C
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
@@ -53,7 +53,8 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = token_pair_dex_event
       ) do
-    PV2CP.run(token_pair_dex_event, {amount0_in, amount0_out, amount1_in, amount1_out})
+
+    PV2C.check_profit(token_pair_dex_event, {amount0_in, amount0_out, amount1_in, amount1_out})
   end
 
   def extract_token_pair_dex_details(token_pair_dex_event_address) do

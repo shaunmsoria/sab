@@ -28,10 +28,12 @@ defmodule PoolV2CheckProfit do
 
   def calculate_ratio(token_pair_dex, amount, reserve) do
     calculate_event_ratio(amount, reserve)
-    |> IO.inspect(label: "sx1 calculate_event_ratio(amount0_in, reserve0) ")
+    |> IO.inspect(label: "sx1 calculate_event_ratio ")
 
-    calculate_pool_ratio(reserve) |> IO.inspect(label: "sx1 calculate_pool_ratio(reserve0)")
-    reserve |> IO.inspect(label: "sx1 reserve0")
+    amount |> IO.inspect(label: "sx1 amount")
+    reserve |> IO.inspect(label: "sx1 reserve")
+
+    calculate_pool_ratio(reserve) |> IO.inspect(label: "sx1 calculate_pool_ratio")
 
     if calculate_event_ratio(amount, reserve) >= calculate_pool_ratio(reserve) do
       action_event(token_pair_dex)
@@ -40,9 +42,12 @@ defmodule PoolV2CheckProfit do
     end
   end
 
-
-  def update_reserves_from_event(%TokenPairDex{refresh_reserve: false} = token_pair_dex),
-    do: {:ok, token_pair_dex}
+  def update_reserves_from_event(
+        %TokenPairDex{id: token_pair_id, refresh_reserve: false} = token_pair_dex
+      ) do
+    IO.puts("sx1 token_pair_id: #{token_pair_id} below threshold")
+    {:ok, token_pair_dex}
+  end
 
   def update_reserves_from_event(
         %TokenPairDex{
@@ -97,7 +102,10 @@ defmodule PoolV2CheckProfit do
     amount_event / amount_pool
   end
 
-  @threshold_percentage 0.001
+  # @threshold_percentage 0.001
+  # @threshold_percentage 0.00001
+
+  @threshold_percentage 0.0000001
   def calculate_pool_ratio(nil), do: 0
   def calculate_pool_ratio(0), do: 0
 

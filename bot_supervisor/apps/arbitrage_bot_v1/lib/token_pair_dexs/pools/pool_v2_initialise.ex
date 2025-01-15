@@ -15,6 +15,8 @@ defmodule PoolV2Initialise do
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
   def run() do
+    Repo.update_all(TokenPairDex, set: [refresh_reserve: true])
+
     with list_dexs_v2 <- DS.with_abi("uniswapV2") |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs_v2) do
       {:ok, list_dex_token_pairs_length_updated}
@@ -50,17 +52,23 @@ defmodule PoolV2Initialise do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(dex_factory) do
       max_length =
         case dex_name do
-          "pancakeswap" -> 671
-          "sushiswap" -> 4143
-          _ -> 237_720
+          "pancakeswap" -> 681
+          "sushiswap" -> 1130
+          _ -> 1130
         end
 
+        # case dex_name do
+        #   "pancakeswap" -> 681
+        #   "sushiswap" -> 4143
+        #   _ -> 237_720
+        # end
+
       # if dex_all_pairs_length <= current_all_pairs_length do
-      # if max_length == current_all_pairs_length do
       if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
-        get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
+        # get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
+        get_pairs_for_dex(dex, max_length, current_all_pairs_length + 1)
         IO.puts("dex: #{dex_name} have been updated")
       end
 
@@ -78,9 +86,9 @@ defmodule PoolV2Initialise do
         dex_all_pairs_length,
         start_all_pairs_length \\ 0
       ) do
-    # sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
+    sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
     # sanitise_current_all_pairs_length(start_all_pairs_length)..237_720
-    sanitise_current_all_pairs_length(start_all_pairs_length)..500
+    # sanitise_current_all_pairs_length(start_all_pairs_length)..1000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -108,7 +116,8 @@ defmodule PoolV2Initialise do
              n_pair: n_pair,
              price: "#{price}",
              reserve0: "#{reserve0}",
-             reserve1: "#{reserve1}"
+             reserve1: "#{reserve1}",
+             refresh_reserve: false
            }),
          {:ok, updated_dex} <- dex |> DC.update(%{all_pairs_length: n_pair}) do
       {:ok, token_pair_dex}
