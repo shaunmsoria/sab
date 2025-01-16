@@ -53,8 +53,8 @@ defmodule PoolV2Initialise do
       max_length =
         case dex_name do
           "pancakeswap" -> 681
-          "sushiswap" -> 1130
-          _ -> 1130
+          "sushiswap" -> 1500
+          _ -> 1500
         end
 
         # case dex_name do
@@ -87,8 +87,6 @@ defmodule PoolV2Initialise do
         start_all_pairs_length \\ 0
       ) do
     sanitise_current_all_pairs_length(start_all_pairs_length)..(dex_all_pairs_length - 1)
-    # sanitise_current_all_pairs_length(start_all_pairs_length)..237_720
-    # sanitise_current_all_pairs_length(start_all_pairs_length)..1000
     |> Enum.map(fn n_pair ->
       n_pair |> IO.inspect(label: "n_pair")
 
@@ -106,7 +104,7 @@ defmodule PoolV2Initialise do
          {:ok, token1_address} <- pair_address |> pool("uniswapV2", :token1),
          {:ok, token0} <- maybe_add_token(token0_address),
          {:ok, token1} <- maybe_add_token(token1_address),
-         {:ok, token_pair} <- maybe_add_token_pair(token0, token1, dex),
+         {:ok, token_pair} <- maybe_add_token_pair_dex(token0, token1, dex),
          {:ok, price, reserve0, reserve1} <-
            calculate_price(pair_address),
          {:ok, token_pair_dex} <-
@@ -133,7 +131,7 @@ defmodule PoolV2Initialise do
     end
   end
 
-  def maybe_add_token_pair(
+  def maybe_add_token_pair_dex(
         %Token{id: token0_id},
         %Token{id: token1_id},
         %Dex{} = dex
