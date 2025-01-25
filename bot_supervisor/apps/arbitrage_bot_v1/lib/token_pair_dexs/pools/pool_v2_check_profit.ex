@@ -23,19 +23,17 @@ defmodule PoolV2CheckProfit do
       ),
       do: calculate_ratio(token_pair_dex_event, amount0_in, reserve0)
 
-
-
   def calculate_ratio(token_pair_dex, _amount, nil),
     do: update_reserves_from_event(token_pair_dex)
 
   def calculate_ratio(token_pair_dex, amount, reserve) do
-    calculate_event_ratio(amount, reserve)
-    |> IO.inspect(label: "sx1 calculate_event_ratio ")
-
     amount |> IO.inspect(label: "sx1 amount")
-    reserve |> IO.inspect(label: "sx1 reserve")
 
-    calculate_pool_ratio(reserve) |> IO.inspect(label: "sx1 calculate_pool_ratio")
+    reserve
+    |> calculate_pool_ratio()
+    |> Decimal.from_float()
+    |> Decimal.to_string(:normal)
+    |> IO.inspect(label: "sx1 calculate_pool_ratio Decimal")
 
     # if calculate_event_ratio(amount, reserve) >= calculate_pool_ratio(reserve) do
     if amount >= calculate_pool_ratio(reserve) do
@@ -106,7 +104,7 @@ defmodule PoolV2CheckProfit do
   end
 
   # @threshold_percentage 0.001
-  @threshold_percentage 0.00001
+  @threshold_percentage 0.02
 
   # @threshold_percentage 0.0000001
   def calculate_pool_ratio(nil), do: 0

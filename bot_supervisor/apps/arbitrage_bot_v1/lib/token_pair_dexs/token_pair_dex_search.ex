@@ -43,6 +43,15 @@ defmodule TokenPairDexSearch do
     from(t in query, where: t.refresh_reserve == ^refresh_reserve)
   end
 
+  def with_tick(query \\ query(), tick) do
+    from(t in query, where: t.tick == ^tick)
+  end
+
+  def with_tick_spacing(query \\ query(), tick_spacin) do
+    from(t in query, where: t.tick_spacin == ^tick_spacin)
+  end
+
+
   def with_upcase_token_address_and_weth(query \\ query(), upcase_token_address) do
     token_id =
       from(t in Token,

@@ -1,7 +1,9 @@
 defmodule PoolV3Initialise do
   import Compute
   alias DexSearch, as: DS
+  alias PoolV3Context, as: PV3C
   alias TokenPairDexSearch, as: TPDS
+  alias TokenPairDexContext, as: TPDC
 
   ## TODO create pool_context_v3 to manage pool v3 initialisation, creation, referencing, **deletion
   ## TODO ** -> if necessary
@@ -38,7 +40,7 @@ defmodule PoolV3Initialise do
     if dex_v3_n_pairs < dex_v2_n_pairs do
       dex_v3_n_pairs..dex_v2_n_pairs
       |> Enum.map(fn n_pair ->
-        maybe_get_or_create_pool_v3(dex_v3, dex_v2_id, n_pair)
+        maybe_add_pool_v3(dex_v3, dex_v2_id, n_pair)
         |> case do
           {:ok, pool_v3_n_pair} ->
             pool_v3_n_pair
@@ -56,7 +58,7 @@ defmodule PoolV3Initialise do
   def sanitise_n_pairs(n_pair) when is_integer(n_pair), do: n_pair - 1
 
   @pool_v3_fees ["100", "500", "3000", "10000"]
-  def maybe_get_or_create_pool_v3(
+  def maybe_add_pool_v3(
         %Dex{
           id: dex_v3_id,
           factory: dex_v3_factory
@@ -79,8 +81,10 @@ defmodule PoolV3Initialise do
       %TokenPairDex{
         token_pair: %TokenPair{
           id: token_pair_id,
-          token0: %Token{symbol: token0_symbol, address: token0_address},
-          token1: %Token{symbol: token1_symbol, address: token1_address}
+          token0:
+            %Token{symbol: token0_symbol, address: token0_address, decimals: decimals0} = token0,
+          token1:
+            %Token{symbol: token1_symbol, address: token1_address, decimals: decimals1} = token1
         }
       } = token_pair_dex_v2 ->
         n_pair
@@ -104,19 +108,17 @@ defmodule PoolV3Initialise do
             pool_v3_fee |> String.to_integer()
           )
           |> case do
-            {:ok, new_pool_v3_address} ->
-              new_pool_v3_address
-          |> IO.inspect(label: "sx1 pool_address")
+            {:ok, pool_v3_address} ->
+              pool_v3_address
+              |> IO.inspect(label: "sx1 pool_address")
 
-
-
+              PV3C.get_of_create_pool_v3(pool_v3_address, decimals0, decimals1)
 
             nil ->
               LW.ipt(
                 "no pool v3 for token_pair_id: #{token_pair_id} with dex_id: #{dex_v3_id} and fee: #{pool_v3_fee}"
               )
           end
-          |> IO.inspect(label: "sx1 get_pool_address")
         end)
 
         {:ok, :do_something}

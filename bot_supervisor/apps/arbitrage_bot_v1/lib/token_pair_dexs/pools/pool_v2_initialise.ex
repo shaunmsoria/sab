@@ -102,9 +102,9 @@ defmodule PoolV2Initialise do
          false <- String.contains?(pair_address |> inspect(), "<<"),
          {:ok, token0_address} <- pair_address |> pool("uniswapV2", :token0),
          {:ok, token1_address} <- pair_address |> pool("uniswapV2", :token1),
-         {:ok, token0} <- maybe_add_token(token0_address),
-         {:ok, token1} <- maybe_add_token(token1_address),
-         {:ok, token_pair} <- maybe_add_token_pair_dex(token0, token1, dex),
+         {:ok, token0} <- TC.maybe_add_token(token0_address),
+         {:ok, token1} <- TC.maybe_add_token(token1_address),
+         {:ok, token_pair} <- TPDC.maybe_add_token_pair_dex(token0, token1, dex),
          {:ok, price, reserve0, reserve1} <-
            calculate_price(pair_address),
          {:ok, token_pair_dex} <-
@@ -131,107 +131,4 @@ defmodule PoolV2Initialise do
     end
   end
 
-  def maybe_add_token_pair_dex(
-        %Token{id: token0_id},
-        %Token{id: token1_id},
-        %Dex{} = dex
-      ) do
-    case TPS.with_token0_id(token0_id)
-         |> TPS.with_token1_id(token1_id)
-         |> Repo.one() do
-      nil ->
-        with {:ok, token_pair} <-
-               %{
-                 token0_id: token0_id,
-                 token1_id: token1_id,
-                 dexs: [dex],
-                 status: "inactive"
-               }
-               |> TPC.insert() do
-          {:ok, token_pair}
-        end
-
-      %TokenPair{} = token_pair ->
-        with {:ok, updated_token_pair} <-
-               token_pair
-               |> TPC.update(%{
-                 dexs: [dex],
-                 status: "active"
-               }) do
-          {:ok, updated_token_pair}
-        end
-    end
-  end
-
-  def maybe_add_token(token_address) do
-    with true <- String.contains?(token_address |> inspect(), "<<") do
-      {:error, "token with address #{token_address} couldn't be retrieved"}
-    else
-      false ->
-        case TS.with_address(token_address)
-             |> Repo.one() do
-          nil ->
-            with {:ok, symbol, name, decimals} <-
-                   token_address
-                   |> get_contract_for_token_address(),
-                 {:ok, token} <-
-                   %{
-                     symbol: symbol,
-                     name: name,
-                     address: token_address,
-                     upcase_address: token_address |> String.upcase(),
-                     decimals: decimals
-                   }
-                   |> TC.insert() do
-              {:ok, token}
-            end
-
-          %Token{} = token ->
-            {:ok, token}
-        end
-    end
-  end
-
-  def get_contract_for_token_address(token_address) do
-    with symbol_result <-
-           (try do
-              token_address |> token_erc20(:symbol)
-            rescue
-              e ->
-                {:ok, token_address}
-            end),
-         name_result <-
-           (try do
-              token_address |> token_erc20(:name)
-            rescue
-              e ->
-                {:ok, token_address}
-            end),
-         decimals_result <-
-           (try do
-              token_address |> token_erc20(:decimals)
-            rescue
-              e ->
-                {:ok, 0}
-            end) do
-      {:ok, sanitise_param(symbol_result), sanitise_param(name_result),
-       sanitise_param(decimals_result, :decimals)}
-      |> IO.inspect(label: "sx1 get_contract_for_token_address")
-    end
-  end
-
-  def sanitise_param({:ok, param}) when is_binary(param) do
-    case param do
-      "0x" ->
-        nil
-
-      param ->
-        split_param = param |> String.slice(0..15) |> inspect() |> String.trim("\"")
-    end
-  end
-
-  def sanitise_param(_), do: nil
-
-  def sanitise_param({:ok, param}, :decimals) when is_integer(param), do: param
-  def sanitise_param(_, :decimals), do: 0
 end

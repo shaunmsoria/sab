@@ -1,9 +1,13 @@
 defmodule TokenPairDexContext do
+  import Compute
   import Ecto.{Changeset, Query}
   alias TokenPairDexSearch, as: TPDS
   alias TokenPairDexContext, as: TPDC
   alias DexSearch, as: DS
   alias LogWritter, as: LW
+  alias TokenPairSearch, as: TPS
+  alias TokenPairContext, as: TPC
+  alias TokenSearch, as: TS
 
   def update(%TokenPairDex{} = token_pair_dex, params) do
     token_pair_dex
@@ -63,10 +67,10 @@ defmodule TokenPairDexContext do
            Compute.calculate_price(token_pair_dex_address),
          {:ok, updated_token_pair_dex} <-
            TPDC.update(token_pair_dex, %{
-            price: "#{new_token_pair_dex_price}",
-            reserve0: "#{reserve0}",
-            reserve1: "#{reserve1}"
-            }) do
+             price: "#{new_token_pair_dex_price}",
+             reserve0: "#{reserve0}",
+             reserve1: "#{reserve1}"
+           }) do
       LW.ipt(
         "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name} price updated to: #{new_token_pair_dex_price}"
       )
@@ -93,10 +97,10 @@ defmodule TokenPairDexContext do
            token_pair_dex_price != "#{new_token_pair_dex_price}",
          {:ok, updated_token_pair_dex} <-
            TPDC.update(token_pair_dex, %{
-            price: "#{new_token_pair_dex_price}",
-            reserve0: "#{reserve0}",
-            reserve1: "#{reserve1}"
-            }) do
+             price: "#{new_token_pair_dex_price}",
+             reserve0: "#{reserve0}",
+             reserve1: "#{reserve1}"
+           }) do
       LW.ipt(
         "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name}  price updated to: #{new_token_pair_dex_price}"
       )
@@ -116,41 +120,37 @@ defmodule TokenPairDexContext do
     end
   end
 
-  def test() do
-    token0 = TokenSearch.with_id(1) |> Repo.one()
-    token1 = TokenSearch.with_id(2) |> Repo.one()
-    dex1 = DexSearch.with_id(1) |> Repo.one()
-    dex2 = DexSearch.with_id(2) |> Repo.one()
+  def maybe_add_token_pair_dex(
+        %Token{id: token0_id} = token0,
+        %Token{id: token1_id} = token1,
+        %Dex{} = dex
+      ) do
+    case TPS.with_token0_id(token0_id)
+         |> TPS.with_token1_id(token1_id)
+         |> Repo.one() do
+      nil ->
+        with {:ok, token_pair} <-
+               %{
+                 token0_id: token0_id,
+                 token1_id: token1_id,
+                 dexs: [dex],
+                 status: "inactive",
+                 decimals_adjsuter_0_1: calculate_decimals_adjuster_0_1(token0, token1)
+               }
+               |> TPC.insert() do
+          {:ok, token_pair}
+        end
 
-    # token_pair =
-    #   TokenPairSearch.with_id(3)
-    #   |> Repo.one()
-    #   |> Repo.preload([:dexs, :token0, :token1])
-    #   |> IO.inspect(label: "token_pair")
-
-    # token_pair_dex = TokenPairDexSearch.with_id(5) |> Repo.one()
-    # |> TokenPairDexContext.update(%{address: "address_test", price: "1000"})
-
-    # token_pair = TokenPairSearch.with_id(2) |> Repo.one()
-
-    # TokenPairDexContext.update_token_pair_dex(token_pair, dex2, %{address: "address_test2"})
-    # |> IO.inspect(label: "sx1 update_token_pair_dex")
-
-    # token_pair_dex =
-    #   TPDS.with_id(12)
-    #   |> Repo.all()
-    #   |> Repo.preload([[token_pair: [:dexs, :token0, :token1]], :dex])
-    # |> IO.inspect(label: "token_pair_dex")
-
-    # extract_other_token_pair_dexs(token_pair, dex2)
-    # |> IO.inspect(label: "sx1 extract_other_token_pair_dexs")
-
-    token_pair =
-      TokenPairDexSearch.with_upcase_token_address_and_weth(
-        "0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48"
-      )
-      |> Repo.one()
-      |> Repo.preload([:dex, token_pair: [:token0, :token1]])
-      |> IO.inspect(label: "token_pair")
+      %TokenPair{} = token_pair ->
+        with {:ok, updated_token_pair} <-
+               token_pair
+               |> TPC.update(%{
+                 dexs: [dex],
+                 status: "active",
+                 decimals_adjuster_0_1: calculate_decimals_adjuster_0_1(token_pair)
+               }) do
+          {:ok, updated_token_pair}
+        end
+    end
   end
 end

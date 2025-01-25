@@ -14,6 +14,8 @@ defmodule TokenPairContext do
     |> Repo.update()
   end
 
+
+
   def test() do
     token0 = TokenSearch.with_id(5) |> Repo.one()
     token1 = TokenSearch.with_id(6) |> Repo.one()
@@ -24,7 +26,8 @@ defmodule TokenPairContext do
       TokenPairSearch.with_id(9)
       |> Repo.one()
       |> Repo.preload([:token0, :token1, :dexs])
-      # |> TokenPairContext.update(%{dexs: [dex2], status: "test"})
+
+    # |> TokenPairContext.update(%{dexs: [dex2], status: "test"})
 
     # TokenPairContext.insert(%{token0_id: 5, token1_id: 6, dexs: [dex], status: "test"})
   end

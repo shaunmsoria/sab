@@ -22,4 +22,8 @@ defmodule TokenPairSearch do
     from(t in query, where: t.status == ^status)
   end
 
+  def with_decimals_adjuster_0_1(query \\ query(), decimals_adjuster_0_1) do
+    from(t in query, where: t.decimals_adjuster_0_1 == ^decimals_adjuster_0_1)
+  end
+
 end

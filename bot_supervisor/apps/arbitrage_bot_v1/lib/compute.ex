@@ -245,4 +245,51 @@ defmodule Compute do
     Sabv1Contract.get_string()
     |> Ethers.call(to: smart_contract_address)
   end
+
+  def calculate_decimals_adjuster_0_1(
+      %Token{decimals: decimals0},
+      %Token{decimals: decimals1}
+  ) do
+decimals_adjuster_0_1 =
+  (10 ** (decimals0 - decimals1))
+
+  decimals_adjuster_0_1
+  |> is_integer()
+  |> case do
+    true ->
+        Integer.to_string(decimals_adjuster_0_1)
+
+    false ->
+        Float.to_string(decimals_adjuster_0_1)
+  end
+end
+
+  def calculate_decimals_adjuster_0_1(
+    %TokenPair{
+      decimals_adjuster_0_1: nil,
+      token0: %Token{decimals: decimals0},
+      token1: %Token{decimals: decimals1}
+    }
+  ) do
+decimals_adjuster_0_1 =
+  (10 ** (decimals0 - decimals1))
+
+  decimals_adjuster_0_1
+  |> is_integer()
+  |> case do
+    true ->
+        Integer.to_string(decimals_adjuster_0_1)
+
+    false ->
+        Float.to_string(decimals_adjuster_0_1)
+  end
+end
+
+def calculate_decimals_adjuster_0_1(
+    %TokenPair{
+      decimals_adjuster_0_1: decimals_adjuster_0_1
+    }
+  ),
+  do: decimals_adjuster_0_1
+
 end
