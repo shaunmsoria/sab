@@ -1,9 +1,9 @@
-defmodule TokenPairDexSearch do
+defmodule PoolSearch do
   import Ecto.Query
 
   ## add Repo.all() or Repo.one() get the results
   def query() do
-    from(TokenPairDex)
+    from(Pool)
     # |> Repo.all()
   end
 
@@ -17,6 +17,10 @@ defmodule TokenPairDexSearch do
 
   def with_dex_id(query \\ query(), dex_id) do
     from(t in query, where: t.dex_id == ^dex_id)
+  end
+
+  def with_token_pair_address_id(query \\ query(), token_pair_address_id) do
+    from(t in query, where: t.token_pair_address_id == ^token_pair_address_id)
   end
 
   def with_address(query \\ query(), address) do

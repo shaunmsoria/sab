@@ -9,7 +9,7 @@ defmodule Dex do
     field(:all_pairs_length, :integer)
     field(:quoter, :string)
     field(:abi, :string)
-    many_to_many(:token_pairs, TokenPair, join_through: "token_pairs_dexs")
+    many_to_many(:token_pairs_, TokenPair, join_through: "pool")
   end
 
   @required [:name, :router, :factory, :abi]

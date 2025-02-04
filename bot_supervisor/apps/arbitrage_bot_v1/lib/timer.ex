@@ -59,7 +59,7 @@ defmodule Timer do
   def handle_cast(:refresh_reserve, state) do
     :timer.sleep(10_800_000)
 
-    Repo.update_all(TokenPairDex, set: [refresh_reserve: true])
+    Repo.update_all(Pool, set: [refresh_reserve: true])
 
     GenServer.cast(__MODULE__, :refresh_reserve)
 

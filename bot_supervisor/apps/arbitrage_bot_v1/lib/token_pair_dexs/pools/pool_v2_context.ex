@@ -10,7 +10,7 @@ defmodule PoolV2Context do
     Check if pool v2 event is profitable
   """
   def check_profit(
-        %TokenPairDex{} = token_pair_dex,
+        %Pool{} = token_pair_dex,
         {amount0_in, amount0_out, amount1_in, amount1_out}
       ),
       do: PV2CP.run(token_pair_dex, {amount0_in, amount0_out, amount1_in, amount1_out})

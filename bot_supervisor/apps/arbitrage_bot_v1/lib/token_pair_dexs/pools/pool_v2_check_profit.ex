@@ -5,20 +5,20 @@ defmodule PoolV2CheckProfit do
   alias DexSearch, as: DS
   alias TokenContext, as: TC
   alias ProfitableTradeContext, as: PTC
-  alias TokenPairDexSearch, as: TPDS
-  alias TokenPairDexContext, as: TPDC
+  alias PoolSearch, as: PS
+  alias PoolContext, as: PC
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
 
   def run(
-        %TokenPairDex{reserve0: reserve0, reserve1: reserve1} = token_pair_dex_event,
+        %Pool{reserve0: reserve0, reserve1: reserve1} = token_pair_dex_event,
         {0, amount0_out, amount1_in, 0}
       ),
       do: calculate_ratio(token_pair_dex_event, amount1_in, reserve1)
 
   def run(
-        %TokenPairDex{reserve0: reserve0, reserve1: reserve1} = token_pair_dex_event,
+        %Pool{reserve0: reserve0, reserve1: reserve1} = token_pair_dex_event,
         {amount0_in, 0, 0, amount1_out}
       ),
       do: calculate_ratio(token_pair_dex_event, amount0_in, reserve0)
@@ -44,24 +44,24 @@ defmodule PoolV2CheckProfit do
   end
 
   def update_reserves_from_event(
-        %TokenPairDex{id: token_pair_id, refresh_reserve: false} = token_pair_dex
+        %Pool{id: token_pair_id, refresh_reserve: false} = token_pair_dex
       ) do
     IO.puts("sx1 token_pair_id: #{token_pair_id} below threshold")
     {:ok, token_pair_dex}
   end
 
   def update_reserves_from_event(
-        %TokenPairDex{
+        %Pool{
           id: token_pair_dex_id,
-          address: token_pair_dex_address,
+          address: pool_address,
           refresh_reserve: true
         } = token_pair_dex
       ) do
     with {:ok, updated_price, updated_reserve0, updated_reserve1} <-
-           calculate_price(token_pair_dex_address) do
+           calculate_price(pool_address) do
       {:ok, updated_token_pair_dex} =
         token_pair_dex
-        |> TPDC.update(%{
+        |> PC.update(%{
           price: updated_price |> Float.to_string(),
           reserve0: updated_reserve0 |> Integer.to_string(),
           reserve1: updated_reserve1 |> Integer.to_string(),
@@ -69,7 +69,7 @@ defmodule PoolV2CheckProfit do
         })
 
       IO.puts(
-        "TokenPairDex with id: #{token_pair_dex_id} updated price: #{updated_price} / reserve0: #{updated_reserve0} / reserve1: #{updated_reserve1} / refresh_reserve: false updated"
+        "Pool with id: #{token_pair_dex_id} updated price: #{updated_price} / reserve0: #{updated_reserve0} / reserve1: #{updated_reserve1} / refresh_reserve: false updated"
       )
 
       {:ok, updated_token_pair_dex}
@@ -84,9 +84,9 @@ defmodule PoolV2CheckProfit do
 
   def sanitise_price(_reserve0, _reserve1), do: 0
 
-  def action_event(%TokenPairDex{} = token_pair_dex_event) do
+  def action_event(%Pool{} = token_pair_dex_event) do
     with {:ok, token_pair_dex_event_udpated} <-
-           TPDC.update_token_pair_dex_price(token_pair_dex_event, :TPD_event),
+           PC.update_token_pair_dex_price(token_pair_dex_event, :pool_event),
          {:ok, list_of_profitable_trades} <-
            get_profitable_trade(token_pair_dex_event_udpated) do
       ExecuteTrade.run_v2(list_of_profitable_trades)
@@ -114,24 +114,23 @@ defmodule PoolV2CheckProfit do
     do: (amount_pool |> String.to_integer()) * @threshold_percentage
 
   def get_profitable_trade(
-        %TokenPairDex{
+        %Pool{
           dex:
             %Dex{
               name: dex_name
             } = dex,
           token_pair:
             %TokenPair{
-              dexs: dexs,
               token0: token0,
               token1: token1
             } = token_pair,
           price: token_pair_dex_event_price,
-          address: token_pair_dex_address
+          address: pool_address
         } =
           token_pair_dex_event
       ) do
     profitable_trades_result =
-      with {:ok, other_token_pair_dexs} <- TPDC.extract_other_token_pair_dexs(token_pair, dex) do
+      with {:ok, other_token_pair_dexs} <- PC.extract_other_pools(token_pair, dex) do
         other_token_pair_dexs
         |> Enum.reduce([], fn token_pair_dex_searched, acc ->
           acc ++ maybe_profitable_trade(token_pair_dex_event, token_pair_dex_searched)
@@ -147,12 +146,12 @@ defmodule PoolV2CheckProfit do
   end
 
   def maybe_profitable_trade(
-        %TokenPairDex{price: token_pair_dex_event_price} = token_pair_dex_event,
-        %TokenPairDex{} = token_pair_dex_searched
+        %Pool{price: token_pair_dex_event_price} = token_pair_dex_event,
+        %Pool{} = token_pair_dex_searched
       ) do
     with {:ok,
-          %TokenPairDex{price: token_pair_dex_searched_price, dex: %Dex{name: dex_searched_name}}} <-
-           TPDC.update_token_pair_dex_price(token_pair_dex_searched),
+          %Pool{price: token_pair_dex_searched_price, dex: %Dex{name: dex_searched_name}}} <-
+           PC.update_token_pair_dex_price(token_pair_dex_searched),
          price_difference <-
            Compute.calculate_difference(token_pair_dex_event_price, token_pair_dex_searched_price) do
       case price_difference do
@@ -166,7 +165,7 @@ defmodule PoolV2CheckProfit do
   end
 
   def maybe_profitable_trade(
-        %TokenPairDex{
+        %Pool{
           dex:
             %Dex{
               router: router_address
@@ -184,7 +183,7 @@ defmodule PoolV2CheckProfit do
             } = token_pair,
           address: token_pair_dex_event_address
         } = token_pair_dex_event,
-        %TokenPairDex{
+        %Pool{
           dex:
             %Dex{
               router: router_searched_address
@@ -232,7 +231,7 @@ defmodule PoolV2CheckProfit do
   end
 
   def simulate_profit_pre_gas_v3(
-        %TokenPairDex{
+        %Pool{
           dex: %Dex{
             router: router_event_address
           },
@@ -250,7 +249,7 @@ defmodule PoolV2CheckProfit do
           reserve0: reserve0,
           reserve1: reserve1
         },
-        %TokenPairDex{
+        %Pool{
           dex: %Dex{
             router: router_searched_address
           },
@@ -320,7 +319,7 @@ defmodule PoolV2CheckProfit do
   end
 
   # ? DONE add to TokenPair table token0_address_upcase and token1_address_upcase
-  # ? DONE search in db by upcase addresses to find the TPD
+  # ? DONE search in db by upcase addresses to find the P
   ## TODO calculate gas price in eth by converting the reserve amount to eth with decimals instead of Gwei or Wei
   def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = _token_profit),
     do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
@@ -333,7 +332,7 @@ defmodule PoolV2CheckProfit do
     estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
 
     gas_token_pair =
-      TPDS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+      PS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
       |> Repo.one()
       |> Repo.preload([:dex, token_pair: [:token0, :token1]])
 
@@ -358,12 +357,12 @@ defmodule PoolV2CheckProfit do
   def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
     do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
 
-  def locate_weth_in_token_pair_v3(%TokenPairDex{
+  def locate_weth_in_token_pair_v3(%Pool{
         token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
       }),
       do: {:ok, :token0_weth}
 
-  def locate_weth_in_token_pair_v3(%TokenPairDex{
+  def locate_weth_in_token_pair_v3(%Pool{
         token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
       }),
       do: {:ok, :token1_weth}
@@ -383,7 +382,7 @@ defmodule PoolV2CheckProfit do
              token_profit_address
            ),
          gas_token_pair <-
-           TPDS.with_upcase_address(gas_token_pair_address |> String.upcase())
+           PS.with_upcase_address(gas_token_pair_address |> String.upcase())
            |> Repo.one()
            |> Repo.preload(token_pair: [:token0, :token1]),
          {:ok, weth_location} <-
@@ -402,12 +401,12 @@ defmodule PoolV2CheckProfit do
   def calculate_gas_price_weth_price_v2(:token1_weth, reserve0, reserve1),
     do: {:ok, reserve0 / (reserve1 * 1_000_000_000)}
 
-  def locate_weth_in_token_pair_v2(%TokenPairDex{
+  def locate_weth_in_token_pair_v2(%Pool{
         token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
       }),
       do: {:ok, :token0_weth}
 
-  def locate_weth_in_token_pair_v2(%TokenPairDex{
+  def locate_weth_in_token_pair_v2(%Pool{
         token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
       }),
       do: {:ok, :token1_weth}

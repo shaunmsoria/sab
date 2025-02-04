@@ -2,8 +2,8 @@ defmodule PoolV3Initialise do
   import Compute
   alias DexSearch, as: DS
   alias PoolV3Context, as: PV3C
-  alias TokenPairDexSearch, as: TPDS
-  alias TokenPairDexContext, as: TPDC
+  alias PoolSearch, as: PS
+  alias PoolContext, as: PC
 
   ## TODO create pool_context_v3 to manage pool v3 initialisation, creation, referencing, **deletion
   ## TODO ** -> if necessary
@@ -68,9 +68,9 @@ defmodule PoolV3Initialise do
       )
       when is_integer(dex_v2_id) and is_integer(n_pair) do
     token_pair_dex_v2_result =
-      TPDS.with_dex_id(dex_v2_id)
-      |> TPDS.with_n_pair(n_pair)
-      |> TPDS.with_fee("0")
+      PS.with_dex_id(dex_v2_id)
+      |> PS.with_n_pair(n_pair)
+      |> PS.with_fee("0")
       |> Repo.one()
       |> Repo.preload(token_pair: [:token0, :token1])
 
@@ -78,15 +78,15 @@ defmodule PoolV3Initialise do
       nil ->
         {:error, "no_token_pair found with n_pair #{n_pair} for this dex_id #{dex_v2_id}"}
 
-      %TokenPairDex{
+      %Pool{
         token_pair: %TokenPair{
           id: token_pair_id,
           token0:
-            %Token{symbol: token0_symbol, address: token0_address, decimals: decimals0} = token0,
+            %Token{symbol: token0_symbol, address: token0_address},
           token1:
-            %Token{symbol: token1_symbol, address: token1_address, decimals: decimals1} = token1
-        }
-      } = token_pair_dex_v2 ->
+            %Token{symbol: token1_symbol, address: token1_address}
+        } = token_pair
+      }  ->
         n_pair
         |> IO.inspect(label: "sx1 n_pair")
 
@@ -112,7 +112,7 @@ defmodule PoolV3Initialise do
               pool_v3_address
               |> IO.inspect(label: "sx1 pool_address")
 
-              PV3C.get_of_create_pool_v3(pool_v3_address, decimals0, decimals1)
+              PV3C.get_or_create_pool_v3(pool_v3_address, dex_v3, token_pair, pool_v3_fee)
 
             nil ->
               LW.ipt(
