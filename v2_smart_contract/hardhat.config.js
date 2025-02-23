@@ -2,7 +2,8 @@ require("dotenv").config()
 require("@nomicfoundation/hardhat-toolbox");
 
 module.exports = {
-  solidity: "0.8.27",
+  // solidity: "0.8.4",
+  solidity: "0.8.28",
   networks: {
     hardhat2: {
       // url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
