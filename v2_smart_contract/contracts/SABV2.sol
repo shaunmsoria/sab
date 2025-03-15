@@ -22,6 +22,8 @@ contract SABV2 is IFlashLoanRecipient {
     IVault private constant vault =
         IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;
+    // Add this event to track execution
+    event FlashLoanReceived(address token, uint256 amount, uint256 fee);
 
     constructor() {
         owner = msg.sender;
@@ -31,6 +33,33 @@ contract SABV2 is IFlashLoanRecipient {
         require(msg.sender == address(vault), "your are not the vault");
         _;
     }
+
+    receive() external payable {}
+
+    function testSimpleFlashLoan(address token, uint256 amount) external {
+        IERC20[] memory tokens = new IERC20[](1);
+        tokens[0] = IERC20(token);
+
+        uint256[] memory amounts = new uint256[](1);
+        amounts[0] = amount;
+
+        // Simplified data with minimal processing
+        bytes memory data = abi.encode(
+            owner,
+            token,
+            token,
+            address(0),
+            "",
+            uint24(0),
+            address(0),
+            "",
+            uint24(0)
+        );
+
+        vault.flashLoan(this, tokens, amounts, data);
+    }
+
+  
 
     function executeTrade(
         address _token0,
@@ -61,6 +90,8 @@ contract SABV2 is IFlashLoanRecipient {
         uint256[] memory amounts = new uint256[](1);
         amounts[0] = _flashAmount;
 
+
+
         vault.flashLoan(this, tokens, amounts, data);
     }
 
@@ -70,6 +101,8 @@ contract SABV2 is IFlashLoanRecipient {
         uint256[] memory feeAmounts,
         bytes memory userData
     ) external override onlyVault {
+        emit FlashLoanReceived(address(tokens[0]), amounts[0], feeAmounts[0]);
+
         (
             address _ownerData,
             address token0,
@@ -216,6 +249,9 @@ contract SABV2 is IFlashLoanRecipient {
                 "end router approval failed"
             );
 
+            // Calculate minimum required with 5% slippage tolerance
+            // uint256 minAmountOut = (_flashAmount * 95) / 100;
+
             _endRouter.exactInputSingle(
                 ISwapRouter.ExactInputSingleParams({
                     tokenIn: _tokenPath[1],
@@ -224,6 +260,7 @@ contract SABV2 is IFlashLoanRecipient {
                     recipient: address(this),
                     deadline: (block.timestamp + 300),
                     amountIn: _endAmountIn,
+                    // amountOutMinimum: minAmountOut,
                     amountOutMinimum: _flashAmount,
                     sqrtPriceLimitX96: 0
                 })

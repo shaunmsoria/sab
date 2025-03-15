@@ -20,8 +20,15 @@ defmodule Server.Router do
     IO.puts("Received POST request with body: #{body}")
 
     event_raw = Jason.decode!(body)
+    |> LogWritter.ipt("sx1 event_raw")
 
-      event = %{event: %{address: event_raw["address"]}}
+
+      event = %{
+        event: %{
+          address: event_raw["address"],
+          name: event_raw["name"],
+          data: event_raw["data"]
+          }}
       |> LogWritter.ipt("sx1 event")
 
     GenServer.cast(DexBot, {:swap_detected, event})
@@ -37,6 +44,11 @@ defmodule Server.Router do
 
 
   match _ do
+
+    {:ok, body, conn} = Plug.Conn.read_body(conn)
+
+    conn |> IO.inspect(label: "sx1 conn")
+
     send_resp(conn, 404, "Oops, not found!")
   end
 end

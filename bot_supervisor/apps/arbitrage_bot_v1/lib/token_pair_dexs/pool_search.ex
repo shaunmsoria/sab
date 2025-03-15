@@ -19,8 +19,8 @@ defmodule PoolSearch do
     from(t in query, where: t.dex_id == ^dex_id)
   end
 
-  def with_token_pair_address_id(query \\ query(), token_pair_address_id) do
-    from(t in query, where: t.token_pair_address_id == ^token_pair_address_id)
+  def with_pool_address_id(query \\ query(), pool_address_id) do
+    from(t in query, where: t.pool_address_id == ^pool_address_id)
   end
 
   def with_address(query \\ query(), address) do
@@ -84,8 +84,17 @@ defmodule PoolSearch do
       )
       |> Repo.one()
 
-    from(tpd in query,
-      where: tpd.token_pair_id == ^token_weth_pair_id and tpd.dex_id == 1
+
+      dex_id =
+        from(d in Dex,
+          where: d.name == "uniswap",
+          where: d.abi == "uniswapV3",
+          select: d.id
+        )
+        |> Repo.one()
+
+    from(p in query,
+      where: p.token_pair_id == ^token_weth_pair_id and p.dex_id == ^dex_id
     )
   end
 end

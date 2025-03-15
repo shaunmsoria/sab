@@ -1,4 +1,8 @@
 defmodule PoolContext do
+  @moduledoc """
+    gather tools that can be used to v2 and v3 pools management
+  """
+
   import Compute
   import Ecto.{Changeset, Query}
   alias PoolSearch, as: PS
@@ -8,6 +12,9 @@ defmodule PoolContext do
   alias TokenPairSearch, as: TPS
   alias TokenPairContext, as: TPC
   alias TokenSearch, as: TS
+  alias PoolAddressContext, as: PAC
+  alias PoolV3Context, as: PV3C
+  alias TokenContext, as: TC
 
   def insert(params) do
     %Pool{}
@@ -17,16 +24,16 @@ defmodule PoolContext do
     |> IO.inspect(label: "mx1 Repo.insert Pool.insert()")
   end
 
-  def update(%Pool{} = token_pair_dex, params) do
-    token_pair_dex
+  def update(%Pool{} = pool, params) do
+    pool
     |> Pool.update_changeset(params)
     |> Repo.update()
   end
 
   def update_with_token_pair_and_dex(%TokenPair{id: token_pair_id}, %Dex{id: dex_id}, params) do
-    with %Pool{} = token_pair_dex <-
+    with %Pool{} = pool <-
            PS.with_token_pair_id(token_pair_id) |> PS.with_dex_id(dex_id) |> Repo.one() do
-      token_pair_dex
+      pool
       |> PoolContext.update(params)
     end
   end
@@ -35,7 +42,7 @@ defmodule PoolContext do
         %TokenPair{id: token_pair_id} = token_pair,
         %Dex{id: dex_id, name: dex_name} = dex
       ) do
-    {:ok, %{entries: list_pools}} =
+    list_pools =
       PS.with_token_pair_id(token_pair_id)
       |> Repo.all()
 
@@ -50,93 +57,114 @@ defmodule PoolContext do
       [] ->
         {:error, "no_profitable_trades"}
 
-        filtered_pools ->
+      filtered_pools ->
         {:ok, filtered_pools}
     end
   end
 
+  def update_pool_price(%Pool{} = pool),
+    do: update_pool_price(pool, :pool_searched)
 
-  def update_token_pair_dex_price(%Pool{} = token_pair_dex),
-    do: update_token_pair_dex_price(token_pair_dex, :TPD_searched)
-
-  def update_token_pair_dex_price(
+  def update_pool_price(
         %Pool{
-          id: token_pair_dex_id,
+          id: pool_id,
           address: pool_address,
-          price: nil,
-          dex: %Dex{name: dex_name}
-        } = token_pair_dex,
+          price: pool_price,
+          dex: %Dex{abi: "uniswapV2", name: dex_name}
+        } = pool,
         test
       ) do
-    with {:ok, new_token_pair_dex_price, reserve0, reserve1} <-
-           Compute.calculate_price(pool_address),
-         {:ok, updated_token_pair_dex} <-
-           PC.update(token_pair_dex, %{
-             price: "#{new_token_pair_dex_price}",
-             reserve0: "#{reserve0}",
-             reserve1: "#{reserve1}"
-           }) do
-      LW.ipt(
-        "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name} price updated to: #{new_token_pair_dex_price}"
-      )
-
-      {:ok, updated_token_pair_dex}
-    else
-      error ->
-        {:error, error}
-    end
-  end
-
-  def update_token_pair_dex_price(
-        %Pool{
-          id: token_pair_dex_id,
-          address: pool_address,
-          price: token_pair_dex_price,
-          dex: %Dex{name: dex_name}
-        } = token_pair_dex,
-        test
-      ) do
-    with {:ok, new_token_pair_dex_price, reserve0, reserve1} <-
-           Compute.calculate_price(pool_address),
+    with {:ok, new_pool_price, reserve0, reserve1} <-
+           calculate_price(pool_address),
          true <-
-           token_pair_dex_price != "#{new_token_pair_dex_price}",
-         {:ok, updated_token_pair_dex} <-
-           PC.update(token_pair_dex, %{
-             price: "#{new_token_pair_dex_price}",
+           pool_price != "#{new_pool_price}",
+         {:ok, updated_pool} <-
+           PC.update(pool, %{
+             price: "#{new_pool_price}",
              reserve0: "#{reserve0}",
              reserve1: "#{reserve1}"
            }) do
-      LW.ipt(
-        "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name}  price updated to: #{new_token_pair_dex_price}"
-      )
+      LW.ipt("#{test} id: #{pool_id} on Dex: #{dex_name}  price updated to: #{new_pool_price}")
 
-      {:ok, updated_token_pair_dex}
+      {:ok, updated_pool}
     else
       _error ->
         if test == :pool_event do
           {:error, "price same as db"}
         else
-          LW.ipt(
-            "#{test} id: #{token_pair_dex_id} on Dex: #{dex_name}  price not updated: #{token_pair_dex_price}"
-          )
+          LW.ipt("#{test} id: #{pool_id} on Dex: #{dex_name}  price not updated: #{pool_price}")
 
-          {:ok, token_pair_dex}
+          {:ok, pool}
         end
     end
   end
 
-  ## TODO create the token_pair_dex_address row from token_pair_dex_address not token_pair associated with dex
-  def maybe_add_token_pair_dex(
+  def update_pool_price(
+        %Pool{
+          token_pair: %TokenPair{
+            decimals_adjuster_0_1: decimals_adjuster_0_1,
+            token0: %Token{decimals: decimals0},
+            token1: %Token{decimals: decimals1}
+          },
+          dex: %Dex{abi: "uniswapV3"} = dex
+        } = pool,
+        test
+      ) do
+    with {:ok, liquidity} <-
+           pool(pool.address, "uniswapV3", :liquidity),
+         {:ok,
+          [
+            sqrtPriceX96,
+            tick_current,
+            _observationIndex,
+            _observationCardinality,
+            _observationCardinalityNext,
+            _feeProtocol,
+            _unlocked
+          ]} <-
+           pool(pool.address, "uniswapV3", :slot0),
+         {:ok, new_pool_price, reserve0, reserve1} <-
+           PV3C.calculate_price_reserve0_reserve1(
+             liquidity,
+             sqrtPriceX96,
+             tick_current,
+             pool.tick_spacing,
+             decimals_adjuster_0_1,
+             decimals0,
+             decimals1
+           ),
+         {:ok, updated_pool} <-
+           PC.update(pool, %{
+             price: "#{new_pool_price}",
+             reserve0: "#{reserve0}",
+             reserve1: "#{reserve1}",
+             liquidity: "#{liquidity}",
+             tick: "#{tick_current}"
+           }) do
+      LW.ipt("#{test} id: #{pool.id} on Dex: #{dex.name}  price updated to: #{new_pool_price}")
+
+      {:ok, updated_pool}
+    else
+      error ->
+        LW.ipt(
+          "#{test} id: #{pool.id} on Dex: #{dex.name}  price not updated: #{pool.price}, reason: #{inspect(error)}"
+        )
+
+        {:ok, pool}
+    end
+  end
+
+  def maybe_add_pool(
         %PoolAddress{
-          id: token_pair_address_id,
-          address: token_pair_address_address
-        } = token_pair_address,
+          id: pool_address_id,
+          address: pool_address_address
+        } = pool_address,
         %Token{id: token0_id} = token0,
         %Token{id: token1_id} = token1,
         %Dex{id: dex_v3_id} = dex,
         params
       ) do
-    IO.puts("sx1 in maybe_add_token_pair_dex")
+    IO.puts("sx1 in maybe_add_pool")
 
     case TPS.with_token0_id(token0_id)
          |> TPS.with_token1_id(token1_id)
@@ -159,6 +187,9 @@ defmodule PoolContext do
                  |> Map.merge(%{token_pair: token_pair})
                )
                |> IO.inspect(label: "sx1 PC insert") do
+          pool_address
+          |> PAC.activate()
+
           {:ok, pool}
         end
 
@@ -166,27 +197,33 @@ defmodule PoolContext do
         with {:ok, %TokenPair{} = updated_token_pair} <-
                token_pair
                |> TPC.update(%{
-                 status: "active",
+                 status: maybe_activate_token_pair(token_pair),
                  decimals_adjuster_0_1: calculate_decimals_adjuster_0_1(token_pair)
                })
                |> IO.inspect(label: "sx1 TPC.update"),
              result_pool <-
-               PS.with_token_pair_address_id(token_pair_address_id)
+               PS.with_pool_address_id(pool_address_id)
                |> PS.with_token_pair_id(token_pair_id)
                |> PS.with_dex_id(dex_v3_id)
                |> Repo.one()
                |> IO.inspect(label: "sx1 PS search") do
           case result_pool do
             nil ->
-              PC.insert(
-                params
-                |> Map.merge(%{
-                  token_pair: token_pair,
-                  dex: dex,
-                  token_pair_address: token_pair_address
-                })
-              )
-              |> IO.inspect(label: "sx1 PC.insert")
+              {:ok, pool} =
+                PC.insert(
+                  params
+                  |> Map.merge(%{
+                    token_pair: token_pair,
+                    dex: dex,
+                    pool_address: pool_address
+                  })
+                )
+                |> IO.inspect(label: "sx1 PC.insert")
+
+              pool_address
+              |> PAC.activate()
+
+              {:ok, pool}
 
             %Pool{} = pool ->
               {:ok, pool}
@@ -196,37 +233,62 @@ defmodule PoolContext do
     end
   end
 
-  # def maybe_add_token_pair_dex(
-  #       %Token{id: token0_id} = token0,
-  #       %Token{id: token1_id} = token1,
-  #       %Dex{} = dex
-  #     ) do
-  #   case TPS.with_token0_id(token0_id)
-  #        |> TPS.with_token1_id(token1_id)
-  #        |> Repo.one() do
-  #     nil ->
-  #       with {:ok, token_pair} <-
-  #              %{
-  #                token0_id: token0_id,
-  #                token1_id: token1_id,
-  #                dexs: [dex],
-  #                status: "inactive",
-  #                decimals_adjsuter_0_1: calculate_decimals_adjuster_0_1(token0, token1)
-  #              }
-  #              |> TPC.insert() do
-  #         {:ok, token_pair}
-  #       end
+  def maybe_activate_token_pair(%TokenPair{id: token_pair_id, status: token_pair_status}) do
+    list_token_pair =
+      PS.with_token_pair_id(token_pair_id)
+      |> Repo.all()
 
-  #     %TokenPair{} = token_pair ->
-  #       with {:ok, updated_token_pair} <-
-  #              token_pair
-  #              |> TPC.update(%{
-  #                dexs: [dex],
-  #                status: "active",
-  #                decimals_adjuster_0_1: calculate_decimals_adjuster_0_1(token_pair)
-  #              }) do
-  #         {:ok, updated_token_pair}
-  #       end
-  #   end
-  # end
+    case length(list_token_pair) > 1 do
+      true -> "active"
+      false -> token_pair_status
+    end
+  end
+
+  def maybe_add_pool_from_pool_address(pool_address, %{
+        "amount0" => amount0_delta,
+        "amount1" => amount1_delta,
+        "liquidity" => liquidity,
+        "recipient" => _recipient,
+        "sender" => _sender,
+        "sqrtPriceX96" => sqrtPriceX96,
+        "tick" => tick
+      }) do
+    IO.puts("sx1 in pool v3 maybe_add_pool_from_pool_address")
+
+    with {:ok, %TokenPair{} = token_pair} <-
+           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV3"),
+         {:ok, list_pools} <- PV3C.maybe_add_all_pool_v3(token_pair, pool_address) do
+      find_pool_in_list_pool(pool_address, list_pools)
+    end
+  end
+
+
+  ##TODO finish this function
+  def maybe_add_pool_from_pool_address(pool_address, %{
+        "amount0In" => amount0_in,
+        "amount0Out" => amount0_out,
+        "amount1In" => amount1_in,
+        "amount1Out" => amount1_out,
+        "sender" => _sender_address,
+        "to" => _to_address
+      }) do
+    IO.puts("sx1 in pool v2 maybe_add_pool_from_pool_address")
+  end
+
+  def find_pool_in_list_pool(pool_address, []), do: "pool not created"
+
+  def find_pool_in_list_pool(pool_address, list_pools) do
+    pool =
+      list_pools
+      |> Enum.filter(fn pool ->
+        pool.pool_address_id === pool_address.id
+      end)
+      |> Enum.at(0)
+
+    if not is_nil(pool) do
+      {:ok, pool}
+    else
+      "pool not created"
+    end
+  end
 end

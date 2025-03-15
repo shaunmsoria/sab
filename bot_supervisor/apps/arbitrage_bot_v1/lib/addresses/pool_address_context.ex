@@ -10,33 +10,45 @@ defmodule PoolAddressContext do
     |> Repo.insert()
   end
 
-  def update(%PoolAddress{} = token_pair_address, params) do
-    token_pair_address
-    |> TokenPairToken.update_changeset(params)
+  def update(%PoolAddress{} = pool_address, params) do
+    pool_address
+    |> PoolAddress.update_changeset(params)
     |> Repo.update()
   end
 
-  def maybe_add_token_pair_address(pair_address) do
-    upcase_pair_address = String.upcase(pair_address)
+  def activate(%PoolAddress{} = pool_address, %{pool_id: pool_id}) do
+    pool_address
+    |> PoolAddress.update_changeset(%{status: "active", pool_id: pool_id})
+    |> Repo.update()
+  end
 
-    case PAS.with_upcase_address(upcase_pair_address)
+  def inactivate(%PoolAddress{} = pool_address) do
+    pool_address
+    |> PoolAddress.update_changeset(%{status: "inactive"})
+    |> Repo.update()
+  end
+
+  def maybe_add_pool_address(event_address) do
+    upcase_event_address = String.upcase(event_address)
+
+    case PAS.with_upcase_address(upcase_event_address)
          |> Repo.one() do
       nil ->
-        with {:ok, token_pair_address} <-
+        with {:ok, pool_address} <-
                %{
-                 address: pair_address,
-                 upcase_address: upcase_pair_address,
+                 address: event_address,
+                 upcase_address: upcase_event_address,
                  status: "new"
                }
                |> PAC.insert() do
-          {:ok, token_pair_address}
+          {:ok, pool_address}
         end
 
-      %PoolAddress{status: "deprecated"} = token_pair_address ->
-        {:error, "PoolAddress #{pair_address} is in status deprecated"}
+      %PoolAddress{status: "inactive"} = pool_address ->
+        {:error, "PoolAddress #{event_address} is in status #{status}"}
 
-      %PoolAddress{status: _status} = token_pair_address ->
-        {:ok, token_pair_address}
+      %PoolAddress{status: status} = pool_address ->
+        {:ok, pool_address}
     end
   end
 end

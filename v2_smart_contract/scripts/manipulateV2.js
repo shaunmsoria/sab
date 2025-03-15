@@ -54,32 +54,81 @@ async function main() {
   // Fetch price of SHIB/WETH before we execute the swap
   const priceBefore = await calculatePrice(pair)
 
+  
+
   pair.on("Swap", async (...params) => {
+
+    // Fetch price of SHIB/WETH after the swap
+    const priceAfter = await calculatePrice(pair)
+  
+    const data = {
+      'Price Before': `1 WETH = ${Number(priceBefore).toFixed(0)} SHIB`,
+      'Price After': `1 WETH = ${Number(priceAfter).toFixed(0)} SHIB`,
+    }
+  
+    console.table(data)
+
+
     console.log("sx1 swap event");
     console.log(params);
 
-    const event = JSON.stringify({ address: params[6].emitter.target });
+    console.log("sx1 params[0]", params[0]);
+    console.log("sx1 params[1]", params[1]);
+    console.log("sx1 params[2]", params[2]);
+    console.log("sx1 params[3]", params[3]);
+    console.log("sx1 params[4]", params[4]);
+    console.log("sx1 params[5]", params[5]);
+    console.log("sx1 params[6]", params[6]);
+
+    const event = JSON.stringify({
+      event: {
+      },
+      data: {
+        amount0In: params[1].toString(),
+        amount1In: params[2].toString(),
+        amount0Out: params[3].toString(),
+        amount1Out: params[4].toString(),
+        to: params[0].toString(),
+        sender: params[5].toString(),
+      },
+      name: params[6].filter,
+      address: params[6].emitter.target, 
+      decoded: true 
+    });
     console.log("sx1 JSON.stringify(event)", event);
 
-
     sendPostEvent(event);
-
   });
-
 
   await manipulatePrice([ARB_AGAINST, ARB_FOR], token0Contract)
 
-  // Fetch price of SHIB/WETH after the swap
-  const priceAfter = await calculatePrice(pair)
 
-  const data = {
-    'Price Before': `1 WETH = ${Number(priceBefore).toFixed(0)} SHIB`,
-    'Price After': `1 WETH = ${Number(priceAfter).toFixed(0)} SHIB`,
-  }
+  // pair.on("Swap", async (...params) => {
+  //   console.log("sx1 swap event");
+  //   console.log(params);
+
+  //   const event = JSON.stringify({ address: params[6].emitter.target });
+  //   console.log("sx1 JSON.stringify(event)", event);
+
+
+  //   sendPostEvent(event);
+
+  // });
+
+
+  // await manipulatePrice([ARB_AGAINST, ARB_FOR], token0Contract)
+
+  // // Fetch price of SHIB/WETH after the swap
+  // const priceAfter = await calculatePrice(pair)
+
+  // const data = {
+  //   'Price Before': `1 WETH = ${Number(priceBefore).toFixed(0)} SHIB`,
+  //   'Price After': `1 WETH = ${Number(priceAfter).toFixed(0)} SHIB`,
+  // }
 
 
 
-  console.table(data)
+  // console.table(data)
 }
 
 async function manipulatePrice(_path, _token0Contract) {

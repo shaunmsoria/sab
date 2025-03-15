@@ -19,31 +19,23 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
-  defmacro pool(pair_address, abi, function, params \\ nil) do
+  def pool(pair_address, abi, function, params \\ nil) do
     case {abi, params} do
       {"uniswapV2", nil} ->
-        quote do
-          PoolContractV2.unquote(function)()
-          |> Ethers.call(to: unquote(pair_address))
-        end
+        apply(PoolContractV2, function, [])
+        |> Ethers.call(to: pair_address)
 
       {"uniswapV2", params} ->
-        quote do
-          PoolContractV2.unquote(function)(unquote(params))
-          |> Ethers.call(to: unquote(pair_address))
-        end
+        apply(PoolContractV2, function, params)
+        |> Ethers.call(to: pair_address)
 
       {"uniswapV3", nil} ->
-        quote do
-          PoolContractV3.unquote(function)()
-          |> Ethers.call(to: unquote(pair_address))
-        end
+        apply(PoolContractV3, function, [])
+        |> Ethers.call(to: pair_address)
 
       {"uniswapV3", params} ->
-        quote do
-          PoolContractV3.unquote(function)(unquote(params))
-          |> Ethers.call(to: unquote(pair_address))
-        end
+        apply(PoolContractV3, function, params)
+        |> Ethers.call(to: pair_address)
     end
   end
 
@@ -249,8 +241,8 @@ defmodule Compute do
   def calculate_decimals_adjuster_0_1(
         %Token{decimals: decimals0},
         %Token{decimals: decimals1}
-      ), do: convert_decimals_adjuster_0_1(10 ** (decimals0 - decimals1))
-
+      ),
+      do: convert_decimals_adjuster_0_1(10 ** (decimals0 - decimals1))
 
   def calculate_decimals_adjuster_0_1(%TokenPair{
         decimals_adjuster_0_1: nil,
@@ -269,4 +261,60 @@ defmodule Compute do
 
   def convert_decimals_adjuster_0_1(decimals_adjuster_0_1) when is_float(decimals_adjuster_0_1),
     do: Float.to_string(decimals_adjuster_0_1)
+
+  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = _token_profit),
+    do: {ConCache.get(:gas, :estimated_gas_fee), "WETH"}
+
+  def calculate_gas_price_for_trade_v3(%Token{
+        symbol: token_profit_symbol,
+        address: token_profit_address,
+        decimals: token_profit_decimals
+      }) do
+    estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
+
+    gas_pool =
+      PS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+      |> Repo.one()
+      |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+
+    with {:ok, weth_location} <-
+           locate_weth_in_token_pair_v3(gas_pool),
+         {:ok, unit_weth_token_profit_price} <-
+           calculate_gas_price_weth_price_v3(
+             weth_location,
+             gas_pool.reserve0,
+             gas_pool.reserve1,
+             token_profit_decimals
+           ) do
+      {unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
+    end
+  end
+
+  def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
+    do: {:ok, reserve1 * 10 ** 18 / (reserve0 * 10 ** token_profit_decimals)}
+
+  def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
+    do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
+
+  def locate_weth_in_token_pair_v3(%Pool{
+        token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token0_weth}
+
+  def locate_weth_in_token_pair_v3(%Pool{
+        token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
+      }),
+      do: {:ok, :token1_weth}
+
+  def locate_weth_in_token_pair_v3(_),
+    do: {:error, "no pool WETH/TOKEN pool found"}
+
+  def enough_eth_to_pay_gas_fee?(gas_fee) do
+    with {:ok, eth_wallet_amount} <- get_wallet_balance() do
+      eth_wallet_amount |> LogWritter.ipt("sx1 eth_wallet_amount")
+      gas_fee |> LogWritter.ipt("sx1 gas_fee")
+
+      {:ok, eth_wallet_amount > String.to_float(gas_fee)}
+    end
+  end
 end

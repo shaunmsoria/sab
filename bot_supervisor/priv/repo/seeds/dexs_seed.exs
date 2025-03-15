@@ -21,7 +21,7 @@ seed_once(Dex, [
   # },
   %{
     name: "uniswap",
-    router: "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
+    router: "0xE592427A0AEce92De3Edee1F18E0157C05861564",
     factory: "0x1F98431c8aD98523631AE4a59f267346ea31F984",
     quoter: "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
     abi: "uniswapV3"

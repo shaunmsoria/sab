@@ -4,7 +4,7 @@ defmodule Pool do
 
   schema "pools" do
     belongs_to(:token_pair, TokenPair)
-    belongs_to(:token_pair_address, PoolAddress)
+    belongs_to(:pool_address, PoolAddress)
     belongs_to(:dex, Dex)
     field(:address, :string)
     field(:price, :string)
@@ -16,6 +16,7 @@ defmodule Pool do
     field(:refresh_reserve, :boolean, default: true)
     field(:tick, :string)
     field(:tick_spacing, :string)
+    field(:liquidity, :string)
 
   end
 
@@ -31,12 +32,13 @@ defmodule Pool do
     :tick,
     :tick_spacing,
     :fee,
+    :liquidity
   ]
 
   def changeset(%Pool{} = pool, %{
     token_pair: token_pair,
     dex: dex,
-    token_pair_address: token_pair_address
+    pool_address: pool_address
     } = params) do
 
 
@@ -45,7 +47,7 @@ defmodule Pool do
     |> cast(params, @required ++ @optional)
     |> put_assoc(:token_pair, token_pair)
     |> put_assoc(:dex, dex)
-    |> put_assoc(:token_pair_address, token_pair_address)
+    |> put_assoc(:pool_address, pool_address)
     |> validate_required(@required)
   end
 
