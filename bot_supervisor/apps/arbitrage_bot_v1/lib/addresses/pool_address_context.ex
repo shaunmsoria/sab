@@ -45,7 +45,7 @@ defmodule PoolAddressContext do
         end
 
       %PoolAddress{status: "inactive"} = pool_address ->
-        {:error, "PoolAddress #{event_address} is in status #{status}"}
+        {:error, "PoolAddress #{event_address} is in status inactive"}
 
       %PoolAddress{status: status} = pool_address ->
         {:ok, pool_address}

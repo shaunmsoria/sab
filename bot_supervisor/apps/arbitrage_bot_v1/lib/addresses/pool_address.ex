@@ -6,7 +6,7 @@ defmodule PoolAddress do
     field(:address, :string)
     field(:upcase_address, :string)
     field(:status, :string, default: "new")
-    has_one(:pool, Pool)
+    belongs_to(:pool, Pool)
   end
 
   @required [:address, :upcase_address]
@@ -25,6 +25,7 @@ defmodule PoolAddress do
   def update_changeset(%PoolAddress{} = pool_address, params) do
     pool_address
     |> cast(params, @optional)
+    # |> put_assoc(:pool, params[:pool_id])
   end
 
 
