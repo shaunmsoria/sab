@@ -97,6 +97,8 @@ defmodule PoolV2Initialise do
     {:ok, :all_pairs_retrieved}
   end
 
+  ##TODO ensure function search for event_address in pool_address and for a token_pair
+  ##TODO and use the existing token_pair and pool_address and update n_pair and params
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: dex_factory} = dex, n_pair) do
     with {:ok, pair_address} <-
            get_all_pairs(dex_factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),

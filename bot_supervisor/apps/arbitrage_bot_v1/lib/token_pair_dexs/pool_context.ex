@@ -226,8 +226,9 @@ defmodule PoolContext do
               {:ok, pool}
 
             %Pool{} = pool ->
-              {:ok, pool}
-              |> IO.inspect(label: "sx1 pool passed over")
+                pool
+                |> PC.update(params)
+              |> IO.inspect(label: "sx1 pool updated with params: #{inspect(params)}")
           end
         end
     end
@@ -262,7 +263,6 @@ defmodule PoolContext do
     end
   end
 
-
   def maybe_add_pool_from_pool_address(pool_address, %{
         "amount0In" => amount0_in,
         "amount0Out" => amount0_out,
@@ -272,11 +272,12 @@ defmodule PoolContext do
         "to" => _to_address
       }) do
     IO.puts("sx1 in pool v2 maybe_add_pool_from_pool_address")
+
     with {:ok, %TokenPair{} = token_pair} <-
-      TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV2"),
-    {:ok, list_pools} <- PV2C.maybe_add_all_pool_v2(token_pair, pool_address) do
- find_pool_in_list_pool(pool_address, list_pools)
-end
+           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV2"),
+         {:ok, list_pools} <- PV2C.maybe_add_all_pool_v2(token_pair, pool_address) do
+      find_pool_in_list_pool(pool_address, list_pools)
+    end
   end
 
   def find_pool_in_list_pool(pool_address, []), do: "pool not created"
