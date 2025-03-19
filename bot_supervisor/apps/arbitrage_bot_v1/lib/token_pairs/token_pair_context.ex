@@ -2,9 +2,11 @@ defmodule TokenPairContext do
   import Compute
   import Ecto.{Changeset, Query, Repo}
   alias TokenPairContext, as: TPC
+  alias TokenPairSearch, as: TPS
   alias PoolContext, as: PC
   alias PoolSearch, as: PS
   alias PoolAddressContext, as: PAC
+  alias TokenContext, as: TC
 
   def insert(params) do
     %TokenPair{}
