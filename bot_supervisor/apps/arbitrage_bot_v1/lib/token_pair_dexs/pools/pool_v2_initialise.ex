@@ -54,9 +54,9 @@ defmodule PoolV2Initialise do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(dex_factory) do
       max_length =
         case dex_name do
-          "pancakeswap" -> 100
-          "sushiswap" -> 100
-          _ -> 100
+          "pancakeswap" -> 20
+          "sushiswap" -> 20
+          _ -> 20
         end
 
       # case dex_name do
@@ -132,7 +132,6 @@ defmodule PoolV2Initialise do
     end
   end
 
-  ##TODO Debug the function below
   def get_or_create_pool_address_token0_token1_from_event_address(event_address, abi) do
     pool_address_result =
       PAS.with_upcase_address(String.upcase(event_address))
@@ -145,7 +144,7 @@ defmodule PoolV2Initialise do
 
         token_pair_preloaded =
           token_pair
-          |> Repo.preload(:token0, :token1)
+          |> Repo.preload([:token0, :token1])
 
         pool_address =
           PAS.with_upcase_address(String.upcase(event_address))
@@ -159,7 +158,7 @@ defmodule PoolV2Initialise do
 
         token_pair_preloaded =
           token_pair
-          |> Repo.preload(:token0, :token1)
+          |> Repo.preload([:token0, :token1])
 
         updated_pool_address =
           PAS.with_id(pool_address.id)

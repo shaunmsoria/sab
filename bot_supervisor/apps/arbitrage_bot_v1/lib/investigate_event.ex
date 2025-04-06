@@ -12,6 +12,7 @@ defmodule InvestigateEvent do
   alias PoolSearch, as: PS
   alias PoolContext, as: PC
   alias PoolAddressSearch, as: PAS
+  alias PoolAddressContext, as: PAC
 
   alias PoolV2Context, as: PV2C
   alias PoolV3Context, as: PV3C
@@ -101,7 +102,7 @@ defmodule InvestigateEvent do
 
       profitable_trades ->
         profitable_trades
-        |> PT.process_trade()
+        |> PT.run()
     end
   end
 
@@ -143,12 +144,12 @@ defmodule InvestigateEvent do
     with {:ok, pool_address} <- PAC.maybe_add_pool_address(event_address) do
       case PC.maybe_add_pool_from_pool_address(pool_address, event_params) do
         {:ok, pool} ->
-          PAC.activate(pool_address)
+          # PAC.activate(pool_address)
 
           {:ok, pool |> Repo.preload([[token_pair: [:token0, :token1]], :dex])}
 
         error_message ->
-          PAC.inactivate(pool_address)
+          # PAC.inactivate(pool_address)
           {:error, "No Pool for #{event_address}, reason: #{inspect(error_message)}"}
       end
     else

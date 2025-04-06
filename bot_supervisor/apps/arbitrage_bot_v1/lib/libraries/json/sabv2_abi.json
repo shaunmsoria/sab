@@ -17,14 +17,34 @@
 				"type": "address"
 			},
 			{
-				"internalType": "contract IUniswapV2Router02",
+				"internalType": "address",
 				"name": "_router0",
 				"type": "address"
 			},
 			{
-				"internalType": "contract IUniswapV2Router02",
+				"internalType": "string",
+				"name": "_router0_abi",
+				"type": "string"
+			},
+			{
+				"internalType": "uint24",
+				"name": "_pool0_fee",
+				"type": "uint24"
+			},
+			{
+				"internalType": "address",
 				"name": "_router1",
 				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_router1_abi",
+				"type": "string"
+			},
+			{
+				"internalType": "uint24",
+				"name": "_pool1_fee",
+				"type": "uint24"
 			},
 			{
 				"internalType": "uint256",
@@ -33,6 +53,24 @@
 			}
 		],
 		"name": "executeTrade",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "testSimpleFlashLoan",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

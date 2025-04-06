@@ -7,6 +7,7 @@ defmodule PoolV3Context do
   alias PoolV3CheckProfit, as: PV3CP
   alias DexSearch, as: DS
   alias DexContext, as: DC
+  alias LogWritter, as: LW
 
   def initialise(), do: PoolV3Initialise.run()
 
@@ -77,7 +78,7 @@ defmodule PoolV3Context do
         )
 
       %Pool{} = pool_v3 ->
-        pool_v3
+        {:ok, pool_v3}
     end
   end
 
@@ -131,7 +132,7 @@ defmodule PoolV3Context do
     {:ok, %PoolAddress{id: pool_address_id} = pool_address} =
       PAC.maybe_add_pool_address(pool_v3_address)
 
-    {:ok, updated_token_pair} =
+    {:ok, updated_pool} =
       PC.maybe_add_pool(pool_address, token0, token1, dex_v3, %{
         pool_address_id: pool_address_id,
         address: pool_v3_address,
@@ -156,7 +157,7 @@ defmodule PoolV3Context do
         _decimals0,
         _decimals1
       ),
-      do: {"0", "0", "0"}
+      do: {"0.0", "0", "0"}
 
   def calculate_price_reserve0_reserve1(
         liquidity,
@@ -172,7 +173,6 @@ defmodule PoolV3Context do
     decimals_adjuster_0_1 = sanitise_from_string_to_float(decimals_adjuster_0_1_raw)
 
     tick_current |> IO.inspect(label: "mx1 tick_current")
-    tick_spacing_raw |> IO.inspect(label: "mx1 tick_spacing_raw")
     tick_spacing |> IO.inspect(label: "mx1 tick_spacing")
 
     tick_lower =
@@ -201,10 +201,10 @@ defmodule PoolV3Context do
           |> IO.inspect(label: "mx1 reserve1 result")
 
         invert_price_t0_t1_sqrtPriceX96 =
-          "0"
+          "0.0"
           |> IO.inspect(label: "mx1 invert_price_t0_t1_sqrtPriceX96")
 
-        {"0", reserve0, reserve1}
+        {"0.0", reserve0, reserve1}
 
       _ ->
         price_current =
@@ -213,7 +213,7 @@ defmodule PoolV3Context do
 
         invert_price_current =
           (1 / (price_current * decimals_adjuster_0_1))
-          |> IO.inspect(label: "mx1 invert_price_current result")
+          |> IO.inspect(label: "sx1 invert_price_current result")
 
         price_lower = (1.0001 ** tick_lower) |> IO.inspect(label: "mx1 price_lower result")
 
@@ -223,23 +223,24 @@ defmodule PoolV3Context do
           (liquidity * (1 / :math.sqrt(price_current) - 1 / :math.sqrt(price_upper)))
           |> trunc()
           |> Integer.to_string()
-          |> IO.inspect(label: "mx1 reserve0 result")
+          |> IO.inspect(label: "sx1 reserve0 result")
 
         reserve1 =
           (liquidity * (:math.sqrt(price_current) - :math.sqrt(price_lower)))
           |> trunc()
           |> Integer.to_string()
-          |> IO.inspect(label: "mx1 reserve1 result")
+          |> IO.inspect(label: "sx1 reserve1 result")
+
+        price_t1_t0_sqrtPriceX96 =
+          (sqrtPriceX96 / 2 ** 96) ** 2 * decimals_adjuster_0_1
+          |> IO.inspect(label: "sx1 price_t1_t0_sqrtPriceX96")
 
         price_t0_t1_sqrtPriceX96 =
-          (sqrtPriceX96 / 2 ** 96) ** 2 * decimals_adjuster_0_1
-
-        invert_price_t0_t1_sqrtPriceX96 =
-          (1 / price_t0_t1_sqrtPriceX96)
+          (1 / price_t1_t0_sqrtPriceX96)
           |> Float.to_string()
-          |> IO.inspect(label: "mx1 invert_price_t0_t1_sqrtPriceX96")
+          |> IO.inspect(label: "sx1 price_t0_t1_sqrtPriceX96")
 
-        {invert_price_t0_t1_sqrtPriceX96, reserve0, reserve1}
+        {price_t0_t1_sqrtPriceX96, reserve0, reserve1}
     end
   end
 
@@ -263,26 +264,34 @@ defmodule PoolV3Context do
      ]} =
       pool(pool_v3_address, "uniswapV3", :slot0)
       |> IO.inspect(label: "mx1 pool slot0 result")
-
-
-
   end
 
   def sanitise_from_string_to_float(nil), do: 0.0
   def sanitise_from_string_to_float(""), do: 0.0
-  def sanitise_from_string_to_float(string) when is_binary(string), do: string |> String.to_float()
-  def sanitise_from_string_to_float(value) when is_integer(value), do: value |> Integer.to_string() |> Float.parse() |> elem(0)
-  def sanitise_from_string_to_float(float) when is_float(float), do: float
 
+  def sanitise_from_string_to_float(string) when is_binary(string) do
+    case string |> String.split(".") |> length > 1 do
+      true -> string |> String.to_float()
+      false -> string |> String.to_integer()
+    end
+  end
+
+  def sanitise_from_string_to_float(value) when is_integer(value),
+    do: value |> Integer.to_string() |> Float.parse() |> elem(0)
+
+  def sanitise_from_string_to_float(float) when is_float(float), do: float
 
   def maybe_add_all_pool_v3(token_pair, pool_address) do
     all_dexs_v3 = DS.with_abi("uniswapV3") |> Repo.all()
 
-    all_dexs_v3
-    |> Enum.map(fn dex_v3 ->
-      maybe_add_pools_from_fees(token_pair, dex_v3)
-    end)
+    list_pools =
+      all_dexs_v3
+      |> Enum.map(fn dex_v3 ->
+        maybe_add_pools_from_fees(token_pair, dex_v3)
+      end)
+      |> List.flatten()
 
+    {:ok, list_pools}
   end
 
   @pool_v3_fees ["100", "500", "3000", "10000"]
@@ -302,17 +311,25 @@ defmodule PoolV3Context do
           pool_v3_address
           |> IO.inspect(label: "sx1 pool_address")
 
-          get_or_create_pool_v3(
-            pool_v3_address,
-            dex_v3,
-            token_pair,
-            pool_v3_fee
-          )
+          with {:ok, pool_v3} <-
+                 get_or_create_pool_v3(
+                   pool_v3_address,
+                   dex_v3,
+                   tp_preloaded,
+                   pool_v3_fee
+                 ) do
+            pool_v3
+          else
+            msg ->
+              LW.ipt(inspect(msg))
+              []
+          end
 
         nil ->
           LW.ipt(
             "no pool v3 for token_pair_id: #{token_pair.id} with dex_id: #{dex_v3.id} and fee: #{pool_v3_fee}"
           )
+
           []
       end
     end)

@@ -19,7 +19,6 @@ defmodule PoolContext do
   def insert(params) do
     %Pool{}
     |> Pool.changeset(params)
-    |> IO.inspect(label: "sx1 pre Repo.insert")
     |> Repo.insert()
     |> IO.inspect(label: "mx1 Repo.insert Pool.insert()")
   end
@@ -123,7 +122,7 @@ defmodule PoolContext do
             _unlocked
           ]} <-
            pool(pool.address, "uniswapV3", :slot0),
-         {:ok, new_pool_price, reserve0, reserve1} <-
+         {new_pool_price, reserve0, reserve1} <-
            PV3C.calculate_price_reserve0_reserve1(
              liquidity,
              sqrtPriceX96,
@@ -226,8 +225,8 @@ defmodule PoolContext do
               {:ok, pool}
 
             %Pool{} = pool ->
-                pool
-                |> PC.update(params)
+              pool
+              |> PC.update(params)
               |> IO.inspect(label: "sx1 pool updated with params: #{inspect(params)}")
           end
         end

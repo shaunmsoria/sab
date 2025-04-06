@@ -55,6 +55,17 @@ defmodule PoolSearch do
     from(t in query, where: t.tick_spacin == ^tick_spacin)
   end
 
+  def with_dex_abi(query \\ query(), dex_abi) do
+    list_dex_id =
+      from(d in Dex,
+        where: d.abi == ^dex_abi,
+        select: d.id
+      )
+      |> Repo.all()
+
+    from(p in query, where: p.dex_id in ^list_dex_id)
+  end
+
 
   def with_upcase_token_address_and_weth(query \\ query(), upcase_token_address) do
     token_id =

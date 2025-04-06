@@ -38,7 +38,7 @@ defmodule PoolV3Initialise do
 
     dex_v3_n_pairs = sanitise_n_pairs(dex_v3_n_pairs_raw)
     # dex_v2_n_pairs = sanitise_n_pairs(dex_v2_n_pairs_raw)
-    dex_v2_n_pairs = 2500
+    dex_v2_n_pairs = 100
 
     if dex_v3_n_pairs < dex_v2_n_pairs do
       dex_v3_n_pairs..dex_v2_n_pairs

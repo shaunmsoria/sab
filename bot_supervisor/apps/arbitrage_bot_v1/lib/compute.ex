@@ -273,7 +273,8 @@ defmodule Compute do
     estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
 
     gas_pool =
-      PS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+      PoolSearch.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+      |> PoolSearch.with_fee("3000")
       |> Repo.one()
       |> Repo.preload([:dex, token_pair: [:token0, :token1]])
 
@@ -282,8 +283,8 @@ defmodule Compute do
          {:ok, unit_weth_token_profit_price} <-
            calculate_gas_price_weth_price_v3(
              weth_location,
-             gas_pool.reserve0,
-             gas_pool.reserve1,
+             gas_pool.reserve0 |> String.to_integer(),
+             gas_pool.reserve1 |> String.to_integer(),
              token_profit_decimals
            ) do
       {unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
