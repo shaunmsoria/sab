@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: '../bot_supervisor/.envrc' });
 const hre = require("hardhat");
 const axios = require("axios");
 const { ethers } = require("hardhat");
@@ -23,10 +23,24 @@ const ERC20_ABI = [
   "event Approval(address indexed owner, address indexed spender, uint256 amount)"
 ];
 
+const SABV2_ABI = [
+  "function executeSwap(address tokenIn, address tokenOut, uint256 amountIn, uint256 amountOutMin, uint256 deadline)",
+  "function queryOwner() view returns (address)",
+  "function testSimpleFlashLoan(address token, uint256 amount) returns (bool)",
+  "event FlashLoanReceived(address token, uint256 amount, uint256 fee)",
+  "event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee)",
+  "event ProfitTracked(uint256 profit)",
+  "event ExecuteTradeError(string reason)"
+];
+const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+
 // Constants
 const UNISWAP_V3_ROUTER = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
-const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance 8 wallet
+const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance hot wallet 20
+// const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance 8 wallet
 const AMOUNT = "100000000000"; // 100 billion SHIB tokens
+// const AMOUNT = "50000000"; // exchange that amount of USDT tokens
+// const AMOUNT = "30000000"; // exchange that amount of USDC tokens
 const FEE_TIER = 3000; // 0.3% fee tier
 
 async function sendPostEvent(event) {
@@ -37,12 +51,20 @@ async function sendPostEvent(event) {
     const response = await axios.post(url, event, {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      timeout: 120000
     });
     console.log('Success:', response.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error('Axios error:', error.message);
+      if (error.code === 'ECONNREFUSED') {
+        console.error('ERROR: Connection refused. Is the server running at http://localhost:4000?');
+      } else if (error.code === 'ETIMEDOUT' || error.code === 'UND_ERR_HEADERS_TIMEOUT') {
+        console.error('ERROR: Request timed out. Server might be busy or not responding.');
+      } else {
+        console.error('Axios error:', error.message, error.code);
+      }
+      // Continue with script execution despite the error
     } else {
       console.error('Unexpected error:', error);
     }
@@ -140,20 +162,107 @@ async function getTokensAndPool(token0Address, token1Address, fee) {
   }
 }
 
+const testSimpleFlashLoanContract = async (token, amount) => {
+  const SABV2 = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
+  const tx = await SABV2.testSimpleFlashLoan(token, amount);
+  const receipt = await tx.wait();
+  console.log(`Flash loan transaction confirmed in block ${receipt.blockNumber}`);
+  console.log(`Flash loan transaction hash: ${tx.hash}`);
+  console.log(`Flash loan transaction details:`, receipt);
+};
+
+const displayUserAndPoolBalances = async (token0, token1, pool) => {
+  const SABV2 = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
+  const owner = await SABV2.queryOwner();
+
+  poolSearched = await ethers.getContractAt(IUniswapV3Pool.abi, "0x7bea39867e4169dbe237d55c8242a8f2fcdcc387");
+  // poolSearched = await ethers.getContractAt(IUniswapV3Pool.abi, "0xacdb27b266142223e1e676841c1e809255fc6d07");
+
+  const balanceUserUSDT = await token0.contract.balanceOf(owner);
+  const balanceUserWETH = await token1.contract.balanceOf(owner);
+
+  const balancePoolUSDT = await token0.contract.balanceOf(pool.target);
+  const balancePoolWETH = await token1.contract.balanceOf(pool.target);
+
+  const balancePoolSearchedUSDT = await token0.contract.balanceOf(poolSearched.target);
+  const balancePoolSearchedWETH = await token1.contract.balanceOf(poolSearched.target);
+
+
+  const decimalsUSDT = await token0.contract.decimals();
+  const decimalsWETH = await token1.contract.decimals();
+
+
+
+  const preBotSwapInfo = {
+    userUSDT: ethers.formatUnits(balanceUserUSDT, decimalsUSDT),
+    userWETH: ethers.formatUnits(balanceUserWETH, decimalsWETH),
+    poolUSDT: ethers.formatUnits(balancePoolUSDT, decimalsUSDT),
+    poolWETH: ethers.formatUnits(balancePoolWETH, decimalsWETH),
+    poolSearchedUSDT: ethers.formatUnits(balancePoolSearchedUSDT, decimalsUSDT),
+    poolSearchedWETH: ethers.formatUnits(balancePoolSearchedWETH, decimalsWETH),
+  };
+
+  console.log(`\n`);
+  console.log(`USDT balance in wallet: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 is:`);
+  console.log(`\n`);
+  console.log(`owner address: ${owner}`);
+  console.log(`\n`);
+
+  console.table(preBotSwapInfo);
+  console.log(`\n`);
+  console.log("######################################################################");
+};
+
+async function listenForContractEvents() {
+  const sabContract = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
+
+  sabContract.on("FlashLoanReceived", (token, amount, fee) => {
+    console.log(`Flash loan received: ${token}, Amount: ${ethers.formatUnits(amount, 6)}, Fee: ${ethers.formatUnits(fee, 6)}`);
+  });
+
+  sabContract.on("FlashLoanRepaid", (flashAmount, loanFee) => {
+    console.log(`Flash loan repaid: Amount: ${ethers.formatUnits(flashAmount, 6)}, Fee: ${ethers.formatUnits(loanFee, 6)}`);
+  });
+
+  sabContract.on("ProfitTracked", (profit) => {
+    console.log(`Profit tracked: ${ethers.formatUnits(profit, 6)} USDT`);
+  });
+
+  sabContract.on("ExecuteTradeError", (reason) => {
+    console.log(`Error executing trade: ${reason}`);
+  });
+
+  // sabContract.on("ExecuteTradeFired", (reason) => {
+  //   console.log(`Execute Trade Fired: ${reason}`);
+  // });
+
+  console.log(`Listening for events from contract: ${CONTRACT_ADDRESS}`);
+
+  sabContract.on("*", (log) => {
+    console.log("Raw contract event:", log);
+  });
+}
+
 async function main() {
   // Define tokens - SHIB and WETH
-  const SHIB = "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE";
-  const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+  // SHIB
+  const tokenA = "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE";
+  // USDT
+  // const tokenA = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+  // USDC
+  // const tokenA = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+
+  const tokenB = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
 
   // Get tokens and pool
-  const { token0, token1, pool, isReversed } = await getTokensAndPool(SHIB, WETH, FEE_TIER);
+  const { token0, token1, pool, isReversed } = await getTokensAndPool(tokenA, tokenB, FEE_TIER);
 
   console.log(`Pool: ${token0.symbol}/${token1.symbol} with ${FEE_TIER / 10000}% fee`);
   console.log(`Pool address: ${pool.target}`);
 
   // Listen for swap events
   pool.on("Swap", async (...params) => {
-    console.log("\nSwap event detected!");
+    console.log("\nManipulation Swap event detected!");
 
     // Calculate price after swap
     const priceAfter = await calculateV3Price(
@@ -162,25 +271,32 @@ async function main() {
       isReversed ? token0.decimals : token1.decimals
     );
 
-    console.log(`Price after swap: 1 ${token1.symbol} = ${priceAfter.toLocaleString()} ${token0.symbol}`);
 
-    // Format parameters for readability
+
+
+    console.log(`Price after manipulation swap: 1 ${token1.symbol} = ${priceAfter.toLocaleString()} ${token0.symbol}`);
+
+    // Check balances pre bot swap
+    displayUserAndPoolBalances(token0, token1, pool);
+    console.log(`\n`);
+
+
     const eventData = {
-      sqrtPriceX96: params[0].toString(),
-      tick: params[1],
+      sqrtPriceX96: params[4].toString(),
+      tick: params[6],
       amount0: isReversed
         ? ethers.formatUnits(params[3], token0.decimals)
         : ethers.formatUnits(params[2], token0.decimals),
       amount1: isReversed
         ? ethers.formatUnits(params[2], token1.decimals)
         : ethers.formatUnits(params[3], token1.decimals),
-      sender: params[4],
-      recipient: params[5]
-    };
+      sender: params[0],
+      recipient: params[1]
+    };  const balancePoolUSDT = await token0.contract.balanceOf(pool.target);
+    const balancePoolWETH = await token1.contract.balanceOf(pool.target);
 
     console.table(eventData);
 
-    // Add this helper function at the top of your file
     function bigIntSafeStringify(obj) {
       return JSON.stringify(obj, (key, value) => {
         if (typeof value === 'bigint') {
@@ -190,15 +306,18 @@ async function main() {
       });
     }
 
+    console.log("sx1 params", params);
+
     // Convert the params
     const eventObj = {
       data: {
-        sqrtPriceX96: params[0].toString(),
-        tick: params[1].toString(),
+        sender: params[0],
+        recipient: params[1],
         amount0: params[2].toString(),
         amount1: params[3].toString(),
-        sender: params[4],
-        recipient: params[5]
+        sqrtPriceX96: params[4].toString(),
+        liquidity: params[5].toString(),
+        tick: params[6].toString(),
       },
       name: "Swap",
       address: pool.target.toString(),  // Convert to string
@@ -208,6 +327,19 @@ async function main() {
     const event = bigIntSafeStringify(eventObj);
 
     await sendPostEvent(event);
+
+    setTimeout(async () => {
+      console.log('3 minutes have passed');
+
+      // Check balances post bot swap
+      displayUserAndPoolBalances(token0, token1, pool);
+
+    }, 3 * 60 * 1000);
+
+    console.log("Timer started for 3 minutes");
+
+
+
   });
 
   // Calculate price before swap
@@ -221,12 +353,25 @@ async function main() {
   // Execute swap
   await executeSwap(token0, token1, isReversed);
 
+
+
   // Keep script running to catch events
   console.log("Waiting for events (press Ctrl+C to exit)...");
+
+  await listenForContractEvents();
+
+
+  testSimpleFlashLoanContract(tokenA, ethers.parseUnits(AMOUNT, 6))
+    .then(() => {
+      console.log("Flash loan executed successfully");
+    })
+    .catch((error) => {
+      console.error("Error executing flash loan:", error);
+    });
 }
 
 async function executeSwap(token0, token1, isReversed) {
-  console.log(`\nBeginning SHIB to WETH swap with whale account...\n`);
+  console.log(`\nBeginning USDT to WETH swap with whale account...\n`);
 
   const amount = ethers.parseUnits(AMOUNT, token0.decimals);
   const deadline = Math.floor(Date.now() / 1000) + 60 * 20; // 20 minutes
@@ -254,6 +399,12 @@ async function executeSwap(token0, token1, isReversed) {
         "0x" + (10n ** 22n).toString(16), // 10000 ETH
       ],
     });
+
+     // Holder of USDT
+    // const holder = "0xF977814e90dA44bFA03b6295A0616a897441aceC";   
+
+    // Holder of USDC
+    // const holder = "0xaD354CfBAa4A8572DD6Df021514a3931A8329Ef5";
 
     // Find a holder with lots of tokens to get SHIB from
     const holder = "0x8894E0a0c962CB723c1976a4421c95949bE2D4E3"; // Top SHIB holder
@@ -293,7 +444,7 @@ async function executeSwap(token0, token1, isReversed) {
   const wethBefore = await token1.contract.balanceOf(signer.address);
   console.log(`${token1.symbol} balance before swap: ${ethers.formatUnits(wethBefore, token1.decimals)}`);
 
-  // Approve router to spend SHIB
+  // Approve router to spend USDT
   console.log(`Approving ${ethers.formatUnits(amount, token0.decimals)} ${token0.symbol}...`);
   await token0.contract.connect(signer).approve(
     UNISWAP_V3_ROUTER,

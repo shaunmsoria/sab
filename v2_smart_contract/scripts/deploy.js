@@ -19,7 +19,10 @@ async function main() {
   const SABV2 = await hre.ethers.deployContract(
     "SABV2",
     [],
-    {signer: deployer}
+    {
+      signer: deployer,
+      maxFeePerGas: 10000000000,
+    }
   )
 
   await SABV2.waitForDeployment()

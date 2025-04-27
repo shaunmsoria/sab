@@ -1,32 +1,45 @@
 // SPDX-License-Identifier: UNLICENSED
-// pragma solidity 0.8.4;
 pragma solidity 0.8.28;
 
+
+import {IERC20 as OZ_IERC20, SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+// Balancer interfaces (directly using what's needed)
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
-// import "https://github.com/balancer/balancer-v2-monorepo/blob/master/pkg/interfaces/contracts/vault/IVault.sol";
-
-
 import "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol";
-// import "https://github.com/balancer/balancer-v2-monorepo/blob/master/pkg/interfaces/contracts/vault/IFlashLoanRecipient.sol";
 
 
+// Uniswap interfaces
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
-// import "https://github.com/Uniswap/v2-periphery/blob/master/contracts/interfaces/IUniswapV2Router02.sol";
-
-
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-// import "https://github.com/Uniswap/v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+
 
 
 contract SABV2 is IFlashLoanRecipient {
+    using SafeERC20 for OZ_IERC20;
+
+
     IVault private constant vault =
         IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;
-    // Add this event to track execution
     event FlashLoanReceived(address token, uint256 amount, uint256 fee);
+    event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee);
+    event ProfitTracked(uint256 profit);
+    event ExecuteTradeFired(string message);
+    event ReceiveFlashLoanEvent(string message);
+
+    uint256 public flashAmount;
+    uint256 public loanFee;
+    uint256 public token0Amount;
+    uint256 public profit;
 
     constructor() {
         owner = msg.sender;
+    }
+
+    // Add this new function
+    function queryOwner() external returns (address) {
+        return owner;
     }
 
     modifier onlyVault() {
@@ -59,8 +72,6 @@ contract SABV2 is IFlashLoanRecipient {
         vault.flashLoan(this, tokens, amounts, data);
     }
 
-  
-
     function executeTrade(
         address _token0,
         address _token1,
@@ -72,6 +83,9 @@ contract SABV2 is IFlashLoanRecipient {
         uint24 _pool1_fee,
         uint256 _flashAmount
     ) external {
+
+        emit ExecuteTradeFired("ExecuteTrade fired");
+
         bytes memory data = abi.encode(
             owner,
             _token0,
@@ -90,8 +104,6 @@ contract SABV2 is IFlashLoanRecipient {
         uint256[] memory amounts = new uint256[](1);
         amounts[0] = _flashAmount;
 
-
-
         vault.flashLoan(this, tokens, amounts, data);
     }
 
@@ -100,7 +112,9 @@ contract SABV2 is IFlashLoanRecipient {
         uint256[] memory amounts,
         uint256[] memory feeAmounts,
         bytes memory userData
-    ) external override onlyVault {
+    // ) external override onlyVault {
+    ) external override {
+        emit ReceiveFlashLoanEvent("ReceiveFlashLoanEvent fired");
         emit FlashLoanReceived(address(tokens[0]), amounts[0], feeAmounts[0]);
 
         (
@@ -118,8 +132,8 @@ contract SABV2 is IFlashLoanRecipient {
                 (address, address, address, address, string, uint24, address, string, uint24)
             );
 
-        uint256 flashAmount = amounts[0];
-        uint256 loanFee = feeAmounts[0];
+        flashAmount = amounts[0];
+        loanFee = feeAmounts[0];
 
         address[] memory routerPath = new address[](2);
 
@@ -143,13 +157,38 @@ contract SABV2 is IFlashLoanRecipient {
 
         _executeSwap(routerPath, abiPath, feePath, tokenPath, flashAmount);
 
-        IERC20 ierc20_token0 = IERC20(token0);
+        OZ_IERC20 ierc20_token0 = OZ_IERC20(token0);
 
         // Replay flash loan + fee
-        ierc20_token0.transfer(address(vault), flashAmount + loanFee);
+        ierc20_token0.safeApprove(address(this), 0);
+        ierc20_token0.safeApprove(address(this), flashAmount + loanFee);
+
+
+        require(
+            ierc20_token0.balanceOf(address(this)) >= flashAmount + loanFee,
+            "Not enough balance to repay flash loan"
+        );
+
+        token0Amount = ierc20_token0.balanceOf(address(this));
+
+        ierc20_token0.safeTransfer(address(vault), flashAmount + loanFee);
+
+        emit FlashLoanRepaid(flashAmount, loanFee);
+
+        emit ProfitTracked(ierc20_token0.balanceOf(address(this)));
 
         // Transfer remaining token0 to owner
-        ierc20_token0.transfer(owner, ierc20_token0.balanceOf(address(this)));
+        ierc20_token0.safeApprove(address(this), 0);
+        ierc20_token0.safeApprove(address(this), ierc20_token0.balanceOf(address(this)));
+
+        require(
+            ierc20_token0.balanceOf(address(this)) >= 0,
+            string(abi.encodePacked("No profit to transfer", Strings.toString(ierc20_token0.balanceOf(address(this)))))
+        );
+        
+        ierc20_token0.safeTransfer(owner, ierc20_token0.balanceOf(address(this))); 
+
+        profit = ierc20_token0.balanceOf(address(this));
     }
 
     function _executeSwap(
@@ -165,13 +204,10 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            require(
-                IERC20(_tokenPath[0]).approve(
-                    address(_startRouter),
-                    _startAmountIn
-                ),
-                "start router approval failed"
-            );
+            // First reset approval to 0 for tokens like USDT
+            OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), 0);
+            // Then set the desired approval
+            OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), _startAmountIn);
 
             _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
                 _startAmountIn,
@@ -186,13 +222,10 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            require(
-                IERC20(_tokenPath[0]).approve(
-                    address(_startRouter),
-                    _startAmountIn
-                ),
-                "start router approval failed"
-            );
+            // First reset approval to 0 for tokens like USDT
+            OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), 0);
+            // Then set the desired approval
+            OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), _startAmountIn);
 
             _startRouter.exactInputSingle(
                 ISwapRouter.ExactInputSingleParams({
@@ -214,13 +247,10 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            require(
-                IERC20(_tokenPath[1]).approve(
-                    address(_endRouter),
-                    _endAmountIn
-                ),
-                "end router approval failed"
-            );
+            // First reset approval to 0 for tokens like USDT
+            OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), 0);
+            // Then set the desired approval
+            OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), _endAmountIn);
 
             address token0 = _tokenPath[0];
             address token1 = _tokenPath[1];
@@ -230,7 +260,7 @@ contract SABV2 is IFlashLoanRecipient {
 
             _endRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
                 _endAmountIn,
-                _flashAmount,
+                _flashAmount + _feePath[0] + _feePath[1],
                 _tokenPath,
                 address(this),
                 (block.timestamp + 1200)
@@ -241,16 +271,10 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            require(
-                IERC20(_tokenPath[1]).approve(
-                    address(_endRouter),
-                    _endAmountIn
-                ),
-                "end router approval failed"
-            );
-
-            // Calculate minimum required with 5% slippage tolerance
-            // uint256 minAmountOut = (_flashAmount * 95) / 100;
+            // First reset approval to 0 for tokens like USDT
+            OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), 0);
+            // Then set the desired approval
+            OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), _endAmountIn);
 
             _endRouter.exactInputSingle(
                 ISwapRouter.ExactInputSingleParams({
@@ -260,7 +284,6 @@ contract SABV2 is IFlashLoanRecipient {
                     recipient: address(this),
                     deadline: (block.timestamp + 300),
                     amountIn: _endAmountIn,
-                    // amountOutMinimum: minAmountOut,
                     amountOutMinimum: _flashAmount,
                     sqrtPriceLimitX96: 0
                 })
