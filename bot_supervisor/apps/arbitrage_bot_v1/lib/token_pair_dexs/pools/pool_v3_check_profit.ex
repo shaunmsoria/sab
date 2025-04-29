@@ -118,7 +118,8 @@ defmodule PoolV3CheckProfit do
     |> estimate_profitable_pool(pool_event, swap_amount, swap_price_event, swap_direction)
     |> Enum.sort_by(
       fn {_pool_event, _pool_searched, profit_amount, _token_return_symbol, _return_amount,
-          _burrow_amount, _token_return_amount_for_gas_fee, _swap_price_event, _swap_direction, _swap_amount} ->
+          _burrow_amount, _token_return_amount_for_gas_fee, _swap_price_event, _swap_direction,
+          _swap_amount} ->
         profit_amount
       end,
       :desc
@@ -175,40 +176,55 @@ defmodule PoolV3CheckProfit do
     |> Enum.map(fn pool_searched_raw ->
       pool_searched = pool_searched_raw |> Repo.preload(token_pair: [:token0, :token1])
 
-
-      {swap_amount_adjusted, return_amount} =
-        calculate_swap_and_return_amount_adjusted(
-          pool_event,
+      {swap_amount_adjusted, burrow_amount} =
+        calculate_swap_and_burrow_amount_adjusted(
+          pool_searched,
           swap_amount,
           swap_direction,
           decimals_adjusted
         )
 
-        # {swap_amount_adjusted, return_amount} =
-        #   calculate_swap_and_return_amount_adjusted(
-        #     pool_searched,
-        #     swap_amount,
-        #     swap_direction,
-        #     decimals_adjusted
-        #   )
+      # {swap_amount_adjusted, return_amount} =
+      #   calculate_swap_and_return_amount_adjusted(
+      #     pool_event,
+      #     swap_amount,
+      #     swap_direction,
+      #     decimals_adjusted
+      #   )
 
-        swap_price_searched = calculate_price_with_direction(pool_searched.price, swap_direction)
+      # {swap_amount_adjusted, return_amount} =
+      #   calculate_swap_and_return_amount_adjusted(
+      #     pool_searched,
+      #     swap_amount,
+      #     swap_direction,
+      #     decimals_adjusted
+      #   )
 
-      burrow_amount =
-        calculate_burrow_amount(
+      swap_price_event = calculate_price_with_direction(pool_event.price, swap_direction)
+
+      return_amount =
+        calculate_return_amount(
           swap_amount_adjusted,
-          swap_price_searched,
-          pool_searched.fee,
+          swap_price_event,
+          pool_event.fee,
           decimals_adjusted
         )
 
-        # burrow_amount =
-        #   calculate_burrow_amount(
-        #     swap_amount_adjusted,
-        #     swap_price_event,
-        #     pool_searched.fee,
-        #     decimals_adjusted
-        #   )
+      # burrow_amount =
+      #   calculate_burrow_amount(
+      #     swap_amount_adjusted,
+      #     swap_price_searched,
+      #     pool_searched.fee,
+      #     decimals_adjusted
+      #   )
+
+      # burrow_amount =
+      #   calculate_burrow_amount(
+      #     swap_amount_adjusted,
+      #     swap_price_event,
+      #     pool_searched.fee,
+      #     decimals_adjusted
+      #   )
 
       {token_return_amount_for_gas_fee, token_return_symbol} =
         calculate_gas_price_for_trade_v3(
@@ -227,7 +243,8 @@ defmodule PoolV3CheckProfit do
       ##
 
       {pool_event, pool_searched, profit_amount, token_return_symbol, return_amount,
-       burrow_amount, token_return_amount_for_gas_fee, swap_price_event, swap_direction, swap_amount}
+       burrow_amount, token_return_amount_for_gas_fee, swap_price_event, swap_direction,
+       swap_amount}
     end)
     # |> IO.inspect(label: "mx1 estimate_profitable_pool")
     |> Enum.filter(fn {_, _, profit_amount, _, _, _, _, _, _, _} ->
@@ -244,7 +261,7 @@ defmodule PoolV3CheckProfit do
   def calculate_price_with_direction(pool_price, "1_0"),
     do: 1 / (pool_price |> String.to_float())
 
-  def calculate_swap_and_return_amount_adjusted(
+  def calculate_swap_and_burrow_amount_adjusted(
         %Pool{} =
           pool,
         swap_amount_estimated,
@@ -253,51 +270,121 @@ defmodule PoolV3CheckProfit do
       ) do
     swap_price_0_1 = calculate_price_with_direction(pool.price, "0_1")
 
-    return_amount_estimated =
-      calculate_return_amount(
+    burrow_amount_estimated =
+      calculate_burrow_amount(
         swap_amount_estimated,
         swap_price_0_1,
         pool.fee,
         decimals_adjusted
       )
 
-    {swap_amount, return_amount} =
-      case return_amount_estimated <= pool.reserve0 do
+    pool_reserve = pool.reserve0 |> String.to_integer()
+
+    LW.ipt("sx1 calculate_swap_and_burrow_amount_adjusted 0_1")
+    swap_amount_estimated |> LW.ipt("sx1 swap_amount_estimated")
+    burrow_amount_estimated |> LW.ipt("sx1 burrow_amount_estimated")
+    pool.reserve1 |> LW.ipt("sx1 pool.reserve1")
+    pool_reserve |> LW.ipt("sx1 pool_reserve")
+    pool.id |> LW.ipt("sx1 pool.id")
+
+    {swap_amount, burrown_amount} =
+      case burrow_amount_estimated <= pool_reserve do
         true ->
-          {swap_amount_estimated, return_amount_estimated}
+          {swap_amount_estimated, burrow_amount_estimated}
 
         false ->
-          {pool.reserve0 / swap_amount_estimated * swap_amount_estimated,
-           pool.reserve0}
+          {pool_reserve / burrow_amount_estimated * swap_amount_estimated, pool_reserve}
       end
   end
 
-  def calculate_swap_and_return_amount_adjusted(
+  def calculate_swap_and_burrow_amount_adjusted(
         %Pool{} = pool,
         swap_amount_estimated,
         "1_0",
         decimals_adjusted
       ) do
-    swap_price_1_0_searched = calculate_price_with_direction(pool.price, "1_0")
+    swap_price_1_0 = calculate_price_with_direction(pool.price, "1_0")
 
-    return_amount_estimated =
-      calculate_return_amount(
+    burrow_amount_estimated =
+      calculate_burrow_amount(
         swap_amount_estimated,
-        swap_price_1_0_searched,
+        swap_price_1_0,
         pool.fee,
         decimals_adjusted
       )
 
-    {swap_amount, return_amount} =
-      case return_amount_estimated <= pool.reserve1 do
+    pool_reserve = pool.reserve1 |> String.to_integer()
+
+    LW.ipt("sx1 calculate_swap_and_burrow_amount_adjusted 1_0")
+    burrow_amount_estimated |> LW.ipt("sx1 burrow_amount_estimated")
+    pool_reserve |> LW.ipt("sx1 pool_reserve")
+    pool.reserve0 |> LW.ipt("sx1 pool.reserve0")
+    pool.id |> LW.ipt("sx1 pool.id")
+
+    {swap_amount, burrow_amount} =
+      case burrow_amount_estimated <= pool_reserve do
         true ->
-          {swap_amount_estimated, return_amount_estimated}
+          {swap_amount_estimated, burrow_amount_estimated}
 
         false ->
-          {pool.reserve1 / swap_amount_estimated * swap_amount_estimated,
-           pool.reserve1}
+          {pool_reserve / burrow_amount_estimated * swap_amount_estimated, pool_reserve}
       end
   end
+
+  # def calculate_swap_and_return_amount_adjusted(
+  #       %Pool{} =
+  #         pool,
+  #       swap_amount_estimated,
+  #       "0_1",
+  #       decimals_adjusted
+  #     ) do
+  #   swap_price_0_1 = calculate_price_with_direction(pool.price, "0_1")
+
+  #   return_amount_estimated =
+  #     calculate_return_amount(
+  #       swap_amount_estimated,
+  #       swap_price_0_1,
+  #       pool.fee,
+  #       decimals_adjusted
+  #     )
+
+  #   {swap_amount, return_amount} =
+  #     case return_amount_estimated <= pool.reserve0 do
+  #       true ->
+  #         {swap_amount_estimated, return_amount_estimated}
+
+  #       false ->
+  #         {pool.reserve0 / swap_amount_estimated * swap_amount_estimated,
+  #          pool.reserve0}
+  #     end
+  # end
+
+  # def calculate_swap_and_return_amount_adjusted(
+  #       %Pool{} = pool,
+  #       swap_amount_estimated,
+  #       "1_0",
+  #       decimals_adjusted
+  #     ) do
+  #   swap_price_1_0_searched = calculate_price_with_direction(pool.price, "1_0")
+
+  #   return_amount_estimated =
+  #     calculate_return_amount(
+  #       swap_amount_estimated,
+  #       swap_price_1_0_searched,
+  #       pool.fee,
+  #       decimals_adjusted
+  #     )
+
+  #   {swap_amount, return_amount} =
+  #     case return_amount_estimated <= pool.reserve1 do
+  #       true ->
+  #         {swap_amount_estimated, return_amount_estimated}
+
+  #       false ->
+  #         {pool.reserve1 / swap_amount_estimated * swap_amount_estimated,
+  #          pool.reserve1}
+  #     end
+  # end
 
   def calculate_return_amount(swap_amount, swap_price, pool_fee, decimals_adjusted) do
     pool_fee_ratio = 1 - (pool_fee |> String.to_integer()) / 10000

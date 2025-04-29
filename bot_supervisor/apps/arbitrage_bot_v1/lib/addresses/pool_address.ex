@@ -15,18 +15,16 @@ defmodule PoolAddress do
     :pool_id
   ]
 
-  def changeset(%PoolAddress{} = pool_address,  params) do
+  def changeset(%PoolAddress{} = pool_address, params) do
     pool_address
     |> cast(params, @required ++ @optional)
     |> validate_required(@required)
   end
 
-
   def update_changeset(%PoolAddress{} = pool_address, params) do
     pool_address
     |> cast(params, @optional)
+
     # |> put_assoc(:pool, params[:pool_id])
   end
-
-
 end

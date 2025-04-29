@@ -19,14 +19,14 @@ defmodule PoolV2Context do
 
   def maybe_add_all_pool_v2(%TokenPair{} = token_pair, %PoolAddress{} = pool_address) do
     list_pools =
-    DS.with_abi("uniswapV2")
-    |> Repo.all()
-    |> Enum.map(fn dex_v2 ->
-      maybe_create_pool_v2(token_pair, pool_address, dex_v2)
-    end)
-    |> Enum.filter(fn maybe_pool ->
-      not is_nil(maybe_pool)
-    end)
+      DS.with_abi("uniswapV2")
+      |> Repo.all()
+      |> Enum.map(fn dex_v2 ->
+        maybe_create_pool_v2(token_pair, pool_address, dex_v2)
+      end)
+      |> Enum.filter(fn maybe_pool ->
+        not is_nil(maybe_pool)
+      end)
 
     {:ok, list_pools}
   end

@@ -2,8 +2,8 @@ defmodule Server.Router do
   use Plug.Router
   use GenServer
 
-  plug :match
-  plug :dispatch
+  plug(:match)
+  plug(:dispatch)
 
   post "/hello" do
     {:ok, body, conn} = Plug.Conn.read_body(conn)
@@ -14,37 +14,32 @@ defmodule Server.Router do
     |> send_resp(200, ~s({"message": "Hello, world!"}))
   end
 
-
   post "/event" do
     {:ok, body, conn} = Plug.Conn.read_body(conn)
     IO.puts("Received POST request with body: #{body}")
 
-    event_raw = Jason.decode!(body)
-    |> LogWritter.ipt("sx1 event_raw")
+    event_raw =
+      Jason.decode!(body)
+      |> LogWritter.ipt("sx1 event_raw")
 
-
-      event = %{
+    event =
+      %{
         event: %{
           address: event_raw["address"],
           name: event_raw["name"],
           data: event_raw["data"]
-          }}
+        }
+      }
       |> LogWritter.ipt("sx1 event")
 
     GenServer.cast(DexBot, {:swap_detected, event})
-
-
 
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, ~s({"message": "event received"}))
   end
 
-
-
-
   match _ do
-
     {:ok, body, conn} = Plug.Conn.read_body(conn)
 
     conn |> IO.inspect(label: "sx1 conn")

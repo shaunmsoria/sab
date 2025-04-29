@@ -43,9 +43,7 @@ defmodule PoolV2CheckProfit do
     end
   end
 
-  def update_reserves_from_event(
-        %Pool{id: token_pair_id, refresh_reserve: false} = pool
-      ) do
+  def update_reserves_from_event(%Pool{id: token_pair_id, refresh_reserve: false} = pool) do
     IO.puts("sx1 token_pair_id: #{token_pair_id} below threshold")
     {:ok, pool}
   end
@@ -149,8 +147,7 @@ defmodule PoolV2CheckProfit do
         %Pool{price: pool_event_price} = pool_event,
         %Pool{} = pool_searched
       ) do
-    with {:ok,
-          %Pool{price: pool_searched_price, dex: %Dex{name: dex_searched_name}}} <-
+    with {:ok, %Pool{price: pool_searched_price, dex: %Dex{name: dex_searched_name}}} <-
            PC.update_pool_price(pool_searched),
          price_difference <-
            Compute.calculate_difference(pool_event_price, pool_searched_price) do
@@ -269,7 +266,7 @@ defmodule PoolV2CheckProfit do
           with {:ok, estimate} <-
                  router_event_address
                  |> estimate_extractor(
-                  format_reserve(reserve0_searched),
+                   format_reserve(reserve0_searched),
                    token1_address,
                    token0_address,
                    #  22
@@ -294,7 +291,7 @@ defmodule PoolV2CheckProfit do
           with {:ok, estimate} <-
                  router_searched_address
                  |> estimate_extractor(
-                  format_reserve(reserve0_searched),
+                   format_reserve(reserve0_searched),
                    token1_address,
                    token0_address,
                    #  22

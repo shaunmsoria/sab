@@ -232,7 +232,7 @@ defmodule PoolV3Context do
           |> IO.inspect(label: "sx1 reserve1 result")
 
         price_t1_t0_sqrtPriceX96 =
-          (sqrtPriceX96 / 2 ** 96) ** 2 * decimals_adjuster_0_1
+          ((sqrtPriceX96 / 2 ** 96) ** 2 * decimals_adjuster_0_1)
           |> IO.inspect(label: "sx1 price_t1_t0_sqrtPriceX96")
 
         price_t0_t1_sqrtPriceX96 =

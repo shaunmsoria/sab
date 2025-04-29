@@ -16,12 +16,18 @@ defmodule ProfitableTrade do
     timestamps()
   end
 
-  @required [:estimated_profit, :direction, :tradable_amount, :gas_fee ]
+  @required [:estimated_profit, :direction, :tradable_amount, :gas_fee]
   @optional [:smart_contract_response]
 
-  def changeset(%ProfitableTrade{} = profitable_trade, %{token_pair: token_pair, dex_emitted: dex_emitted, dex_searched: dex_searched, token_profit: token_profit} = params) do
-
-
+  def changeset(
+        %ProfitableTrade{} = profitable_trade,
+        %{
+          token_pair: token_pair,
+          dex_emitted: dex_emitted,
+          dex_searched: dex_searched,
+          token_profit: token_profit
+        } = params
+      ) do
     profitable_trade
     |> cast(params, @required ++ @optional)
     |> put_assoc(:token_pair, token_pair)

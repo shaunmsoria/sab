@@ -17,7 +17,6 @@ defmodule Pool do
     field(:tick, :string)
     field(:tick_spacing, :string)
     field(:liquidity, :string)
-
   end
 
   @required []
@@ -35,14 +34,14 @@ defmodule Pool do
     :liquidity
   ]
 
-  def changeset(%Pool{} = pool, %{
-    token_pair: token_pair,
-    dex: dex,
-    pool_address: pool_address
-    } = params) do
-
-
-
+  def changeset(
+        %Pool{} = pool,
+        %{
+          token_pair: token_pair,
+          dex: dex,
+          pool_address: pool_address
+        } = params
+      ) do
     pool
     |> cast(params, @required ++ @optional)
     |> put_assoc(:token_pair, token_pair)

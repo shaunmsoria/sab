@@ -11,16 +11,18 @@ defmodule SubgraphBalancerApi do
     {:ok, Jason.decode(body)}
   end
 
-
   def get_balancer_pool_ids() do
     header = [{"Content-Type", "application/json"}]
-    body = Jason.encode!(%{})
-    |> LogWritter.ipt("sx1 body")
+
+    body =
+      Jason.encode!(%{})
+      |> LogWritter.ipt("sx1 body")
 
     url = @balancer["url"]
 
-    response = post(url, body, header)
-    |> LogWritter.ipt("sx1 Jason.decode(body) ")
+    response =
+      post(url, body, header)
+      |> LogWritter.ipt("sx1 Jason.decode(body) ")
 
     case response do
       {:ok,

@@ -66,7 +66,6 @@ defmodule PoolSearch do
     from(p in query, where: p.dex_id in ^list_dex_id)
   end
 
-
   def with_upcase_token_address_and_weth(query \\ query(), upcase_token_address) do
     token_id =
       from(t in Token,
@@ -95,14 +94,13 @@ defmodule PoolSearch do
       )
       |> Repo.one()
 
-
-      dex_id =
-        from(d in Dex,
-          where: d.name == "uniswap",
-          where: d.abi == "uniswapV3",
-          select: d.id
-        )
-        |> Repo.one()
+    dex_id =
+      from(d in Dex,
+        where: d.name == "uniswap",
+        where: d.abi == "uniswapV3",
+        select: d.id
+      )
+      |> Repo.one()
 
     from(p in query,
       where: p.token_pair_id == ^token_weth_pair_id and p.dex_id == ^dex_id

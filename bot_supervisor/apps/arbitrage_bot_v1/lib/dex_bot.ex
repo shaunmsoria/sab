@@ -72,7 +72,7 @@ defmodule DexBot do
   end
 
   def handle_cast(:reinitialise, state) do
-    :timer.sleep(86400000)
+    :timer.sleep(86_400_000)
     LogWritter.ipt("sx1 Dex_Bot Restarted after 1 day")
     :init.restart()
 

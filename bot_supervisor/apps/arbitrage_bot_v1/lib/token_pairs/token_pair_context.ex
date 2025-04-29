@@ -69,7 +69,8 @@ defmodule TokenPairContext do
         {:ok, preloaded_pool_address.pool.token_pair}
 
       {:ok, %PoolAddress{status: "inactive"} = pool_address} ->
-        {:error, "PoolAddress #{event_address} is in status inactive from maybe_add_pair_from_event_address"}
+        {:error,
+         "PoolAddress #{event_address} is in status inactive from maybe_add_pair_from_event_address"}
 
       error ->
         {:error, "Error from maybe_add_pair_from_event_address: #{inspect(error)}"}
