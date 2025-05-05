@@ -13,6 +13,7 @@ defmodule PoolContext do
   alias TokenPairContext, as: TPC
   alias TokenSearch, as: TS
   alias PoolAddressContext, as: PAC
+  alias PoolV2Context, as: PV2C
   alias PoolV3Context, as: PV3C
   alias TokenContext, as: TC
 

@@ -1,5 +1,6 @@
 defmodule PoolSearch do
   import Ecto.Query
+  alias LogWritter, as: LW
 
   ## add Repo.all() or Repo.one() get the results
   def query() do
@@ -73,6 +74,7 @@ defmodule PoolSearch do
         select: t.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 token_id ")
 
     weth_id =
       from(t in Token,
@@ -80,6 +82,7 @@ defmodule PoolSearch do
         select: t.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 weth_id")
 
     ## TODO use sub_query above to find weth token pair
 
@@ -93,6 +96,7 @@ defmodule PoolSearch do
         select: tp.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 token_weth_pair_id")
 
     dex_id =
       from(d in Dex,
@@ -101,6 +105,8 @@ defmodule PoolSearch do
         select: d.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 dex_id")
+
 
     from(p in query,
       where: p.token_pair_id == ^token_weth_pair_id and p.dex_id == ^dex_id

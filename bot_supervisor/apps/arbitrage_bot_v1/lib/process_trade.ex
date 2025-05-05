@@ -16,6 +16,9 @@ defmodule ProcessTrade do
     potential_profitable_trades
     |> Enum.reduce_while(false, fn trade, acc ->
       case maybe_execute_trade(trade) do
+        false -> LW.ipt("sx1 no trade executed")
+          {:cont, acc}
+
         {:error, error} ->
           error |> LW.ipt("sx1 error in maybe_execute_trade")
           {:cont, acc}

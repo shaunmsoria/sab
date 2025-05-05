@@ -51,7 +51,8 @@ defmodule PoolV3Initialise do
             pools_v3_n_pair
 
           {:error, message} ->
-            message |> LW.ipt("error for pool on dex #{dex_v2_id} for n_pair: #{n_pair}")
+            message
+            # message |> LW.ipt("error for pool on dex #{dex_v2_id} for n_pair: #{n_pair}")
         end
       end)
       |> List.flatten()

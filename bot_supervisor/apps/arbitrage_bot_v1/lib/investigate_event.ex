@@ -62,12 +62,16 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-    PV2C.check_profit(pool_event, {
-      maybe_sanitise_amounts(amount0_in),
-      maybe_sanitise_amounts(amount0_out),
-      maybe_sanitise_amounts(amount1_in),
-      maybe_sanitise_amounts(amount1_out)
-    })
+
+    ## TODO debug & check math after v3 release
+    # PV2C.check_profit(pool_event, {
+    #   maybe_sanitise_amounts(amount0_in),
+    #   maybe_sanitise_amounts(amount0_out),
+    #   maybe_sanitise_amounts(amount1_in),
+    #   maybe_sanitise_amounts(amount1_out)
+    # })
+
+    LW.ipt("sx1 pool_event v2 id: #{inspect(pool_event.id)} skipped")
   end
 
   def maybe_investigate_event(
@@ -139,6 +143,9 @@ defmodule InvestigateEvent do
 
   def maybe_sanitise_amounts(amount) when is_binary(amount),
     do: amount |> String.to_integer()
+
+  def maybe_sanitise_amounts(amount) when is_integer(amount),
+    do: amount
 
   def maybe_create_pool(event_address, event_params) do
     with {:ok, pool_address} <- PAC.maybe_add_pool_address(event_address) do

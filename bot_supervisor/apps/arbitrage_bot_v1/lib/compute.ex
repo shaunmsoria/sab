@@ -291,10 +291,16 @@ defmodule Compute do
     end
   end
 
-  def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
+  def calculate_gas_price_weth_price_v3(:token0_weth, 0, reserve1, token_profit_decimals),
+    do: {:ok, 0}
+
+    def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
     do: {:ok, reserve1 * 10 ** 18 / (reserve0 * 10 ** token_profit_decimals)}
 
-  def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
+  def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, 0, token_profit_decimals),
+    do: {:ok, 0}
+
+    def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
     do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
 
   def locate_weth_in_token_pair_v3(%Pool{

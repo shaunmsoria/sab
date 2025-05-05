@@ -2,6 +2,8 @@ defmodule TokenContext do
   import Compute
   import Ecto.{Changeset, Query}
   alias TokenSearch, as: TS
+  alias TokenContext, as: TC
+  alias LogWritter, as: LW
 
   def insert(params) do
     %Token{}
@@ -34,7 +36,9 @@ defmodule TokenContext do
                      upcase_address: token_address |> String.upcase(),
                      decimals: decimals
                    }
-                   |> TC.insert() do
+                   |> LW.ipt("sx1 before LW.ipt")
+                   |> TC.insert()
+                   |> LW.ipt("sx1 TC.insert()") do
               {:ok, token}
             end
 
@@ -68,7 +72,7 @@ defmodule TokenContext do
             end) do
       {:ok, sanitise_param(symbol_result), sanitise_param(name_result),
        sanitise_param(decimals_result, :decimals)}
-      |> IO.inspect(label: "sx1 get_contract_for_token_address")
+      |> LW.ipt("sx1 get_contract_for_token_address")
     end
   end
 

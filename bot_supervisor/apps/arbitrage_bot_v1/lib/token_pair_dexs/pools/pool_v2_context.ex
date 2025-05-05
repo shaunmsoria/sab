@@ -1,6 +1,9 @@
 defmodule PoolV2Context do
   import Compute
   alias PoolV2CheckProfit, as: PV2CP
+  alias PoolContext, as: PC
+  alias PoolSearch, as: PS
+  alias PoolAddressSearch, as: PAS
   alias DexSearch, as: DS
 
   @doc """
@@ -22,7 +25,25 @@ defmodule PoolV2Context do
       DS.with_abi("uniswapV2")
       |> Repo.all()
       |> Enum.map(fn dex_v2 ->
-        maybe_create_pool_v2(token_pair, pool_address, dex_v2)
+        ##TODO search for the pair address for the token pair
+        ##TODO then check if pool v2 already added
+        ##TODO if not, add it,
+        ##TODO test
+
+        {:ok, pool_v2_address} = get_pair_address(dex_v2.factory, token_pair.token0.address, token_pair.token1.address)
+
+        PAS.with_upcase_address(pool_v2_address |> String.upcase())
+        |> PAS.with_status("active")
+        |> Repo.one()
+        |> case do
+          nil ->  maybe_create_pool_v2(token_pair, pool_v2_address, dex_v2)
+          pool_address ->
+            PS.with_upcase_address(pool_v2_address |> String.upcase())
+            |> Repo.one()
+        end
+
+
+        # maybe_create_pool_v2(token_pair, pool_address, dex_v2)
       end)
       |> Enum.filter(fn maybe_pool ->
         not is_nil(maybe_pool)
@@ -32,11 +53,15 @@ defmodule PoolV2Context do
   end
 
   def maybe_create_pool_v2(%TokenPair{} = token_pair, %PoolAddress{} = pool_address, %Dex{} = dex) do
+    token_pair_preloaded =
+      token_pair
+      |> Repo.preload([:token0, :token1])
+
     with false <- String.contains?(pool_address.address |> inspect(), "<<"),
          {:ok, price, reserve0, reserve1} <-
            calculate_price(pool_address.address),
          {:ok, pool} <-
-           PC.maybe_add_pool(pool_address, token_pair.token0, token_pair.token1, dex, %{
+           PC.maybe_add_pool(pool_address, token_pair_preloaded.token0, token_pair_preloaded.token1, dex, %{
              pool_address: pool_address,
              address: pool_address.address,
              upcase_address: pool_address.address |> String.upcase(),
