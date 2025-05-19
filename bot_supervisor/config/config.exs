@@ -10,7 +10,7 @@
 import Config
 
 config :arbitrage_bot_v1, Repo,
-  database: "server_db",
+  database: "server_db2",
   username: "server",
   password: "password",
   hostname: "localhost"
@@ -29,7 +29,6 @@ config :logger, :info_log,
   level: :error,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
-
 
 config :logger, :console,
   level: :error,
@@ -96,9 +95,11 @@ config :arbitrage_bot_v1, W3WS,
           # abi: abi,                        # decoded json abi
           # list of paths to abi json files
           abi_files: [
-            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/liquidity_pool_abi_v2.json"
+            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/pool_v2_abi.json",
+            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/factory_v3_abi.json",
+            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/pool_v3_abi.json"
           ],
-          # abi_files: ["/home/server/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/uniswap_abi_v2.json"], # list of paths to abi json files
+          # abi_files: ["/home/server/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/factory_v2_abi.json"], # list of paths to abi json files
 
           # an optional `context` to provide in the `W3WS.Env` struct for any events
           # received from this subscription. Defaults to `%{}`.

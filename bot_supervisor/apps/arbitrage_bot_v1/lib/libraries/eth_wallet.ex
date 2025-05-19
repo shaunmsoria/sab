@@ -10,6 +10,7 @@ defmodule EthWallet do
       {:ok, balance_wei} ->
         balance_eth = Util.from_wei(balance_wei)
         {:ok, balance_eth}
+
       {:error, reason} ->
         {:error, reason}
     end

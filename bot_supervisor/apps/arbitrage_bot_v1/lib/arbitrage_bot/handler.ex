@@ -6,6 +6,20 @@ defmodule DexBot.Handler do
 
   @event %W3WS.Env{
     event: %W3WS.Event{
+      data: %{
+        "amount0" => -1_262_072_812,
+        "amount1" => 479_970_000_000_000_000,
+        "liquidity" => 6_127_674_475_112_662_982,
+        "recipient" => "0x66a9893cc07d91d95644aedd05d03f95e1dba8af",
+        "sender" => "0x66a9893cc07d91d95644aedd05d03f95e1dba8af",
+        "sqrtPriceX96" => 1_544_673_499_414_225_994_914_890_157_747_819,
+        "tick" => 197_569
+      }
+    }
+  }
+
+  @event %W3WS.Env{
+    event: %W3WS.Event{
       # address: "0x2B08A6aAfB04447FFE19BE24d2015d42C00165Bc",
       # address: "0x4329412f58161141eb3d86c5c9a406d99020b518",
       address: "0x00001bea43608c5ee487f82b773af8bd7cb20a6f",
@@ -75,7 +89,10 @@ defmodule DexBot.Handler do
         } = event,
         _state
       ) do
-    # event |> LogWritter.ipt("sx1 event filtered")
+    # event |> Map.get(:event) |> Map.get(:data) |> LogWritter.ipt("sx1 event filtered")
+
+    # event[:event] |> IO.inspect(label: "sx1 event[:event]")
+    # data |> LogWritter.ipt("sx1 event decoded? true")
 
     GenServer.cast(DexBot, {:swap_detected, event})
   end
@@ -84,6 +101,12 @@ defmodule DexBot.Handler do
         _event,
         _state
       ) do
+    # event |> LogWritter.ipt("sx1 event other")
+    # event[:event] |> LogWritter.ipt("sx1 event[:event]")
+    # event.event |> LogWritter.ipt("sx1 event.event")
+    # event |> Map.get(:event) |> Map.get(:data) |> LogWritter.ipt("sx1 event |> Map.get(:event) |> Map.get(:data) ")
+    # event[:event][:data] |> LogWritter.ipt("sx1 event[:event][:data] ")
+    # event[:event][:data] |> LogWritter.ipt("sx1 event.event.data")
     nil
   end
 

@@ -112,8 +112,7 @@ defmodule ExecuteTrade do
              tradable_amount,
              direction
            ) do
-
-            trade_result |> LW.ipt("sx1 trade_result")
+      trade_result |> LW.ipt("sx1 trade_result")
       PTC.update(profitable_trade, %{smart_contract_response: inspect(trade_result)})
     else
       msg ->

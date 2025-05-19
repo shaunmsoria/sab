@@ -16,16 +16,19 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("sx1 deployer", deployer);
   
-  const SABV1 = await hre.ethers.deployContract(
-    "SABV1",
+  const SABV2 = await hre.ethers.deployContract(
+    "SABV2",
     [],
-    {signer: deployer}
+    {
+      signer: deployer,
+      maxFeePerGas: 10000000000,
+    }
   )
 
-  await SABV1.waitForDeployment()
+  await SABV2.waitForDeployment()
 
 
-  console.log(`SABV1 contract deployed to ${await SABV1.getAddress()}`)
+  console.log(`SABV2 contract deployed to ${await SABV2.getAddress()}`)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

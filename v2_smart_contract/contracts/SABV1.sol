@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.27;
+pragma solidity 0.8.28;
 
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 import "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol";
@@ -25,7 +25,7 @@ contract SABV1 is IFlashLoanRecipient {
         IUniswapV2Router02 _router0,
         IUniswapV2Router02 _router1,
         uint256 _flashAmount
-    ) external {
+    ) external{
         bytes memory data = abi.encode(
             owner,
             _token0,

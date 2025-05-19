@@ -1,5 +1,6 @@
-defmodule GasExtractor do
+defmodule Timer do
   use GenServer
+  import Ecto.Query
 
   # Client API
 
@@ -7,19 +8,20 @@ defmodule GasExtractor do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
-  def refresh do
-    GenServer.cast(__MODULE__, :refresh)
-  end
+  def refresh_gas, do: GenServer.cast(__MODULE__, :refresh_gas)
+
+  def refresh_reserve, do: GenServer.cast(__MODULE__, :refresh_reserve)
 
   # GenServer callbacks
 
   def init(%{}) do
-    GenServer.cast(__MODULE__, :refresh)
+    GenServer.cast(__MODULE__, :refresh_gas)
+    GenServer.cast(__MODULE__, :refresh_reserve)
 
     {:ok, %{}}
   end
 
-  def handle_cast(:refresh, state) do
+  def handle_cast(:refresh_gas, state) do
     gas_result = EtherscanApi.get_gas_oracle()
 
     case gas_result do
@@ -35,7 +37,6 @@ defmodule GasExtractor do
         fast_gas_price =
           convert_string_to_value(fast_gas_price_raw)
 
-
         estimated_gas_fee = fast_gas_price * max_gas_limit / 1_000_000_000
 
         ConCache.put(:gas, :fast_gas_price, fast_gas_price)
@@ -46,8 +47,21 @@ defmodule GasExtractor do
         %{"error" => reason} |> LogWritter.ipt("sx1 gas_extract error result")
     end
 
-    :timer.sleep(1000)
-    GenServer.cast(__MODULE__, :refresh)
+    :timer.sleep(10000)
+    GenServer.cast(__MODULE__, :refresh_gas)
+
+    {:noreply, state}
+  end
+
+  @doc """
+  :refresh_reserve -> reset refresh_reserve to true after specified time
+  """
+  def handle_cast(:refresh_reserve, state) do
+    :timer.sleep(10_800_000)
+
+    Repo.update_all(Pool, set: [refresh_reserve: true])
+
+    GenServer.cast(__MODULE__, :refresh_reserve)
 
     {:noreply, state}
   end

@@ -1,9 +1,10 @@
-defmodule TokenPairDexSearch do
+defmodule PoolSearch do
   import Ecto.Query
+  alias LogWritter, as: LW
 
   ## add Repo.all() or Repo.one() get the results
   def query() do
-    from(TokenPairDex)
+    from(Pool)
     # |> Repo.all()
   end
 
@@ -19,6 +20,10 @@ defmodule TokenPairDexSearch do
     from(t in query, where: t.dex_id == ^dex_id)
   end
 
+  def with_pool_address_id(query \\ query(), pool_address_id) do
+    from(t in query, where: t.pool_address_id == ^pool_address_id)
+  end
+
   def with_address(query \\ query(), address) do
     from(t in query, where: t.address == ^address)
   end
@@ -31,6 +36,37 @@ defmodule TokenPairDexSearch do
     from(t in query, where: t.upcase_address == ^upcase_address)
   end
 
+  def with_n_pair(query \\ query(), n_pair) do
+    from(t in query, where: t.n_pair == ^n_pair)
+  end
+
+  def with_fee(query \\ query(), fee) do
+    from(t in query, where: t.fee == ^fee)
+  end
+
+  def with_refresh_reserve(query \\ query(), refresh_reserve) do
+    from(t in query, where: t.refresh_reserve == ^refresh_reserve)
+  end
+
+  def with_tick(query \\ query(), tick) do
+    from(t in query, where: t.tick == ^tick)
+  end
+
+  def with_tick_spacing(query \\ query(), tick_spacin) do
+    from(t in query, where: t.tick_spacin == ^tick_spacin)
+  end
+
+  def with_dex_abi(query \\ query(), dex_abi) do
+    list_dex_id =
+      from(d in Dex,
+        where: d.abi == ^dex_abi,
+        select: d.id
+      )
+      |> Repo.all()
+
+    from(p in query, where: p.dex_id in ^list_dex_id)
+  end
+
   def with_upcase_token_address_and_weth(query \\ query(), upcase_token_address) do
     token_id =
       from(t in Token,
@@ -38,6 +74,7 @@ defmodule TokenPairDexSearch do
         select: t.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 token_id ")
 
     weth_id =
       from(t in Token,
@@ -45,6 +82,7 @@ defmodule TokenPairDexSearch do
         select: t.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 weth_id")
 
     ## TODO use sub_query above to find weth token pair
 
@@ -58,9 +96,20 @@ defmodule TokenPairDexSearch do
         select: tp.id
       )
       |> Repo.one()
+      |> LW.ipt("sx1 token_weth_pair_id")
 
-    from(tpd in query,
-      where: tpd.token_pair_id == ^token_weth_pair_id and tpd.dex_id == 1
+    dex_id =
+      from(d in Dex,
+        where: d.name == "uniswap",
+        where: d.abi == "uniswapV3",
+        select: d.id
+      )
+      |> Repo.one()
+      |> LW.ipt("sx1 dex_id")
+
+
+    from(p in query,
+      where: p.token_pair_id == ^token_weth_pair_id and p.dex_id == ^dex_id
     )
   end
 end

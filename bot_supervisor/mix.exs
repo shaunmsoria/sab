@@ -26,7 +26,8 @@ defmodule BotSupervisor.MixProject do
       {:logger_file_backend, "~> 0.0.14"},
       {:plug_cowboy, "~> 2.5"},
       {:ecto_sql, "~> 3.2"},
-      {:postgrex, "~> 0.15"}
+      {:postgrex, "~> 0.15"},
+      {:decimal, "~> 2.3.0"}
     ]
   end
 
