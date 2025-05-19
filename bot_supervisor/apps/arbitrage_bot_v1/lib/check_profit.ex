@@ -212,7 +212,8 @@ defmodule CheckProfit do
                    reserve0_searched,
                    token1_address,
                    token0_address,
-                   22
+                  #  22
+                  2
                  )
                  |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
@@ -236,7 +237,8 @@ defmodule CheckProfit do
                    reserve0_searched,
                    token1_address,
                    token0_address,
-                   22
+                  #  22
+                  2
                  )
                  |> LW.ipt("sx1 estimate"),
                {:ok, amount_in, amount_out} <-
@@ -366,26 +368,26 @@ defmodule CheckProfit do
 
   def estimate_extractor(router, amount, token0, token1, counter) do
     list_divider = [
-      1_000_000_000_000,
-      500_000_000_000,
-      10_000_000_000,
-      5_000_000_000,
-      1_000_000_000,
-      500_000_000,
-      100_000_000,
-      50_000_000,
-      10_000_000,
-      5_000_000,
-      1_000_000,
-      500_000,
-      100_000,
-      50000,
-      10000,
-      5000,
-      1000,
-      500,
-      100,
-      50,
+      # 1_000_000_000_000,
+      # 500_000_000_000,
+      # 10_000_000_000,
+      # 5_000_000_000,
+      # 1_000_000_000,
+      # 500_000_000,
+      # 100_000_000,
+      # 50_000_000,
+      # 10_000_000,
+      # 5_000_000,
+      # 1_000_000,
+      # 500_000,
+      # 100_000,
+      # 50000,
+      # 10000,
+      # 5000,
+      # 1000,
+      # 500,
+      # 100,
+      # 50,
       10,
       5,
       2
