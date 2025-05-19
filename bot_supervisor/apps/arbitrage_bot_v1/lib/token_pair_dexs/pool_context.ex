@@ -188,7 +188,7 @@ defmodule PoolContext do
                )
                |> IO.inspect(label: "sx1 PC insert") do
           pool_address
-          |> PAC.activate()
+          |> PAC.activate(%{pool_id: pool.id})
 
           {:ok, pool}
         end

@@ -52,12 +52,12 @@ defmodule PoolV2Initialise do
         } = dex
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(dex_factory) do
-      max_length =
-        case dex_name do
-          "pancakeswap" -> 20
-          "sushiswap" -> 20
-          _ -> 20
-        end
+      # max_length =
+      #   case dex_name do
+      #     "pancakeswap" -> 20
+      #     "sushiswap" -> 20
+      #     _ -> 20
+      #   end
 
       # case dex_name do
       #   "pancakeswap" -> 681
@@ -65,12 +65,12 @@ defmodule PoolV2Initialise do
       #   _ -> 237_720
       # end
 
-      # if dex_all_pairs_length <= current_all_pairs_length do
-      if max_length <= current_all_pairs_length do
+      if dex_all_pairs_length <= current_all_pairs_length do
+      # if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
-        # get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
-        get_pairs_for_dex(dex, max_length, current_all_pairs_length + 1)
+        get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
+        # get_pairs_for_dex(dex, max_length, current_all_pairs_length + 1)
         IO.puts("dex: #{dex_name} have been updated")
       end
 

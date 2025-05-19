@@ -4,6 +4,7 @@ defmodule PoolV2Context do
   alias PoolContext, as: PC
   alias PoolSearch, as: PS
   alias PoolAddressSearch, as: PAS
+  alias PoolAddressContext, as: PAC
   alias DexSearch, as: DS
 
   @doc """
@@ -21,6 +22,10 @@ defmodule PoolV2Context do
       do: PV2CP.run(pool, {amount0_in, amount0_out, amount1_in, amount1_out})
 
   def maybe_add_all_pool_v2(%TokenPair{} = token_pair, %PoolAddress{} = pool_address) do
+    token_pair_preloaded =
+      token_pair
+      |> Repo.preload([:token0, :token1])
+
     list_pools =
       DS.with_abi("uniswapV2")
       |> Repo.all()
@@ -30,15 +35,17 @@ defmodule PoolV2Context do
         ##TODO if not, add it,
         ##TODO test
 
-        {:ok, pool_v2_address} = get_pair_address(dex_v2.factory, token_pair.token0.address, token_pair.token1.address)
+        {:ok, pair_address} = get_pair_address(dex_v2.factory, token_pair_preloaded.token0.address, token_pair_preloaded.token1.address)
 
-        PAS.with_upcase_address(pool_v2_address |> String.upcase())
+        {:ok, pool_v2_address} = PAC.maybe_add_pool_address(pair_address)
+
+        PAS.with_upcase_address(pool_v2_address.upcase_address)
         |> PAS.with_status("active")
         |> Repo.one()
         |> case do
-          nil ->  maybe_create_pool_v2(token_pair, pool_v2_address, dex_v2)
+          nil ->  maybe_create_pool_v2(token_pair_preloaded, pool_v2_address, dex_v2)
           pool_address ->
-            PS.with_upcase_address(pool_v2_address |> String.upcase())
+            PS.with_upcase_address(pool_v2_address.upcase_address)
             |> Repo.one()
         end
 

@@ -10,7 +10,7 @@
 import Config
 
 config :arbitrage_bot_v1, Repo,
-  database: "server_db",
+  database: "server_db2",
   username: "server",
   password: "password",
   hostname: "localhost"

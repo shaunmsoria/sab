@@ -37,8 +37,8 @@ defmodule PoolV3Initialise do
       DS.with_name(dex_v3_name) |> DS.with_abi("uniswapV2") |> Repo.one()
 
     dex_v3_n_pairs = sanitise_n_pairs(dex_v3_n_pairs_raw)
-    # dex_v2_n_pairs = sanitise_n_pairs(dex_v2_n_pairs_raw)
-    dex_v2_n_pairs = 100
+    dex_v2_n_pairs = sanitise_n_pairs(dex_v2_n_pairs_raw)
+    # dex_v2_n_pairs = 100
 
     if dex_v3_n_pairs < dex_v2_n_pairs do
       dex_v3_n_pairs..dex_v2_n_pairs

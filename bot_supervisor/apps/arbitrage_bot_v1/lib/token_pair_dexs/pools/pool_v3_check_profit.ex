@@ -231,7 +231,6 @@ defmodule PoolV3CheckProfit do
           extract_token_profit_from_pool(pool_event, swap_direction)
         )
 
-      profit_amount = return_amount - burrow_amount - token_return_amount_for_gas_fee
 
       ##
       swap_amount_adjusted |> LW.ipt("sx1 swap_amount_adjusted")
@@ -239,8 +238,10 @@ defmodule PoolV3CheckProfit do
       token_return_symbol |> LW.ipt("sx1 token_return_symbol")
       burrow_amount |> LW.ipt("sx1 burrow_amount")
       token_return_amount_for_gas_fee |> LW.ipt("sx1 token_return_amount_for_gas_fee")
-      profit_amount |> LW.ipt("sx1 profit_amount")
+      # profit_amount |> LW.ipt("sx1 profit_amount")
       ##
+
+      profit_amount = return_amount - burrow_amount - token_return_amount_for_gas_fee
 
       {pool_event, pool_searched, profit_amount, token_return_symbol, return_amount,
        burrow_amount, token_return_amount_for_gas_fee, swap_price_event, swap_direction,
