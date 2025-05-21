@@ -231,7 +231,6 @@ defmodule PoolV3CheckProfit do
           extract_token_profit_from_pool(pool_event, swap_direction)
         )
 
-
       ##
       swap_amount_adjusted |> LW.ipt("sx1 swap_amount_adjusted")
       return_amount |> LW.ipt("sx1 return_amount")

@@ -107,7 +107,6 @@ defmodule PoolSearch do
       |> Repo.one()
       |> LW.ipt("sx1 dex_id")
 
-
     from(p in query,
       where: p.token_pair_id == ^token_weth_pair_id and p.dex_id == ^dex_id
     )

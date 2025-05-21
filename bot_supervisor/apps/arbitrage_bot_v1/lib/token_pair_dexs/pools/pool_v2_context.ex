@@ -30,12 +30,17 @@ defmodule PoolV2Context do
       DS.with_abi("uniswapV2")
       |> Repo.all()
       |> Enum.map(fn dex_v2 ->
-        ##TODO search for the pair address for the token pair
-        ##TODO then check if pool v2 already added
-        ##TODO if not, add it,
-        ##TODO test
+        ## TODO search for the pair address for the token pair
+        ## TODO then check if pool v2 already added
+        ## TODO if not, add it,
+        ## TODO test
 
-        {:ok, pair_address} = get_pair_address(dex_v2.factory, token_pair_preloaded.token0.address, token_pair_preloaded.token1.address)
+        {:ok, pair_address} =
+          get_pair_address(
+            dex_v2.factory,
+            token_pair_preloaded.token0.address,
+            token_pair_preloaded.token1.address
+          )
 
         {:ok, pool_v2_address} = PAC.maybe_add_pool_address(pair_address)
 
@@ -43,12 +48,13 @@ defmodule PoolV2Context do
         |> PAS.with_status("active")
         |> Repo.one()
         |> case do
-          nil ->  maybe_create_pool_v2(token_pair_preloaded, pool_v2_address, dex_v2)
+          nil ->
+            maybe_create_pool_v2(token_pair_preloaded, pool_v2_address, dex_v2)
+
           pool_address ->
             PS.with_upcase_address(pool_v2_address.upcase_address)
             |> Repo.one()
         end
-
 
         # maybe_create_pool_v2(token_pair, pool_address, dex_v2)
       end)
@@ -68,15 +74,21 @@ defmodule PoolV2Context do
          {:ok, price, reserve0, reserve1} <-
            calculate_price(pool_address.address),
          {:ok, pool} <-
-           PC.maybe_add_pool(pool_address, token_pair_preloaded.token0, token_pair_preloaded.token1, dex, %{
-             pool_address: pool_address,
-             address: pool_address.address,
-             upcase_address: pool_address.address |> String.upcase(),
-             price: "#{price}",
-             reserve0: "#{reserve0}",
-             reserve1: "#{reserve1}",
-             refresh_reserve: false
-           })
+           PC.maybe_add_pool(
+             pool_address,
+             token_pair_preloaded.token0,
+             token_pair_preloaded.token1,
+             dex,
+             %{
+               pool_address: pool_address,
+               address: pool_address.address,
+               upcase_address: pool_address.address |> String.upcase(),
+               price: "#{price}",
+               reserve0: "#{reserve0}",
+               reserve1: "#{reserve1}",
+               refresh_reserve: false
+             }
+           )
            |> IO.inspect(label: "mx1 maybe_add_pool") do
       pool
     else

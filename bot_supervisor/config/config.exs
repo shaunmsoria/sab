@@ -56,7 +56,8 @@ config :ethers,
 config :ethereumex,
   # url: "http://127.0.0.1:8545"
 
-url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+
 # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
 # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY2")}"
 

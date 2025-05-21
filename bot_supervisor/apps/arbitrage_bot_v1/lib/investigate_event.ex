@@ -62,7 +62,6 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-
     ## TODO debug & check math after v3 release
     # PV2C.check_profit(pool_event, {
     #   maybe_sanitise_amounts(amount0_in),
