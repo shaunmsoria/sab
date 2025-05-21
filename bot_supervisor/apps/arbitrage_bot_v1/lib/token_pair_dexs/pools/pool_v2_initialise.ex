@@ -66,7 +66,7 @@ defmodule PoolV2Initialise do
       # end
 
       if dex_all_pairs_length <= current_all_pairs_length do
-      # if max_length <= current_all_pairs_length do
+        # if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)
@@ -101,7 +101,11 @@ defmodule PoolV2Initialise do
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: dex_factory} = dex, n_pair) do
     with {:ok, pair_address} <-
            get_all_pairs(dex_factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
+<<<<<<< HEAD
            true <- String.valid?(pair_address),
+=======
+         true <- String.valid?(pair_address),
+>>>>>>> 5027fd61889780476825a89ba37422d931ca59e8
          {:ok, pool_address, token0, token1} <-
            get_or_create_pool_address_token0_token1_from_event_address(pair_address, "uniswapV2"),
          {:ok, price, reserve0, reserve1} <-
@@ -139,18 +143,22 @@ defmodule PoolV2Initialise do
 
     case pool_address_result do
       nil ->
-        {:ok, %TokenPair{} = token_pair} =
-          TPC.maybe_add_pair_from_event_address(event_address, "uniswapV2")
+        TPC.maybe_add_pair_from_event_address(event_address, "uniswapV2")
+        |> case do
+          {:ok, %TokenPair{} = token_pair} ->
+            token_pair_preloaded =
+              token_pair
+              |> Repo.preload([:token0, :token1])
 
-        token_pair_preloaded =
-          token_pair
-          |> Repo.preload([:token0, :token1])
+            pool_address =
+              PAS.with_upcase_address(String.upcase(event_address))
+              |> Repo.one()
 
-        pool_address =
-          PAS.with_upcase_address(String.upcase(event_address))
-          |> Repo.one()
+            {:ok, pool_address, token_pair_preloaded.token0, token_pair_preloaded.token1}
 
-        {:ok, pool_address, token_pair_preloaded.token0, token_pair_preloaded.token1}
+          {:error, error} ->
+            {:error, "Error from maybe_add_pair_from_event_address: #{inspect(error)}"}
+        end
 
       %PoolAddress{status: "new"} = pool_address ->
         {:ok, %TokenPair{} = token_pair} =

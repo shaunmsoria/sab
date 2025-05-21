@@ -16,7 +16,8 @@ defmodule ProcessTrade do
     potential_profitable_trades
     |> Enum.reduce_while(false, fn trade, acc ->
       case maybe_execute_trade(trade) do
-        false -> LW.ipt("sx1 no trade executed")
+        false ->
+          LW.ipt("sx1 no trade executed")
           {:cont, acc}
 
         {:error, error} ->
@@ -81,18 +82,19 @@ defmodule ProcessTrade do
         swap_direction
       )
 
-      profit_decimal_number = pool_event.token_pair.token0.decimals
+    profit_decimal_number = pool_event.token_pair.token0.decimals
 
-      data =
+    data =
       %{
         token_pair: pool_event.token_pair,
         dex_emitted: dex_event,
         dex_searched: dex_searched,
         token_profit: pool_event.token_pair.token0,
-        estimated_profit: (profit_amount / (10 ** profit_decimal_number)) |> Float.to_string(),
+        estimated_profit: (profit_amount / 10 ** profit_decimal_number) |> Float.to_string(),
         direction: swap_direction,
-        tradable_amount: (burrow_amount / (10 ** profit_decimal_number)) |> Float.to_string(),
-        gas_fee: (token_return_amount_for_gas_fee / (10 ** profit_decimal_number)) |> Float.to_string(),
+        tradable_amount: (burrow_amount / 10 ** profit_decimal_number) |> Float.to_string(),
+        gas_fee:
+          (token_return_amount_for_gas_fee / 10 ** profit_decimal_number) |> Float.to_string()
         # smart_contract_response: "0x"
       }
       |> LW.ipt("sx1 data test")
@@ -138,7 +140,6 @@ defmodule ProcessTrade do
         PTC.insert(updated_data)
         |> LW.ipt("sx1 PTC.insert")
 
-
         {:ok, %{success: true}}
 
       {:ok, "0x"} ->
@@ -174,5 +175,4 @@ defmodule ProcessTrade do
 
   def token_path_via_direction(%Token{} = token0, %Token{} = token1, "0_1"), do: [token0, token1]
   def token_path_via_direction(%Token{} = token0, %Token{} = token1, "1_0"), do: [token1, token0]
-
 end
