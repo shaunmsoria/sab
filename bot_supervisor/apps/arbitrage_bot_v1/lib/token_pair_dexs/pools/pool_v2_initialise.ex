@@ -157,18 +157,22 @@ defmodule PoolV2Initialise do
         end
 
       %PoolAddress{status: "new"} = pool_address ->
-        {:ok, %TokenPair{} = token_pair} =
-          TPC.maybe_add_pair_from_event_address(event_address, "uniswapV2")
+        TPC.maybe_add_pair_from_event_address(event_address, "uniswapV2")
+        |> case do
+          {:ok, %TokenPair{} = token_pair} ->
+            token_pair_preloaded =
+              token_pair
+              |> Repo.preload([:token0, :token1])
 
-        token_pair_preloaded =
-          token_pair
-          |> Repo.preload([:token0, :token1])
+            updated_pool_address =
+              PAS.with_id(pool_address.id)
+              |> Repo.one()
 
-        updated_pool_address =
-          PAS.with_id(pool_address.id)
-          |> Repo.one()
+            {:ok, updated_pool_address, token_pair_preloaded.token0, token_pair_preloaded.token1}
 
-        {:ok, updated_pool_address, token_pair_preloaded.token0, token_pair_preloaded.token1}
+          {:error, error} ->
+            {:error, "Error from maybe_add_pair_from_event_address: #{inspect(error)}"}
+        end
 
       %PoolAddress{status: "active"} = pool_address ->
         preloaded_pool_address =
