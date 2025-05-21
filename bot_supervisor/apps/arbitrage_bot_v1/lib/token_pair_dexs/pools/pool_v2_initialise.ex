@@ -101,11 +101,7 @@ defmodule PoolV2Initialise do
   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: dex_factory} = dex, n_pair) do
     with {:ok, pair_address} <-
            get_all_pairs(dex_factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
-<<<<<<< HEAD
-           true <- String.valid?(pair_address),
-=======
          true <- String.valid?(pair_address),
->>>>>>> 5027fd61889780476825a89ba37422d931ca59e8
          {:ok, pool_address, token0, token1} <-
            get_or_create_pool_address_token0_token1_from_event_address(pair_address, "uniswapV2"),
          {:ok, price, reserve0, reserve1} <-
