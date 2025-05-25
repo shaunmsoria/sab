@@ -56,9 +56,9 @@ config :ethers,
 config :ethereumex,
   # url: "http://127.0.0.1:8545"
 
-  url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+  # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
-# url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
 # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY2")}"
 
 # in your config.exs
@@ -67,8 +67,8 @@ config :arbitrage_bot_v1, W3WS,
     [
       # the uri of the ethereum jsonrpc websocket server
       # uri: "ws://127.0.0.1:8545",
-      uri: "wss://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}",
-      # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
+      # uri: "wss://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}",
+      uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
       # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY2")}",
 
       # enable block ping every 10 seconds. this will cause the listener to

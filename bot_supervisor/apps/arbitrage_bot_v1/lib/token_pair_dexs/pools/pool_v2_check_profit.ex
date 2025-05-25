@@ -315,59 +315,6 @@ defmodule PoolV2CheckProfit do
     end
   end
 
-  # ? DONE add to TokenPair table token0_address_upcase and token1_address_upcase
-  # ? DONE search in db by upcase addresses to find the P
-  ## TODO calculate gas price in eth by converting the reserve amount to eth with decimals instead of Gwei or Wei
-  ## ? moved to Compute
-  # def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = _token_profit),
-  #   do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
-
-  # def calculate_gas_price_for_trade_v3(%Token{
-  #       symbol: token_profit_symbol,
-  #       address: token_profit_address,
-  #       decimals: token_profit_decimals
-  #     }) do
-  #   estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
-
-  #   gas_token_pair =
-  #     PS.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
-  #     |> Repo.one()
-  #     |> Repo.preload([:dex, token_pair: [:token0, :token1]])
-
-  #   with {:ok, weth_location} <-
-  #          locate_weth_in_token_pair_v3(gas_token_pair),
-  #        {:ok, [reserve0, reserve1, _block_timestamp]} <-
-  #          gas_token_pair.address |> pool("uniswapV2", :get_reserves),
-  #        {:ok, unit_weth_token_profit_price} <-
-  #          calculate_gas_price_weth_price_v3(
-  #            weth_location,
-  #            reserve0,
-  #            reserve1,
-  #            token_profit_decimals
-  #          ) do
-  #     {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
-  #   end
-  # end
-
-  # def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
-  #   do: {:ok, reserve1 * 10 ** 18 / (reserve0 * 10 ** token_profit_decimals)}
-
-  # def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
-  #   do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
-
-  # def locate_weth_in_token_pair_v3(%Pool{
-  #       token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}
-  #     }),
-  #     do: {:ok, :token0_weth}
-
-  # def locate_weth_in_token_pair_v3(%Pool{
-  #       token_pair: %TokenPair{token1: %Token{symbol: "WETH"}}
-  #     }),
-  #     do: {:ok, :token1_weth}
-
-  # def locate_weth_in_token_pair_v3(_),
-  #     do: {:error, "no pool WETH/TOKEN pool found"}
-
   def calculate_gas_price_for_trade_v2(%Token{symbol: "WETH"}),
     do: {:ok, ConCache.get(:gas, :estimated_gas_fee), "WETH"}
 
