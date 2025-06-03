@@ -132,7 +132,7 @@ defmodule InvestigateEvent do
       {:ok, pool_event_preloaded}
     else
       msg ->
-        msg |> IO.inspect(label: "mx1 msg")
+        msg |> IO.inspect(label: "mx1 extract_pool_details else")
 
         maybe_create_pool(address, event_params)
     end
