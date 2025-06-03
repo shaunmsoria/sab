@@ -102,9 +102,12 @@ defmodule PoolV2CheckProfit do
   end
 
   # @threshold_percentage 0.001
-  @threshold_percentage 0.02
+
+  # @threshold_percentage 0.02
 
   # @threshold_percentage 0.0000001
+
+  @threshold_percentage 0.00000000001
   def calculate_pool_ratio(nil), do: 0
   def calculate_pool_ratio(0), do: 0
 
@@ -130,6 +133,16 @@ defmodule PoolV2CheckProfit do
     profitable_trades_result =
       with {:ok, other_pools} <- PC.extract_other_pools(token_pair, dex) do
         other_pools
+        |> Enum.filter(fn pool_searched ->
+          pool_abi =
+            pool_searched
+            |> Repo.preload(:dex)
+            |> Map.get(:dex)
+            |> Map.get(:abi)
+
+
+          pool_abi == "uniswapV2"
+        end)
         |> Enum.reduce([], fn pool_searched, acc ->
           acc ++ maybe_profitable_trade(pool_event, pool_searched)
         end)
