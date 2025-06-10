@@ -7,6 +7,7 @@ defmodule PoolV2CheckProfit do
   alias ProfitableTradeContext, as: PTC
   alias PoolSearch, as: PS
   alias PoolContext, as: PC
+  alias PoolV3CheckProfit, as: PV3CP
 
   @dexs Libraries.dexs()
   @balancer Libraries.balancer()
@@ -87,7 +88,11 @@ defmodule PoolV2CheckProfit do
            PC.update_pool_price(pool_event, :pool_event),
          {:ok, list_of_profitable_trades} <-
            get_profitable_trade(pool_event_udpated) do
-      ExecuteTrade.run_v2(list_of_profitable_trades)
+
+
+      ##? testing universal execute_trade
+      # ExecuteTrade.run_v2(list_of_profitable_trades)
+      ProcessTrade.run(list_of_profitable_trades)
     end
   end
 
@@ -216,18 +221,35 @@ defmodule PoolV2CheckProfit do
       simulated_profit |> LW.ipt("sx1 simulated_profit in #{token_profit_symbol}")
 
       if simulated_profit > 0 do
-        {:ok, profitable_trade} =
-          PTC.insert(%{
-            token_pair: token_pair,
-            dex_emitted: dex_emitted,
-            dex_searched: dex_searched,
-            token_profit: token_profit,
-            estimated_profit: "#{simulated_profit}",
-            direction: Atom.to_string(direction),
-            tradable_amount: "#{tradable_amount}",
-            gas_fee: "#{gas_fee_in_token_profit_amount}",
-            smart_contract_response: "not_sent_to_smart_contract"
-          })
+
+        ##TODO match the mapping for process_trade
+        # {:ok, profitable_trade} =
+        #   PTC.insert(%{
+        #     token_pair: token_pair,
+        #     dex_emitted: dex_emitted,
+        #     dex_searched: dex_searched,
+        #     token_profit: token_profit,
+        #     estimated_profit: "#{simulated_profit}",
+        #     direction: Atom.to_string(direction),
+        #     tradable_amount: "#{tradable_amount}",
+        #     gas_fee: "#{gas_fee_in_token_profit_amount}",
+        #     smart_contract_response: "not_sent_to_smart_contract"
+        #   })
+
+        profitable_trade =
+          {
+            pool_event,
+            pool_searched,
+            simulated_profit,
+            token_profit.symbol,
+            simulated_profit_pre_gas,
+            tradable_amount,
+            gas_fee_in_token_profit_amount,
+            PV3CP.calculate_price_with_direction(pool_event.price, direction),
+            Atom.to_string(direction),
+            -1
+          }
+
 
         [profitable_trade]
       else
@@ -454,3 +476,6 @@ defmodule PoolV2CheckProfit do
 
   def format_reserve(reserve_amount) when is_integer(reserve_amount), do: reserve_amount
 end
+
+# 1982500000000000000000000
+# 405374359039574340000

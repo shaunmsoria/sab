@@ -255,10 +255,10 @@ defmodule PoolV3CheckProfit do
   def calculate_price_with_direction("0.0", _), do: nil
   def calculate_price_with_direction(nil, _), do: nil
 
-  def calculate_price_with_direction(pool_price, "0_1"),
+  def calculate_price_with_direction(pool_price, direction) when direction in ["0_1", :O_I],
     do: pool_price |> String.to_float()
 
-  def calculate_price_with_direction(pool_price, "1_0"),
+  def calculate_price_with_direction(pool_price, direction) when direction in ["1_0", :I_O],
     do: 1 / (pool_price |> String.to_float())
 
   def calculate_swap_and_burrow_amount_adjusted(

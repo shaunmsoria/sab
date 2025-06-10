@@ -63,14 +63,14 @@ defmodule InvestigateEvent do
         } = pool_event
       ) do
     ## TODO debug & check math after v3 release
-    # PV2C.check_profit(pool_event, {
-    #   maybe_sanitise_amounts(amount0_in),
-    #   maybe_sanitise_amounts(amount0_out),
-    #   maybe_sanitise_amounts(amount1_in),
-    #   maybe_sanitise_amounts(amount1_out)
-    # })
+    PV2C.check_profit(pool_event, {
+      maybe_sanitise_amounts(amount0_in),
+      maybe_sanitise_amounts(amount0_out),
+      maybe_sanitise_amounts(amount1_in),
+      maybe_sanitise_amounts(amount1_out)
+    })
 
-    LW.ipt("sx1 pool_event v2 id: #{inspect(pool_event.id)} skipped")
+    # LW.ipt("sx1 pool_event v2 id: #{inspect(pool_event.id)} skipped")
   end
 
   def maybe_investigate_event(

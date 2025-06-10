@@ -8,7 +8,7 @@ async function main() {
   const [signer] = await ethers.getSigners();
   
   // const contractAddress = process.env.CONTRACT_ADDRESS;
-  const contractAddress = "0x9AC91029691A8D483F32672A0261D4E8708351D7";
+  const contractAddress = "0x938d59DA07F52887f701E82a7CCd654a55C1593d";
   console.log(`Sending 0.1 ETH to ${contractAddress} from ${signer.address}`);
   
   const tx = await signer.sendTransaction({
