@@ -88,9 +88,7 @@ defmodule PoolV2CheckProfit do
            PC.update_pool_price(pool_event, :pool_event),
          {:ok, list_of_profitable_trades} <-
            get_profitable_trade(pool_event_udpated) do
-
-
-      ##? testing universal execute_trade
+      ## ? testing universal execute_trade
       # ExecuteTrade.run_v2(list_of_profitable_trades)
       ProcessTrade.run(list_of_profitable_trades)
     end
@@ -144,7 +142,6 @@ defmodule PoolV2CheckProfit do
             |> Repo.preload(:dex)
             |> Map.get(:dex)
             |> Map.get(:abi)
-
 
           pool_abi == "uniswapV2"
         end)
@@ -221,8 +218,7 @@ defmodule PoolV2CheckProfit do
       simulated_profit |> LW.ipt("sx1 simulated_profit in #{token_profit_symbol}")
 
       if simulated_profit > 0 do
-
-        ##TODO match the mapping for process_trade
+        ## TODO match the mapping for process_trade
         # {:ok, profitable_trade} =
         #   PTC.insert(%{
         #     token_pair: token_pair,
@@ -249,7 +245,6 @@ defmodule PoolV2CheckProfit do
             Atom.to_string(direction),
             -1
           }
-
 
         [profitable_trade]
       else

@@ -66,7 +66,7 @@ defmodule PoolV2Initialise do
       # end
 
       # if dex_all_pairs_length <= current_all_pairs_length do
-        if max_length <= current_all_pairs_length do
+      if max_length <= current_all_pairs_length do
         IO.puts("dex: #{dex_name} is up to date")
       else
         # get_pairs_for_dex(dex, dex_all_pairs_length, current_all_pairs_length + 1)

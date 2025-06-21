@@ -45,16 +45,17 @@ defmodule ProcessTrade do
       pool_searched_updated.price |> IO.inspect(label: "sx1 pool_searched_updated.price")
 
       case {swap_amount, current_pool_price == pool_searched_updated.price} do
-        { -1, _test_result } ->
+        {-1, _test_result} ->
           IO.puts("sx1 in in -1")
           execute_trade(params)
 
-        { _swap_amount, true } ->
+        {_swap_amount, true} ->
           IO.puts("sx1 in true")
           execute_trade(params)
 
-        { _swap_amount, false } ->
+        {_swap_amount, false} ->
           IO.puts("sx1 in false")
+
           PV3CP.estimate_profitable_pool(
             pool_searched_updated,
             pool_event,
@@ -183,6 +184,11 @@ defmodule ProcessTrade do
     |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
   end
 
-  def token_path_via_direction(%Token{} = token0, %Token{} = token1, direction) when direction in ["0_1", "O_I"], do: [token0, token1]
-  def token_path_via_direction(%Token{} = token0, %Token{} = token1, direction) when direction in ["1_0", "I_O"], do: [token1, token0]
+  def token_path_via_direction(%Token{} = token0, %Token{} = token1, direction)
+      when direction in ["0_1", "O_I"],
+      do: [token0, token1]
+
+  def token_path_via_direction(%Token{} = token0, %Token{} = token1, direction)
+      when direction in ["1_0", "I_O"],
+      do: [token1, token0]
 end

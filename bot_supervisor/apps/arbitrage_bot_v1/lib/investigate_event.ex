@@ -92,7 +92,14 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-    PV3C.check_profit(pool_event, {
+    # PV3C.check_profit(pool_event, {
+    #   maybe_sanitise_amounts(amount0_delta),
+    #   maybe_sanitise_amounts(amount1_delta),
+    #   maybe_sanitise_amounts(liquidity),
+    #   maybe_sanitise_amounts(sqrtPriceX96),
+    #   maybe_sanitise_amounts(tick)
+    # })
+    CheckProfit.run(pool_event, {
       maybe_sanitise_amounts(amount0_delta),
       maybe_sanitise_amounts(amount1_delta),
       maybe_sanitise_amounts(liquidity),
