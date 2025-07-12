@@ -62,15 +62,25 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-    ## TODO debug & check math after v3 release
-    PV2C.check_profit(pool_event, {
+    LogWritter.ipt("sx1 pool_event id: #{pool_event.id} maybe_investigate_event pool v2")
+
+    CheckProfit.run(pool_event, {
       maybe_sanitise_amounts(amount0_in),
       maybe_sanitise_amounts(amount0_out),
       maybe_sanitise_amounts(amount1_in),
       maybe_sanitise_amounts(amount1_out)
     })
+    |> case do
+      [] ->
+        {:ok, "No profitable trade found"}
 
-    # LW.ipt("sx1 pool_event v2 id: #{inspect(pool_event.id)} skipped")
+      {:error, msg} ->
+        msg |> LogWritter.ipt("sx1 CheckProfit.run error")
+
+      profitable_trades ->
+        profitable_trades
+        |> PT.run()
+    end
   end
 
   def maybe_investigate_event(
@@ -92,13 +102,6 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-    # PV3C.check_profit(pool_event, {
-    #   maybe_sanitise_amounts(amount0_delta),
-    #   maybe_sanitise_amounts(amount1_delta),
-    #   maybe_sanitise_amounts(liquidity),
-    #   maybe_sanitise_amounts(sqrtPriceX96),
-    #   maybe_sanitise_amounts(tick)
-    # })
     CheckProfit.run(pool_event, {
       maybe_sanitise_amounts(amount0_delta),
       maybe_sanitise_amounts(amount1_delta),

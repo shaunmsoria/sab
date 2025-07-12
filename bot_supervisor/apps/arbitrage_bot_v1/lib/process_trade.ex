@@ -1,10 +1,10 @@
 defmodule ProcessTrade do
   import Compute
-  alias ProfitableTradeContext, as: PTC
-  alias LogWritter, as: LW
-  alias PoolContext, as: PC
-  alias PoolV3CheckProfit, as: PV3CP
-  alias ProfitableTradeContext, as: PTC
+  # alias ProfitableTradeContext, as: PTC
+  # alias LogWritter, as: LW
+  # alias PoolContext, as: PC
+  # alias PoolV3CheckProfit, as: PV3CP
+  # alias ProfitableTradeContext, as: PTC
 
   @dexs Libraries.dexs()
 
@@ -17,15 +17,15 @@ defmodule ProcessTrade do
     |> Enum.reduce_while(false, fn trade, acc ->
       case maybe_execute_trade(trade) do
         false ->
-          LW.ipt("sx1 no trade executed")
+          LogWritter.ipt("sx1 no trade executed")
           {:cont, acc}
 
         {:error, error} ->
-          error |> LW.ipt("sx1 error in maybe_execute_trade")
+          error |> LogWritter.ipt("sx1 error in maybe_execute_trade")
           {:cont, acc}
 
         {:ok, msg} ->
-          msg |> LW.ipt("sx1 msg in maybe_execute_trade")
+          msg |> LogWritter.ipt("sx1 msg in maybe_execute_trade")
           {:halt, true}
       end
     end)
@@ -39,7 +39,7 @@ defmodule ProcessTrade do
     pool_searched = pool_searched_raw |> Repo.preload([:token_pair, :dex])
     current_pool_price = pool_searched.price
 
-    with {:ok, pool_searched_updated} <- PC.update_pool_price(pool_searched) do
+    with {:ok, pool_searched_updated} <- PoolContext.update_pool_price(pool_searched) do
       swap_amount |> IO.inspect(label: "sx1 swap_amount")
       current_pool_price |> IO.inspect(label: "sx1 current_pool_price")
       pool_searched_updated.price |> IO.inspect(label: "sx1 pool_searched_updated.price")
@@ -56,7 +56,8 @@ defmodule ProcessTrade do
         {_swap_amount, false} ->
           IO.puts("sx1 in false")
 
-          PV3CP.estimate_profitable_pool(
+          # PV3CP.estimate_profitable_pool(
+          CheckProfit.estimate_profitable_pool(
             pool_searched_updated,
             pool_event,
             swap_amount,
@@ -108,7 +109,7 @@ defmodule ProcessTrade do
           (token_return_amount_for_gas_fee / 10 ** profit_decimal_number) |> Float.to_string()
         # smart_contract_response: "0x"
       }
-      |> LW.ipt("sx1 data test")
+      |> LogWritter.ipt("sx1 data test")
 
     ## TODO check direction for the swap order token0 to token1 or token1 to token0
     Sabv2Contract.execute_trade(
@@ -130,55 +131,55 @@ defmodule ProcessTrade do
     )
     |> case do
       {:ok, true} ->
-        LW.ipt("Transaction succeeded with true return value")
+        LogWritter.ipt("Transaction succeeded with true return value")
 
         updated_data =
           data
           |> Map.merge(%{smart_contract_response: "returned true"})
 
-        PTC.insert(updated_data)
-        |> LW.ipt("sx1 PTC.insert")
+        ProfitableTradeContext.insert(updated_data)
+        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
 
         {:ok, %{success: true}}
 
       {:ok, [true]} ->
-        LW.ipt("Transaction succeeded with true return value")
+        LogWritter.ipt("Transaction succeeded with true return value")
 
         updated_data =
           data
           |> Map.merge(%{smart_contract_response: "returned [true]"})
 
-        PTC.insert(updated_data)
-        |> LW.ipt("sx1 PTC.insert")
+        ProfitableTradeContext.insert(updated_data)
+        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
 
         {:ok, %{success: true}}
 
       {:ok, "0x"} ->
-        LW.ipt("Transaction succeeded with 0x return value")
+        LogWritter.ipt("Transaction executed with 0x return value")
 
         updated_data =
           data
           |> Map.merge(%{smart_contract_response: "returned 0x"})
 
-        PTC.insert(updated_data)
-        |> LW.ipt("sx1 PTC.insert")
+        ProfitableTradeContext.insert(updated_data)
+        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
 
         {:ok, %{success: true}}
 
       {:ok, msg} ->
-        LW.ipt("Transaction succeeded with unexpected return value: #{inspect(msg)}")
+        LogWritter.ipt("Transaction executed with unexpected return value: #{inspect(msg)}")
 
         updated_data =
           data
           |> Map.merge(%{smart_contract_response: "returned #{inspect(msg)}"})
 
-        PTC.insert(updated_data)
-        |> LW.ipt("sx1 PTC.insert")
+        ProfitableTradeContext.insert(updated_data)
+        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
 
         {:ok, %{success: false, msg: msg}}
 
       {:error, reason} ->
-        LW.ipt("Transaction failed: #{inspect(reason)}")
+        LogWritter.ipt("Transaction failed: #{inspect(reason)}")
         {:error, reason}
     end
     |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")

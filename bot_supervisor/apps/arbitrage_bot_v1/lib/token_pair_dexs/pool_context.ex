@@ -67,10 +67,22 @@ defmodule PoolContext do
 
   def update_pool_price(
         %Pool{
+          dex: %Dex{abi: "uniswapV2", name: dex_name},
+          refresh_reserve: false
+        } = pool,
+        test
+      ) do
+    LW.ipt("#{test} id: #{pool.id} on Dex: #{dex_name}  refresh_reserve: false, not updated")
+    {:error, "refresh_reserve: false"}
+  end
+
+  def update_pool_price(
+        %Pool{
           id: pool_id,
           address: pool_address,
           price: pool_price,
-          dex: %Dex{abi: "uniswapV2", name: dex_name}
+          dex: %Dex{abi: "uniswapV2", name: dex_name},
+          refresh_reserve: true
         } = pool,
         test
       ) do
@@ -82,7 +94,8 @@ defmodule PoolContext do
            PC.update(pool, %{
              price: "#{new_pool_price}",
              reserve0: "#{reserve0}",
-             reserve1: "#{reserve1}"
+             reserve1: "#{reserve1}",
+             refresh_reserve: false
            }) do
       LW.ipt("#{test} id: #{pool_id} on Dex: #{dex_name}  price updated to: #{new_pool_price}")
 

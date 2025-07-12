@@ -65,10 +65,10 @@ defmodule PoolAddressContext do
       end)
       |> List.first()
 
-      pool
-      |> PoolContext.update(%{pool_address_id: pool_address.id})
+    pool
+    |> PoolContext.update(%{pool_address_id: pool_address.id})
 
-      maybe_activate_pool_address(pool_address, pool.id)
+    maybe_activate_pool_address(pool_address, pool.id)
   end
 
   def maybe_activate_pool_address(
@@ -84,9 +84,9 @@ defmodule PoolAddressContext do
       end)
       |> List.first()
 
-     ##TODO check the pool_address_id is correctly updated
-      pool
-      |> PoolContext.update(%{pool_address_id: pool_address.id})
+    ## TODO check the pool_address_id is correctly updated
+    pool
+    |> PoolContext.update(%{pool_address_id: pool_address.id})
 
     {:ok, activated_pool} = maybe_activate_pool_address(pool_address, pool.id)
 
