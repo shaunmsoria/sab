@@ -1,5 +1,7 @@
 defmodule PoolV2Initialise do
   import Compute
+  import Ecto.Query
+
   alias LogWritter, as: LW
   alias ListDex, as: LD
   alias DexSearch, as: DS
@@ -17,11 +19,22 @@ defmodule PoolV2Initialise do
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
   def run() do
-    Repo.update_all(Pool, set: [refresh_reserve: true])
+    maybe_reset_refresh_reserve()
 
     with list_dexs_v2 <- DS.with_abi("uniswapV2") |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs_v2) do
       {:ok, list_dex_token_pairs_length_updated}
+    end
+  end
+
+  def maybe_reset_refresh_reserve() do
+    from(p in Pool, where: p.refresh_reserve == false)
+    |> Repo.all()
+    |> case do
+      [] -> LogWritter.ipt("mx1 maybe refresh_reserve, no need to reset")
+      _ ->
+        Repo.update_all(Pool, set: [refresh_reserve: true])
+        |> LogWritter.ipt("mx1 maybe refresh_reserve, reset needed")
     end
   end
 

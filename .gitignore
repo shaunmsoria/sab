@@ -38,3 +38,8 @@ bot_supervisor/tmp/
 # Remove logs from github
 bot_supervisor/log/
 bot_supervisor/apps/arbitrage_bot_v1/lib/log/
+
+# Remove .env files
+.env
+bot_supervisor/apps/arbitrage_bot_v1/.env
+bot_supervisor/apps/arbitrage_bot_v1/lib/log/.env
