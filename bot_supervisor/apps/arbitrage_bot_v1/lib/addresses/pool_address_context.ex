@@ -51,4 +51,54 @@ defmodule PoolAddressContext do
         {:ok, pool_address}
     end
   end
+
+  def maybe_activate_pool_address(
+        %PoolAddress{status: "new"} = pool_address,
+        %TokenPair{status: "active"} = token_pair
+      ) do
+    pool =
+      token_pair
+      |> Repo.preload(:pools)
+      |> Map.get(:pools)
+      |> Enum.filter(fn pool ->
+        pool.upcase_address == pool_address.upcase_address
+      end)
+      |> List.first()
+
+    pool
+    |> PoolContext.update(%{pool_address_id: pool_address.id})
+
+    maybe_activate_pool_address(pool_address, pool.id)
+  end
+
+  def maybe_activate_pool_address(
+        %PoolAddress{status: "new"} = pool_address,
+        %TokenPair{status: "inactive"} = token_pair
+      ) do
+    pool =
+      token_pair
+      |> Repo.preload(:pools)
+      |> Map.get(:pools)
+      |> Enum.filter(fn pool ->
+        pool.upcase_address == pool_address.upcase_address
+      end)
+      |> List.first()
+
+    ## TODO check the pool_address_id is correctly updated
+    pool
+    |> PoolContext.update(%{pool_address_id: pool_address.id})
+
+    {:ok, activated_pool} = maybe_activate_pool_address(pool_address, pool.id)
+
+    inactivate(activated_pool)
+  end
+
+  def maybe_activate_pool_address(%PoolAddress{status: "new"} = pool_address, pool_id)
+      when is_integer(pool_id),
+      do:
+        pool_address
+        |> PAC.activate(%{pool_id: pool_id})
+
+  def maybe_activate_pool_address(%PoolAddress{status: _} = pool_address, _pool_id_or_token_pair),
+    do: {:ok, pool_address}
 end

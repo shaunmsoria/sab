@@ -21,7 +21,7 @@ async function main() {
     [],
     {
       signer: deployer,
-      maxFeePerGas: 10000000000,
+      maxFeePerGas: 30000000000,
     }
   )
 

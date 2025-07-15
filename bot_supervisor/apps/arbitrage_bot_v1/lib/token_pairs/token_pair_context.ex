@@ -57,6 +57,9 @@ defmodule TokenPairContext do
           |> TPC.insert()
 
         %TokenPair{id: token_pair_id} = token_pair ->
+          PAC.maybe_activate_pool_address(pool_address, token_pair)
+          |> IO.inspect(label: "mx1 PAC.maybe_activate_pool_address")
+
           token_pair
           |> TPC.update(%{
             status: PC.maybe_activate_token_pair(token_pair),

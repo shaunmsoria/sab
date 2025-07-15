@@ -333,6 +333,8 @@ defmodule PoolV3Context do
           []
       end
     end)
+    |> IO.inspect(label: "sx1 maybe_add_pools_from_fees")
     |> List.flatten()
+    |> IO.inspect(label: "sx1 maybe_add_pools_from_fees after List.flatten")
   end
 end
