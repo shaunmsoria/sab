@@ -25,7 +25,8 @@ contract SABV2 is IFlashLoanRecipient {
     event FlashLoanReceived(address token, uint256 amount, uint256 fee);
     event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee);
     event ProfitTracked(uint256 profit);
-    event ExecuteTradeFired(string message);
+    event EventMessage(string message);
+    event ReceiveFlashLoanMessage(string message);
     event ReceiveFlashLoanEvent(string message);
 
     uint256 public flashAmount;
@@ -84,8 +85,6 @@ contract SABV2 is IFlashLoanRecipient {
         uint256 _flashAmount
     ) external {
 
-        emit ExecuteTradeFired("ExecuteTrade fired");
-
         bytes memory data = abi.encode(
             owner,
             _token0,
@@ -114,8 +113,13 @@ contract SABV2 is IFlashLoanRecipient {
         bytes memory userData
     // ) external override onlyVault {
     ) external override {
+        // emit ReceiveFlashLoanEvent();
         emit ReceiveFlashLoanEvent("ReceiveFlashLoanEvent fired");
+        emit EventMessage("ReceiveFlashLoanEven fired");
+        // emit ReceiveFlashLoanMessage(2);
+        // emit ReceiveFlashLoanMessage("ReceiveFlashLoanMessage fired");
         emit FlashLoanReceived(address(tokens[0]), amounts[0], feeAmounts[0]);
+
 
         (
             address _ownerData,
@@ -198,6 +202,10 @@ contract SABV2 is IFlashLoanRecipient {
         address[] memory _tokenPath,
         uint256 _flashAmount
     ) internal {
+        // emit ExecuteSwapFired("ExecuteSwapFired fired");
+        
+        emit ReceiveFlashLoanEvent("ExecuteSwapFired fired");
+
         if (keccak256(abi.encodePacked(_abiPath[0])) == keccak256(abi.encodePacked("uniswapV2"))) {
             IUniswapV2Router02 _startRouter = IUniswapV2Router02(_routerPath[0]);
             uint256 _startAmountIn = IERC20(_tokenPath[0]).balanceOf(

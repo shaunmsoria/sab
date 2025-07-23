@@ -63,7 +63,7 @@ defmodule PoolContext do
   end
 
   def update_pool_price(%Pool{} = pool),
-    do: update_pool_price(pool, :pool_searched)
+    do: update_pool_price(pool, :pool_search)
 
   def update_pool_price(
         %Pool{

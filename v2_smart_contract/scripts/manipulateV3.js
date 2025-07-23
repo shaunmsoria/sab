@@ -30,7 +30,9 @@ const SABV2_ABI = [
   "event FlashLoanReceived(address token, uint256 amount, uint256 fee)",
   "event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee)",
   "event ProfitTracked(uint256 profit)",
-  "event ExecuteTradeError(string reason)"
+  "event ExecuteTradeError(string reason)",
+  "event ReceiveFlashLoanMessage(string test)",
+  "event ReceiveFlashLoanEvent()",
 ];
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 
@@ -226,6 +228,14 @@ async function listenForContractEvents() {
 
   sabContract.on("ProfitTracked", (profit) => {
     console.log(`Profit tracked: ${ethers.formatUnits(profit, 6)} USDT`);
+  });
+
+  sabContract.on("ReceiveFlashLoanEvent", () => {
+    console.log(`ReceiveFlashLoanEvent Fired!`);
+  });
+
+  sabContract.on("ReceiveFlashLoanMessage", (message) => {
+    console.log(`ReceiveFlashLoanMessage Fired!`, message);
   });
 
   sabContract.on("ExecuteTradeError", (reason) => {

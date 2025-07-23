@@ -117,14 +117,15 @@ defmodule CheckProfit do
     get_profitable_trades(pool_event, params.swap_amount, swap_price_event, params.swap_direction)
   end
 
+  # todo tdx1 remove the the dex_abi filter
   def get_profitable_trades(%Pool{} = pool_event, swap_amount, swap_price_event, swap_direction) do
     PoolSearch.with_token_pair_id(pool_event.token_pair.id)
     |> LogWritter.ipt("sx1 PoolSearch.with_token_pair_id")
-    # |> PoolSearch.with_dex_abi("uniswapV3")
+    |> PoolSearch.with_dex_abi("uniswapV3")
     |> Repo.all()
     |> estimate_profitable_pool(pool_event, swap_amount, swap_price_event, swap_direction)
     |> Enum.sort_by(
-      fn {_pool_event, _pool_searched, profit_amount, _token_return_symbol, _return_amount,
+      fn {_pool_event, _pool_search, profit_amount, _token_return_symbol, _return_amount,
           _burrow_amount, _token_return_amount_for_gas_fee, _swap_price_event, _swap_direction,
           _swap_amount} ->
         profit_amount
@@ -134,7 +135,7 @@ defmodule CheckProfit do
   end
 
   def estimate_profitable_pool(
-        %Pool{} = pool_searched,
+        %Pool{} = pool_search,
         pool_event,
         swap_amount,
         swap_price_event,
@@ -142,7 +143,7 @@ defmodule CheckProfit do
       ),
       do:
         estimate_profitable_pool(
-          [pool_searched],
+          [pool_search],
           pool_event,
           swap_amount,
           swap_price_event,
@@ -152,26 +153,26 @@ defmodule CheckProfit do
   def estimate_profitable_pool([], _, _, _, _), do: []
 
   def estimate_profitable_pool(
-        list_pool_searched,
+        list_pool_search,
         pool_event_unpreloaded,
         swap_amount,
         swap_price_event,
         swap_direction
       )
-      when is_list(list_pool_searched) do
+      when is_list(list_pool_search) do
     pool_event = pool_event_unpreloaded |> Repo.preload(token_pair: [:token0, :token1])
     decimals_adjusted = calculate_decimals_adjusted(pool_event, swap_direction)
 
-    list_pool_searched
-    |> Enum.filter(fn pool_searched ->
-      swap_price_searched = calculate_price_with_direction(pool_searched.price, swap_direction)
+    list_pool_search
+    |> Enum.filter(fn pool_search ->
+      swap_price_searched = calculate_price_with_direction(pool_search.price, swap_direction)
 
       ##
       swap_direction |> LogWritter.ipt("sx1 swap_direction")
       swap_price_event |> LogWritter.ipt("sx1 swap_price_event")
       pool_event.id |> LogWritter.ipt("sx1 pool_event.id")
       swap_price_searched |> LogWritter.ipt("sx1 swap_price_searched")
-      pool_searched.id |> LogWritter.ipt("sx1 pool_searched.id")
+      pool_search.id |> LogWritter.ipt("sx1 pool_search.id")
 
       (not is_nil(swap_price_searched) and swap_price_event > swap_price_searched)
       |> LogWritter.ipt("sx1 swap_price_event > swap_price_searched")
@@ -180,12 +181,12 @@ defmodule CheckProfit do
 
       not is_nil(swap_price_searched) and swap_price_event > swap_price_searched
     end)
-    |> Enum.map(fn pool_searched_unpreloaded ->
-      pool_searched = pool_searched_unpreloaded |> Repo.preload(token_pair: [:token0, :token1])
+    |> Enum.map(fn pool_search_unpreloaded ->
+      pool_search = pool_search_unpreloaded |> Repo.preload(token_pair: [:token0, :token1])
 
       {swap_amount_adjusted, burrow_amount} =
         calculate_swap_and_burrow_amount_adjusted(
-          pool_searched,
+          pool_search,
           swap_amount,
           swap_direction,
           decimals_adjusted
@@ -201,7 +202,7 @@ defmodule CheckProfit do
           decimals_adjusted
         )
 
-      {token_return_amount_for_gas_fee, token_return_symbol} =
+      {token_return_amount_for_gas_fee, token_return} =
         calculate_gas_price_for_trade_v3(
           extract_token_profit_from_pool(pool_event, swap_direction)
         )
@@ -209,7 +210,7 @@ defmodule CheckProfit do
       ##
       swap_amount_adjusted |> LogWritter.ipt("sx1 swap_amount_adjusted")
       return_amount |> LogWritter.ipt("sx1 return_amount")
-      token_return_symbol |> LogWritter.ipt("sx1 token_return_symbol")
+      token_return |> LogWritter.ipt("sx1 token_return")
       burrow_amount |> LogWritter.ipt("sx1 burrow_amount")
       token_return_amount_for_gas_fee |> LogWritter.ipt("sx1 token_return_amount_for_gas_fee")
       ##
@@ -218,9 +219,8 @@ defmodule CheckProfit do
         (return_amount - burrow_amount - token_return_amount_for_gas_fee)
         |> LogWritter.ipt("sx1 profit_amount")
 
-      {pool_event, pool_searched, profit_amount, token_return_symbol, return_amount,
-       burrow_amount, token_return_amount_for_gas_fee, swap_price_event, swap_direction,
-       swap_amount}
+      {pool_event, pool_search, profit_amount, token_return, return_amount, burrow_amount,
+       token_return_amount_for_gas_fee, swap_price_event, swap_direction, swap_amount}
     end)
     |> Enum.filter(fn {_, _, profit_amount, _, _, _, _, _, _, _} ->
       profit_amount > 0
@@ -258,7 +258,7 @@ defmodule CheckProfit do
         decimals_adjusted
       )
 
-    pool_reserve = pool.reserve0 |> String.to_integer()
+    pool_reserve = sanitise_pool_reserve(pool.reserve0)
 
     LogWritter.ipt("sx1 calculate_swap_and_burrow_amount_adjusted 0_1")
     swap_amount_estimated |> LogWritter.ipt("sx1 swap_amount_estimated")
@@ -293,7 +293,7 @@ defmodule CheckProfit do
         decimals_adjusted
       )
 
-    pool_reserve = pool.reserve1 |> String.to_integer()
+    pool_reserve = sanitise_pool_reserve(pool.reserve1)
 
     LogWritter.ipt("sx1 calculate_swap_and_burrow_amount_adjusted 1_0")
     burrow_amount_estimated |> LogWritter.ipt("sx1 burrow_amount_estimated")
@@ -310,6 +310,10 @@ defmodule CheckProfit do
           {pool_reserve / burrow_amount_estimated * swap_amount_estimated, pool_reserve}
       end
   end
+
+  def sanitise_pool_reserve(nil), do: 0
+  def sanitise_pool_reserve(""), do: 0
+  def sanitise_pool_reserve(reserve), do: reserve |> String.to_integer()
 
   def calculate_burrow_amount(swap_amount, swap_price, pool_fee, decimals_adjusted) do
     pool_fee_ratio = 1 + (pool_fee |> String.to_integer()) / 10000

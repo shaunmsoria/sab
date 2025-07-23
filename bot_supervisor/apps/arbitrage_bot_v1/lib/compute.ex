@@ -262,14 +262,15 @@ defmodule Compute do
   def convert_decimals_adjuster_0_1(decimals_adjuster_0_1) when is_float(decimals_adjuster_0_1),
     do: Float.to_string(decimals_adjuster_0_1)
 
-  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = _token_profit),
-    do: {ConCache.get(:gas, :estimated_gas_fee), "WETH"}
+  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = token_profit),
+    do: {ConCache.get(:gas, :estimated_gas_fee), token_profit}
 
-  def calculate_gas_price_for_trade_v3(%Token{
-        symbol: token_profit_symbol,
-        address: token_profit_address,
-        decimals: token_profit_decimals
-      }) do
+  def calculate_gas_price_for_trade_v3(
+        %Token{
+          address: token_profit_address,
+          decimals: token_profit_decimals
+        } = token_profit
+      ) do
     estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
 
     gas_pool =
@@ -287,7 +288,7 @@ defmodule Compute do
              gas_pool.reserve1 |> String.to_integer(),
              token_profit_decimals
            ) do
-      {unit_weth_token_profit_price * estimated_gas_fee, token_profit_symbol}
+      {unit_weth_token_profit_price * estimated_gas_fee, token_profit}
     end
   end
 

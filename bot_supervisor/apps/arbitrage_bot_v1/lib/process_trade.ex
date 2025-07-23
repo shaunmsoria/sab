@@ -1,10 +1,7 @@
 defmodule ProcessTrade do
   import Compute
-  # alias ProfitableTradeContext, as: PTC
-  # alias LogWritter, as: LW
-  # alias PoolContext, as: PC
-  # alias PoolV3CheckProfit, as: PV3CP
-  # alias ProfitableTradeContext, as: PTC
+
+  alias Sabv2Contract.EventFilters
 
   @dexs Libraries.dexs()
 
@@ -32,19 +29,19 @@ defmodule ProcessTrade do
   end
 
   def maybe_execute_trade(
-        {pool_event, pool_searched_raw, _profit_amount, _token_return_symbol, _return_amount,
+        {pool_event, pool_search_raw, _profit_amount, _token_return, _return_amount,
          burrow_amount, _token_return_amount_for_gas_fee, swap_price_event, swap_direction,
          swap_amount} = params
       ) do
-    pool_searched = pool_searched_raw |> Repo.preload([:token_pair, :dex])
-    current_pool_price = pool_searched.price
+    pool_search = pool_search_raw |> Repo.preload([:token_pair, :dex])
+    current_pool_price = pool_search.price
 
-    with {:ok, pool_searched_updated} <- PoolContext.update_pool_price(pool_searched) do
+    with {:ok, pool_search_updated} <- PoolContext.update_pool_price(pool_search) do
       swap_amount |> IO.inspect(label: "sx1 swap_amount")
       current_pool_price |> IO.inspect(label: "sx1 current_pool_price")
-      pool_searched_updated.price |> IO.inspect(label: "sx1 pool_searched_updated.price")
+      pool_search_updated.price |> IO.inspect(label: "sx1 pool_search_updated.price")
 
-      case {swap_amount, current_pool_price == pool_searched_updated.price} do
+      case {swap_amount, current_pool_price == pool_search_updated.price} do
         {-1, _test_result} ->
           IO.puts("sx1 in in -1")
           execute_trade(params)
@@ -58,7 +55,7 @@ defmodule ProcessTrade do
 
           # PV3CP.estimate_profitable_pool(
           CheckProfit.estimate_profitable_pool(
-            pool_searched_updated,
+            pool_search_updated,
             pool_event,
             swap_amount,
             swap_price_event,
@@ -73,19 +70,21 @@ defmodule ProcessTrade do
   end
 
   def execute_trade(
-        {pool_event, pool_searched, profit_amount, _token_return_symbol, _return_amount,
-         burrow_amount, token_return_amount_for_gas_fee, swap_price_event, swap_direction,
-         _swap_amount}
+        {pool_event, pool_search, profit_amount, token_return, _return_amount, burrow_amount,
+         token_return_amount_for_gas_fee, swap_price_event, swap_direction, _swap_amount}
       ) do
     %Pool{dex: %Dex{} = dex_event} =
       pool_event |> Repo.preload([:dex, token_pair: [:token0, :token1]])
 
     %Pool{dex: %Dex{} = dex_searched} =
-      pool_searched |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+      pool_search |> Repo.preload([:dex, token_pair: [:token0, :token1]])
 
     smart_contract_address =
       System.get_env("CONTRACT_ADDRESS")
       |> IO.inspect(label: "sx1 smart_contract_address")
+
+    token_return
+    |> LogWritter.ipt("sx1 token_return")
 
     token_path =
       token_path_via_direction(
@@ -101,13 +100,14 @@ defmodule ProcessTrade do
         token_pair: pool_event.token_pair,
         dex_emitted: dex_event,
         dex_searched: dex_searched,
-        token_profit: pool_event.token_pair.token0,
+        token_profit: token_return,
         estimated_profit: (profit_amount / 10 ** profit_decimal_number) |> Float.to_string(),
         direction: swap_direction,
         tradable_amount: (burrow_amount / 10 ** profit_decimal_number) |> Float.to_string(),
         gas_fee:
-          (token_return_amount_for_gas_fee / 10 ** profit_decimal_number) |> Float.to_string()
-        # smart_contract_response: "0x"
+          (token_return_amount_for_gas_fee / 10 ** profit_decimal_number) |> Float.to_string(),
+        pool_event: pool_event,
+        pool_search: pool_search
       }
       |> LogWritter.ipt("sx1 data test")
 
@@ -117,7 +117,7 @@ defmodule ProcessTrade do
       token_path |> Enum.at(1) |> Map.get(:address),
       dex_searched.router,
       dex_searched.abi,
-      pool_searched.fee |> String.to_integer(),
+      pool_search.fee |> String.to_integer(),
       dex_event.router,
       dex_event.abi,
       pool_event.fee |> String.to_integer(),
@@ -129,60 +129,51 @@ defmodule ProcessTrade do
       gas_limit: 5_000_000,
       value: 0
     )
-    |> case do
-      {:ok, true} ->
-        LogWritter.ipt("Transaction succeeded with true return value")
-
-        updated_data =
-          data
-          |> Map.merge(%{smart_contract_response: "returned true"})
-
-        ProfitableTradeContext.insert(updated_data)
-        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
-
-        {:ok, %{success: true}}
-
-      {:ok, [true]} ->
-        LogWritter.ipt("Transaction succeeded with true return value")
-
-        updated_data =
-          data
-          |> Map.merge(%{smart_contract_response: "returned [true]"})
-
-        ProfitableTradeContext.insert(updated_data)
-        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
-
-        {:ok, %{success: true}}
-
-      {:ok, "0x"} ->
-        LogWritter.ipt("Transaction executed with 0x return value")
-
-        updated_data =
-          data
-          |> Map.merge(%{smart_contract_response: "returned 0x"})
-
-        ProfitableTradeContext.insert(updated_data)
-        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
-
-        {:ok, %{success: true}}
-
-      {:ok, msg} ->
-        LogWritter.ipt("Transaction executed with unexpected return value: #{inspect(msg)}")
-
-        updated_data =
-          data
-          |> Map.merge(%{smart_contract_response: "returned #{inspect(msg)}"})
-
-        ProfitableTradeContext.insert(updated_data)
-        |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
-
-        {:ok, %{success: false, msg: msg}}
-
-      {:error, reason} ->
-        LogWritter.ipt("Transaction failed: #{inspect(reason)}")
-        {:error, reason}
-    end
+    |> maybe_save_response(data)
     |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
+
+    # filter = Sabv2Contract.EventFilters.receive_flash_loan_event()
+    # |> IO.inspect(label: "sx1 receive_flash_loan_event")
+
+    Sabv2Contract.EventFilters.event_message()
+    |> Ethers.get_logs()
+    |> IO.inspect(label: "sx1 Event Log get_logs")
+  end
+
+  def sanitise_response(message) do
+    case String.contains?(inspect(message), "0x") do
+      true -> message
+      false -> inspect(message)
+    end
+  end
+
+  def maybe_save_response({:ok, msg}, data) do
+    LogWritter.ipt("Transaction sent, return value: #{inspect(msg)}")
+
+    # message =
+    # case String.contains?(inspect(msg)V, "0x") do
+    #   true -> msg
+    #   false -> inspect(msg)
+    # end
+
+    updated_data =
+      data
+      |> Map.merge(%{smart_contract_response: sanitise_response(msg)})
+
+    ProfitableTradeContext.insert(updated_data)
+    |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
+
+    {:ok, %{success: true}}
+  end
+
+  def maybe_save_response({:error, reason}, _data) do
+    LogWritter.ipt("Transaction failed: #{inspect(reason)}")
+    {:error, reason}
+  end
+
+  def maybe_save_response(message, _data) do
+    LogWritter.ipt("Unexpected response: #{inspect(message)}")
+    {:error, message}
   end
 
   def token_path_via_direction(%Token{} = token0, %Token{} = token1, direction)

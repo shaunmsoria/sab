@@ -1,0 +1,216 @@
+[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_token0",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_token1",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_router0",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_router0_abi",
+				"type": "string"
+			},
+			{
+				"internalType": "uint24",
+				"name": "_pool0_fee",
+				"type": "uint24"
+			},
+			{
+				"internalType": "address",
+				"name": "_router1",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_router1_abi",
+				"type": "string"
+			},
+			{
+				"internalType": "uint24",
+				"name": "_pool1_fee",
+				"type": "uint24"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_flashAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "executeTrade",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "testSimpleFlashLoan",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getOwner1",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "flashAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "loanFee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "token0Amount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "profit",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20[]",
+				"name": "tokens",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "amounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "feeAmounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bytes",
+				"name": "userData",
+				"type": "bytes"
+			}
+		],
+		"name": "receiveFlashLoan",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "message",
+          "type": "string"
+        }
+      ],
+      "name": "ReceiveFlashLoanEvent",
+      "type": "event"
+    },
+	{
+		"anonymous": false,
+		"inputs": [],
+		"name": "receiveFlashLoanMessage",
+		"type": "event"
+	},
+	{
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "message",
+          "type": "string"
+        }
+      ],
+      "name": "EventMessage",
+      "type": "event"
+    }
+]
