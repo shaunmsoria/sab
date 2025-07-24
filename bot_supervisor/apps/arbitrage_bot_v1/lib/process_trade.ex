@@ -95,6 +95,8 @@ defmodule ProcessTrade do
 
     profit_decimal_number = pool_event.token_pair.token0.decimals
 
+    uuid = Ecto.UUID.generate()
+
     data =
       %{
         token_pair: pool_event.token_pair,
@@ -108,6 +110,8 @@ defmodule ProcessTrade do
           (token_return_amount_for_gas_fee / 10 ** profit_decimal_number) |> Float.to_string(),
         pool_event: pool_event,
         pool_search: pool_search
+        # uuid: uuid
+
       }
       |> LogWritter.ipt("sx1 data test")
 
@@ -121,7 +125,8 @@ defmodule ProcessTrade do
       dex_event.router,
       dex_event.abi,
       pool_event.fee |> String.to_integer(),
-      burrow_amount |> trunc()
+      burrow_amount |> trunc(),
+      # uuid
     )
     |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
     |> Ethers.call(
