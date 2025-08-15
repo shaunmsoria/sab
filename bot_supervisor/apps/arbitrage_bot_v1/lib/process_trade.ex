@@ -83,8 +83,8 @@ defmodule ProcessTrade do
       System.get_env("CONTRACT_ADDRESS")
       |> IO.inspect(label: "sx1 smart_contract_address")
 
-    token_return
-    |> LogWritter.ipt("sx1 token_return")
+    # token_return
+    # |> LogWritter.ipt("sx1 token_return")
 
     token_path =
       token_path_via_direction(
@@ -95,7 +95,10 @@ defmodule ProcessTrade do
 
     profit_decimal_number = pool_event.token_pair.token0.decimals
 
-    uuid = Ecto.UUID.generate()
+    uuid =
+      Ecto.UUID.generate()
+      |> String.replace("-", "")
+      |> IO.inspect(label: "sx1 uuid")
 
     data =
       %{
@@ -109,24 +112,53 @@ defmodule ProcessTrade do
         gas_fee:
           (token_return_amount_for_gas_fee / 10 ** profit_decimal_number) |> Float.to_string(),
         pool_event: pool_event,
-        pool_search: pool_search
-        # uuid: uuid
-
+        pool_search: pool_search,
+        uuid: uuid
       }
-      |> LogWritter.ipt("sx1 data test")
 
-    ## TODO check direction for the swap order token0 to token1 or token1 to token0
-    Sabv2Contract.execute_trade(
+    # |> LogWritter.ipt("sx1 data test")
+
+    [
       token_path |> Enum.at(0) |> Map.get(:address),
-      token_path |> Enum.at(1) |> Map.get(:address),
-      dex_searched.router,
+      token_path |> Enum.at(1) |> Map.get(:address)
+    ]
+    |> LogWritter.ipt("mx1 token_path")
+
+    [dex_searched.router, dex_event.router]
+    |> LogWritter.ipt("mx1 routers")
+
+    [dex_searched.abi, dex_event.abi]
+    |> LogWritter.ipt("mx1 abis")
+
+    [pool_search.fee |> String.to_integer(), pool_event.fee |> String.to_integer()]
+    |> LogWritter.ipt("mx1 fees")
+
+
+
+# data_call = Ethers.encode_function_call("testArgsFour", [9], abi_file: "/home/server/Programs/sab/v2_smart_contract/artifacts/contracts/SABV2.sol/SABV2.json")
+# |> IO.inspect(label: "mx1 data_call")
+
+# Ethers.send_transaction(
+#   from: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+#   to: "0xfde41A17EBfA662867DA7324C0Bf5810623Cb3F8",
+#   data: data_call,
+#   gas_limit: 5_000_000,
+#   value: 0
+# )
+
+
+    # ## TODO check direction for the swap order token0 to token1 or token1 to token0
+    Sabv2Contract.execute_trade(
+      [
+        token_path |> Enum.at(0) |> Map.get(:address),
+        token_path |> Enum.at(1) |> Map.get(:address)
+      ],
+      [dex_searched.router, dex_event.router],
       dex_searched.abi,
-      pool_search.fee |> String.to_integer(),
-      dex_event.router,
       dex_event.abi,
-      pool_event.fee |> String.to_integer(),
+      [pool_search.fee |> String.to_integer(), pool_event.fee |> String.to_integer()],
       burrow_amount |> trunc(),
-      # uuid
+      uuid
     )
     |> IO.inspect(label: "sx1 execute_trade pre Ethers.call()")
     |> Ethers.call(
@@ -137,12 +169,29 @@ defmodule ProcessTrade do
     |> maybe_save_response(data)
     |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
 
-    # filter = Sabv2Contract.EventFilters.receive_flash_loan_event()
-    # |> IO.inspect(label: "sx1 receive_flash_loan_event")
+
+    # Sabv2Contract.EventFilters.receive_flash_loan_event()
+    # |> Ethers.get_logs()
+    # |> IO.inspect(label: "sx1 Event Log get_logs receive_flash_loan_event")
 
     Sabv2Contract.EventFilters.event_message()
     |> Ethers.get_logs()
-    |> IO.inspect(label: "sx1 Event Log get_logs")
+    |> IO.inspect(label: "sx1 Event Log get_logs event_message")
+
+    # Sabv2Contract.EventFilters.flash_loan_received()
+    # |> Ethers.get_logs()
+    # |> IO.inspect(label: "sx1 Event Log get_logs flash_loan_received")
+
+    # Sabv2Contract.EventFilters.flash_loan_repaid()
+    # |> Ethers.get_logs()
+    # |> IO.inspect(label: "sx1 Event Log get_logs flash_loan_repaid")
+
+
+    Sabv2Contract.EventFilters.swap_receipt()
+    |> Ethers.get_logs()
+    |> IO.inspect(label: "sx1 Event Log get_logs swap_receipt")
+
+
   end
 
   def sanitise_response(message) do
@@ -155,18 +204,11 @@ defmodule ProcessTrade do
   def maybe_save_response({:ok, msg}, data) do
     LogWritter.ipt("Transaction sent, return value: #{inspect(msg)}")
 
-    # message =
-    # case String.contains?(inspect(msg)V, "0x") do
-    #   true -> msg
-    #   false -> inspect(msg)
-    # end
-
     updated_data =
       data
       |> Map.merge(%{smart_contract_response: sanitise_response(msg)})
 
     ProfitableTradeContext.insert(updated_data)
-    |> LogWritter.ipt("sx1 ProfitableTradeContext.insert")
 
     {:ok, %{success: true}}
   end

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.28;
+pragma solidity 0.8.30;
 
 
 import {IERC20 as OZ_IERC20, SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -13,6 +13,8 @@ import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
+import "hardhat/console.sol";
+
 
 
 contract SABV2 is IFlashLoanRecipient {
@@ -22,17 +24,22 @@ contract SABV2 is IFlashLoanRecipient {
     IVault private constant vault =
         IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;
-    event FlashLoanReceived(address token, uint256 amount, uint256 fee);
-    event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee);
-    event ProfitTracked(uint256 profit);
+    // event FlashLoanReceived(address token, uint256 amount, uint256 fee);
+    // event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee);
+    // event ProfitTracked(uint256 profit);
     event EventMessage(string message);
-    event ReceiveFlashLoanMessage(string message);
-    event ReceiveFlashLoanEvent(string message);
-
+    // event EventMessageTwo(string message);
+    // event ReceiveFlashLoanMessage(string message);
+    // event ReceiveFlashLoanEvent(string message);
+    // event IntFired(uint256 value);
+    // event swapReceipt(string uuid, uint256 flashAmount, uint256 loanFee, uint256 token0Amount, uint256 profit, uint256 remaining);
+    event swapReceipt(uint256 flashAmount, uint256 loanFee, uint256 token0Amount, uint256 profit, uint256 remaining);
+    
     uint256 public flashAmount;
     uint256 public loanFee;
     uint256 public token0Amount;
     uint256 public profit;
+    uint256 public remaining;
 
     constructor() {
         owner = msg.sender;
@@ -50,62 +57,40 @@ contract SABV2 is IFlashLoanRecipient {
 
     receive() external payable {}
 
-    function testSimpleFlashLoan(address token, uint256 amount) external {
-        IERC20[] memory tokens = new IERC20[](1);
-        tokens[0] = IERC20(token);
-
-        uint256[] memory amounts = new uint256[](1);
-        amounts[0] = amount;
-
-        // Simplified data with minimal processing
-        bytes memory data = abi.encode(
-            owner,
-            token,
-            token,
-            address(0),
-            "",
-            uint24(0),
-            address(0),
-            "",
-            uint24(0)
-        );
-
-        vault.flashLoan(this, tokens, amounts, data);
-    }
-
     function executeTrade(
-        address _token0,
-        address _token1,
-        address _router0,
-        string calldata _router0_abi,
-        uint24 _pool0_fee,
-        address _router1,
-        string calldata _router1_abi,
-        uint24 _pool1_fee,
-        uint256 _flashAmount
-        // string calldata _uuid
+        address[] memory _tokens,
+        address[] memory _routers,
+        string calldata _router_abi_0,
+        string calldata _router_abi_1,
+        uint24[] memory _pool_fees,
+        uint256 _flashAmount,
+        string calldata _uuid
     ) external {
 
+        console.log("executeTrade called with arguments:");
+
         bytes memory data = abi.encode(
             owner,
-            _token0,
-            _token1,
-            _router0,
-            _router0_abi,
-            _pool0_fee,
-            _router1,
-            _router1_abi,
-            _pool1_fee
-            // _uuid
+            _tokens,
+            _routers,
+            _pool_fees,
+            _router_abi_0,
+            _router_abi_1,
+            _uuid
         );
 
         IERC20[] memory tokens = new IERC20[](1);
-        tokens[0] = IERC20(_token0);
+        tokens[0] = IERC20(_tokens[0]);
 
         uint256[] memory amounts = new uint256[](1);
         amounts[0] = _flashAmount;
 
+
+        // emit swapReceipt("", 0, 0, 0, 0, 1);
+        emit swapReceipt(0, 0, 0, 0, 1);
+
         vault.flashLoan(this, tokens, amounts, data);
+
     }
 
     function receiveFlashLoan(
@@ -115,37 +100,37 @@ contract SABV2 is IFlashLoanRecipient {
         bytes memory userData
     // ) external override onlyVault {
     ) external override {
-        // emit ReceiveFlashLoanEvent();
-        emit ReceiveFlashLoanEvent("ReceiveFlashLoanEvent fired");
+        // emit ReceiveFlashLoanEvent("ReceiveFlashLoanEvent fired");
         emit EventMessage("ReceiveFlashLoanEven fired");
-        // emit ReceiveFlashLoanMessage(2);
-        // emit ReceiveFlashLoanMessage("ReceiveFlashLoanMessage fired");
-        emit FlashLoanReceived(address(tokens[0]), amounts[0], feeAmounts[0]);
+        // emit FlashLoanReceived(address(tokens[0]), amounts[0], feeAmounts[0]);
 
+        
+        emit swapReceipt(0, 0, 0, 0, 2);
+
+//todo remove unnecessary variables from userData
 
         (
             address _ownerData,
-            address token0,
-            address token1,
-            address router0,
+            address[] memory tokens,
+            address[] memory routers,
+            uint24[] memory pool_fees,
             string memory router0_abi,
-            uint24 pool0_fee,
-            address router1,
             string memory router1_abi,
-            uint24 pool1_fee
-            // string memory uuid
+            string memory uuid
         ) = abi.decode(
                 userData,
-                (address, address, address, address, string, uint24, address, string, uint24)
+                (address, address[], address[], uint24[], string, string, string)
             );
+
 
         flashAmount = amounts[0];
         loanFee = feeAmounts[0];
+ 
 
         address[] memory routerPath = new address[](2);
 
-        routerPath[0] = router0;
-        routerPath[1] = router1;
+        routerPath[0] = routers[0];
+        routerPath[1] = routers[1];
 
         string[] memory abiPath = new string[](2);
 
@@ -154,17 +139,17 @@ contract SABV2 is IFlashLoanRecipient {
 
         uint24[] memory feePath = new uint24[](2);
 
-        feePath[0] = pool0_fee;
-        feePath[1] = pool1_fee;
+        feePath[0] = pool_fees[0];
+        feePath[1] = pool_fees[1];
 
         address[] memory tokenPath = new address[](2);
 
-        tokenPath[0] = token0;
-        tokenPath[1] = token1;
+        tokenPath[0] = tokens[0];
+        tokenPath[1] = tokens[1];
 
         _executeSwap(routerPath, abiPath, feePath, tokenPath, flashAmount);
 
-        OZ_IERC20 ierc20_token0 = OZ_IERC20(token0);
+        OZ_IERC20 ierc20_token0 = OZ_IERC20(tokens[0]);
 
         // Replay flash loan + fee
         ierc20_token0.safeApprove(address(this), 0);
@@ -180,13 +165,19 @@ contract SABV2 is IFlashLoanRecipient {
 
         ierc20_token0.safeTransfer(address(vault), flashAmount + loanFee);
 
-        emit FlashLoanRepaid(flashAmount, loanFee);
+        // emit FlashLoanRepaid(flashAmount, loanFee);
 
-        emit ProfitTracked(ierc20_token0.balanceOf(address(this)));
+        // emit ProfitTracked(ierc20_token0.balanceOf(address(this)));
 
         // Transfer remaining token0 to owner
         ierc20_token0.safeApprove(address(this), 0);
         ierc20_token0.safeApprove(address(this), ierc20_token0.balanceOf(address(this)));
+
+
+        profit = ierc20_token0.balanceOf(address(this));
+
+        console.log("profit", profit);
+
 
         require(
             ierc20_token0.balanceOf(address(this)) >= 0,
@@ -195,7 +186,19 @@ contract SABV2 is IFlashLoanRecipient {
         
         ierc20_token0.safeTransfer(owner, ierc20_token0.balanceOf(address(this))); 
 
-        profit = ierc20_token0.balanceOf(address(this));
+        remaining = ierc20_token0.balanceOf(address(this));
+
+        emit swapReceipt(0, 0, 0, 0, 3);
+        // emit swapReceipt(uuid, flashAmount, loanFee, token0Amount, profit, remaining);
+
+        console.log("uuid", uuid);
+        console.log("flashAmount", flashAmount);
+        console.log("loanFee", loanFee);   
+
+        console.log("sx1 token0Amount:", token0Amount);
+        console.log("sx1 profit:", profit);
+        console.log("sx1 remaining:", remaining);
+
     }
 
     function _executeSwap(
@@ -205,9 +208,9 @@ contract SABV2 is IFlashLoanRecipient {
         address[] memory _tokenPath,
         uint256 _flashAmount
     ) internal {
-        // emit ExecuteSwapFired("ExecuteSwapFired fired");
-        
-        emit ReceiveFlashLoanEvent("ExecuteSwapFired fired");
+        // emit ReceiveFlashLoanEvent("ExecuteSwapFired fired");
+
+        emit swapReceipt(0, 0, 0, 0, 4);
 
         if (keccak256(abi.encodePacked(_abiPath[0])) == keccak256(abi.encodePacked("uniswapV2"))) {
             IUniswapV2Router02 _startRouter = IUniswapV2Router02(_routerPath[0]);

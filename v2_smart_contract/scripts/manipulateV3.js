@@ -33,6 +33,7 @@ const SABV2_ABI = [
   "event ExecuteTradeError(string reason)",
   "event ReceiveFlashLoanMessage(string test)",
   "event ReceiveFlashLoanEvent()",
+  "event EventMessage(string message)",
 ];
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 
@@ -40,7 +41,8 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 const UNISWAP_V3_ROUTER = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
 const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance hot wallet 20
 // const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance 8 wallet
-const AMOUNT = "100000000000"; // 100 billion SHIB tokens
+// const AMOUNT = "100000000000"; // 100 billion SHIB tokens
+const AMOUNT = "50000000000"; // 50 billion SHIB tokens
 // const AMOUNT = "50000000"; // exchange that amount of USDT tokens
 // const AMOUNT = "30000000"; // exchange that amount of USDC tokens
 const FEE_TIER = 3000; // 0.3% fee tier
@@ -164,14 +166,6 @@ async function getTokensAndPool(token0Address, token1Address, fee) {
   }
 }
 
-const testSimpleFlashLoanContract = async (token, amount) => {
-  const SABV2 = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
-  const tx = await SABV2.testSimpleFlashLoan(token, amount);
-  const receipt = await tx.wait();
-  console.log(`Flash loan transaction confirmed in block ${receipt.blockNumber}`);
-  console.log(`Flash loan transaction hash: ${tx.hash}`);
-  console.log(`Flash loan transaction details:`, receipt);
-};
 
 const displayUserAndPoolBalances = async (token0, token1, pool) => {
   const SABV2 = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
@@ -242,6 +236,9 @@ async function listenForContractEvents() {
     console.log(`Error executing trade: ${reason}`);
   });
 
+  sabContract.on("EventMessage", (message) => {
+    console.log(`EventMessage Fired!`, message);
+  });
   // sabContract.on("ExecuteTradeFired", (reason) => {
   //   console.log(`Execute Trade Fired: ${reason}`);
   // });
@@ -371,13 +368,6 @@ async function main() {
   await listenForContractEvents();
 
 
-  testSimpleFlashLoanContract(tokenA, ethers.parseUnits(AMOUNT, 6))
-    .then(() => {
-      console.log("Flash loan executed successfully");
-    })
-    .catch((error) => {
-      console.error("Error executing flash loan:", error);
-    });
 }
 
 async function executeSwap(token0, token1, isReversed) {
