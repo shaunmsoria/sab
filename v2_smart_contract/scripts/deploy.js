@@ -22,13 +22,42 @@ async function main() {
 
   // const [deployer] = await ethers.getSigners();
   console.log("sx1 deployer", deployer);
+
+  const SabLibrary = await hre.ethers.deployContract(
+    "SabLibrary",
+    [],
+    {
+      signer: deployer,
+      maxFeePerGas: 30000000000
+    }
+  )
+
+  await SabLibrary.waitForDeployment()
+
+  const sabLibraryAddress = await SabLibrary.getAddress();
+
+  console.log(`SABV2SabLibrary contract deployed to ${sabLibraryAddress}`)
+
+  const hardhatConfig = require("../hardhat.config");
+  hardhatConfig.libraries = {
+    "contracts/SabLibrary.sol": {
+      "SabLibrary": sabLibraryAddress
+    }
+  };
+
+  // Force recompilation to use the library address
+  await hre.run("compile", { force: true });
+
   
   const SABV2 = await hre.ethers.deployContract(
     "SABV2",
     [],
     {
       signer: deployer,
-      maxFeePerGas: 30000000000
+      maxFeePerGas: 30000000000,
+      // libraries: {
+      //   SabLibrary: sabLibraryAddress  // Link the library here
+      // }
     }
   )
 

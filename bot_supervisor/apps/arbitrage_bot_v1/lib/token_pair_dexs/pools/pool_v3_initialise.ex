@@ -36,6 +36,7 @@ defmodule PoolV3Initialise do
       %Dex{id: dex_v2_id, all_pairs_length: dex_v2_n_pairs_raw} =
       DS.with_name(dex_v3_name) |> DS.with_abi("uniswapV2") |> Repo.one()
 
+    ##todoshaun maybe reset dex_v2_n_pairs to sanitise_n_pairs(dex_v2_n_pairs_raw) once more data available
     dex_v3_n_pairs = sanitise_n_pairs(dex_v3_n_pairs_raw)
     # dex_v2_n_pairs = sanitise_n_pairs(dex_v2_n_pairs_raw)
     # dex_v2_n_pairs = 100

@@ -70,7 +70,6 @@ defmodule TokenPairContext do
           }
           |> TPC.insert()
 
-        ## todoshaun throwing error because in v2 uniswap the pool are supposed to be initialised but here they are created from event
         %TokenPair{id: token_pair_id} = token_pair ->
           PAC.maybe_activate_pool_address(pool_address, token_pair)
           |> IO.inspect(label: "mx1 PAC.maybe_activate_pool_address")
@@ -99,7 +98,8 @@ defmodule TokenPairContext do
     end
   end
 
-  @max_pool_address_daily_updates 200
+
+  @max_pool_address_daily_updates 100
   def is_daily_update_amount_exceeded() do
     ConCache.get(:system, :daily_pool_address_count)
     |> IO.inspect(label: "mx1 ConCache.get")
