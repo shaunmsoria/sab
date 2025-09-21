@@ -19,11 +19,7 @@ defmodule PoolV2Initialise do
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
   def run() do
-<<<<<<< HEAD
-    # Repo.update_all(Pool, set: [refresh_reserve: true])
-=======
     maybe_reset_refresh_reserve()
->>>>>>> 87ad4cc769a765d580bdfb37aa244d1bfc3b4e31
 
     with list_dexs_v2 <- DS.with_abi("uniswapV2") |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs_v2) do
@@ -35,7 +31,9 @@ defmodule PoolV2Initialise do
     from(p in Pool, where: p.refresh_reserve == false)
     |> Repo.all()
     |> case do
-      [] -> LogWritter.ipt("mx1 maybe refresh_reserve, no need to reset")
+      [] ->
+        LogWritter.ipt("mx1 maybe refresh_reserve, no need to reset")
+
       _ ->
         Repo.update_all(Pool, set: [refresh_reserve: true])
         |> LogWritter.ipt("mx1 maybe refresh_reserve, reset needed")
@@ -203,74 +201,4 @@ defmodule PoolV2Initialise do
          "PoolAddress #{event_address} is in status inactive from maybe_add_pair_from_event_address"}
     end
   end
-
-  # def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: dex_factory} = dex, n_pair) do
-  #   with {:ok, pair_address} <-
-  #          get_all_pairs(dex_factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
-  #        false <- String.contains?(pair_address |> inspect(), "<<"),
-  #        {:ok, %PoolAddress{id: pool_address_id} = pool_address} <- PAC.maybe_add_pool_address(pair_address),
-  #        {:ok, token0_address} <- pair_address |> pool("uniswapV2", :token0),
-  #        {:ok, token1_address} <- pair_address |> pool("uniswapV2", :token1),
-  #        {:ok, token0} <- TC.maybe_add_token(token0_address),
-  #        {:ok, token1} <- TC.maybe_add_token(token1_address),
-  #        {:ok, price, reserve0, reserve1} <-
-  #          calculate_price(pair_address),
-  #        {:ok, pool} <- PC.maybe_add_pool(pool_address, token0, token1, dex, %{
-  #         pool_address: pool_address,
-  #          address: pair_address,
-  #          upcase_address: pair_address |> String.upcase(),
-  #          n_pair: n_pair,
-  #          price: "#{price}",
-  #          reserve0: "#{reserve0}",
-  #          reserve1: "#{reserve1}",
-  #          refresh_reserve: false
-  #        }) |> IO.inspect(label: "mx1 maybe_add_pool"),
-  #        {:ok, updated_dex} <- dex |> DC.update(%{all_pairs_length: n_pair}) do
-  #     {:ok, pool}
-  #   else
-  #     error ->
-  #       :timer.sleep(5000)
-
-  #       LW.ipt(
-  #         "dex: #{dex_name} for n_pair: #{n_pair} not retrieved because of: #{inspect(error)}"
-  #       )
-
-  #       get_or_create_pair_for_dex(%Dex{factory: dex_factory} = dex, n_pair + 1)
-  #   end
-  # end
-
-  #   def get_or_create_pair_for_dex(%Dex{name: dex_name, factory: dex_factory} = dex, n_pair) do
-  #   with {:ok, pair_address} <-
-  #          get_all_pairs(dex_factory, n_pair) |> IO.inspect(label: "sx1 get_all_pairs"),
-  #        false <- String.contains?(pair_address |> inspect(), "<<"),
-  #        {:ok, %PoolAddress{id: pool_address_id} = pool_address} <- PAC.maybe_add_pool_address(pair_address),
-  #        {:ok, token0_address} <- pair_address |> pool("uniswapV2", :token0),
-  #        {:ok, token1_address} <- pair_address |> pool("uniswapV2", :token1),
-  #        {:ok, token0} <- TC.maybe_add_token(token0_address),
-  #        {:ok, token1} <- TC.maybe_add_token(token1_address),
-  #        {:ok, price, reserve0, reserve1} <-
-  #          calculate_price(pair_address),
-  #        {:ok, pool} <- PC.maybe_add_pool(pool_address, token0, token1, dex, %{
-  #         pool_address: pool_address,
-  #          address: pair_address,
-  #          upcase_address: pair_address |> String.upcase(),
-  #          n_pair: n_pair,
-  #          price: "#{price}",
-  #          reserve0: "#{reserve0}",
-  #          reserve1: "#{reserve1}",
-  #          refresh_reserve: false
-  #        }) |> IO.inspect(label: "mx1 maybe_add_pool"),
-  #        {:ok, updated_dex} <- dex |> DC.update(%{all_pairs_length: n_pair}) do
-  #     {:ok, pool}
-  #   else
-  #     error ->
-  #       :timer.sleep(5000)
-
-  #       LW.ipt(
-  #         "dex: #{dex_name} for n_pair: #{n_pair} not retrieved because of: #{inspect(error)}"
-  #       )
-
-  #       get_or_create_pair_for_dex(%Dex{factory: dex_factory} = dex, n_pair + 1)
-  #   end
-  # end
 end

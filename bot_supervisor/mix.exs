@@ -27,7 +27,9 @@ defmodule BotSupervisor.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:ecto_sql, "~> 3.2"},
       {:postgrex, "~> 0.15"},
-      {:decimal, "~> 2.3.0"}
+      {:decimal, "~> 2.3.0"},
+      {:ex_secp256k1, "~> 0.7.1"},
+      {:timex, "~> 3.0"}
     ]
   end
 

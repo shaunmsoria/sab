@@ -11,6 +11,8 @@ defmodule InitialiseDexBot do
     ConCache.put(:system, :new_start, true)
     # ConCache.put(:dex, "list_dex", @dexs |> Map.keys())
 
+    PoolAddressContext.set_dialy_pool_address_count()
+
     with {:ok, :database_ready} <- IDTP.run() do
       state
     end

@@ -13,7 +13,7 @@ defmodule PoolV3Initialise do
   def run() do
     with list_dexs_v3 <- DS.with_abi("uniswapV3") |> Repo.all(),
          {:ok, updated_list_pool_v3} <- update_v3_pools_from_v2_pools(list_dexs_v3) do
-      list_dexs_v3 |> IO.inspect(label: "sx1 list_dexs_v3")
+      list_dexs_v3
     end
 
     {:ok, :test}
@@ -36,9 +36,11 @@ defmodule PoolV3Initialise do
       %Dex{id: dex_v2_id, all_pairs_length: dex_v2_n_pairs_raw} =
       DS.with_name(dex_v3_name) |> DS.with_abi("uniswapV2") |> Repo.one()
 
+    ##todoshaun maybe reset dex_v2_n_pairs to sanitise_n_pairs(dex_v2_n_pairs_raw) once more data available
     dex_v3_n_pairs = sanitise_n_pairs(dex_v3_n_pairs_raw)
     # dex_v2_n_pairs = sanitise_n_pairs(dex_v2_n_pairs_raw)
-    dex_v2_n_pairs = 100
+    # dex_v2_n_pairs = 100
+    dex_v2_n_pairs = 5
 
     if dex_v3_n_pairs < dex_v2_n_pairs do
       dex_v3_n_pairs..dex_v2_n_pairs

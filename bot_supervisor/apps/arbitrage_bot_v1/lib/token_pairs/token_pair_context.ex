@@ -37,13 +37,27 @@ defmodule TokenPairContext do
       do: token_pair
 
   def maybe_add_pair_from_event_address(event_address, abi) do
-    with false <- String.contains?(event_address |> inspect(), "<<"),
+    with false <-
+           String.contains?(event_address |> inspect(), "<<")
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address 1"),
          {:ok, %PoolAddress{status: "new"} = pool_address} <-
-           PAC.maybe_add_pool_address(event_address),
-         {:ok, token0_address} <- event_address |> pool(abi, :token0),
-         {:ok, token1_address} <- event_address |> pool(abi, :token1),
-         {:ok, token0} <- TC.maybe_add_token(token0_address),
-         {:ok, token1} <- TC.maybe_add_token(token1_address) do
+           PAC.maybe_add_pool_address(event_address)
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address 2"),
+         {:ok, :pool_address_daily_updates_not_exceeded} <- is_daily_update_amount_exceeded(),
+         {:ok, token0_address} <-
+           event_address
+           |> pool(abi, :token0)
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address 3"),
+         {:ok, token1_address} <-
+           event_address
+           |> pool(abi, :token1)
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address 4"),
+         {:ok, token0} <-
+           TC.maybe_add_token(token0_address)
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address 5"),
+         {:ok, token1} <-
+           TC.maybe_add_token(token1_address)
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address 6") do
       case TPS.with_token0_id(token0.id)
            |> TPS.with_token1_id(token1.id)
            |> Repo.one() do
@@ -75,9 +89,25 @@ defmodule TokenPairContext do
         {:error,
          "PoolAddress #{event_address} is in status inactive from maybe_add_pair_from_event_address"}
 
+      {:ok, :pool_address_daily_updates_exceeded} ->
+        {:error,
+         "PoolAddress #{event_address} not update because pool_address_daily_updates exceeded from maybe_add_pair_from_event_address"}
+
       error ->
         {:error, "Error from maybe_add_pair_from_event_address: #{inspect(error)}"}
     end
+  end
+
+
+  @max_pool_address_daily_updates 100
+  def is_daily_update_amount_exceeded() do
+    ConCache.get(:system, :daily_pool_address_count)
+    |> IO.inspect(label: "mx1 ConCache.get")
+
+    if(ConCache.get(:system, :daily_pool_address_count) <= @max_pool_address_daily_updates,
+      do: {:ok, :pool_address_daily_updates_not_exceeded},
+      else: {:ok, :pool_address_daily_updates_exceeded}
+    )
   end
 
   def test() do
