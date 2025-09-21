@@ -5,20 +5,26 @@ const { ethers } = require("hardhat");
 
 
 async function main() {
-  const [signer] = await ethers.getSigners();
+  // const [signer] = await ethers.getSigners();
+
+  const privateKey = process.env.PRIVATE_KEY;
+
+  console.log("mx1 privateKey", privateKey);
+  const provider = hre.ethers.provider;
+  const signer = new hre.ethers.Wallet(privateKey, provider);
   
   // const contractAddress = process.env.CONTRACT_ADDRESS;
-  const contractAddress = "0x9AC91029691A8D483F32672A0261D4E8708351D7";
-  console.log(`Sending 0.1 ETH to ${contractAddress} from ${signer.address}`);
+  const contractAddress = "0xE38aF3FDa379401445FFD7b9cD57D0D33d03790E";
+  console.log(`Sending 0.005 ETH to ${contractAddress} from ${signer.address}`);
   
   const tx = await signer.sendTransaction({
     to: contractAddress,
-    value: ethers.parseEther("0.1")
+    value: ethers.parseEther("0.005")
   });
   
   console.log(`Transaction hash: ${tx.hash}`);
   const receipt = await tx.wait();
-  console.log(`Transaction confirmed in block ${receipt.blockNumber}`);
+  console.log(`receipt ${JSON.stringify(receipt)}`);
 }
 
 main()

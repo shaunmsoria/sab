@@ -62,15 +62,26 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-    ## TODO debug & check math after v3 release
-    # PV2C.check_profit(pool_event, {
-    #   maybe_sanitise_amounts(amount0_in),
-    #   maybe_sanitise_amounts(amount0_out),
-    #   maybe_sanitise_amounts(amount1_in),
-    #   maybe_sanitise_amounts(amount1_out)
-    # })
+    LogWritter.ipt("sx1 pool_event id: #{pool_event.id} maybe_investigate_event pool v2")
 
-    LW.ipt("sx1 pool_event v2 id: #{inspect(pool_event.id)} skipped")
+    CheckProfit.run(pool_event, {
+      maybe_sanitise_amounts(amount0_in),
+      maybe_sanitise_amounts(amount0_out),
+      maybe_sanitise_amounts(amount1_in),
+      maybe_sanitise_amounts(amount1_out)
+    })
+    |> case do
+      [] ->
+        {:ok, "No profitable trade found"}
+
+      {:error, msg} ->
+        msg |> LogWritter.ipt("sx1 CheckProfit.run error")
+
+      profitable_trades ->
+        profitable_trades
+        |> PT.run()
+    end
+    |> IO.inspect(label: "sx1 maybe_investigate_event v2")
   end
 
   def maybe_investigate_event(
@@ -92,7 +103,9 @@ defmodule InvestigateEvent do
           reserve1: reserve1
         } = pool_event
       ) do
-    PV3C.check_profit(pool_event, {
+    LogWritter.ipt("sx1 pool_event id: #{pool_event.id} maybe_investigate_event pool v3")
+
+    CheckProfit.run(pool_event, {
       maybe_sanitise_amounts(amount0_delta),
       maybe_sanitise_amounts(amount1_delta),
       maybe_sanitise_amounts(liquidity),
@@ -100,6 +113,9 @@ defmodule InvestigateEvent do
       maybe_sanitise_amounts(tick)
     })
     |> case do
+      false ->
+        {:ok, "Swap did not pass threshold"}
+
       [] ->
         {:ok, "No profitable trade found"}
 
@@ -107,6 +123,7 @@ defmodule InvestigateEvent do
         profitable_trades
         |> PT.run()
     end
+    |> IO.inspect(label: "sx1 maybe_investigate_event v3")
   end
 
   def maybe_investigate_event(
@@ -150,12 +167,12 @@ defmodule InvestigateEvent do
     with {:ok, pool_address} <- PAC.maybe_add_pool_address(event_address) do
       case PC.maybe_add_pool_from_pool_address(pool_address, event_params) do
         {:ok, pool} ->
-          # PAC.activate(pool_address)
-
           {:ok, pool |> Repo.preload([[token_pair: [:token0, :token1]], :dex])}
 
+        {:error, error_message} ->
+          {:error, "No Pool for #{event_address}, reason: #{inspect(error_message)}"}
+
         error_message ->
-          # PAC.inactivate(pool_address)
           {:error, "No Pool for #{event_address}, reason: #{inspect(error_message)}"}
       end
     else

@@ -90,4 +90,22 @@ defmodule TokenContext do
 
   def sanitise_param({:ok, param}, :decimals) when is_integer(param), do: param
   def sanitise_param(_, :decimals), do: 0
+
+  def calculate_initialised_tokens() do
+    date =
+      Timex.today()
+      |> Timex.to_naive_datetime()
+
+    count_today_updated_pool_addresses =
+      from(pa in PoolAddress,
+        where: pa.status != "new",
+        where: pa.updated_at >= ^date
+      )
+      |> Repo.aggregate(:count, :id)
+
+    ConCache.put(:system, :today_updated_pool_addresses, count_today_updated_pool_addresses)
+
+    # ConCache.get(:system, :today_updated_pool_addresses)
+    # |> IO.inspect(label: "sx1 ConCache today_updated_pool_addresses")
+  end
 end

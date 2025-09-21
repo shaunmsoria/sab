@@ -7,6 +7,8 @@ defmodule PoolAddress do
     field(:upcase_address, :string)
     field(:status, :string, default: "new")
     belongs_to(:pool, Pool)
+
+    timestamps()
   end
 
   @required [:address, :upcase_address]

@@ -21,13 +21,14 @@ defmodule PoolV3Context do
   end
 
   def get_or_create_pool_v3(
-        "0x0000000000000000000000000000000000000000",
+        pool_address,
         _dex_v3,
         _token_pair,
         _pool_v3_fee,
         _n_pair
-      ),
-      do: {:error, "no pool v3 for address 0x0000000000000000000000000000000000000000"}
+      )
+      when pool_address in [nil, "0x", "0x0000000000000000000000000000000000000000"],
+      do: {:error, "no pool v3 for address #{pool_address}"}
 
   def get_or_create_pool_v3(
         pool_v3_address,
@@ -82,6 +83,10 @@ defmodule PoolV3Context do
     end
   end
 
+  def create_pool_v3(pool_address, _, _, _, _, _, _, _, _)
+      when pool_address in [nil, "0x", "0x0000000000000000000000000000000000000000"],
+      do: {:error, "no pool v3 for address #{pool_address}"}
+
   def create_pool_v3(
         pool_v3_address,
         %Dex{id: dex_v3_id} = dex_v3,
@@ -129,23 +134,27 @@ defmodule PoolV3Context do
 
     IO.puts("mx1 #####################")
 
-    {:ok, %PoolAddress{id: pool_address_id} = pool_address} =
-      PAC.maybe_add_pool_address(pool_v3_address)
+    case PAC.maybe_add_pool_address(pool_v3_address) do
+      {:ok, %PoolAddress{id: pool_address_id} = pool_address} ->
+        {:ok, updated_pool} =
+          PC.maybe_add_pool(pool_address, token0, token1, dex_v3, %{
+            pool_address_id: pool_address_id,
+            address: pool_v3_address,
+            upcase_address: String.upcase(pool_v3_address),
+            fee: pool_v3_fee,
+            price: price,
+            reserve0: reserve0,
+            reserve1: reserve1,
+            tick: tick_current |> Integer.to_string(),
+            tick_spacing: tick_spacing |> Integer.to_string(),
+            n_pair: n_pair,
+            liquidity: liquidity |> Integer.to_string()
+          })
 
-    {:ok, updated_pool} =
-      PC.maybe_add_pool(pool_address, token0, token1, dex_v3, %{
-        pool_address_id: pool_address_id,
-        address: pool_v3_address,
-        upcase_address: String.upcase(pool_v3_address),
-        fee: pool_v3_fee,
-        price: price,
-        reserve0: reserve0,
-        reserve1: reserve1,
-        tick: tick_current |> Integer.to_string(),
-        tick_spacing: tick_spacing |> Integer.to_string(),
-        n_pair: n_pair,
-        liquidity: liquidity |> Integer.to_string()
-      })
+      {:error, msg} ->
+        LW.ipt("Error from maybe_add_pool_address: #{inspect(msg)}")
+        {:error, msg}
+    end
   end
 
   def calculate_price_reserve0_reserve1(
@@ -307,6 +316,20 @@ defmodule PoolV3Context do
         pool_v3_fee |> String.to_integer()
       )
       |> case do
+        "0x" ->
+          LW.ipt(
+            "no pool v3 for token_pair_id: #{token_pair.id} with dex_id: #{dex_v3.id} and fee: #{pool_v3_fee}"
+          )
+
+          []
+
+        nil ->
+          LW.ipt(
+            "no pool v3 for token_pair_id: #{token_pair.id} with dex_id: #{dex_v3.id} and fee: #{pool_v3_fee}"
+          )
+
+          []
+
         {:ok, pool_v3_address} ->
           pool_v3_address
           |> IO.inspect(label: "sx1 pool_address")
@@ -324,15 +347,10 @@ defmodule PoolV3Context do
               LW.ipt(inspect(msg))
               []
           end
-
-        nil ->
-          LW.ipt(
-            "no pool v3 for token_pair_id: #{token_pair.id} with dex_id: #{dex_v3.id} and fee: #{pool_v3_fee}"
-          )
-
-          []
       end
     end)
+    |> IO.inspect(label: "sx1 maybe_add_pools_from_fees")
     |> List.flatten()
+    |> IO.inspect(label: "sx1 maybe_add_pools_from_fees after List.flatten")
   end
 end
