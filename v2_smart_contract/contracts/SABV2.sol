@@ -24,17 +24,8 @@ contract SABV2 is IFlashLoanRecipient {
     IVault private constant vault =
         IVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     address public owner;
-    // event FlashLoanReceived(address token, uint256 amount, uint256 fee);
-    // event FlashLoanRepaid(uint256 flashAmount, uint256 loanFee);
-    // event ProfitTracked(uint256 profit);
-    event EventMessage(string message);
-    // event EventMessageTwo(string message);
-    // event ReceiveFlashLoanMessage(string message);
-    // event ReceiveFlashLoanEvent(string message);
-    // event IntFired(uint256 value);
-    // event swapReceipt(string uuid, uint256 flashAmount, uint256 loanFee, uint256 token0Amount, uint256 profit, uint256 remaining);
-    event swapReceipt(uint256 flashAmount, uint256 loanFee, uint256 token0Amount, uint256 profit, uint256 remaining);
-    
+    event swapReceipt(string uuid, uint256 flashAmount, uint256 loanFee, uint256 token0Amount, uint256 profit, uint256 remaining);
+
     uint256 public flashAmount;
     uint256 public loanFee;
     uint256 public token0Amount;
@@ -45,17 +36,33 @@ contract SABV2 is IFlashLoanRecipient {
         owner = msg.sender;
     }
 
-    // Add this new function
-    function queryOwner() external returns (address) {
-        return owner;
-    }
-
     modifier onlyVault() {
         require(msg.sender == address(vault), "your are not the vault");
         _;
     }
 
     receive() external payable {}
+
+    function queryOwner() external view returns (address) {
+        return owner;
+    }
+
+    function withdrawToken(address tokenAddress) external {
+        require(msg.sender == owner, "Only owner can withdraw");
+        uint256 balance = IERC20(tokenAddress).balanceOf(address(this));
+        require(balance > 0, "No token amount to withdraw");
+        OZ_IERC20(tokenAddress).safeTransfer(owner, balance);
+    }
+
+    function withdrawEth() external {
+        require(msg.sender == owner, "Only owner can withdraw");
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No ETH to withdraw");
+        
+        (bool success, ) = owner.call{value: balance}("");
+        require(success, "ETH transfer failed");
+    }
+
 
     function executeTrade(
         address[] memory _tokens,
@@ -67,10 +74,8 @@ contract SABV2 is IFlashLoanRecipient {
         string calldata _uuid
     ) external {
 
-        console.log("executeTrade called with arguments:");
 
         bytes memory data = abi.encode(
-            owner,
             _tokens,
             _routers,
             _pool_fees,
@@ -86,31 +91,19 @@ contract SABV2 is IFlashLoanRecipient {
         amounts[0] = _flashAmount;
 
 
-        // emit swapReceipt("", 0, 0, 0, 0, 1);
-        emit swapReceipt(0, 0, 0, 0, 1);
-
         vault.flashLoan(this, tokens, amounts, data);
 
     }
 
     function receiveFlashLoan(
-        IERC20[] memory tokens,
+        IERC20[] memory _tokens,
         uint256[] memory amounts,
         uint256[] memory feeAmounts,
         bytes memory userData
-    // ) external override onlyVault {
     ) external override {
-        // emit ReceiveFlashLoanEvent("ReceiveFlashLoanEvent fired");
-        emit EventMessage("ReceiveFlashLoanEven fired");
-        // emit FlashLoanReceived(address(tokens[0]), amounts[0], feeAmounts[0]);
 
-        
-        emit swapReceipt(0, 0, 0, 0, 2);
-
-//todo remove unnecessary variables from userData
 
         (
-            address _ownerData,
             address[] memory tokens,
             address[] memory routers,
             uint24[] memory pool_fees,
@@ -119,7 +112,14 @@ contract SABV2 is IFlashLoanRecipient {
             string memory uuid
         ) = abi.decode(
                 userData,
-                (address, address[], address[], uint24[], string, string, string)
+                (
+                    address[], 
+                    address[], 
+                    uint24[], 
+                    string, 
+                    string, 
+                    string
+                )
             );
 
 
@@ -165,10 +165,6 @@ contract SABV2 is IFlashLoanRecipient {
 
         ierc20_token0.safeTransfer(address(vault), flashAmount + loanFee);
 
-        // emit FlashLoanRepaid(flashAmount, loanFee);
-
-        // emit ProfitTracked(ierc20_token0.balanceOf(address(this)));
-
         // Transfer remaining token0 to owner
         ierc20_token0.safeApprove(address(this), 0);
         ierc20_token0.safeApprove(address(this), ierc20_token0.balanceOf(address(this)));
@@ -176,29 +172,16 @@ contract SABV2 is IFlashLoanRecipient {
 
         profit = ierc20_token0.balanceOf(address(this));
 
-        console.log("profit", profit);
-
-
         require(
             ierc20_token0.balanceOf(address(this)) >= 0,
-            string(abi.encodePacked("No profit to transfer", Strings.toString(ierc20_token0.balanceOf(address(this)))))
+            string(abi.encodePacked("No profit to transfer: ", Strings.toString(ierc20_token0.balanceOf(address(this)))))
         );
         
         ierc20_token0.safeTransfer(owner, ierc20_token0.balanceOf(address(this))); 
 
         remaining = ierc20_token0.balanceOf(address(this));
 
-        emit swapReceipt(0, 0, 0, 0, 3);
-        // emit swapReceipt(uuid, flashAmount, loanFee, token0Amount, profit, remaining);
-
-        console.log("uuid", uuid);
-        console.log("flashAmount", flashAmount);
-        console.log("loanFee", loanFee);   
-
-        console.log("sx1 token0Amount:", token0Amount);
-        console.log("sx1 profit:", profit);
-        console.log("sx1 remaining:", remaining);
-
+        emit swapReceipt(uuid, flashAmount, loanFee, token0Amount, profit, remaining);
     }
 
     function _executeSwap(
@@ -208,9 +191,6 @@ contract SABV2 is IFlashLoanRecipient {
         address[] memory _tokenPath,
         uint256 _flashAmount
     ) internal {
-        // emit ReceiveFlashLoanEvent("ExecuteSwapFired fired");
-
-        emit swapReceipt(0, 0, 0, 0, 4);
 
         if (keccak256(abi.encodePacked(_abiPath[0])) == keccak256(abi.encodePacked("uniswapV2"))) {
             IUniswapV2Router02 _startRouter = IUniswapV2Router02(_routerPath[0]);
@@ -218,9 +198,7 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            // First reset approval to 0 for tokens like USDT
             OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), 0);
-            // Then set the desired approval
             OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), _startAmountIn);
 
             _startRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
@@ -236,9 +214,7 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            // First reset approval to 0 for tokens like USDT
             OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), 0);
-            // Then set the desired approval
             OZ_IERC20(_tokenPath[0]).safeApprove(address(_startRouter), _startAmountIn);
 
             _startRouter.exactInputSingle(
@@ -261,9 +237,7 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            // First reset approval to 0 for tokens like USDT
             OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), 0);
-            // Then set the desired approval
             OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), _endAmountIn);
 
             address token0 = _tokenPath[0];
@@ -285,9 +259,7 @@ contract SABV2 is IFlashLoanRecipient {
                 address(this)
             );
 
-            // First reset approval to 0 for tokens like USDT
             OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), 0);
-            // Then set the desired approval
             OZ_IERC20(_tokenPath[1]).safeApprove(address(_endRouter), _endAmountIn);
 
             _endRouter.exactInputSingle(

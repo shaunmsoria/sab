@@ -74,7 +74,7 @@ defmodule PoolSearch do
         select: t.id
       )
       |> Repo.one()
-      |> LW.ipt("sx1 token_id ")
+      |> LW.ipt("sx1 token_id")
 
     weth_id =
       from(t in Token,
@@ -98,6 +98,14 @@ defmodule PoolSearch do
       |> Repo.one()
       |> LW.ipt("sx1 token_weth_pair_id")
 
+    find_pool_weth_from_token_weth_pair_id(query, token_weth_pair_id)
+  end
+
+  def find_pool_weth_from_token_weth_pair_id(query \\ query(), token_weth_pair_id \\ nil)
+  def find_pool_weth_from_token_weth_pair_id(query, nil), do: nil
+
+  def find_pool_weth_from_token_weth_pair_id(query, token_weth_pair_id)
+      when is_integer(token_weth_pair_id) do
     dex_id =
       from(d in Dex,
         where: d.name == "uniswap",

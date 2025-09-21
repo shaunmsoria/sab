@@ -19,6 +19,7 @@ defmodule CheckProfit do
         {:ok, %Pool{} = pool_event},
         {amount0_in, amount0_out, amount1_in, amount1_out} = params
       ) do
+    ## ? define_direction only call get_profitable_trade_from_pool if the positive amount is greater than the liquidity * threshold_percentage
     case {amount1_out >= calculate_pool_ratio(pool_event.reserve1),
           amount0_out >= calculate_pool_ratio(pool_event.reserve0)} do
       {true, false} ->
@@ -47,12 +48,12 @@ defmodule CheckProfit do
     end
   end
 
-  @threshold_percentage 0.00000000001
+  @threshold_percentage_v2 0.00000000001
   def calculate_pool_ratio(nil), do: 0
   def calculate_pool_ratio(0), do: 0
 
   def calculate_pool_ratio(amount_pool),
-    do: (amount_pool |> String.to_integer()) * @threshold_percentage
+    do: String.to_integer(amount_pool) * @threshold_percentage_v2
 
   ## ? v3 flow
   def run(
@@ -82,9 +83,76 @@ defmodule CheckProfit do
         }
       )
 
-    define_direction(updated_pool_event, amount0_delta, amount1_delta)
+    should_proceed(updated_pool_event, amount0_delta, amount1_delta)
   end
 
+  def should_proceed(nil, _, _), do: {:error, "no weth / token to calculate threshold v3"}
+
+  def should_proceed(
+        %Pool{token_pair: %TokenPair{token0: token0, token1: token1}} = pool,
+        amount0_delta,
+        amount1_delta
+      ) do
+    case locate_weth_in_token_pair_v3(pool) do
+      {:ok, :token0_weth} ->
+        compare_with_threshold(amount0_delta) &&
+          define_direction(pool, amount0_delta, amount1_delta)
+
+      {:ok, :token1_weth} ->
+        compare_with_threshold(amount1_delta) &&
+          define_direction(pool, amount0_delta, amount1_delta)
+
+      {:error, "no pool WETH/TOKEN pool found"} ->
+        token0_weth_price = calculate_weth_value(token0)
+
+        if token0_weth_price > 0,
+          do:
+            compare_with_threshold(token0_weth_price * amount0_delta) &&
+              define_direction(pool, amount0_delta, amount1_delta),
+          else:
+            compare_with_threshold(calculate_weth_value(token1) * amount1_delta) &&
+              define_direction(pool, amount0_delta, amount1_delta)
+    end
+  end
+
+  def calculate_weth_value(%Token{} = token) do
+    weth_pool_not_preloaded =
+      PoolSearch.with_fee("3000")
+      |> PoolSearch.with_upcase_token_address_and_weth(token.address |> String.upcase())
+
+    weth_pool =
+      not is_nil(weth_pool_not_preloaded) &&
+        weth_pool_not_preloaded
+        |> Repo.one()
+        |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+
+    case locate_weth_in_token_pair_v3(weth_pool) do
+      {:ok, :token0_weth} ->
+        if String.to_float(weth_pool.price) != 0.0,
+          do: 1 / String.to_float(weth_pool.price),
+          else: 0.0
+
+      {:ok, :token1_weth} ->
+        String.to_float(weth_pool.price)
+
+      {:error, "no pool WETH/TOKEN pool found"} ->
+        0
+    end
+  end
+
+  ## todoshaun continue here calculation need check
+  @threshold_percentage_v3 0.5
+  def compare_with_threshold(amount_to_compare) when amount_to_compare >= 0,
+    do:
+      (amount_to_compare / 10 ** 18 >= @threshold_percentage_v3)
+      |> LogWritter.ipt("sx1 ((amount_to_compare * price) >= @threshold_percentage_v3)")
+
+  def compare_with_threshold(amount_to_compare) when amount_to_compare < 0,
+    do:
+      (amount_to_compare * -1 / 10 ** 18 >= @threshold_percentage_v3)
+      |> LogWritter.ipt("sx1 (((amount_to_compare * -1) * price) >= @threshold_percentage_v3)")
+
+  ## ? define_direction only call get_profitable_trade_from_pool if the positive amount is greater than the liquidity * threshold_percentage
   def define_direction(%Pool{} = pool_event, amount0_delta, amount1_delta) when amount0_delta > 0,
     do:
       get_profitable_trade_from_pool(pool_event, %{
@@ -103,6 +171,11 @@ defmodule CheckProfit do
           swap_amount: amount0_delta * -1,
           swap_direction: "1_0"
         })
+
+  def define_direction(%Pool{} = pool_event, amount0_delta, amount1_delta, _liquidity),
+    do:
+      {:error,
+       "Pool_id: #{pool_event.id} Both amount0_delta: #{amount0_delta} and amount1_delta: #{amount1_delta} below event_threshold"}
 
   ## ? check profit flow
   def get_profitable_trade_from_pool(%Pool{price: "0.0"} = pool_event, _params),
@@ -202,25 +275,32 @@ defmodule CheckProfit do
           decimals_adjusted
         )
 
-      {token_return_amount_for_gas_fee, token_return} =
-        calculate_gas_price_for_trade_v3(
-          extract_token_profit_from_pool(pool_event, swap_direction)
-        )
+      calculate_gas_price_for_trade_v3(extract_token_profit_from_pool(pool_event, swap_direction))
+      |> case do
+        {:ok, token_return_amount_for_gas_fee, token_return} ->
+          ##
+          swap_amount_adjusted |> LogWritter.ipt("sx1 swap_amount_adjusted")
+          return_amount |> LogWritter.ipt("sx1 return_amount")
+          token_return |> LogWritter.ipt("sx1 token_return")
+          burrow_amount |> LogWritter.ipt("sx1 burrow_amount")
 
-      ##
-      swap_amount_adjusted |> LogWritter.ipt("sx1 swap_amount_adjusted")
-      return_amount |> LogWritter.ipt("sx1 return_amount")
-      token_return |> LogWritter.ipt("sx1 token_return")
-      burrow_amount |> LogWritter.ipt("sx1 burrow_amount")
-      token_return_amount_for_gas_fee |> LogWritter.ipt("sx1 token_return_amount_for_gas_fee")
-      ##
+          token_return_amount_for_gas_fee
+          |> LogWritter.ipt("sx1 token_return_amount_for_gas_fee")
 
-      profit_amount =
-        (return_amount - burrow_amount - token_return_amount_for_gas_fee)
-        |> LogWritter.ipt("sx1 profit_amount")
+          ##
 
-      {pool_event, pool_search, profit_amount, token_return, return_amount, burrow_amount,
-       token_return_amount_for_gas_fee, swap_price_event, swap_direction, swap_amount}
+          profit_amount =
+            (return_amount - burrow_amount - token_return_amount_for_gas_fee)
+            |> LogWritter.ipt("sx1 profit_amount")
+
+          {pool_event, pool_search, profit_amount, token_return, return_amount, burrow_amount,
+           token_return_amount_for_gas_fee, swap_price_event, swap_direction, swap_amount}
+
+        {:error, msg} ->
+          {:error, msg} |> LogWritter.ipt("sx1 calculate_gas_price_for_trade_v3 error")
+
+          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+      end
     end)
     |> Enum.filter(fn {_, _, profit_amount, _, _, _, _, _, _, _} ->
       profit_amount > 0

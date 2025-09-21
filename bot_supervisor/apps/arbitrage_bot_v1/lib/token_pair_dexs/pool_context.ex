@@ -21,7 +21,6 @@ defmodule PoolContext do
     %Pool{}
     |> Pool.changeset(params)
     |> Repo.insert()
-    |> IO.inspect(label: "mx1 Repo.insert Pool.insert()")
   end
 
   def update(%Pool{} = pool, params) do
@@ -247,14 +246,14 @@ defmodule PoolContext do
     end
   end
 
-  def maybe_activate_token_pair(%TokenPair{id: token_pair_id, status: token_pair_status}) do
+  def maybe_activate_token_pair(%TokenPair{id: token_pair_id}) do
     list_token_pair =
       PS.with_token_pair_id(token_pair_id)
       |> Repo.all()
 
     case length(list_token_pair) > 1 do
       true -> "active"
-      false -> token_pair_status
+      false -> "inactive"
     end
   end
 
@@ -270,9 +269,13 @@ defmodule PoolContext do
     IO.puts("sx1 in pool v3 maybe_add_pool_from_pool_address")
 
     with {:ok, %TokenPair{} = token_pair} <-
-           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV3"),
-         {:ok, list_pools} <- PV3C.maybe_add_all_pool_v3(token_pair, pool_address) do
+           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV3")
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address uniswapV3"),
+         {:ok, list_pools} <-
+           PV3C.maybe_add_all_pool_v3(token_pair, pool_address)
+           |> IO.inspect(label: "mx1 maybe_add_all_pool_v3") do
       find_pool_in_list_pool(pool_address, list_pools)
+      |> IO.inspect(label: "mx1 find_pool_in_list_pool")
     end
   end
 
@@ -287,9 +290,13 @@ defmodule PoolContext do
     IO.puts("sx1 in pool v2 maybe_add_pool_from_pool_address")
 
     with {:ok, %TokenPair{} = token_pair} <-
-           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV2"),
-         {:ok, list_pools} <- PV2C.maybe_add_all_pool_v2(token_pair, pool_address) do
+           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV2")
+           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address uniswapV2"),
+         {:ok, list_pools} <-
+           PV2C.maybe_add_all_pool_v2(token_pair, pool_address)
+           |> IO.inspect(label: "mx1 maybe_add_all_pool_v2") do
       find_pool_in_list_pool(pool_address, list_pools)
+      |> IO.inspect(label: "mx1 find_pool_in_list_pool")
     end
   end
 

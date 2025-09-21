@@ -21,6 +21,14 @@ config :seedex,
   repo: Repo,
   seeds_path: "priv/repo/seeds"
 
+config :logger, :console,
+  level: :error,
+  # level: :debug,
+  # level: :info,
+  # level: :critical,
+  format: "$date $time [$level] $metadata$message\n"
+
+# todo check why looger not saving error in file
 config :logger,
   backends: [{LoggerFileBackend, :info_log}]
 
@@ -29,13 +37,6 @@ config :logger, :info_log,
   level: :error,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
-
-config :logger, :console,
-  level: :error,
-  # level: :debug,
-  # level: :info,
-  # level: :critical,
-  format: "$date $time [$level] $metadata$message\n"
 
 config :ethers,
   # Defaults to: Ethereumex.HttpClient
@@ -58,7 +59,11 @@ config :ethereumex,
 
 # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
+# url: "https://eth-sepolia.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
+
 # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+# url: "https://sepolia.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+
 # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY2")}"
 
 # in your config.exs
@@ -66,9 +71,12 @@ config :arbitrage_bot_v1, W3WS,
   listeners: [
     [
       # the uri of the ethereum jsonrpc websocket server
-      uri: "ws://127.0.0.1:8545",
+      # uri: "ws://127.0.0.1:8545",
       # uri: "wss://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}",
-      # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
+      # uri: "wss://eth-sepolia.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}",
+
+      uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
+      # uri: "wss://sepolia.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY")}",
       # uri: "wss://mainnet.infura.io/ws/v3/#{System.get_env("INFURA_API_KEY2")}",
 
       # enable block ping every 10 seconds. this will cause the listener to
@@ -98,7 +106,8 @@ config :arbitrage_bot_v1, W3WS,
           abi_files: [
             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/pool_v2_abi.json",
             "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/factory_v3_abi.json",
-            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/pool_v3_abi.json"
+            "/home/server/Programs/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/pool_v3_abi.json",
+            "/home/server/Programs/sab/v2_smart_contract/artifacts/contracts/SABV2.sol/SABV2.json"
           ],
           # abi_files: ["/home/server/volume/sab/bot_supervisor/apps/arbitrage_bot_v1/lib/libraries/json/factory_v2_abi.json"], # list of paths to abi json files
 

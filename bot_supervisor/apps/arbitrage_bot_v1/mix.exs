@@ -34,7 +34,8 @@ defmodule ArbitrageBotV1.MixProject do
       {:decimal, "~> 2.0"},
       {:ecto_sql, "~> 3.2"},
       {:postgrex, "~> 0.15"},
-      {:seedex, "~> 0.3.0"}
+      {:seedex, "~> 0.3.0"},
+      {:timex, "~> 3.0"}
     ]
   end
 end

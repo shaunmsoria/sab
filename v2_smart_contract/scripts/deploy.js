@@ -4,6 +4,7 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
+require("dotenv").config();
 const hre = require("hardhat")
 const { ethers } = require("hardhat")
 
@@ -13,7 +14,13 @@ const config = require("../config.json")
 
 
 async function main() {
-  const [deployer] = await ethers.getSigners();
+  const privateKey = process.env.PRIVATE_KEY;
+
+  // console.log("mx1 privateKey", privateKey);
+  const provider = hre.ethers.provider;
+  const deployer = new hre.ethers.Wallet(privateKey, provider);
+
+  // const [deployer] = await ethers.getSigners();
   console.log("sx1 deployer", deployer);
   
   const SABV2 = await hre.ethers.deployContract(
@@ -21,7 +28,7 @@ async function main() {
     [],
     {
       signer: deployer,
-      maxFeePerGas: 30000000000,
+      maxFeePerGas: 30000000000
     }
   )
 

@@ -14,12 +14,13 @@ defmodule ProfitableTrade do
     field(:tradable_amount, :string)
     field(:gas_fee, :string)
     field(:smart_contract_response, :string)
+    field(:event_data, :map)
 
     timestamps()
   end
 
   @required [:estimated_profit, :direction, :tradable_amount, :gas_fee]
-  @optional [:smart_contract_response]
+  @optional [:smart_contract_response, :event_data]
 
   def changeset(
         %ProfitableTrade{} = profitable_trade,

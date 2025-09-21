@@ -9,10 +9,16 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
-  def get_pair_address(factory_address, token0_address, token1_address) do
-    FactoryContractV2.get_pair(token0_address, token1_address)
-    |> Ethers.call(to: factory_address)
-  end
+  def get_pair_address(factory_address, "0x", "0x"),
+    do: {:error, "no_pair_address_found_for_0x_0x"}
+
+  def get_pair_address(factory_address, token0_address, token1_address),
+    do:
+      FactoryContractV2.get_pair(token0_address, token1_address)
+      |> Ethers.call(to: factory_address)
+
+  def get_pool_address(factory_address, "0x", "0x", fee),
+    do: {:error, "no_pool_address_found_for_0x_0x"}
 
   def get_pool_address(factory_address, token0_address, token1_address, fee) do
     FactoryContractV3.get_pool(token0_address, token1_address, fee)
@@ -263,7 +269,7 @@ defmodule Compute do
     do: Float.to_string(decimals_adjuster_0_1)
 
   def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = token_profit),
-    do: {ConCache.get(:gas, :estimated_gas_fee), token_profit}
+    do: {:ok, ConCache.get(:gas, :estimated_gas_fee), token_profit}
 
   def calculate_gas_price_for_trade_v3(
         %Token{
@@ -273,22 +279,30 @@ defmodule Compute do
       ) do
     estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
 
+    gas_pool_not_preloaded =
+      PoolSearch.with_fee("3000")
+      |> PoolSearch.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+
     gas_pool =
-      PoolSearch.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
-      |> PoolSearch.with_fee("3000")
-      |> Repo.one()
-      |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+      not is_nil(gas_pool_not_preloaded) &&
+        gas_pool_not_preloaded
+        |> Repo.one()
+        |> Repo.preload([:dex, token_pair: [:token0, :token1]])
 
     with {:ok, weth_location} <-
-           locate_weth_in_token_pair_v3(gas_pool),
+           locate_weth_in_token_pair_v3(gas_pool)
+           |> IO.inspect(label: "mx1 locate_weth_in_token_pair_v3"),
          {:ok, unit_weth_token_profit_price} <-
            calculate_gas_price_weth_price_v3(
              weth_location,
              gas_pool.reserve0 |> String.to_integer(),
              gas_pool.reserve1 |> String.to_integer(),
              token_profit_decimals
-           ) do
-      {unit_weth_token_profit_price * estimated_gas_fee, token_profit}
+           )
+           |> IO.inspect(label: "mx1 calculate_gas_price_weth_price_v3") do
+      {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit}
+    else
+      {:error, msg} -> {:error, msg}
     end
   end
 

@@ -30,39 +30,39 @@ defmodule PoolV2Context do
       DS.with_abi("uniswapV2")
       |> Repo.all()
       |> Enum.map(fn dex_v2 ->
-        {:ok, pair_address} =
-          get_pair_address(
-            dex_v2.factory,
-            token_pair_preloaded.token0.address,
-            token_pair_preloaded.token1.address
-          )
+        with {:ok, pair_address} <-
+               get_pair_address(
+                 dex_v2.factory,
+                 token_pair_preloaded.token0.address,
+                 token_pair_preloaded.token1.address
+               ) do
+          case PAC.maybe_add_pool_address(pair_address) do
+            {:ok, pool_v2_address} ->
+              PAS.with_upcase_address(pool_v2_address.upcase_address)
+              |> PAS.with_status("active")
+              |> Repo.one()
+              |> case do
+                nil ->
+                  maybe_create_pool_v2(token_pair_preloaded, pool_v2_address, dex_v2)
 
-        # todo allow system to manage error
-        # {:ok, pool_v2_address} =
-        #   PAC.maybe_add_pool_address(pair_address)
+                pool_address ->
+                  PS.with_upcase_address(pool_v2_address.upcase_address)
+                  |> Repo.one()
+              end
 
-        case PAC.maybe_add_pool_address(pair_address) do
-          {:ok, pool_v2_address} ->
-            PAS.with_upcase_address(pool_v2_address.upcase_address)
-            |> PAS.with_status("active")
-            |> Repo.one()
-            |> case do
-              nil ->
-                maybe_create_pool_v2(token_pair_preloaded, pool_v2_address, dex_v2)
+            {:error, error_message} ->
+              error_message
+              |> IO.inspect(label: "Error adding pool address")
 
-              pool_address ->
-                PS.with_upcase_address(pool_v2_address.upcase_address)
-                |> Repo.one()
-            end
+              nil
+          end
 
-          {:error, error_message} ->
-            error_message
-            |> IO.inspect(label: "Error adding pool address")
-
+          # maybe_create_pool_v2(token_pair, pool_address, dex_v2)
+        else
+          msg ->
+            msg |> IO.inspect(label: "Error getting pair address")
             nil
         end
-
-        # maybe_create_pool_v2(token_pair, pool_address, dex_v2)
       end)
       |> Enum.filter(fn maybe_pool ->
         not is_nil(maybe_pool)

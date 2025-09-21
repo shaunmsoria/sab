@@ -34,6 +34,7 @@ const SABV2_ABI = [
   "event ReceiveFlashLoanMessage(string test)",
   "event ReceiveFlashLoanEvent()",
   "event EventMessage(string message)",
+  "event EventTest()",
 ];
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 
@@ -42,7 +43,8 @@ const UNISWAP_V3_ROUTER = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
 const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance hot wallet 20
 // const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance 8 wallet
 // const AMOUNT = "100000000000"; // 100 billion SHIB tokens
-const AMOUNT = "50000000000"; // 50 billion SHIB tokens
+// const AMOUNT = "50000000000"; // 50 billion SHIB tokens
+const AMOUNT = "50000000000"; // SHIB
 // const AMOUNT = "50000000"; // exchange that amount of USDT tokens
 // const AMOUNT = "30000000"; // exchange that amount of USDC tokens
 const FEE_TIER = 3000; // 0.3% fee tier
@@ -167,47 +169,47 @@ async function getTokensAndPool(token0Address, token1Address, fee) {
 }
 
 
-const displayUserAndPoolBalances = async (token0, token1, pool) => {
-  const SABV2 = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
-  const owner = await SABV2.queryOwner();
+// const displayUserAndPoolBalances = async (token0, token1, pool) => {
+//   const SABV2 = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
+//   const owner = await SABV2.queryOwner();
 
-  poolSearched = await ethers.getContractAt(IUniswapV3Pool.abi, "0x7bea39867e4169dbe237d55c8242a8f2fcdcc387");
-  // poolSearched = await ethers.getContractAt(IUniswapV3Pool.abi, "0xacdb27b266142223e1e676841c1e809255fc6d07");
+//   poolSearched = await ethers.getContractAt(IUniswapV3Pool.abi, "0x7bea39867e4169dbe237d55c8242a8f2fcdcc387");
+//   // poolSearched = await ethers.getContractAt(IUniswapV3Pool.abi, "0xacdb27b266142223e1e676841c1e809255fc6d07");
 
-  const balanceUserUSDT = await token0.contract.balanceOf(owner);
-  const balanceUserWETH = await token1.contract.balanceOf(owner);
+//   const balanceUserUSDT = await token0.contract.balanceOf(owner);
+//   const balanceUserWETH = await token1.contract.balanceOf(owner);
 
-  const balancePoolUSDT = await token0.contract.balanceOf(pool.target);
-  const balancePoolWETH = await token1.contract.balanceOf(pool.target);
+//   const balancePoolUSDT = await token0.contract.balanceOf(pool.target);
+//   const balancePoolWETH = await token1.contract.balanceOf(pool.target);
 
-  const balancePoolSearchedUSDT = await token0.contract.balanceOf(poolSearched.target);
-  const balancePoolSearchedWETH = await token1.contract.balanceOf(poolSearched.target);
-
-
-  const decimalsUSDT = await token0.contract.decimals();
-  const decimalsWETH = await token1.contract.decimals();
+//   const balancePoolSearchedUSDT = await token0.contract.balanceOf(poolSearched.target);
+//   const balancePoolSearchedWETH = await token1.contract.balanceOf(poolSearched.target);
 
 
+//   const decimalsUSDT = await token0.contract.decimals();
+//   const decimalsWETH = await token1.contract.decimals();
 
-  const preBotSwapInfo = {
-    userUSDT: ethers.formatUnits(balanceUserUSDT, decimalsUSDT),
-    userWETH: ethers.formatUnits(balanceUserWETH, decimalsWETH),
-    poolUSDT: ethers.formatUnits(balancePoolUSDT, decimalsUSDT),
-    poolWETH: ethers.formatUnits(balancePoolWETH, decimalsWETH),
-    poolSearchedUSDT: ethers.formatUnits(balancePoolSearchedUSDT, decimalsUSDT),
-    poolSearchedWETH: ethers.formatUnits(balancePoolSearchedWETH, decimalsWETH),
-  };
 
-  console.log(`\n`);
-  console.log(`USDT balance in wallet: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 is:`);
-  console.log(`\n`);
-  console.log(`owner address: ${owner}`);
-  console.log(`\n`);
 
-  console.table(preBotSwapInfo);
-  console.log(`\n`);
-  console.log("######################################################################");
-};
+//   const preBotSwapInfo = {
+//     userUSDT: ethers.formatUnits(balanceUserUSDT, decimalsUSDT),
+//     userWETH: ethers.formatUnits(balanceUserWETH, decimalsWETH),
+//     poolUSDT: ethers.formatUnits(balancePoolUSDT, decimalsUSDT),
+//     poolWETH: ethers.formatUnits(balancePoolWETH, decimalsWETH),
+//     poolSearchedUSDT: ethers.formatUnits(balancePoolSearchedUSDT, decimalsUSDT),
+//     poolSearchedWETH: ethers.formatUnits(balancePoolSearchedWETH, decimalsWETH),
+//   };
+
+//   console.log(`\n`);
+//   console.log(`USDT balance in wallet: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 is:`);
+//   console.log(`\n`);
+//   console.log(`owner address: ${owner}`);
+//   console.log(`\n`);
+
+//   console.table(preBotSwapInfo);
+//   console.log(`\n`);
+//   console.log("######################################################################");
+// };
 
 async function listenForContractEvents() {
   const sabContract = await ethers.getContractAt(SABV2_ABI, CONTRACT_ADDRESS);
@@ -239,8 +241,16 @@ async function listenForContractEvents() {
   sabContract.on("EventMessage", (message) => {
     console.log(`EventMessage Fired!`, message);
   });
+
+  sabContract.on("EventTest", () => {
+    console.log(`EventTest Fired!`);
+  });
   // sabContract.on("ExecuteTradeFired", (reason) => {
   //   console.log(`Execute Trade Fired: ${reason}`);
+  // });
+
+  // sabContract.on("SwapReceipt", (p1, p2, p3, p4, p5, p6) => {
+  //   console.log(`Swap receipt: ${p1}, ${p2}, ${p3}, ${p4}, ${p5}, ${p6}`);
   // });
 
   console.log(`Listening for events from contract: ${CONTRACT_ADDRESS}`);
@@ -283,9 +293,9 @@ async function main() {
 
     console.log(`Price after manipulation swap: 1 ${token1.symbol} = ${priceAfter.toLocaleString()} ${token0.symbol}`);
 
-    // Check balances pre bot swap
-    displayUserAndPoolBalances(token0, token1, pool);
-    console.log(`\n`);
+    // // Check balances pre bot swap
+    // displayUserAndPoolBalances(token0, token1, pool);
+    // console.log(`\n`);
 
 
     const eventData = {
@@ -345,7 +355,10 @@ async function main() {
 
     console.log("Timer started for 3 minutes");
 
-
+const artifact = require("../artifacts/contracts/SABV2.sol/SABV2.json");
+const bytecodeSize = (artifact.bytecode.length - 2) / 2; // in bytes
+console.log(`Contract size: ${bytecodeSize} bytes`);
+console.log(`Size limit: 24576 bytes`);
 
   });
 
