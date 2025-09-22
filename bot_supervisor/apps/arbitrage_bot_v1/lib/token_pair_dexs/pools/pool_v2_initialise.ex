@@ -19,11 +19,7 @@ defmodule PoolV2Initialise do
   # remove comment in get_pairs_for_dex to allow the system to update for all token_pairs
 
   def run() do
-<<<<<<< HEAD
-    # Repo.update_all(Pool, set: [refresh_reserve: true])
-=======
     maybe_reset_refresh_reserve()
->>>>>>> e983bf6f517544c2ff35f0e443bf0b1685803625
 
     with list_dexs_v2 <- DS.with_abi("uniswapV2") |> Repo.all(),
          {:ok, list_dex_token_pairs_length_updated} <- get_all_token_pairs_length(list_dexs_v2) do
