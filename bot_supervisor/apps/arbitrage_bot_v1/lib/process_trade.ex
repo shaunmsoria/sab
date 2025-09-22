@@ -129,7 +129,7 @@ defmodule ProcessTrade do
       burrow_amount |> trunc(),
       uuid
     )
-    |> IO.inspect(label: "sx1 execute_trade pre Ethers.send_transaction()")
+    |> LogWritter.ipt("sx1 execute_trade pre Ethers.send_transaction()")
     |> Ethers.send(
       signer: Ethers.Signer.Local,
       signer_opts: [private_key: System.get_env("PRIVATE_KEY")],
@@ -138,7 +138,7 @@ defmodule ProcessTrade do
       from: System.get_env("ACCOUNT_NUMBER")
     )
     |> maybe_save_response(data)
-    |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
+    |> LogWritter.ipt("sx1 execute_trade post Ethers.call()")
 
     ## ? test for wallet balance to be use in prod
     # {:ok, token0_balance} =
