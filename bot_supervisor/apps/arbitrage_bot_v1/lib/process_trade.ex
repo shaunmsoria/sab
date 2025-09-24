@@ -134,6 +134,8 @@ defmodule ProcessTrade do
       signer: Ethers.Signer.Local,
       signer_opts: [private_key: System.get_env("PRIVATE_KEY")],
       value: 0,
+      gas_price: :auto,
+      gas_limit: 1_000_000,
       to: smart_contract_address,
       from: System.get_env("ACCOUNT_NUMBER")
     )
