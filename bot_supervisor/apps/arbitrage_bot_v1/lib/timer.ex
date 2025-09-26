@@ -35,13 +35,17 @@ defmodule Timer do
           convert_string_to_value(System.get_env("GAS_LIMIT"))
 
         fast_gas_price =
-          convert_string_to_value(fast_gas_price_raw)
+          convert_string_to_value(fast_gas_price_raw) * 1.0e9
 
-        estimated_gas_fee = fast_gas_price * max_gas_limit / 1_000_000_000
+        max_priority_fee_per_gas = round(fast_gas_price * 1.2)
+        max_fee_per_gas = round(fast_gas_price * 2)
 
-        ConCache.put(:gas, :fast_gas_price, fast_gas_price)
-        ConCache.put(:gas, :last_block, last_block)
-        ConCache.put(:gas, :estimated_gas_fee, estimated_gas_fee)
+        estimated_aggressive_max_gas_fee = (max_fee_per_gas * max_gas_limit) / 10 ** 18
+
+        ConCache.put(:gas, :max_priority_fee_per_gas, max_priority_fee_per_gas)
+        ConCache.put(:gas, :max_fee_per_gas, max_fee_per_gas)
+        ConCache.put(:gas, :gas_limit, convert_string_to_value(System.get_env("GAS_LIMIT")))
+        ConCache.put(:gas, :estimated_aggressive_max_gas_fee, estimated_aggressive_max_gas_fee)
 
       {:error, reason} ->
         %{"error" => reason} |> LogWritter.ipt("sx1 gas_extract error result")

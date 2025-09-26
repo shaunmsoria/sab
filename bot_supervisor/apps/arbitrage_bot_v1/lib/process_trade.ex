@@ -98,6 +98,18 @@ defmodule ProcessTrade do
 
     profit_decimal_number = pool_event.token_pair.token0.decimals
 
+    ConCache.get(:gas, :max_priority_fee_per_gas)
+    |> IO.inspect(label: "mx1 max_priority_fee_per_gas")
+
+    ConCache.get(:gas, :max_fee_per_gas)
+    |> IO.inspect(label: "mx1 max_fee_per_gas")
+
+    ConCache.get(:gas, :estimated_aggressive_max_gas_fee)
+    |> IO.inspect(label: "mx1 estimated_aggressive_max_gas_fee")
+
+    ConCache.get(:gas, :gas_limit)
+    |> IO.inspect(label: "mx1 :gas_limit")
+
     uuid = Ecto.UUID.generate()
 
     data =
@@ -117,6 +129,9 @@ defmodule ProcessTrade do
       }
       |> LogWritter.ipt("sx1 data test")
 
+
+
+
     Sabv2Contract.execute_trade(
       [
         token_path |> Enum.at(0) |> Map.get(:address),
@@ -130,13 +145,17 @@ defmodule ProcessTrade do
       uuid
     )
     |> IO.inspect(label: "sx1 execute_trade pre Ethers.send_transaction()")
-    |> Ethers.send(
+    ##todoshaun update Ethers.send to Ethers.send_transaction with priority fees
+    |> Ethers.send_transaction(
       signer: Ethers.Signer.Local,
       signer_opts: [private_key: System.get_env("PRIVATE_KEY")],
       value: 0,
-      gas_price: :auto,
-      gas_limit: 1_000_000,
+      chain_id: 31337,
+      # chain_id: 1,
       to: smart_contract_address,
+      max_priority_fee_per_gas: ConCache.get(:gas, :max_priority_fee_per_gas),
+      max_fee_per_gas: ConCache.get(:gas, :max_fee_per_gas),
+      gas_limit: ConCache.get(:gas, :gas_limit),
       from: System.get_env("ACCOUNT_NUMBER")
     )
     |> maybe_save_response(data)

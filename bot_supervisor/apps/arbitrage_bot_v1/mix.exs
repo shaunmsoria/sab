@@ -27,7 +27,7 @@ defmodule ArbitrageBotV1.MixProject do
   defp deps do
     [
       {:jason, "~> 1.2"},
-      {:ethers, "~> 0.2.2"},
+      {:ethers, "~> 0.6.7"},
       {:w3ws, "~> 0.3.0"},
       {:httpoison, "~> 2.2"},
       {:con_cache, "~> 1.0"},

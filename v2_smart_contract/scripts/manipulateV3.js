@@ -355,10 +355,7 @@ async function main() {
 
     console.log("Timer started for 3 minutes");
 
-const artifact = require("../artifacts/contracts/SABV2.sol/SABV2.json");
-const bytecodeSize = (artifact.bytecode.length - 2) / 2; // in bytes
-console.log(`Contract size: ${bytecodeSize} bytes`);
-console.log(`Size limit: 24576 bytes`);
+
 
   });
 

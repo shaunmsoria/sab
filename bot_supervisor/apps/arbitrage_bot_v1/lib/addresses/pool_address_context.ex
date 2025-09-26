@@ -102,8 +102,5 @@ defmodule PoolAddressContext do
       |> Repo.aggregate(:count, :id)
 
     ConCache.put(:system, :daily_pool_address_count, count_today_updated_pool_addresses)
-
-    # ConCache.get(:system, :today_updated_pool_addresses)
-    # |> IO.inspect(label: "sx1 ConCache today_updated_pool_addresses")
   end
 end

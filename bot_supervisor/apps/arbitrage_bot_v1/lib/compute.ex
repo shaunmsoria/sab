@@ -269,7 +269,7 @@ defmodule Compute do
     do: Float.to_string(decimals_adjuster_0_1)
 
   def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = token_profit),
-    do: {:ok, ConCache.get(:gas, :estimated_gas_fee), token_profit}
+    do: {:ok, ConCache.get(:gas, :estimated_aggressive_max_gas_fee), token_profit}
 
   def calculate_gas_price_for_trade_v3(
         %Token{
@@ -277,7 +277,8 @@ defmodule Compute do
           decimals: token_profit_decimals
         } = token_profit
       ) do
-    estimated_gas_fee = ConCache.get(:gas, :estimated_gas_fee)
+    estimated_aggressive_max_gas_fee = ConCache.get(:gas, :estimated_aggressive_max_gas_fee)
+    |> IO.inspect(label: "mx1 estimated_aggressive_max_gas_fee")
 
     gas_pool_not_preloaded =
       PoolSearch.with_fee("3000")
@@ -288,23 +289,28 @@ defmodule Compute do
         gas_pool_not_preloaded
         |> Repo.one()
         |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+        |> IO.inspect(label: "mx1 gas_pool")
 
     with {:ok, weth_location} <-
            locate_weth_in_token_pair_v3(gas_pool)
            |> IO.inspect(label: "mx1 locate_weth_in_token_pair_v3"),
-         {:ok, unit_weth_token_profit_price} <-
-           calculate_gas_price_weth_price_v3(
-             weth_location,
-             gas_pool.reserve0 |> String.to_integer(),
-             gas_pool.reserve1 |> String.to_integer(),
-             token_profit_decimals
-           )
+         {:ok, gas_price_from_token_profit} <-
+           calculate_gas_price_from_token_profit(weth_location, gas_pool)
            |> IO.inspect(label: "mx1 calculate_gas_price_weth_price_v3") do
-      {:ok, unit_weth_token_profit_price * estimated_gas_fee, token_profit}
+      {:ok, (gas_price_from_token_profit  * 10 ** token_profit_decimals) * estimated_aggressive_max_gas_fee, token_profit}
     else
       {:error, msg} -> {:error, msg}
     end
   end
+
+  def calculate_gas_price_from_token_profit(_, %Pool{price: "0.0"}),
+    do: {:ok, 0.0}
+
+  def calculate_gas_price_from_token_profit(:token0_weth, %Pool{price: price_token0_token1}),
+    do: {:ok, 1 / String.to_float(price_token0_token1)}
+
+  def calculate_gas_price_from_token_profit(:token1_weth, %Pool{price: price_token0_token1}),
+    do: {:ok, String.to_float(price_token0_token1)}
 
   def calculate_gas_price_weth_price_v3(:token0_weth, 0, reserve1, token_profit_decimals),
     do: {:ok, 0}
