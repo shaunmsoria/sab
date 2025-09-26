@@ -141,7 +141,7 @@ defmodule CheckProfit do
   end
 
   ## todoshaun continue here calculation need check
-  @threshold_percentage_v3 2
+  @threshold_percentage_v3 5
   def compare_with_threshold(amount_to_compare) when amount_to_compare >= 0,
     do:
       (amount_to_compare / 10 ** 18 >= @threshold_percentage_v3)
