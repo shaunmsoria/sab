@@ -268,61 +268,92 @@ defmodule Compute do
   def convert_decimals_adjuster_0_1(decimals_adjuster_0_1) when is_float(decimals_adjuster_0_1),
     do: Float.to_string(decimals_adjuster_0_1)
 
-  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = token_profit),
+  def calculate_gas_price_for_trade_v3(%Token{symbol: "WETH"} = token_profit, _pool_event),
     do: {:ok, ConCache.get(:gas, :estimated_aggressive_max_gas_fee), token_profit}
 
   def calculate_gas_price_for_trade_v3(
         %Token{
           address: token_profit_address,
           decimals: token_profit_decimals
-        } = token_profit
+        } = token_profit,
+        %Pool{} = pool_event
       ) do
-    estimated_aggressive_max_gas_fee = ConCache.get(:gas, :estimated_aggressive_max_gas_fee)
-    |> IO.inspect(label: "mx1 estimated_aggressive_max_gas_fee")
+    with token_profit_price_in_weth when is_float(token_profit_price_in_weth) <-
+           calculate_weth_value_in_token_profit(token_profit, pool_event) do
+            token_profit_price_in_weth
+            |> LogWritter.ipt( "sx1 token_profit_price_in_weth")
 
-    gas_pool_not_preloaded =
-      PoolSearch.with_fee("3000")
-      |> PoolSearch.with_upcase_token_address_and_weth(token_profit_address |> String.upcase())
+          ConCache.get(:gas, :estimated_aggressive_max_gas_fee)
+          |> LogWritter.ipt( "sx1 estimated_aggressive_max_gas_fee")
 
-    gas_pool =
-      not is_nil(gas_pool_not_preloaded) &&
-        gas_pool_not_preloaded
-        |> Repo.one()
-        |> Repo.preload([:dex, token_pair: [:token0, :token1]])
-        |> IO.inspect(label: "mx1 gas_pool")
+         (token_profit_price_in_weth *
+         ConCache.get(:gas, :estimated_aggressive_max_gas_fee))
+         |> LogWritter.ipt( "sx1 calculate_gas_price_for_trade_v3 result")
 
-    with {:ok, weth_location} <-
-           locate_weth_in_token_pair_v3(gas_pool)
-           |> IO.inspect(label: "mx1 locate_weth_in_token_pair_v3"),
-         {:ok, gas_price_from_token_profit} <-
-           calculate_gas_price_from_token_profit(weth_location, gas_pool)
-           |> IO.inspect(label: "mx1 calculate_gas_price_weth_price_v3") do
-      {:ok, (gas_price_from_token_profit  * 10 ** token_profit_decimals) * estimated_aggressive_max_gas_fee, token_profit}
+      {:ok,
+       token_profit_price_in_weth *
+         ConCache.get(:gas, :estimated_aggressive_max_gas_fee), token_profit}
     else
-      {:error, msg} -> {:error, msg}
+      msg -> {:error, msg}
     end
   end
 
-  def calculate_gas_price_from_token_profit(_, %Pool{price: "0.0"}),
+  def calculate_weth_value_in_token_profit(%Token{symbol: "WETH", decimals: decimals}, _),
+    do: 1
+
+  def calculate_weth_value_in_token_profit(
+        %Token{upcase_address: upcase_address, decimals: decimals},
+        %Pool{} = pool_event
+      ) do
+    IO.puts("sx1 in calculate_weth_value_in_token_profit")
+
+    {sum_of_prices, number_of_pools} =
+      PoolSearch.with_upcase_token_address_and_weth(upcase_address)
+      |> Repo.all()
+      |> Enum.filter(fn %Pool{} = pool -> pool.id != pool_event.id end)
+      |> Enum.reduce({0.0, 0}, fn pool_not_preloaded, acc ->
+        pool_not_preloaded
+        |> case do
+          nil ->
+            acc
+
+          %Pool{} = pool_not_preloaded ->
+            pool =
+              pool_not_preloaded
+              |> Repo.preload([:dex, token_pair: [:token0, :token1]])
+
+            with {:ok, weth_location} <-
+                   locate_weth_in_token_pair_v3(pool)
+                   |> LogWritter.ipt( "mx1 locate_weth_in_token_pair_v3"),
+                 {:ok, token_profit_price_from_weth} <-
+                   calculate_weth_value_from_token_profit(weth_location, pool)
+                   |> LogWritter.ipt( "mx1 calculate_weth_value_from_token_profit") do
+              {sum_prices, number_of_pools} = acc
+
+              {sum_prices + token_profit_price_from_weth, number_of_pools + 1}
+            else
+              {:error, msg} -> acc
+            end
+        end
+      end)
+
+    if(number_of_pools in [0, nil],
+      do: false,
+      else: (sum_of_prices / number_of_pools)
+    )
+  end
+
+  def calculate_weth_value_in_token_profit(result),
+    do: LogWritter.ipt(result, "sx1 result of calculate_weth_value_in_token_profit")
+
+  def calculate_weth_value_from_token_profit(_, %Pool{price: "0.0"}),
     do: {:ok, 0.0}
 
-  def calculate_gas_price_from_token_profit(:token0_weth, %Pool{price: price_token0_token1}),
+  def calculate_weth_value_from_token_profit(:token0_weth, %Pool{price: price_token0_token1}),
     do: {:ok, 1 / String.to_float(price_token0_token1)}
 
-  def calculate_gas_price_from_token_profit(:token1_weth, %Pool{price: price_token0_token1}),
+  def calculate_weth_value_from_token_profit(:token1_weth, %Pool{price: price_token0_token1}),
     do: {:ok, String.to_float(price_token0_token1)}
-
-  def calculate_gas_price_weth_price_v3(:token0_weth, 0, reserve1, token_profit_decimals),
-    do: {:ok, 0}
-
-  def calculate_gas_price_weth_price_v3(:token0_weth, reserve0, reserve1, token_profit_decimals),
-    do: {:ok, reserve1 * 10 ** 18 / (reserve0 * 10 ** token_profit_decimals)}
-
-  def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, 0, token_profit_decimals),
-    do: {:ok, 0}
-
-  def calculate_gas_price_weth_price_v3(:token1_weth, reserve0, reserve1, token_profit_decimals),
-    do: {:ok, reserve0 * 10 ** 18 / (reserve1 * 10 ** token_profit_decimals)}
 
   def locate_weth_in_token_pair_v3(%Pool{
         token_pair: %TokenPair{token0: %Token{symbol: "WETH"}}

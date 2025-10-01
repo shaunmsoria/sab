@@ -90,6 +90,4 @@ defmodule TokenContext do
 
   def sanitise_param({:ok, param}, :decimals) when is_integer(param), do: param
   def sanitise_param(_, :decimals), do: 0
-
-
 end

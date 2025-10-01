@@ -23,6 +23,7 @@ defmodule Timer do
 
   def handle_cast(:refresh_gas, state) do
     gas_result = EtherscanApi.get_gas_oracle()
+    |> IO.inspect(label: "sx1 gas_result")
 
     case gas_result do
       %{
@@ -37,10 +38,13 @@ defmodule Timer do
         fast_gas_price =
           convert_string_to_value(fast_gas_price_raw) * 1.0e9
 
-        max_priority_fee_per_gas = round(fast_gas_price * 1.2)
-        max_fee_per_gas = round(fast_gas_price * 2)
+        max_priority_fee_per_gas = round(fast_gas_price * 2)
+        max_fee_per_gas = round(fast_gas_price * 3)
 
-        estimated_aggressive_max_gas_fee = (max_fee_per_gas * max_gas_limit) / 10 ** 18
+        # max_priority_fee_per_gas = round(fast_gas_price * 1.2)
+        # max_fee_per_gas = round(fast_gas_price * 2)
+
+        estimated_aggressive_max_gas_fee = max_fee_per_gas * max_gas_limit
 
         ConCache.put(:gas, :max_priority_fee_per_gas, max_priority_fee_per_gas)
         ConCache.put(:gas, :max_fee_per_gas, max_fee_per_gas)

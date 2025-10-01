@@ -1,15 +1,15 @@
 defmodule EtherscanApi do
   use HTTPoison.Base
 
-  @base_url "https://api.etherscan.io/api"
+  @base_url "https://api.etherscan.io/v2/api"
   @etherscan_api_key System.get_env("ETHERSCAN_API_KEY")
 
   defp process_url(module, action),
-    do: "#{@base_url}?module=#{module}&action=#{action}&apikey=#{@etherscan_api_key}"
+    do: "#{@base_url}?chainid=1&module=#{module}&action=#{action}&apikey=#{@etherscan_api_key}"
 
   defp process_url(module, action, address),
     do:
-      "#{@base_url}?module=#{module}&action=#{action}&contractaddress=#{address}&apikey=#{@etherscan_api_key}"
+      "#{@base_url}?chainid=1&module=#{module}&action=#{action}&contractaddress=#{address}&apikey=#{@etherscan_api_key}"
 
   def get_gas_oracle() do
     header = [{"Content-Type", "application/json"}]
