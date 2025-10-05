@@ -141,15 +141,15 @@ defmodule CheckProfit do
   end
 
   ## todoshaun continue here calculation need check
-  @threshold_percentage_v3 10
+  @threshold_percentage_v3 5
   def compare_with_threshold(amount_to_compare) when amount_to_compare >= 0,
     do:
-      (amount_to_compare / 10 ** 18 >= @threshold_percentage_v3)
+      (amount_to_compare / (10 ** 18) >= @threshold_percentage_v3)
       |> LogWritter.ipt("sx1 ((amount_to_compare * price) >= @threshold_percentage_v3)")
 
   def compare_with_threshold(amount_to_compare) when amount_to_compare < 0,
     do:
-      (amount_to_compare * -1 / 10 ** 18 >= @threshold_percentage_v3)
+      ((amount_to_compare * -1) / (10 ** 18) >= @threshold_percentage_v3)
       |> LogWritter.ipt("sx1 (((amount_to_compare * -1) * price) >= @threshold_percentage_v3)")
 
   ## ? define_direction only call get_profitable_trade_from_pool if the positive amount is greater than the liquidity * threshold_percentage
@@ -317,7 +317,6 @@ defmodule CheckProfit do
     end)
     |> Enum.filter(fn {pool_event, _, profit_amount, token_return, _, _, _, _, _, _} ->
       profit_amount |> LogWritter.ipt("sx1 profit_amount in filter")
-      # token_return |> LogWritter.ipt("sx1 token_return in filter")
 
       token_profit_price_in_weth_in_wei =
         calculate_weth_value_in_token_profit(token_return, pool_event)
@@ -421,14 +420,16 @@ defmodule CheckProfit do
   def sanitise_pool_reserve(""), do: 0
   def sanitise_pool_reserve(reserve), do: reserve |> String.to_integer()
 
-  def calculate_burrow_amount(swap_amount, swap_price, pool_fee, decimals_adjusted) do
+  def calculate_burrow_amount(swap_amount, swap_price, pool_fee, _decimals_adjusted) do
     pool_fee_ratio = 1 + (pool_fee |> String.to_integer()) / 10000
-    swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
+    swap_amount * swap_price * pool_fee_ratio
+    # swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
   end
 
-  def calculate_return_amount(swap_amount, swap_price, pool_fee, decimals_adjusted) do
+  def calculate_return_amount(swap_amount, swap_price, pool_fee, _decimals_adjusted) do
     pool_fee_ratio = 1 - (pool_fee |> String.to_integer()) / 10000
-    swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
+    swap_amount * swap_price * pool_fee_ratio
+    # swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
   end
 
   def extract_token_profit_from_pool(%Pool{} = pool, "0_1"),
