@@ -64,24 +64,24 @@ defmodule InvestigateEvent do
       ) do
     LogWritter.ipt("sx1 pool_event id: #{pool_event.id} maybe_investigate_event pool v2")
 
-    CheckProfit.run(pool_event, {
-      maybe_sanitise_amounts(amount0_in),
-      maybe_sanitise_amounts(amount0_out),
-      maybe_sanitise_amounts(amount1_in),
-      maybe_sanitise_amounts(amount1_out)
-    })
-    |> case do
-      [] ->
-        {:ok, "No profitable trade found"}
+    # CheckProfit.run(pool_event, {
+    #   maybe_sanitise_amounts(amount0_in),
+    #   maybe_sanitise_amounts(amount0_out),
+    #   maybe_sanitise_amounts(amount1_in),
+    #   maybe_sanitise_amounts(amount1_out)
+    # })
+    # |> case do
+    #   [] ->
+    #     {:ok, "No profitable trade found"}
 
-      {:error, msg} ->
-        msg |> LogWritter.ipt("sx1 CheckProfit.run error")
+    #   {:error, msg} ->
+    #     msg |> LogWritter.ipt("sx1 CheckProfit.run error")
 
-      profitable_trades ->
-        profitable_trades
-        |> PT.run()
-    end
-    |> IO.inspect(label: "sx1 maybe_investigate_event v2")
+    #   profitable_trades ->
+    #     profitable_trades
+    #     |> PT.run()
+    # end
+    # |> IO.inspect(label: "sx1 maybe_investigate_event v2")
   end
 
   def maybe_investigate_event(
