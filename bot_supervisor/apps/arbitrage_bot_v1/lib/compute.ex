@@ -25,23 +25,23 @@ defmodule Compute do
     |> Ethers.call(to: factory_address)
   end
 
-  def pool(pair_address, abi, function, params \\ nil) do
+  def pool(pool_address, abi, function, params \\ nil) do
     case {abi, params} do
       {"uniswapV2", nil} ->
         apply(PoolContractV2, function, [])
-        |> Ethers.call(to: pair_address)
+        |> Ethers.call(to: pool_address)
 
       {"uniswapV2", params} ->
         apply(PoolContractV2, function, params)
-        |> Ethers.call(to: pair_address)
+        |> Ethers.call(to: pool_address)
 
       {"uniswapV3", nil} ->
         apply(PoolContractV3, function, [])
-        |> Ethers.call(to: pair_address)
+        |> Ethers.call(to: pool_address)
 
       {"uniswapV3", params} ->
         apply(PoolContractV3, function, params)
-        |> Ethers.call(to: pair_address)
+        |> Ethers.call(to: pool_address)
     end
   end
 
@@ -61,34 +61,38 @@ defmodule Compute do
     end
   end
 
-  def calculate_price(pair_address),
-    do: calculate_price(pair_address, :O_I)
+  def calculate_price(pool_address),
+    do: calculate_price(pool_address, :O_I)
 
   def calulcate_price("", _), do: {:error, "no pair address extracted from event"}
 
-  def calculate_price(pair_address, :O_I) do
-    with {:ok, [amount_0, amount_1, _time_stamp]} <-
-           pair_address |> pool("uniswapV2", :get_reserves) do
+  def calculate_price(pool_address, :O_I) do
+    with %Pool{} = pool_not_preloaded <- PoolSearch.with_address(pool_address) |> Repo.one(),
+    %Pool{token_pair: %TokenPair{decimals_adjuster_0_1: adjuster}} when not is_nil(adjuster) <- pool_not_preloaded |> Repo.preload(:token_pair),
+    {:ok, [amount_0, amount_1, _time_stamp]} <-
+           pool_address |> pool("uniswapV2", :get_reserves) do
       case {is_integer(amount_0), is_integer(amount_1), amount_1 != 0} do
-        {true, true, true} -> {:ok, amount_0 / amount_1, amount_0, amount_1}
+        {true, true, true} -> {:ok, (amount_0 / amount_1), amount_0, amount_1}
         {true, true, false} -> {:ok, 0, amount_0, amount_1}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
     else
-      _ -> {:error, "no price found for the pair #{pair_address}"}
+      _ -> {:error, "no price found for the pair #{pool_address}"}
     end
   end
 
-  def calculate_price(pair_address, :I_O) do
-    with {:ok, [amount_0, amount_1, _time_stamp]} <-
-           pair_address |> pool("uniswapV2", :get_reserves) do
+  def calculate_price(pool_address, :I_O) do
+        with %Pool{} = pool_not_preloaded <- PoolSearch.with_address(pool_address) |> Repo.one(),
+    %Pool{token_pair: %TokenPair{decimals_adjuster_0_1: adjuster}} when not is_nil(adjuster) <- pool_not_preloaded |> Repo.preload(:token_pair),
+    {:ok, [amount_0, amount_1, _time_stamp]} <-
+           pool_address |> pool("uniswapV2", :get_reserves) do
       case {is_integer(amount_0), is_integer(amount_1), amount_0 != 0} do
-        {true, true, true} -> {:ok, amount_1 / amount_0, amount_0, amount_1}
+        {true, true, true} -> {:ok, (amount_1 / amount_0), amount_0, amount_1}
         {true, true, false} -> {:ok, 0, amount_0, amount_1}
         {_, _} -> {:error, "calculate_price issue with amount_0 #{amount_0} or #{amount_1}"}
       end
     else
-      _ -> {:error, "no price found for the pair #{pair_address}"}
+      _ -> {:error, "no price found for the pair #{pool_address}"}
     end
   end
 

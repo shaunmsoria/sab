@@ -44,6 +44,7 @@ defmodule ProcessTrade do
       current_pool_price |> IO.inspect(label: "sx1 current_pool_price")
       pool_search_updated.price |> IO.inspect(label: "sx1 pool_search_updated.price")
 
+      ##todoshaun update the code below to not use the swap_amount if pass test
       case {swap_amount, current_pool_price == pool_search_updated.price} do
         {-1, _test_result} ->
           IO.puts("sx1 in in -1")
@@ -153,8 +154,8 @@ defmodule ProcessTrade do
         signer: Ethers.Signer.Local,
         signer_opts: [private_key: System.get_env("PRIVATE_KEY")],
         value: 0,
-        # chain_id: 31337,
-        chain_id: 1,
+        chain_id: 31337,
+        # chain_id: 1,
         to: System.get_env("CONTRACT_ADDRESS"),
         max_priority_fee_per_gas: ConCache.get(:gas, :max_priority_fee_per_gas),
         max_fee_per_gas: ConCache.get(:gas, :max_fee_per_gas),
