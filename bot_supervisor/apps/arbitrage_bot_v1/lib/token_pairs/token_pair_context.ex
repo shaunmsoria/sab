@@ -99,7 +99,7 @@ defmodule TokenPairContext do
     end
   end
 
-  @max_pool_address_daily_updates 200
+  @max_pool_address_daily_updates 450
   def is_daily_update_amount_exceeded() do
     ConCache.get(:system, :daily_pool_address_count)
     |> IO.inspect(label: "mx1 ConCache.get")

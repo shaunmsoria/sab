@@ -141,7 +141,8 @@ defmodule CheckProfit do
   end
 
   ## todoshaun continue here calculation need check
-  @threshold_percentage_v3 5
+  # @threshold_percentage_v3 5
+  @threshold_percentage_v3 1
   def compare_with_threshold(amount_to_compare) when amount_to_compare >= 0,
     do:
       (amount_to_compare / (10 ** 18) >= @threshold_percentage_v3)
@@ -208,9 +209,9 @@ defmodule CheckProfit do
   end
 
   # profit_threshold ~ $100 aud at the time of this commit
-  @profit_threshold 0.01558
+  # @profit_threshold 0.01558
   ## profit_threshold ~ $20 aud at the time of this commit
-  # @profit_threshold 0.00312
+  @profit_threshold 0.00312
   def estimate_profitable_pool(
         %Pool{} = pool_search,
         pool_event,
@@ -420,16 +421,16 @@ defmodule CheckProfit do
   def sanitise_pool_reserve(""), do: 0
   def sanitise_pool_reserve(reserve), do: reserve |> String.to_integer()
 
-  def calculate_burrow_amount(swap_amount, swap_price, pool_fee, _decimals_adjusted) do
+  def calculate_burrow_amount(swap_amount, swap_price, pool_fee, decimals_adjusted) do
     pool_fee_ratio = 1 + (pool_fee |> String.to_integer()) / 10000
-    swap_amount * swap_price * pool_fee_ratio
-    # swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
+    # swap_amount * swap_price * pool_fee_ratio
+    swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
   end
 
-  def calculate_return_amount(swap_amount, swap_price, pool_fee, _decimals_adjusted) do
+  def calculate_return_amount(swap_amount, swap_price, pool_fee, decimals_adjusted) do
     pool_fee_ratio = 1 - (pool_fee |> String.to_integer()) / 10000
-    swap_amount * swap_price * pool_fee_ratio
-    # swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
+    # swap_amount * swap_price * pool_fee_ratio
+    swap_amount * swap_price * pool_fee_ratio * decimals_adjusted
   end
 
   def extract_token_profit_from_pool(%Pool{} = pool, "0_1"),
