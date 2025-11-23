@@ -13,7 +13,8 @@ const V2_ROUTER_TO_USE = uRouter
 
 const UNLOCKED_ACCOUNT = '0xdEAD000000000000000042069420694206942069' // SHIB account to impersonate 
 // const AMOUNT = '405000000000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
-const AMOUNT = '40050000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
+// const AMOUNT = '40050000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
+const AMOUNT = '1000000000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
 // const AMOUNT = '400500000000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
 // const AMOUNT = '40500000000000000' // 40,500,000,000,000 SHIB -- Tokens will automatically be converted to wei
 

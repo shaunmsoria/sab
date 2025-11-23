@@ -191,6 +191,13 @@ defmodule CheckProfit do
     get_profitable_trades(pool_event, params.swap_amount, swap_price_event, params.swap_direction)
   end
 
+  #todoshaun create a script that will iterate through all the token_pairs
+  #todoshaun get all the pools for each token_pairs
+  #todoshaun query for a v2_abi pool the token0 and confirm against db and populate new field token_pair_order to straight or reverse for all the v2_abi pools
+  #todoshaun query for a v3_abi pool the token0 and confirm against db and populate new field token_pair_order to straight or reverse for all the v3_abi pools
+  #todoshaun create an embedded schema to adjust the reverses order and price to match the pool_event order
+  #todoshaun update computations and price updates to use/update the embedded schema
+
   # todo tdx1 remove the the dex_abi filter
   def get_profitable_trades(%Pool{} = pool_event, swap_amount, swap_price_event, swap_direction) do
     PoolSearch.with_token_pair_id(pool_event.token_pair.id)

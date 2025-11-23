@@ -9,11 +9,18 @@
 # move said applications out of the umbrella.
 import Config
 
+
 config :arbitrage_bot_v1, Repo,
   database: "server_db3",
   username: "server",
   password: "password",
   hostname: "localhost"
+
+# config :arbitrage_bot_v1, Repo,
+#   database: "server_db2",
+#   username: "server",
+#   password: "password",
+#   hostname: "localhost"
 
 config :arbitrage_bot_v1, ecto_repos: [Repo]
 
@@ -55,13 +62,13 @@ config :ethers,
 # # If using Ethereumex, you can specify a default JSON-RPC server url here for all requests.
 # # config :ethereumex, url: "http://localhost:8545"
 config :ethereumex,
-  # url: "http://127.0.0.1:8545"
+  url: "http://127.0.0.1:8545"
 
 # url: "https://eth-mainnet.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
 # url: "https://eth-sepolia.g.alchemy.com/v2/#{System.get_env("ALCHEMY_API_KEY")}"
 
-url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
+# url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
 # url: "https://sepolia.infura.io/v3/#{System.get_env("INFURA_API_KEY")}"
 
 # url: "https://mainnet.infura.io/v3/#{System.get_env("INFURA_API_KEY2")}"

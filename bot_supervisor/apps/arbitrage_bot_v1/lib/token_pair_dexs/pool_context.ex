@@ -289,15 +289,17 @@ defmodule PoolContext do
       }) do
     IO.puts("sx1 in pool v2 maybe_add_pool_from_pool_address")
 
-    with {:ok, %TokenPair{} = token_pair} <-
-           TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV2")
-           |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address uniswapV2"),
-         {:ok, list_pools} <-
-           PV2C.maybe_add_all_pool_v2(token_pair, pool_address)
-           |> IO.inspect(label: "mx1 maybe_add_all_pool_v2") do
-      find_pool_in_list_pool(pool_address, list_pools)
-      |> IO.inspect(label: "mx1 find_pool_in_list_pool")
-    end
+    #todoshaun remove comment to initialise v2 pools
+    # with {:ok, %TokenPair{} = token_pair} <-
+    #        TPC.maybe_add_pair_from_event_address(pool_address.address, "uniswapV2")
+    #        |> IO.inspect(label: "mx1 maybe_add_pair_from_event_address uniswapV2"),
+    #      {:ok, list_pools} <-
+    #        PV2C.maybe_add_all_pool_v2(token_pair, pool_address)
+    #        |> IO.inspect(label: "mx1 maybe_add_all_pool_v2") do
+    #   find_pool_in_list_pool(pool_address, list_pools)
+    #   |> IO.inspect(label: "mx1 find_pool_in_list_pool")
+    # end
+    {:error, "error not adding v2 pool"}
   end
 
   def find_pool_in_list_pool(pool_address, []), do: "pool not created"
