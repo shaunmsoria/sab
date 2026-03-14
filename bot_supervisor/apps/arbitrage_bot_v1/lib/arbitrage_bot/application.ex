@@ -4,6 +4,7 @@ defmodule ArbitrageBotV1.Application do
 
   def start(_type, []) do
     children = [
+      #  ArbitrageBotV1.Repo,
       Repo,
       Supervisor.child_spec({ConCache, [name: :logs, ttl_check_interval: false]},
         id: :con_cache_logs
@@ -27,3 +28,6 @@ defmodule ArbitrageBotV1.Application do
     Supervisor.start_link(children, opts)
   end
 end
+
+
+#  PAS.with_upcase_address("0X9E5F2B740E52C239DA457109BCCED1F2BB40DA5B") |> PAS.with_status("active") |> Repo.one()

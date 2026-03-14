@@ -25,13 +25,13 @@ defmodule InvestigateEvent do
   def run(_state, event_data) when is_map(event_data) do
     event_data |> LW.ipt("sx1 event_data")
 
-    with true <- event_data.event.address !== "",
+    with true <- event_data.event.address !== "" |> IO.inspect(label: "sx1 event_data.event.address check"),
          {:ok,
           %Pool{
             token_pair: %TokenPair{status: "active"} = token_pair,
             dex: %Dex{name: dex_name} = dex
           } = pool_event} <-
-           extract_pool_details(event_data.event.address, event_data.event.data) do
+           extract_pool_details(event_data.event.address, event_data.event.data) |> IO.inspect(label: "sx1 extract_pool_details result") do
       # event_data.event.data |> IO.inspect(label: "sx1 event_data.event.data")
 
       maybe_investigate_event(event_data.event.data, event_data.event.name, pool_event)
@@ -136,16 +136,17 @@ defmodule InvestigateEvent do
   end
 
   def extract_pool_details(address, event_params) do
-    with upcase_address <- String.upcase(address),
+    IO.puts("sx1 extract_pool_details for event_params")
+    with upcase_address <- String.upcase(address) |> IO.inspect(label: "sx1 extract_pool_details upcase_address"),
          pool_address <-
            PAS.with_upcase_address(upcase_address)
            |> PAS.with_status("active")
-           |> Repo.one(),
-         true <- not is_nil(pool_address),
-         pool_event <- pool_address |> Repo.preload(:pool) |> Map.get(:pool),
+           |> Repo.one() |> IO.inspect(label: "sx1 extract_pool_details pool_address"),
+         true <- not is_nil(pool_address) |> IO.inspect(label: "sx1 extract_pool_details not is_nil(pool_address)"),
+         pool_event <- pool_address |> Repo.preload(:pool) |> Map.get(:pool) |> IO.inspect(label: "sx1 extract_pool_details pool_event"),
          pool_event_preloaded <-
            pool_event
-           |> Repo.preload([[token_pair: [:token0, :token1]], :dex]) do
+           |> Repo.preload([[token_pair: [:token0, :token1]], :dex]) |> IO.inspect(label: "sx1 extract_pool_details pool_event_preloaded") do
       {:ok, pool_event_preloaded}
     else
       msg ->
