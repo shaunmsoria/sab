@@ -44,8 +44,8 @@ const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance h
 // const WHALE_ACCOUNT = "0xF977814e90dA44bFA03b6295A0616a897441aceC"; // Binance 8 wallet
 // const AMOUNT = "100000000000"; // 100 billion SHIB tokens
 // const AMOUNT = "50000000000"; // 50 billion SHIB tokens
-const AMOUNT = "50000000000"; // SHIB
-// const AMOUNT = "50000000"; // exchange that amount of USDT tokens
+// const AMOUNT = "50000000000"; // SHIB
+const AMOUNT = "12500000000"; // exchange that amount of USDT tokens
 // const AMOUNT = "30000000"; // exchange that amount of USDC tokens
 const FEE_TIER = 3000; // 0.3% fee tier
 
@@ -355,10 +355,7 @@ async function main() {
 
     console.log("Timer started for 3 minutes");
 
-const artifact = require("../artifacts/contracts/SABV2.sol/SABV2.json");
-const bytecodeSize = (artifact.bytecode.length - 2) / 2; // in bytes
-console.log(`Contract size: ${bytecodeSize} bytes`);
-console.log(`Size limit: 24576 bytes`);
+
 
   });
 

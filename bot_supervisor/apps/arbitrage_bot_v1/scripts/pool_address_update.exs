@@ -11,9 +11,6 @@ defmodule PoolAddressUpdate do
  def main() do
     # create_pool_address_for_pool()
     remove_pool_address_duplication()
-
-
-
  end
 
  def create_pool_address_for_pool() do

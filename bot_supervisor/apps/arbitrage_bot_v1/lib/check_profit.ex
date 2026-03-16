@@ -141,15 +141,15 @@ defmodule CheckProfit do
   end
 
   ## todoshaun continue here calculation need check
-  @threshold_percentage_v3 0.5
+  @threshold_percentage_v3 5
   def compare_with_threshold(amount_to_compare) when amount_to_compare >= 0,
     do:
-      (amount_to_compare / 10 ** 18 >= @threshold_percentage_v3)
+      (amount_to_compare / (10 ** 18) >= @threshold_percentage_v3)
       |> LogWritter.ipt("sx1 ((amount_to_compare * price) >= @threshold_percentage_v3)")
 
   def compare_with_threshold(amount_to_compare) when amount_to_compare < 0,
     do:
-      (amount_to_compare * -1 / 10 ** 18 >= @threshold_percentage_v3)
+      ((amount_to_compare * -1) / (10 ** 18) >= @threshold_percentage_v3)
       |> LogWritter.ipt("sx1 (((amount_to_compare * -1) * price) >= @threshold_percentage_v3)")
 
   ## ? define_direction only call get_profitable_trade_from_pool if the positive amount is greater than the liquidity * threshold_percentage
@@ -190,6 +190,13 @@ defmodule CheckProfit do
     get_profitable_trades(pool_event, params.swap_amount, swap_price_event, params.swap_direction)
   end
 
+  #todoshaun create a script that will iterate through all the token_pairs
+  #todoshaun get all the pools for each token_pairs
+  #todoshaun query for a v2_abi pool the token0 and confirm against db and populate new field token_pair_order to straight or reverse for all the v2_abi pools
+  #todoshaun query for a v3_abi pool the token0 and confirm against db and populate new field token_pair_order to straight or reverse for all the v3_abi pools
+  #todoshaun create an embedded schema to adjust the reverses order and price to match the pool_event order
+  #todoshaun update computations and price updates to use/update the embedded schema
+
   # todo tdx1 remove the the dex_abi filter
   def get_profitable_trades(%Pool{} = pool_event, swap_amount, swap_price_event, swap_direction) do
     PoolSearch.with_token_pair_id(pool_event.token_pair.id)
@@ -207,6 +214,10 @@ defmodule CheckProfit do
     )
   end
 
+  # profit_threshold ~ $100 aud at the time of this commit
+  @profit_threshold 0.01558
+  ## profit_threshold ~ $20 aud at the time of this commit
+  # @profit_threshold 0.00312
   def estimate_profitable_pool(
         %Pool{} = pool_search,
         pool_event,
@@ -275,7 +286,10 @@ defmodule CheckProfit do
           decimals_adjusted
         )
 
-      calculate_gas_price_for_trade_v3(extract_token_profit_from_pool(pool_event, swap_direction))
+      calculate_gas_price_for_trade_v3(
+        extract_token_profit_from_pool(pool_event, swap_direction),
+        pool_event
+      )
       |> case do
         {:ok, token_return_amount_for_gas_fee, token_return} ->
           ##
@@ -284,6 +298,8 @@ defmodule CheckProfit do
           token_return |> LogWritter.ipt("sx1 token_return")
           burrow_amount |> LogWritter.ipt("sx1 burrow_amount")
 
+
+          ##todoshaun check value of gas it's way too high on v2 api endpoint
           token_return_amount_for_gas_fee
           |> LogWritter.ipt("sx1 token_return_amount_for_gas_fee")
 
@@ -298,12 +314,28 @@ defmodule CheckProfit do
 
         {:error, msg} ->
           {:error, msg} |> LogWritter.ipt("sx1 calculate_gas_price_for_trade_v3 error")
+          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+        false ->
+          LogWritter.ipt("sx1 calculate_gas_price_for_trade_v3 false error")
 
           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       end
     end)
-    |> Enum.filter(fn {_, _, profit_amount, _, _, _, _, _, _, _} ->
-      profit_amount > 0
+    |> Enum.filter(fn {pool_event, _, profit_amount, token_return, _, _, _, _, _, _} ->
+      profit_amount |> LogWritter.ipt("sx1 profit_amount in filter")
+
+      token_profit_price_in_weth_in_wei =
+        calculate_weth_value_in_token_profit(token_return, pool_event)
+          |> LogWritter.ipt("sx1 token_profit_price_in_weth_in_wei")
+
+      (token_profit_price_in_weth_in_wei * @profit_threshold)
+      |>  LogWritter.ipt("sx1 calculate_weth_value_in_token_profit result")
+
+      token_profit_price_in_weth_in_wei &&
+        (profit_amount >
+          (token_profit_price_in_weth_in_wei * @profit_threshold))
+          |> IO.inspect(label: "mx1 check profit result")
     end)
   end
 

@@ -67,6 +67,8 @@ defmodule PoolV2Initialise do
         } = dex
       ) do
     with {:ok, dex_all_pairs_length} <- get_all_pairs_length(dex_factory) do
+      ## todoshaun maybe remove restriction, for now allow token_pair to be updated adhoc
+
       max_length =
         case dex_name do
           "pancakeswap" -> 20

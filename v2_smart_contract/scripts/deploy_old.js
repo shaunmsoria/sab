@@ -20,9 +20,6 @@ async function main() {
   const provider = hre.ethers.provider;
   const deployer = new hre.ethers.Wallet(privateKey, provider);
 
-
-  
-
   // const [deployer] = await ethers.getSigners();
   console.log("sx1 deployer", deployer);
 
@@ -57,8 +54,10 @@ async function main() {
     [],
     {
       signer: deployer,
-      // gasPrice: 50000000000,
-      // gasLimit: 5000000
+      maxFeePerGas: 30000000000,
+      // libraries: {
+      //   SabLibrary: sabLibraryAddress  // Link the library here
+      // }
     }
   )
 

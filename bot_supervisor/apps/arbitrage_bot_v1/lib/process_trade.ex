@@ -44,6 +44,7 @@ defmodule ProcessTrade do
       current_pool_price |> IO.inspect(label: "sx1 current_pool_price")
       pool_search_updated.price |> IO.inspect(label: "sx1 pool_search_updated.price")
 
+      ##todoshaun update the code below to not use the swap_amount if pass test
       case {swap_amount, current_pool_price == pool_search_updated.price} do
         {-1, _test_result} ->
           IO.puts("sx1 in in -1")
@@ -96,7 +97,8 @@ defmodule ProcessTrade do
         swap_direction
       )
 
-    profit_decimal_number = pool_event.token_pair.token0.decimals
+    # profit_decimal_number = pool_event.token_pair.token0.decimals
+    profit_decimal_number = token_return.decimals
 
     uuid = Ecto.UUID.generate()
 
@@ -117,45 +119,57 @@ defmodule ProcessTrade do
       }
       |> LogWritter.ipt("sx1 data test")
 
-    Sabv2Contract.execute_trade(
-      [
-        token_path |> Enum.at(0) |> Map.get(:address),
-        token_path |> Enum.at(1) |> Map.get(:address)
-      ],
-      [dex_searched.router, dex_event.router],
-      dex_searched.abi,
-      dex_event.abi,
-      [String.to_integer(pool_search.fee), String.to_integer(pool_event.fee)],
-      burrow_amount |> trunc(),
-      uuid
-    )
-    |> LogWritter.ipt("sx1 execute_trade pre Ethers.send_transaction()")
-    |> Ethers.send(
-      signer: Ethers.Signer.Local,
-      signer_opts: [private_key: System.get_env("PRIVATE_KEY")],
-      value: 0,
-      to: smart_contract_address,
-      from: System.get_env("ACCOUNT_NUMBER")
-    )
-    |> maybe_save_response(data)
-    |> LogWritter.ipt("sx1 execute_trade post Ethers.call()")
-
-    ## ? test for wallet balance to be use in prod
-    # {:ok, token0_balance} =
-    #   Ethers.Contracts.ERC20.balance_of(System.get_env("ACCOUNT_NUMBER"))
-    #   |> Ethers.call(to: token_path |> Enum.at(0) |> Map.get(:address))
-
-    # {:ok, token1_balance} =
-    #   Ethers.Contracts.ERC20.balance_of(System.get_env("ACCOUNT_NUMBER"))
-    #   |> Ethers.call(to: token_path |> Enum.at(1) |> Map.get(:address))
-
-    #   %{token0_address: token_path |> Enum.at(0) |> Map.get(:address),
-    #     token0_balance: token0_balance,
-    #     token1_address: token_path |> Enum.at(1) |> Map.get(:address),
-    #     token1_balance: token1_balance
-    #   }
-    #   |> IO.inspect(label: "sx1 balance")
+    execute_trade_order =
+      Sabv2Contract.execute_trade(
+        [
+          token_path |> Enum.at(0) |> Map.get(:address),
+          token_path |> Enum.at(1) |> Map.get(:address)
+        ],
+        [dex_searched.router, dex_event.router],
+        dex_searched.abi,
+        dex_event.abi,
+        [String.to_integer(pool_search.fee), String.to_integer(pool_event.fee)],
+        burrow_amount |> trunc(),
+        uuid
+      )
+      |> IO.inspect(label: "sx1 execute_trade pre Ethers.send_transaction()")
+      |> call_and_maybe_execute(data)
   end
+
+  def call_and_maybe_execute(execute_trade_order, data),
+    do:
+      execute_trade_order
+      |> Ethers.call(
+        to: System.get_env("CONTRACT_ADDRESS"),
+        gas_limit: 5_000_000,
+        value: 0
+      )
+      |> IO.inspect(label: "mx1 call_and_maybe_execute result")
+      |> maybe_execute(execute_trade_order, data)
+
+  def maybe_execute({:ok, nil}, execute_trade_order, data),
+    do:
+      execute_trade_order
+      |> Ethers.send_transaction(
+        signer: Ethers.Signer.Local,
+        signer_opts: [private_key: System.get_env("PRIVATE_KEY")],
+        value: 0,
+        chain_id: 31337,
+        # chain_id: 1,
+        to: System.get_env("CONTRACT_ADDRESS"),
+        max_priority_fee_per_gas: ConCache.get(:gas, :max_priority_fee_per_gas),
+        max_fee_per_gas: ConCache.get(:gas, :max_fee_per_gas),
+        gas_limit: ConCache.get(:gas, :gas_limit),
+        from: System.get_env("ACCOUNT_NUMBER")
+      )
+      |> maybe_save_response(data)
+      |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
+
+  def maybe_execute(message, execute_trade_order, data),
+    do:
+      message
+      |> maybe_save_response(data)
+      |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
 
   def sanitise_response(message) do
     case String.contains?(inspect(message), "0x") do

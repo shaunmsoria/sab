@@ -14,8 +14,8 @@ async function main() {
   const signer = new hre.ethers.Wallet(privateKey, provider);
   
   // const contractAddress = process.env.CONTRACT_ADDRESS;
-  const contractAddress = "0x6BE459DA15fd89a89e2FCDE4e8E6a68abDB0D11a";
-  console.log(`Sending 0.00233 ETH to ${contractAddress} from ${signer.address}`);
+  const contractAddress = "0x346422cF9c620668089453838EDD1a30F9b1A273";
+  console.log(`Sending 0.005 ETH to ${contractAddress} from ${signer.address}`);
   
   const tx = await signer.sendTransaction({
     to: contractAddress,
