@@ -22,50 +22,50 @@ Engineering Challenges
 
 1. Reliable Event Processing
 
-The first challenge was designing a system capable of reliably processing blockchain events while maintaining accurate liquidity data.
-DEX protocols emit multiple event types including: Swap, Mint, Burn...
-The system must correctly isolate swap events while ignoring irrelevant events within the same stream.
-Additional complexity arises from:
+    The first challenge was designing a system capable of reliably processing blockchain events while maintaining accurate liquidity data.
+    DEX protocols emit multiple event types including: Swap, Mint, Burn...
+    The system must correctly isolate swap events while ignoring irrelevant events within the same stream.
+    Additional complexity arises from:
 
-- inconsistent token naming conventions
-- special characters in token symbols
-- malformed or unexpected event payloads
+    - inconsistent token naming conventions
+    - special characters in token symbols
+    - malformed or unexpected event payloads
 
-To address these challenges, SAB was designed with defensive parsing, validation layers, and fault-tolerant pipelines, ensuring the system remains stable even when encountering unexpected data.
+    To address these challenges, SAB was designed with defensive parsing, validation layers, and fault-tolerant pipelines, ensuring the system remains stable even when encountering unexpected data.
 
 
 2. 24/7 Operation with Minimal Computational Cost
 
-Arbitrage opportunities exist for only short time windows, meaning the system must operate continuously to avoid missing profitable trades.
+    Arbitrage opportunities exist for only short time windows, meaning the system must operate continuously to avoid missing profitable trades.
 
-However, querying DEX liquidity and pricing data can become computationally expensive.
-The challenge was amplified by infrastructure limitations from providers such as:
+    However, querying DEX liquidity and pricing data can become computationally expensive.
+    The challenge was amplified by infrastructure limitations from providers such as:
 
-- Alchemy
-- Infura
+    - Alchemy
+    - Infura
 
-Their monthly compute unit allocations were reduced from 300M CU to 30M CU, forcing significant optimisation.
-Several strategies were implemented:
+    Their monthly compute unit allocations were reduced from 300M CU to 30M CU, forcing significant optimisation.
+    Several strategies were implemented:
 
-- selective liquidity updates
-- reduced RPC queries
-- caching strategies
-- trading thresholds to ignore low-value swaps unlikely to produce profit
+    - selective liquidity updates
+    - reduced RPC queries
+    - caching strategies
+    - trading thresholds to ignore low-value swaps unlikely to produce profit
 
-These optimisations significantly reduced compute consumption while maintaining effective arbitrage detection.
+    These optimisations significantly reduced compute consumption while maintaining effective arbitrage detection.
 
 
 3. Scaling to 300k+ Liquidity Pools
 
-Uniswap V3 currently supports 300,000+ liquidity pools, representing a large surface area for potential arbitrage.
+    Uniswap V3 currently supports 300,000+ liquidity pools, representing a large surface area for potential arbitrage.
 
-Supporting this scale required careful database design to handle:
+    Supporting this scale required careful database design to handle:
 
-- frequent read/write operations
-- concurrent event updates
-- liquidity recalculations
+    - frequent read/write operations
+    - concurrent event updates
+    - liquidity recalculations
 
-The system was designed to maintain performance while continuously updating pool liquidity data and evaluating arbitrage opportunities.
+    The system was designed to maintain performance while continuously updating pool liquidity data and evaluating arbitrage opportunities.
 
 
 Architecture Goals
