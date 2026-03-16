@@ -20,7 +20,7 @@ Key Features
 
 Engineering Challenges
 
-1. Reliable Event Processing
+1) Reliable Event Processing
 
     The first challenge was designing a system capable of reliably processing blockchain events while maintaining accurate liquidity data.
     DEX protocols emit multiple event types including: Swap, Mint, Burn...
@@ -34,7 +34,7 @@ Engineering Challenges
     To address these challenges, SAB was designed with defensive parsing, validation layers, and fault-tolerant pipelines, ensuring the system remains stable even when encountering unexpected data.
 
 
-2. 24/7 Operation with Minimal Computational Cost
+2) 24/7 Operation with Minimal Computational Cost
 
     Arbitrage opportunities exist for only short time windows, meaning the system must operate continuously to avoid missing profitable trades.
 
@@ -55,7 +55,7 @@ Engineering Challenges
     These optimisations significantly reduced compute consumption while maintaining effective arbitrage detection.
 
 
-3. Scaling to 300k+ Liquidity Pools
+3) Scaling to 300k+ Liquidity Pools
 
     Uniswap V3 currently supports 300,000+ liquidity pools, representing a large surface area for potential arbitrage.
 
