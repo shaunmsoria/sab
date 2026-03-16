@@ -1,4 +1,6 @@
 # Supervised Arbitrage Bot (SAB)
+![Supervised Arbitrage Bot v1.0](https://shaunmsoria.github.io/bot_supervisor/SAB.png "Example of SAB running in the backend")
+
 
 Overview
 
