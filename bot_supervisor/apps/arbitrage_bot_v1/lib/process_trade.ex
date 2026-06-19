@@ -33,7 +33,7 @@ defmodule ProcessTrade do
 
   def maybe_execute_trade(
         {pool_event, pool_search_raw, _profit_amount, _token_return, _return_amount,
-         burrow_amount, _token_return_amount_for_gas_fee, swap_price_event, swap_direction,
+         _burrow_amount, _token_return_amount_for_gas_fee, swap_price_event, swap_direction,
          swap_amount} = params
       ) do
     pool_search = pool_search_raw |> Repo.preload([:token_pair, :dex])
@@ -75,7 +75,7 @@ defmodule ProcessTrade do
 
   def execute_trade(
         {pool_event, pool_search, profit_amount, token_return, _return_amount, burrow_amount,
-         token_return_amount_for_gas_fee, swap_price_event, swap_direction, _swap_amount}
+         token_return_amount_for_gas_fee, _swap_price_event, swap_direction, _swap_amount}
       ) do
     %Pool{dex: %Dex{} = dex_event} =
       pool_event |> Repo.preload([:dex, token_pair: [:token0, :token1]])
@@ -119,7 +119,7 @@ defmodule ProcessTrade do
       }
       |> LogWritter.ipt("sx1 data test")
 
-    execute_trade_order =
+    _execute_trade_order =
       Sabv2Contract.execute_trade(
         [
           token_path |> Enum.at(0) |> Map.get(:address),
@@ -165,7 +165,7 @@ defmodule ProcessTrade do
       |> maybe_save_response(data)
       |> IO.inspect(label: "sx1 execute_trade post Ethers.call()")
 
-  def maybe_execute(message, execute_trade_order, data),
+  def maybe_execute(message, _execute_trade_order, data),
     do:
       message
       |> maybe_save_response(data)

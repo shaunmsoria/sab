@@ -46,20 +46,20 @@ defmodule InvestigateEvent do
 
   def maybe_investigate_event(
         %{
-          "amount0In" => amount0_in,
-          "amount0Out" => amount0_out,
-          "amount1In" => amount1_in,
-          "amount1Out" => amount1_out,
+          "amount0In" => _amount0_in,
+          "amount0Out" => _amount0_out,
+          "amount1In" => _amount1_in,
+          "amount1Out" => _amount1_out,
           "sender" => _sender_address,
           "to" => _to_address
         },
         "Swap",
         %Pool{
-          token_pair: %TokenPair{status: "active"} = token_pair,
-          dex: %Dex{name: dex_name} = dex,
-          price: pool_price,
-          reserve0: reserve0,
-          reserve1: reserve1
+          token_pair: %TokenPair{status: "active"} = _token_pair,
+          dex: %Dex{name: _dex_name} = _dex,
+          price: _pool_price,
+          reserve0: _reserve0,
+          reserve1: _reserve1
         } = pool_event
       ) do
     LogWritter.ipt("sx1 pool_event id: #{pool_event.id} maybe_investigate_event pool v2")
